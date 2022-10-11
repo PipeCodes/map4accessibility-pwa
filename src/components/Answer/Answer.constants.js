@@ -1,0 +1,5 @@
+export const ANSWER_STATE = {
+  DEFAULT: 'DEFAULT',
+  WRONG: 'WRONG',
+  CORRECT: 'CORRECT',
+};
