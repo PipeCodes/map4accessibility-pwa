@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unstable-nested-components */
 import { Accordion, Card } from 'react-bootstrap';
 import React, { Children, useContext } from 'react';
 import AccordionContext from 'react-bootstrap/AccordionContext';

@@ -1,3 +1,4 @@
+/* eslint-disable react/no-danger */
 import React, { useEffect, useMemo } from 'react';
 import * as DOMPurify from 'dompurify';
 import { useTranslation } from 'react-i18next';

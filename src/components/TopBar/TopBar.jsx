@@ -1,5 +1,4 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
 import {
   Title,
   LeftButton,
@@ -43,4 +42,4 @@ const TopBar = (props) => {
   );
 };
 
-export default withRouter(TopBar);
+export default TopBar;

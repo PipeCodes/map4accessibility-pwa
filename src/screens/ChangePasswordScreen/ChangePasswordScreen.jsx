@@ -1,5 +1,4 @@
 import React, { useMemo, useState } from 'react';
-import { withRouter } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import CustomButton from '../../components/CustomButton/CustomButton';
@@ -63,4 +62,4 @@ const ChangePasswordScreen = (props) => {
   );
 };
 
-export default withRouter(ChangePasswordScreen);
+export default ChangePasswordScreen;

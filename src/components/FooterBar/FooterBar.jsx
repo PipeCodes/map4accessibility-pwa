@@ -1,11 +1,12 @@
 import React, { useMemo } from 'react';
-import { withRouter } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { FooterBarContainter, FooterButton, Icon, Overlay, Saturation } from './FooterBar.styles';
 import { colors } from '../../constants/colors';
 import RankingIcon from '../../assets/images/old_delete/ranking_inactive.svg';
 import ProfileIcon from '../../assets/images/old_delete/profile_inactive.svg';
 
 const FooterBar = (props) => {
+  const navigate = useNavigate();
   const { history, routes, activeColor } = props;
 
   const isRankingActive = useMemo(
@@ -21,11 +22,11 @@ const FooterBar = (props) => {
   );
 
   const rankingClickHandler = () => {
-    history.push(routes.RANKING.path);
+    navigate(routes.RANKING.path);
   };
 
   const profileClickHandler = () => {
-    history.push(routes.PROFILE.path);
+    navigate(routes.PROFILE.path);
   };
 
   return (
@@ -54,4 +55,4 @@ const FooterBar = (props) => {
   );
 };
 
-export default withRouter(FooterBar);
+export default FooterBar;

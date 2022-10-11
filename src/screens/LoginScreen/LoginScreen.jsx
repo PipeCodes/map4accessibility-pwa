@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { withRouter } from 'react-router';
+import { useNavigate } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import CustomInput from '../../components/CustomInput/CustomInput';
@@ -16,7 +16,8 @@ import Logo from '../../assets/images/old_delete/logo.svg';
 import { login } from '../../store/actions/auth';
 
 const LoginScreen = (props) => {
-  const { history, routes } = props;
+  const navigate = useNavigate();
+  const { routes } = props;
 
   const { t } = useTranslation();
   const dispatch = useDispatch();
@@ -63,7 +64,7 @@ const LoginScreen = (props) => {
         value={password}
       />
       <RecoverPassword
-        onClick={() => history.push(routes.RECOVER_PASSWORD.path)}
+        onClick={() => navigate(routes.RECOVER_PASSWORD.path)}
       >
         {t('recover_password')}
       </RecoverPassword>
@@ -86,11 +87,11 @@ const LoginScreen = (props) => {
         }}
         backgroundColor={colors.orange}
         text={t('register')}
-        onClick={() => history.push(routes.REGISTER.path)}
+        onClick={() => navigate(routes.REGISTER.path)}
         disabled={loading}
       />
     </Page>
   );
 };
 
-export default withRouter(LoginScreen);
+export default LoginScreen;

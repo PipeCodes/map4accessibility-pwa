@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { withRouter } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import Checkbox from 'react-custom-checkbox';
@@ -165,4 +164,4 @@ const RegisterScreen = (props) => {
   );
 };
 
-export default withRouter(RegisterScreen);
+export default RegisterScreen;

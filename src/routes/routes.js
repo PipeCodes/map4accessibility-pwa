@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Switch } from 'react-router-dom';
+import { BrowserRouter, Routes } from 'react-router-dom';
 import PrivateRoute from './PrivateRoute';
 import WelcomeScreen from '../screens/WelcomeScreen/WelcomeScreen';
 import OnboardingScreen from '../screens/OnboardingScreen/OnboardingScreen';
@@ -66,7 +66,7 @@ const routes = {
 
 const GlobalRoutes = () => (
   <BrowserRouter>
-    <Switch>
+    <Routes>
       {Object.values(routes).map((route) => {
         if (route.private) {
           return (
@@ -88,7 +88,7 @@ const GlobalRoutes = () => (
           />
         );
       })}
-    </Switch>
+    </Routes>
   </BrowserRouter>
 );
 

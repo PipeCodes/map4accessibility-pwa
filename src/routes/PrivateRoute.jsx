@@ -1,5 +1,5 @@
 import React from 'react';
-import { Redirect } from 'react-router';
+import { Navigate } from 'react-router';
 import { isAuthenticated } from '../services/local';
 import TrackedRoute from './TrackedRoute';
 
@@ -10,7 +10,7 @@ const PrivateRoute = ({ component: Component, routes, ...rest }) => (
       isAuthenticated() ? (
         <Component {...props} routes={routes} />
       ) : (
-        <Redirect to={routes.LOGIN.path} />
+        <Navigate to={routes.LOGIN.path} />
       )
     }
   />

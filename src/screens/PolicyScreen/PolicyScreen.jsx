@@ -1,6 +1,6 @@
+/* eslint-disable react/no-danger */
 import React, { useEffect } from 'react';
 import * as DOMPurify from 'dompurify';
-import { withRouter } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import TopBar from '../../components/TopBar/TopBar';
 import { Page, Container, SpinnerWrapper } from './PolicyScreen.styles';
@@ -38,4 +38,4 @@ const PolicyScreen = () => {
   );
 };
 
-export default withRouter(PolicyScreen);
+export default PolicyScreen;

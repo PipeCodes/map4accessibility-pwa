@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { withRouter } from 'react-router-dom';
 import Logo from '../../assets/images/old_delete/logo_blue.svg';
 import SplashIllustration from '../../assets/images/old_delete/illustration_splash.svg';
 import { Page, LogoImage, Illustration } from './WelcomeScreen.styles';
@@ -26,4 +25,4 @@ const WelcomeScreen = (props) => {
   );
 };
 
-export default withRouter(WelcomeScreen);
+export default WelcomeScreen;
