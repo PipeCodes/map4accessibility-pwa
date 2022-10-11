@@ -7,10 +7,12 @@ Node: v14.15.5
 nvm: 0.37.2
 
 ## Starting Dev:
-0- Make sure you have the Prettier VSCode extension
-1- nvm use 14.15.5
-2- npm install
-3- npm run start
+<ol>
+<li>Make sure you have the Prettier VSCode extension</li>
+<li>nvm use 14.15.5</li>
+<li>npm install</li>
+<li>npm run start</li>
+</ol>
 
 ## Deploy to Staging env
 
