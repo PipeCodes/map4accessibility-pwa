@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import Checkbox from 'react-custom-checkbox';
 import CustomButton from '../../components/CustomButton/CustomButton';
 import CustomInput from '../../components/CustomInput/CustomInput';
 import { colors } from '../../constants/colors';
@@ -119,24 +118,9 @@ const RegisterScreen = (props) => {
         />
 
         <CheckboxWrapper>
-          <Checkbox
+          <input type="checkbox"
             checked={privacyPolicyConditionsChecked}
             onChange={setPrivacyPolicyChecked}
-            borderColor={colors.blueMagenta}
-            borderWidth={1}
-            containerStyle={{
-              backgroundColor: colors.blueMagenta,
-              borderRadius: 5,
-            }}
-            icon={
-              <div
-                style={{
-                  backgroundColor: '#fff',
-                  borderRadius: 5,
-                  padding: 5,
-                }}
-              />
-            }
           />
           <PrivacyPolicyLabel
             onClick={() => setPrivacyPolicyChecked((prevState) => !prevState)}

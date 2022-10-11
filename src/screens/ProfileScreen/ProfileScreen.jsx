@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import {
   Page,
   Container,
@@ -34,7 +34,6 @@ import StarIcon from '../../assets/images/old_delete/star.svg';
 import { AVATARS } from '../../constants';
 
 const ProfileScreen = (props) => {
-  const navigate = useNavigate();
   const { history, routes } = props;
 
   const dispatch = useDispatch();
@@ -49,7 +48,7 @@ const ProfileScreen = (props) => {
   );
 
   const openFAQs = useCallback(() => {
-    navigate(routes.FAQS.path);
+    history.push(routes.FAQS.path);
   }, [history, routes]);
 
   const logoutHandler = useCallback(() => {
@@ -70,11 +69,11 @@ const ProfileScreen = (props) => {
   );
 
   const editHandler = () => {
-    navigate(routes.EDIT_PROFILE.path);
+    history.push(routes.EDIT_PROFILE.path);
   };
 
   const privacyHandler = () => {
-    navigate(routes.POLICY.path);
+    history.push(routes.POLICY.path);
   };
 
   useEffect(() => {
@@ -137,4 +136,4 @@ const ProfileScreen = (props) => {
   );
 };
 
-export default ProfileScreen;
+export default withRouter(ProfileScreen);

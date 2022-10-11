@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import Carousel from 'react-bootstrap/Carousel';
+import { withRouter } from 'react-router-dom';
 import { getOnboardingItems } from '../../store/actions/onboarding';
 import {
   Page,
@@ -34,7 +35,7 @@ const OnboardingScreen = (props) => {
   }, [dispatch]);
 
   const continueClickHandler = () => {
-    history.replace(routes.LOGIN.path);
+    history.push(routes.LOGIN.path);
   };
 
   return (
@@ -86,4 +87,4 @@ const OnboardingScreen = (props) => {
   );
 };
 
-export default OnboardingScreen;
+export default withRouter(OnboardingScreen);

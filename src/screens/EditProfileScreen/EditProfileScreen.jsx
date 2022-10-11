@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import { withRouter } from 'react-router-dom';
 import CustomButton from '../../components/CustomButton/CustomButton';
 import CustomInput from '../../components/CustomInput/CustomInput';
 import { colors } from '../../constants/colors';
@@ -107,4 +108,4 @@ const EditProfileScreen = (props) => {
   );
 };
 
-export default EditProfileScreen;
+export default withRouter(EditProfileScreen);

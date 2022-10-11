@@ -1,5 +1,6 @@
 import React from 'react';
-import { BrowserRouter, Routes } from 'react-router-dom';
+import { BrowserRouter, Switch } from 'react-router-dom';
+import { createBrowserHistory } from 'history';
 import PrivateRoute from './PrivateRoute';
 import WelcomeScreen from '../screens/WelcomeScreen/WelcomeScreen';
 import OnboardingScreen from '../screens/OnboardingScreen/OnboardingScreen';
@@ -13,6 +14,8 @@ import FAQsScreen from '../screens/FAQsScreen/FAQsScreen';
 import TrackedRoute from './TrackedRoute';
 import ChangePasswordScreen from '../screens/ChangePasswordScreen/ChangePasswordScreen';
 import EditProfileScreen from '../screens/EditProfileScreen/EditProfileScreen';
+
+const history = createBrowserHistory({forceRefresh:true});
 
 const routes = {
   WELCOME: { path: '/', component: WelcomeScreen, private: false },
@@ -65,8 +68,8 @@ const routes = {
 };
 
 const GlobalRoutes = () => (
-  <BrowserRouter>
-    <Routes>
+  <BrowserRouter history={history}>
+    <Switch>
       {Object.values(routes).map((route) => {
         if (route.private) {
           return (
@@ -88,7 +91,7 @@ const GlobalRoutes = () => (
           />
         );
       })}
-    </Routes>
+    </Switch>
   </BrowserRouter>
 );
 

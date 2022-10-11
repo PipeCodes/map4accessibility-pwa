@@ -1,6 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import CustomButton from '../../components/CustomButton/CustomButton';
 import CustomInput from '../../components/CustomInput/CustomInput';
 import { colors } from '../../constants/colors';
@@ -62,4 +63,4 @@ const ChangePasswordScreen = (props) => {
   );
 };
 
-export default ChangePasswordScreen;
+export default withRouter(ChangePasswordScreen);
