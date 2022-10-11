@@ -14,7 +14,7 @@ import {
   AvatarWrapper,
   Container,
 } from './RegisterScreen.styles';
-import Logo from '../../assets/images/logo.svg';
+import Logo from '../../assets/images/old_delete/logo.svg';
 import { signup } from '../../store/actions/auth';
 import TopBar from '../../components/TopBar/TopBar';
 import { AVATARS, regions } from '../../constants';
@@ -22,7 +22,7 @@ import AvatarCarousel from '../../components/AvatarCarousel/AvatarCarousel';
 import CustomSelect from '../../components/CustomSelect/CustomSelect';
 
 const RegisterScreen = (props) => {
-  const { history, routes } = props;
+  const { routes } = props;
 
   const { t } = useTranslation();
   const dispatch = useDispatch();
@@ -61,7 +61,7 @@ const RegisterScreen = (props) => {
 
   useEffect(() => {
     if (user) {
-      history.replace(routes.CYCLES.path);
+      alert("TODO")
     }
   }, [user]);
 

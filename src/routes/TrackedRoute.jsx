@@ -12,7 +12,7 @@ const TrackedRoute = (props) => {
     ReactGA.pageview(page);
   }, [location.pathname]);
 
-  return <Route {...props} />;
+  return <Route {...props} key={location.key} />;
 };
 
 export default TrackedRoute;

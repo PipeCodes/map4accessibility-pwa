@@ -29,15 +29,3 @@ export function clearLocalStorage() {
   localStorage.removeItem(AUTH_TOKEN_KEY);
   localStorage.removeItem(LOGGED_USER_KEY);
 }
-
-export function setCurrentQuestion(question) {
-  localStorage.setItem(CURRENT_QUESTION_KEY, question);
-}
-
-export function getCurrentQuestion() {
-  return parseInt(localStorage.getItem(CURRENT_QUESTION_KEY), 10);
-}
-
-export function clearCurrentQuestion() {
-  localStorage.removeItem(CURRENT_QUESTION_KEY);
-}

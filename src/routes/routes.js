@@ -7,15 +7,11 @@ import PolicyScreen from '../screens/PolicyScreen/PolicyScreen';
 import LoginScreen from '../screens/LoginScreen/LoginScreen';
 import RecoverPasswordScreen from '../screens/RecoverPasswordScreen/RecoverPasswordScreen';
 import RegisterScreen from '../screens/RegisterScreen/RegisterScreen';
-import CyclesScreen from '../screens/CyclesScreen/CyclesScreen';
-import QuizScreen from '../screens/QuizScreen/QuizScreen';
-import QuizResultsScreen from '../screens/QuizResultsScreen/QuizResultsScreen';
 import ProfileScreen from '../screens/ProfileScreen/ProfileScreen';
 import RankingScreen from '../screens/RankingScreen/RankingScreen';
 import FAQsScreen from '../screens/FAQsScreen/FAQsScreen';
 import TrackedRoute from './TrackedRoute';
 import ChangePasswordScreen from '../screens/ChangePasswordScreen/ChangePasswordScreen';
-import SelectLevelScreen from '../screens/SelectLevelScreen/SelectLevelScreen';
 import EditProfileScreen from '../screens/EditProfileScreen/EditProfileScreen';
 
 const routes = {
@@ -40,22 +36,6 @@ const routes = {
     path: '/register',
     component: RegisterScreen,
     private: false,
-  },
-  CYCLES: { path: '/cycles', component: CyclesScreen, private: false },
-  SELECT_LEVEL: {
-    path: '/cycles/:id/levels',
-    component: SelectLevelScreen,
-    private: true,
-  },
-  QUIZ: {
-    path: '/cycles/:cycleId/quiz/:quizId',
-    component: QuizScreen,
-    private: true,
-  },
-  QUIZ_RESULTS: {
-    path: '/cycles/:cycleId/quiz/:quizId/results',
-    component: QuizResultsScreen,
-    private: true,
   },
   PROFILE: {
     path: '/profile',

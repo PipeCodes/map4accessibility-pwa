@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import BackgroundImage from '../../assets/images/bg_blue.svg';
+import BackgroundImage from '../../assets/images/old_delete/bg_blue.svg';
 import { colors } from '../../constants/colors';
 
 export const Page = styled.div`

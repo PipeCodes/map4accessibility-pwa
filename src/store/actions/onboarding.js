@@ -11,9 +11,9 @@ export const getOnboardingItems = () => async (dispatch) => {
     dispatch({
       type: GET_ONBOARDING_ITEMS_SUCCESS,
       data: [{
-        title: "aa",
-        icon: "bb",
-        body: "cc"
+        title: "TODO - Get from Translations",
+        icon: "TODO - Get from Translations",
+        body: "TODO - Get from Translations"
       }],
     });
   } catch (error) {

@@ -27,10 +27,10 @@ import {
 import TopBar from '../../components/TopBar/TopBar';
 import { getUser, logout } from '../../store/actions/auth';
 import FooterBar from '../../components/FooterBar/FooterBar';
-import FAQsIcon from '../../assets/images/faqs.svg';
-import LogoutIcon from '../../assets/images/logout.svg';
-import EditIcon from '../../assets/images/edit.svg';
-import StarIcon from '../../assets/images/star.svg';
+import FAQsIcon from '../../assets/images/old_delete/faqs.svg';
+import LogoutIcon from '../../assets/images/old_delete/logout.svg';
+import EditIcon from '../../assets/images/old_delete/edit.svg';
+import StarIcon from '../../assets/images/old_delete/star.svg';
 import { AVATARS } from '../../constants';
 
 const ProfileScreen = (props) => {

@@ -9,8 +9,7 @@ export default axios.create({
     'Content-Type': 'application/json',
     Accept: 'application/json',
     'Api-Static-Key': process.env.REACT_APP_API_STATIC_KEY,
-    // 'Accept-Language': navigator.language || 'en',
-    'Accept-Language': 'pt-PT',
+    'Accept-Language': navigator?.language || 'en-GB'
   },
 });
 

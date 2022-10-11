@@ -1,6 +1,3 @@
-export const ONBOARDING_ITEMS = '/onboarding-items';
-export const CYCLES = '/cycles';
-export const LEVELS = '/cycles/:cycle_id:/quizzes';
 export const FAQS = '/faqs';
 export const POLICY = '/terms-conditions';
 export const RANKING = '/app-users';
@@ -10,5 +7,3 @@ export const RECOVER_PASSWORD = '/recoverpassword';
 export const CHANGE_PASSWORD = '/changepassword';
 export const GET_USER = '/app-users/profile';
 export const UPDATE_USER = '/app-users/update';
-export const QUIZ = '/quiz/:quiz_id:';
-export const REGISTER_ANSWER = '/user-answer';

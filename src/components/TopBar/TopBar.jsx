@@ -6,7 +6,7 @@ import {
   RightButton,
   TopBarContainer,
 } from './TopBar.styles';
-import BackIcon from '../../assets/images/back.svg';
+import BackIcon from '../../assets/images/old_delete/back.svg';
 
 const TopBar = (props) => {
   const {

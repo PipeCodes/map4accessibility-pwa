@@ -35,7 +35,7 @@ const OnboardingScreen = (props) => {
   }, [dispatch]);
 
   const continueClickHandler = () => {
-    history.replace(routes.CYCLES.path);
+    history.replace(routes.LOGIN.path);
   };
 
   return (

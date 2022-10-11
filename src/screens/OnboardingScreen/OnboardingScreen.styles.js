@@ -1,6 +1,6 @@
 import Carousel from 'react-bootstrap/Carousel';
 import styled from 'styled-components';
-import BackgroundImage from '../../assets/images/bg_tutorial.svg';
+import BackgroundImage from '../../assets/images/old_delete/bg_tutorial.svg';
 import { colors } from '../../constants/colors';
 
 export const Page = styled.div`

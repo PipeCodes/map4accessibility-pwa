@@ -7,8 +7,8 @@ import {
   Arrow,
   Avatar,
 } from './AvatarCarousel.styles';
-import PreviousArrow from '../../assets/images/previous_arrow.svg';
-import NextArrow from '../../assets/images/next_arrow.svg';
+import PreviousArrow from '../../assets/images/old_delete/previous_arrow.svg';
+import NextArrow from '../../assets/images/old_delete/next_arrow.svg';
 import { AVATARS } from '../../constants';
 
 const AvatarCarousel = (props) => {

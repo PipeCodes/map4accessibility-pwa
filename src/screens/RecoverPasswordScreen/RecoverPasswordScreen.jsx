@@ -6,7 +6,7 @@ import CustomButton from '../../components/CustomButton/CustomButton';
 import CustomInput from '../../components/CustomInput/CustomInput';
 import { colors } from '../../constants/colors';
 import { Page, LogoImage, Subtitle } from './RecoverPasswordScreen.styles';
-import Logo from '../../assets/images/logo.svg';
+import Logo from '../../assets/images/old_delete/logo.svg';
 import { recoverPassword } from '../../store/actions/auth';
 import TopBar from '../../components/TopBar/TopBar';
 

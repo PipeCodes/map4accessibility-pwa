@@ -2,19 +2,11 @@ import React, { useMemo } from 'react';
 import { withRouter } from 'react-router-dom';
 import { FooterBarContainter, FooterButton, Icon, Overlay, Saturation } from './FooterBar.styles';
 import { colors } from '../../constants/colors';
-import RankingIcon from '../../assets/images/ranking_inactive.svg';
-import CyclesIcon from '../../assets/images/cycles_inactive.svg';
-import ProfileIcon from '../../assets/images/profile_inactive.svg';
+import RankingIcon from '../../assets/images/old_delete/ranking_inactive.svg';
+import ProfileIcon from '../../assets/images/old_delete/profile_inactive.svg';
 
 const FooterBar = (props) => {
   const { history, routes, activeColor } = props;
-
-  const isCyclesActive = useMemo(
-    () =>
-      history.location.pathname === routes.CYCLES.path ||
-      history.location.pathname.includes(routes.CYCLES.path),
-    [history, routes],
-  );
 
   const isRankingActive = useMemo(
     () => history.location.pathname === routes.RANKING.path,
@@ -27,10 +19,6 @@ const FooterBar = (props) => {
       history.location.pathname === routes.FAQS.path,
     [history, routes],
   );
-
-  const cyclesClickHandler = () => {
-    history.push(routes.CYCLES.path);
-  };
 
   const rankingClickHandler = () => {
     history.push(routes.RANKING.path);
@@ -49,11 +37,10 @@ const FooterBar = (props) => {
           src={RankingIcon}
         />
       </FooterButton>
-      <FooterButton type="button" onClick={cyclesClickHandler}>
-        { isCyclesActive ? <Overlay color={activeColor} /> : <Saturation />}
+      <FooterButton type="button" onClick={alert("TODO")}>
         <Icon
-          alt="cycles"
-          src={CyclesIcon}
+          alt="TODO"
+          src={RankingIcon}
         />
       </FooterButton>
       <FooterButton type="button" onClick={profileClickHandler}>

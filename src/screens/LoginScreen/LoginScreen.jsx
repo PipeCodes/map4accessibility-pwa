@@ -12,7 +12,7 @@ import {
   RecoverPassword,
   Subtitle,
 } from './LoginScreen.styles';
-import Logo from '../../assets/images/logo.svg';
+import Logo from '../../assets/images/old_delete/logo.svg';
 import { login } from '../../store/actions/auth';
 
 const LoginScreen = (props) => {
@@ -35,7 +35,7 @@ const LoginScreen = (props) => {
 
   useEffect(() => {
     if (user) {
-      history.replace(routes.CYCLES.path);
+      alert("TODO")
     }
   }, [user]);
 

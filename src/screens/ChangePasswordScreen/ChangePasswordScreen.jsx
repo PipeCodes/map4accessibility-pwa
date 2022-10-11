@@ -6,7 +6,7 @@ import CustomButton from '../../components/CustomButton/CustomButton';
 import CustomInput from '../../components/CustomInput/CustomInput';
 import { colors } from '../../constants/colors';
 import { Page, LogoImage, Subtitle } from './ChangePasswordScreen.styles';
-import Logo from '../../assets/images/logo.svg';
+import Logo from '../../assets/images/old_delete/logo.svg';
 import { changePassword } from '../../store/actions/auth';
 import useQuery from '../../helpers/hooks/useQuery';
 
