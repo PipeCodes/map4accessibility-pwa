@@ -1,9 +1,7 @@
 import React from 'react';
-import { BrowserRouter, Switch } from 'react-router-dom';
+import { BrowserRouter, Switch, Redirect, Route } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 import PrivateRoute from './PrivateRoute';
-import WelcomeScreen from '../screens/WelcomeScreen/WelcomeScreen';
-import OnboardingScreen from '../screens/OnboardingScreen/OnboardingScreen';
 import PolicyScreen from '../screens/PolicyScreen/PolicyScreen';
 import LoginScreen from '../screens/LoginScreen/LoginScreen';
 import RecoverPasswordScreen from '../screens/RecoverPasswordScreen/RecoverPasswordScreen';
@@ -14,16 +12,11 @@ import FAQsScreen from '../screens/FAQsScreen/FAQsScreen';
 import TrackedRoute from './TrackedRoute';
 import ChangePasswordScreen from '../screens/ChangePasswordScreen/ChangePasswordScreen';
 import EditProfileScreen from '../screens/EditProfileScreen/EditProfileScreen';
+import { isAuthenticated } from '../services/local';
 
 const history = createBrowserHistory({forceRefresh:true});
 
 const routes = {
-  WELCOME: { path: '/', component: WelcomeScreen, private: false },
-  ONBOARDING: {
-    path: '/onboarding',
-    component: OnboardingScreen,
-    private: false,
-  },
   POLICY: {
     path: '/policy',
     component: PolicyScreen,
@@ -70,6 +63,7 @@ const routes = {
 const GlobalRoutes = () => (
   <BrowserRouter history={history}>
     <Switch>
+      <Route exact path="/" render={ () => (isAuthenticated() ? <Redirect to="/home" /> : <Redirect to="/login" />)}/>
       {Object.values(routes).map((route) => {
         if (route.private) {
           return (
