@@ -1,6 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { withRouter } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import CustomButton from '../../components/CustomButton/CustomButton';
 import {
   Page,
@@ -12,20 +13,32 @@ import {
 } from './AccessibilityScreen.styles';
 import EraserIcon from '../../assets/icons/eraser.svg';
 import TopBar from '../../components/TopBar/TopBar';
+import {
+  decreaseFontSize,
+  increaseFontSize,
+  resetFontSize,
+} from '../../store/actions/accessibility';
 
 const AccessibilityScreen = (props) => {
   const { routes, history } = props;
+
   const { t } = useTranslation();
+
+  const dispatch = useDispatch();
+
+  const readableFont = useSelector((state) => state.accessibilityReducer.font);
+
   return (
     <Page>
       <TopBar hasCloseButton hasIcon title={t('accessibility')} />
       <Box>
         <CustomButton
           style={{
-            backgroundColor: 'transparent',
+            backgroundColor: readableFont ? 'white' : 'transparent',
             border: '1px solid white',
             borderRadius: '25px',
             width: '100%',
+            color: readableFont ? 'black' : 'white',
           }}
           text={t('readable_font')}
         />
@@ -33,7 +46,7 @@ const AccessibilityScreen = (props) => {
       <BoxHalf>
         <BoxTitle>
           <Text>{t('font_size')}</Text>
-          <EraserButton type="button" onClick="">
+          <EraserButton type="button" onClick={() => dispatch(resetFontSize())}>
             <img src={EraserIcon} alt={t('reset')} />
           </EraserButton>
         </BoxTitle>
@@ -46,6 +59,7 @@ const AccessibilityScreen = (props) => {
             color: 'black',
           }}
           text="A-"
+          onClick={() => dispatch(decreaseFontSize())}
         />
         <CustomButton
           style={{
@@ -56,6 +70,7 @@ const AccessibilityScreen = (props) => {
             color: 'black',
           }}
           text="A+"
+          onClick={() => dispatch(increaseFontSize())}
         />
       </BoxHalf>
       <Box>

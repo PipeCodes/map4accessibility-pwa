@@ -1,5 +1,6 @@
-import  React from 'react';
+import React from 'react';
 import { withRouter } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import {
   Title,
   LeftButton,
@@ -23,6 +24,8 @@ const TopBar = (props) => {
     hasCloseButton,
   } = props;
 
+  const fontSize = useSelector((state) => state.accessibilityReducer.fontSize);
+
   return (
     <TopBarContainer backgroundColor={backgroundColor}>
       {hasBackButton && (
@@ -37,7 +40,12 @@ const TopBar = (props) => {
         </LeftButton>
       )}
 
-      {title && <Title>{hasIcon && <img src={AccessibilityIcon} alt="Accessibility"/>}{title}</Title>}
+      {title && (
+        <Title fontSize={fontSize}>
+          {hasIcon && <img src={AccessibilityIcon} alt="Accessibility" />}
+          {title}
+        </Title>
+      )}
 
       {hasAccessibilityButton && (
         <AccessibilityButton type="button" onClick={hasAccessibilityButton}>

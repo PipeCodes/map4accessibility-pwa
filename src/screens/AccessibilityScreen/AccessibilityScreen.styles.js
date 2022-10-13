@@ -19,7 +19,6 @@ export const Box = styled.div`
   padding: 30px 0;
   border-top: 0.5px solid white;
   opacity: 1;
-
 `;
 
 export const BoxHalf = styled.div`
@@ -43,7 +42,7 @@ export const BoxTitle = styled.div`
 
 export const Text = styled.span`
   font-size: 24px;
-  text-font: 'EasyReadingPRO';
+  font-family: 'EasyReadingPRO';
   color: white;
 `;
 
@@ -51,7 +50,7 @@ export const EraserButton = styled.button`
   border-radius: 50%;
   background: white 0% 0% no-repeat padding-box;
   box-shadow: 0px 2px 2px #00000029;
-  border:none;
+  border: none;
   margin: 0;
   width: 32px;
   height: 32px;

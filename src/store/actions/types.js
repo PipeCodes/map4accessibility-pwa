@@ -38,6 +38,7 @@ export const REGISTER_LAST_ANSWER_SUCCESS = 'REGISTER_LAST_ANSWER_SUCCESS';
 
 export const RESET_QUIZ_STATE = 'RESET_QUIZ_STATE';
 
-export const ADD_FONT = 'ADD_FONT';
-export const SUB_FONT = 'SUB_FONT';
-export const RESET_FONT = 'RESET_FONT';
+export const INCREASE_FONT_SIZE = 'INCREASE_FONT_SIZE';
+export const DECREASE_FONT_SIZE = 'DECREASE_FONT_SIZE';
+export const RESET_FONT_SIZE = 'RESET_FONT_SIZE';
+export const SET_FONT = 'SET_FONT';

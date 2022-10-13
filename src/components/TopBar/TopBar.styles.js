@@ -1,16 +1,16 @@
 import styled from 'styled-components';
 import { colors } from '../../constants/colors';
+import { updateFontSize } from '../../helpers/utils';
 
 export const Title = styled.span`
   color: white;
-  font-size: 28px;
+  font-size: ${(props) => updateFontSize(28, props.fontSize)};
   font-family: 'EasyReadingPro';
-  display:flex;
+  display: flex;
 
-  img{
+  img {
     margin-right: 10px;
   }
-
 `;
 
 export const TopBarContainer = styled.div`
@@ -48,7 +48,7 @@ export const LeftButton = styled.button`
 
 export const AccessibilityButton = styled.button`
   border-radius: 50%;
-  background: #34518D 0% 0% no-repeat padding-box;
+  background: #34518d 0% 0% no-repeat padding-box;
   box-shadow: 0px 2px 2px #00000029;
   border: 1px solid ${colors.primaryColor};
   color: white;
@@ -79,7 +79,7 @@ export const CloseButton = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  border:none;
-  padding-right:0;
+  border: none;
+  padding-right: 0;
   justify-content: flex-end;
 `;
