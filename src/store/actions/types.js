@@ -37,3 +37,7 @@ export const GET_QUIZ_ERROR = 'GET_QUIZ_ERROR';
 export const REGISTER_LAST_ANSWER_SUCCESS = 'REGISTER_LAST_ANSWER_SUCCESS';
 
 export const RESET_QUIZ_STATE = 'RESET_QUIZ_STATE';
+
+export const ADD_FONT = 'ADD_FONT';
+export const SUB_FONT = 'SUB_FONT';
+export const RESET_FONT = 'RESET_FONT';

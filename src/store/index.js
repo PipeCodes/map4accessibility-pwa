@@ -7,6 +7,7 @@ import faqsReducer from './reducers/faqs';
 import rankingReducer from './reducers/ranking';
 import authReducer from './reducers/auth';
 import policyReducer from './reducers/policy';
+import accessibilityReducer from './reducers/accessibility';
 
 export const rootReducer = combineReducers({
   onboarding: onboardingReducer,
@@ -15,6 +16,7 @@ export const rootReducer = combineReducers({
   ranking: rankingReducer,
   auth: authReducer,
   policy: policyReducer,
+  accessibility: accessibilityReducer,
 });
 
 export default createStore(rootReducer, applyMiddleware(ReduxThunk));

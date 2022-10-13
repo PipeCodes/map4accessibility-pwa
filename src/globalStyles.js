@@ -1,22 +1,22 @@
 import { createGlobalStyle } from 'styled-components';
-import RubikRegular from './assets/fonts/Rubik-Regular.ttf';
-import RubikBold from './assets/fonts/Rubik-Bold.ttf';
+import NotoSansRegular from './assets/fonts/NotoSans-Regular.ttf';
+import NotoSansBold from './assets/fonts/NotoSans-Bold.ttf';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import { colors } from './constants/colors';
 
 const GlobalStyles = createGlobalStyle`
   @font-face {
-    font-family: 'Rubik-Regular';
-    src: url(${RubikRegular}) format('truetype');
+    font-family: 'NotoSans-Regular';
+    src: url(${NotoSansRegular}) format('truetype');
   }
   @font-face {
-    font-family: 'Rubik-Bold';
-    src: url(${RubikBold}) format('truetype');
+    font-family: 'NotoSans-Bold';
+    src: url(${NotoSansBold}) format('truetype');
   }
 
   body {
-    font-family: 'Rubik-Regular';
+    font-family: 'NotoSans-Regular';
     margin: 0;
     overscroll-behavior-y: contain;
     max-width: 820px;
@@ -28,7 +28,7 @@ const GlobalStyles = createGlobalStyle`
     }
 
     b {
-      font-family: 'Rubik-Bold';
+      font-family: 'NotoSans-Bold';
     }
 
     button {

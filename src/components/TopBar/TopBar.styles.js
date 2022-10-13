@@ -1,20 +1,28 @@
 import styled from 'styled-components';
+import { colors } from '../../constants/colors';
 
 export const Title = styled.span`
   color: white;
-  font-size: 32px;
-  font-family: 'Rubik-Bold';
+  font-size: 28px;
+  font-family: 'EasyReadingPro';
+  display:flex;
+
+  img{
+    margin-right: 10px;
+  }
+
 `;
 
 export const TopBarContainer = styled.div`
   position: relative;
   display: flex;
   width: 100%;
+  min-height: 42px;
   align-items: center;
-  justify-content: center;
-  background-color: ${(props) => props.backgroundColor ?? props.darkTopbar};
-  height: 60px;
-  margin-bottom: 0;
+  justify-content: left;
+  background-color: transparent;
+  height: auto;
+  margin-bottom: 15px;
 `;
 
 export const LeftButton = styled.button`
@@ -38,23 +46,40 @@ export const LeftButton = styled.button`
   }
 `;
 
-export const RightButton = styled.button`
+export const AccessibilityButton = styled.button`
+  border-radius: 50%;
+  background: #34518D 0% 0% no-repeat padding-box;
+  box-shadow: 0px 2px 2px #00000029;
+  border: 1px solid ${colors.primaryColor};
   color: white;
-  background-color: transparent;
-  border: 0;
   margin: 0;
   position: absolute;
   top: 50%;
   -ms-transform: translateY(-50%);
   transform: translateY(-50%);
-  right: 5px;
-  width: 35px;
-  height: 35px;
+  right: 0px;
+  width: 42px;
+  height: 42px;
   display: flex;
   justify-content: center;
   align-items: center;
+`;
 
-  img {
-    height: 25px;
-  }
+export const CloseButton = styled.button`
+  background: transparent;
+  color: white;
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  right: 0px;
+  width: 42px;
+  height: 42px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border:none;
+  padding-right:0;
+  justify-content: flex-end;
 `;

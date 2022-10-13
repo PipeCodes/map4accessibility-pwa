@@ -1,12 +1,15 @@
-import React from 'react';
+import  React from 'react';
 import { withRouter } from 'react-router-dom';
 import {
   Title,
   LeftButton,
-  RightButton,
+  AccessibilityButton,
+  CloseButton,
   TopBarContainer,
 } from './TopBar.styles';
 import BackIcon from '../../assets/images/old_delete/back.svg';
+import CloseIcon from '../../assets/icons/close.svg';
+import AccessibilityIcon from '../../assets/icons/accessibility.svg';
 
 const TopBar = (props) => {
   const {
@@ -14,8 +17,10 @@ const TopBar = (props) => {
     hasBackButton,
     backgroundColor,
     title,
-    rightButton,
+    hasIcon,
+    hasAccessibilityButton,
     leftButton,
+    hasCloseButton,
   } = props;
 
   return (
@@ -32,12 +37,18 @@ const TopBar = (props) => {
         </LeftButton>
       )}
 
-      {title && <Title>{title}</Title>}
+      {title && <Title>{hasIcon && <img src={AccessibilityIcon} alt="Accessibility"/>}{title}</Title>}
 
-      {rightButton && (
-        <RightButton type="button" onClick={rightButton.action}>
-          <img src={rightButton.icon} alt={rightButton.description} />
-        </RightButton>
+      {hasAccessibilityButton && (
+        <AccessibilityButton type="button" onClick={hasAccessibilityButton}>
+          <img src={AccessibilityIcon} alt="Accessibility" />
+        </AccessibilityButton>
+      )}
+
+      {hasCloseButton && (
+        <CloseButton type="button" onClick={history.goBack}>
+          <img src={CloseIcon} alt="back" />
+        </CloseButton>
       )}
     </TopBarContainer>
   );

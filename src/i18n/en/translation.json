@@ -45,5 +45,16 @@
   "correct_answer": "Correct Answer",
   "wrong_answer": "Wrong Answer",
   "you_won": "You Won",
-  "more_levels_soon": "More levels available soon"
+  "more_levels_soon": "More levels available soon",
+  "accessibility": "Accessibility",
+  "readable_font": "Readable Font",
+  "font_size": "Font Size",
+  "contrast": "Contrast",
+  "reset": "Reset",
+  "choose_color": "Choose Color",
+  "underline_links": "Underline Links",
+  "remove_animations": "Remove Animations",
+  "remove-styles": "Remove Styles",
+  "lights_off_mode": "Lights Off Mode",
+  "back_to_default_view": "Back to Default View"
 }
