@@ -75,7 +75,7 @@ const accessibilityReducer = (state = initialState, action) => {
     case REMOVE_ANIMATIONS:
       return {
         ...state,
-        animations: !state.highlight,
+        animations: !state.animations,
       };
 
     case SET_LIGHTS_OFF:

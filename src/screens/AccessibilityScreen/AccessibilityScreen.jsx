@@ -25,6 +25,7 @@ import {
   resetContrast,
   resetSettings,
   toggleColors,
+  removeAnimations,
 } from '../../store/actions/accessibility';
 import ColorsPallet from '../../components/ColorsPallet/ColorsPallet';
 
@@ -46,6 +47,7 @@ const AccessibilityScreen = (props) => {
   const lightsOffMode = useSelector(
     (state) => state.accessibility.lightsOffMode,
   );
+  const animations = useSelector((state) => state.accessibility.animations);
   const toggleColor = useSelector((state) => state.accessibility.toggleColors);
 
   return (
@@ -155,13 +157,15 @@ const AccessibilityScreen = (props) => {
           />
           <CustomButton
             style={{
-              backgroundColor: 'transparent',
+              backgroundColor: animations ? 'white' : 'transparent',
               border: '1px solid white',
               borderRadius: '25px',
               width: '100%',
               marginTop: '30px',
+              color: animations ? 'black' : 'white',
             }}
             text={t('remove_animations')}
+            onClick={() => dispatch(removeAnimations())}
           />
           <CustomButton
             style={{
@@ -170,7 +174,7 @@ const AccessibilityScreen = (props) => {
               borderRadius: '25px',
               width: '100%',
               marginTop: '30px',
-              hidden: 'none',
+              display: 'none',
             }}
             text={t('remove_styles')}
           />

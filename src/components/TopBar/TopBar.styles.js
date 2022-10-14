@@ -1,15 +1,11 @@
 import styled from 'styled-components';
 import { colors } from '../../constants/colors';
-import {
-  updateFontSize,
-  updateFont,
-  updateBackgroundColor,
-} from '../../helpers/utils';
+import { updateFontSize, updateValue } from '../../helpers/utils';
 
 export const Title = styled.span`
   color: white;
   font-size: ${(props) => updateFontSize(28, props.fontSize)};
-  font-family: ${(props) => updateFont('EasyReadingPro', props.font)};
+  font-family: ${(props) => updateValue('EasyReadingPro', props.font)};
   display: flex;
 
   img {
@@ -26,7 +22,7 @@ export const TopBarContainer = styled.div`
   align-items: center;
   justify-content: left;
   background-color: ${(props) =>
-    updateBackgroundColor(colors.primaryColor, props.backgroundColor)};
+    updateValue(colors.primaryColor, props.backgroundColor)};
   padding: 10px 15px;
   height: auto;
   margin-bottom: 15px;

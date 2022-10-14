@@ -9,11 +9,9 @@ const ButtonStyle = styled.button`
   border-radius: ${(props) => (props.borderRadius ? props.borderRadius : 0)};
   margin-top: ${(props) => (props.marginTop ? props.marginTop : 0)};
   font-size: ${(props) => updateFontSize(20, props.fontSize)};
-  width: ${(props) => (props.width ? props.width : '189')};
+  width: ${(props) => (props.width ? props.width : '189px')};
   height: ${(props) => (props.height ? props.height : 'auto')};
   min-height: ${(props) => (props.minHeight ? props.minHeight : '42px')};
-  display: ${(props) => props.hidden};
-
   padding-top: 12px;
   padding-bottom: 12px;
   &:focus {

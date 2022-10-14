@@ -1,9 +1,5 @@
 import styled from 'styled-components';
-import {
-  updateFontSize,
-  updateFont,
-  updateBackgroundColor,
-} from '../../helpers/utils';
+import { updateFontSize, updateValue } from '../../helpers/utils';
 import { colors } from '../../constants/colors';
 
 export const Page = styled.div`
@@ -11,7 +7,7 @@ export const Page = styled.div`
   flex-direction: column;
   align-items: center;
   background-color: ${(props) =>
-    updateBackgroundColor(colors.primaryColor, props.backgroundColor)};
+    updateValue(colors.primaryColor, props.backgroundColor)};
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -57,7 +53,7 @@ export const BoxTitle = styled.div`
 
 export const Text = styled.span`
   font-size: ${(props) => updateFontSize(20, props.fontSize)};
-  font-family: ${(props) => updateFont('EasyReadingPro', props.font)};
+  font-family: ${(props) => updateValue('EasyReadingPro', props.font)};
   color: white;
 `;
 

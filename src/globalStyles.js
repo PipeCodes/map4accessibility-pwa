@@ -1,10 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
-import {
-  updateFont,
-  setUnderline,
-  setHighlight,
-  updateBackgroundColor,
-} from './helpers/utils';
+import { updateValue, setUnderline, setHighlight } from './helpers/utils';
 import NotoSansRegular from './assets/fonts/NotoSans-Regular.ttf';
 import NotoSansBold from './assets/fonts/NotoSans-Bold.ttf';
 import EasyReadingPro from './assets/fonts/EasyReadingPRO.ttf';
@@ -34,13 +29,13 @@ const GlobalStyles = createGlobalStyle`
   }
 
   body {
-    font-family: ${(props) => updateFont('NotoSans-Regular', props.font)};
+    font-family: ${(props) => updateValue('NotoSans-Regular', props.font)};
     margin: 0;
     overscroll-behavior-y: contain;
     max-width: 820px;
     margin: 0px auto;
     background-color: ${(props) =>
-      updateBackgroundColor(colors.lightBlue, props.backgroundColor)};
+      updateValue(colors.lightBlue, props.backgroundColor)};
 
     a {
       text-decoration: ${(props) => setUnderline('none', props.underline)};

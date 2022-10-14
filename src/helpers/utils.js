@@ -9,20 +9,12 @@ export const updateFontSize = (fontSize, incrementor) => {
   return `${newFontSize}px`;
 };
 
-export const updateFont = (font, newFont) => {
-  if (newFont != null) {
-    return newFont;
+export const updateValue = (defaultValue, newValue) => {
+  if (newValue != null) {
+    return newValue;
   }
-  return font;
+  return defaultValue;
 };
-
-export const updateBackgroundColor = (color, newColor) => {
-  if (newColor != null) {
-    return newColor;
-  }
-  return color;
-};
-
 export const setUnderline = (defaultValue, underline) => {
   if (underline) {
     return 'underline';
