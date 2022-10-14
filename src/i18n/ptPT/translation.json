@@ -45,5 +45,17 @@
   "correct_answer": "Responsta Certa",
   "wrong_answer": "Resposta Errada",
   "you_won": "Ganhaste",
-  "more_levels_soon": "Mais níveis disponíveis brevemente"
+  "more_levels_soon": "Mais níveis disponíveis brevemente",
+  "accessibility": "Acessibilidade",
+  "readable_font": "Texto Legivel",
+  "font_size": "Tamanho do Texto",
+  "contrast": "Contraste",
+  "reset": "Voltar ao pre-definido",
+  "choose_color": "Escolher a Cor",
+  "highlight_links": "Realçar Hiperligações",
+  "underline_links": "Sublinhar Hiperligações",
+  "remove_animations": "Remover Animações",
+  "remove_styles": "Remover Estilos",
+  "lights_off_mode": "Modo sem Luz",
+  "back_to_default_view": "Voltar para vista pre-definida"
 }

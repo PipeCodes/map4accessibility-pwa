@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { withRouter } from 'react-router-dom';
@@ -6,6 +6,7 @@ import CustomInput from '../../components/CustomInput/CustomInput';
 import { colors } from '../../constants/colors';
 import CustomButton from '../../components/CustomButton/CustomButton';
 import TopBar from '../../components/TopBar/TopBar';
+import AccessibilityIcon from '../../assets/icons/accessibility.svg';
 import {
   Page,
   LogoImage,
@@ -27,6 +28,12 @@ const LoginScreen = (props) => {
   const [emailOrUsername, setEmailOrUsername] = useState('');
   const [password, setPassword] = useState('');
 
+  const openAccessibility = useCallback(() => {
+    history.push(routes.ACCESSIBILITY.path);
+  }, [history, routes]);
+
+
+
   const loginClickHandler = () => {
     dispatch(login(emailOrUsername, password, t)).catch((error) => {
       alert(error);
@@ -41,7 +48,7 @@ const LoginScreen = (props) => {
 
   return (
     <Page>
-      <TopBar hasBackButton />
+      <TopBar hasAccessibilityButton={openAccessibility}/>
       <LogoImage className="logo_img" alt="logo" src={Logo} />
       <Subtitle>{t('login_subtitle')}</Subtitle>
       <CustomInput

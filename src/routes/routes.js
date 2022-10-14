@@ -8,6 +8,7 @@ import RecoverPasswordScreen from '../screens/RecoverPasswordScreen/RecoverPassw
 import RegisterScreen from '../screens/RegisterScreen/RegisterScreen';
 import ProfileScreen from '../screens/ProfileScreen/ProfileScreen';
 import RankingScreen from '../screens/RankingScreen/RankingScreen';
+import AccessibilityScreen from '../screens/AccessibilityScreen/AccessibilityScreen';
 import FAQsScreen from '../screens/FAQsScreen/FAQsScreen';
 import TrackedRoute from './TrackedRoute';
 import ChangePasswordScreen from '../screens/ChangePasswordScreen/ChangePasswordScreen';
@@ -17,6 +18,11 @@ import { isAuthenticated } from '../services/local';
 const history = createBrowserHistory({forceRefresh:true});
 
 const routes = {
+  ACCESSIBILITY: {
+    path: '/accessibility',
+    component: AccessibilityScreen,
+    private: false,
+  },
   POLICY: {
     path: '/policy',
     component: PolicyScreen,
