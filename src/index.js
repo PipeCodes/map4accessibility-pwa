@@ -4,12 +4,12 @@ import { Provider } from 'react-redux';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import reportWebVitals from './reportWebVitals';
 import store from './store';
-import "bootstrap/dist/css/bootstrap.min.css";
+import 'bootstrap/dist/css/bootstrap.min.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import App from './App';
 import './i18n';
 
-const rootElement = document.getElementById("root");
+const rootElement = document.getElementById('root');
 
 const root = ReactDOM.createRoot(rootElement);
 root.render(
@@ -17,7 +17,7 @@ root.render(
     <Provider store={store}>
       <App />
     </Provider>
-  </React.StrictMode>
+  </React.StrictMode>,
 );
 
 // If you want your app to work offline and load faster, you can change

@@ -3,16 +3,26 @@ import {
   DECREASE_FONT_SIZE,
   RESET_FONT_SIZE,
   SET_FONT,
+  SET_BACKGROUND_COLOR,
+  SET_UNDERLINE,
+  SET_HIGHLIGHT,
+  SET_LIGHTS_OFF,
+  RESET_CONTRAST,
+  REMOVE_ANIMATIONS,
+  RESET_SETTINGS,
+  TOGGLE_COLORS,
 } from '../actions/types';
 
 const initialState = {
   fontSize: 0,
   font: null,
-  color: null,
-  underlineLinks: false,
+  backgroundColor: null,
+  underline: false,
+  highlight: false,
   animations: false,
   styles: true,
-  lighsOffMode: false,
+  lightsOffMode: false,
+  toggleColors: false,
 };
 
 const accessibilityReducer = (state = initialState, action) => {
@@ -35,13 +45,70 @@ const accessibilityReducer = (state = initialState, action) => {
     case SET_FONT:
       return {
         ...state,
-        font: state.font
-          ? null
-          : {
-              regular: 'arial',
-              bold: 'arial',
-            },
+        font: state.font ? null : 'Arial, Helvetica, sans-serif !important',
       };
+
+    case SET_BACKGROUND_COLOR:
+      return {
+        ...state,
+        backgroundColor: action.color,
+      };
+
+    case SET_UNDERLINE:
+      return {
+        ...state,
+        underline: !state.underline,
+      };
+
+    case SET_HIGHLIGHT:
+      return {
+        ...state,
+        highlight: !state.highlight,
+      };
+
+    case TOGGLE_COLORS:
+      return {
+        ...state,
+        toggleColors: !state.toggleColors,
+      };
+
+    case REMOVE_ANIMATIONS:
+      return {
+        ...state,
+        animations: !state.highlight,
+      };
+
+    case SET_LIGHTS_OFF:
+      return {
+        ...state,
+        lightsOffMode: !state.lightsOffMode,
+      };
+
+    case RESET_CONTRAST:
+      return {
+        ...state,
+        backgroundColor: null,
+        underline: false,
+        highlight: false,
+        animations: false,
+        styles: true,
+        lightsOffMode: false,
+        toggleColors: false,
+      };
+
+    case RESET_SETTINGS:
+      return {
+        fontSize: 0,
+        font: null,
+        backgroundColor: null,
+        underline: false,
+        highlight: false,
+        animations: false,
+        styles: true,
+        lightsOffMode: false,
+        toggleColors: false,
+      };
+
     default:
       return state;
   }

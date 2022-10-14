@@ -52,9 +52,10 @@
   "contrast": "Contraste",
   "reset": "Voltar ao pre-definido",
   "choose_color": "Escolher a Cor",
+  "highlight_links": "Realçar Hiperligações",
   "underline_links": "Sublinhar Hiperligações",
   "remove_animations": "Remover Animações",
-  "remove-styles": "Remover Estilos",
+  "remove_styles": "Remover Estilos",
   "lights_off_mode": "Modo sem Luz",
   "back_to_default_view": "Voltar para vista pre-definida"
 }

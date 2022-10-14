@@ -1,16 +1,31 @@
 import styled from 'styled-components';
+import {
+  updateFontSize,
+  updateFont,
+  updateBackgroundColor,
+} from '../../helpers/utils';
 import { colors } from '../../constants/colors';
 
 export const Page = styled.div`
   display: flex;
-  padding: 10px 15px;
   flex-direction: column;
   align-items: center;
-  background-color: ${colors.primaryColor};
+  background-color: ${(props) =>
+    updateBackgroundColor(colors.primaryColor, props.backgroundColor)};
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
+  z-index: 54;
+`;
+
+export const Container = styled.div`
+  display: flex;
+  padding: 10px 15px;
+  flex-direction: column;
+  align-items: center;
+  z-index: 54;
+  width: 100%;
 `;
 
 export const Box = styled.div`
@@ -41,8 +56,8 @@ export const BoxTitle = styled.div`
 `;
 
 export const Text = styled.span`
-  font-size: 24px;
-  font-family: 'EasyReadingPRO';
+  font-size: ${(props) => updateFontSize(20, props.fontSize)};
+  font-family: ${(props) => updateFont('EasyReadingPro', props.font)};
   color: white;
 `;
 

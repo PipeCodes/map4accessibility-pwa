@@ -24,7 +24,8 @@ const TopBar = (props) => {
     hasCloseButton,
   } = props;
 
-  const fontSize = useSelector((state) => state.accessibilityReducer.fontSize);
+  const fontSize = useSelector((state) => state.accessibility.fontSize);
+  const font = useSelector((state) => state.accessibility.font);
 
   return (
     <TopBarContainer backgroundColor={backgroundColor}>
@@ -41,7 +42,7 @@ const TopBar = (props) => {
       )}
 
       {title && (
-        <Title fontSize={fontSize}>
+        <Title fontSize={fontSize} font={font}>
           {hasIcon && <img src={AccessibilityIcon} alt="Accessibility" />}
           {title}
         </Title>

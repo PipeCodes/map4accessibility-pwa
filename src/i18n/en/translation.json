@@ -52,9 +52,10 @@
   "contrast": "Contrast",
   "reset": "Reset",
   "choose_color": "Choose Color",
+  "highlight_links": "Highlight Links",
   "underline_links": "Underline Links",
   "remove_animations": "Remove Animations",
-  "remove-styles": "Remove Styles",
+  "remove_styles": "Remove Styles",
   "lights_off_mode": "Lights Off Mode",
   "back_to_default_view": "Back to Default View"
 }

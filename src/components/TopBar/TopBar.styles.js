@@ -1,11 +1,15 @@
 import styled from 'styled-components';
 import { colors } from '../../constants/colors';
-import { updateFontSize } from '../../helpers/utils';
+import {
+  updateFontSize,
+  updateFont,
+  updateBackgroundColor,
+} from '../../helpers/utils';
 
 export const Title = styled.span`
   color: white;
   font-size: ${(props) => updateFontSize(28, props.fontSize)};
-  font-family: 'EasyReadingPro';
+  font-family: ${(props) => updateFont('EasyReadingPro', props.font)};
   display: flex;
 
   img {
@@ -16,11 +20,14 @@ export const Title = styled.span`
 export const TopBarContainer = styled.div`
   position: relative;
   display: flex;
+  z-index: 51;
   width: 100%;
   min-height: 42px;
   align-items: center;
   justify-content: left;
-  background-color: transparent;
+  background-color: ${(props) =>
+    updateBackgroundColor(colors.primaryColor, props.backgroundColor)};
+  padding: 10px 15px;
   height: auto;
   margin-bottom: 15px;
 `;
@@ -80,6 +87,6 @@ export const CloseButton = styled.button`
   justify-content: center;
   align-items: center;
   border: none;
-  padding-right: 0;
+  padding-right: 15px;
   justify-content: flex-end;
 `;
