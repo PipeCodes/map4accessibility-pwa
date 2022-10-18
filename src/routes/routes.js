@@ -6,6 +6,7 @@ import PolicyScreen from '../screens/PolicyScreen/PolicyScreen';
 import LoginScreen from '../screens/LoginScreen/LoginScreen';
 import RecoverPasswordScreen from '../screens/RecoverPasswordScreen/RecoverPasswordScreen';
 import RegisterScreen from '../screens/RegisterScreen/RegisterScreen';
+import RegisterOptionsScreen from '../screens/RegisterOptionsScreen/RegisterOptionsScreen';
 import ProfileScreen from '../screens/ProfileScreen/ProfileScreen';
 import RankingScreen from '../screens/RankingScreen/RankingScreen';
 import AccessibilityScreen from '../screens/AccessibilityScreen/AccessibilityScreen';
@@ -15,7 +16,7 @@ import ChangePasswordScreen from '../screens/ChangePasswordScreen/ChangePassword
 import EditProfileScreen from '../screens/EditProfileScreen/EditProfileScreen';
 import { isAuthenticated } from '../services/local';
 
-const history = createBrowserHistory({forceRefresh:true});
+const history = createBrowserHistory({ forceRefresh: true });
 
 const routes = {
   ACCESSIBILITY: {
@@ -32,6 +33,11 @@ const routes = {
   RECOVER_PASSWORD: {
     path: '/recover-password',
     component: RecoverPasswordScreen,
+    private: false,
+  },
+  REGISTER_OPTIONS: {
+    path: '/register-options',
+    component: RegisterOptionsScreen,
     private: false,
   },
   REGISTER: {
@@ -69,7 +75,13 @@ const routes = {
 const GlobalRoutes = () => (
   <BrowserRouter history={history}>
     <Switch>
-      <Route exact path="/" render={ () => (isAuthenticated() ? <Redirect to="/home" /> : <Redirect to="/login" />)}/>
+      <Route
+        exact
+        path="/"
+        render={() =>
+          isAuthenticated() ? <Redirect to="/home" /> : <Redirect to="/login" />
+        }
+      />
       {Object.values(routes).map((route) => {
         if (route.private) {
           return (

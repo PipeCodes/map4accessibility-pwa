@@ -1,151 +1,203 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import CustomButton from '../../components/CustomButton/CustomButton';
-import CustomInput from '../../components/CustomInput/CustomInput';
-import { colors } from '../../constants/colors';
+import { signup } from '../../store/actions/auth';
 import {
   Page,
-  LogoImage,
-  CheckboxWrapper,
-  PrivacyPolicyLabel,
-  AvatarWrapper,
   Container,
+  Box,
+  TextSecondary,
+  BackButton,
 } from './RegisterScreen.styles';
-import Logo from '../../assets/images/old_delete/logo.svg';
-import { signup } from '../../store/actions/auth';
+import CustomButton from '../../components/CustomButton/CustomButton';
+import LoginIcon from '../../assets/icons/login.svg';
+import { colors } from '../../constants/colors';
+import ArrowBack from '../../assets/icons/arrow-back.svg';
+import ArrowRight from '../../assets/icons/arrow-right.svg';
+import ProfileIcon from '../../assets/icons/profile.svg';
 import TopBar from '../../components/TopBar/TopBar';
-import { AVATARS, regions } from '../../constants';
-import AvatarCarousel from '../../components/AvatarCarousel/AvatarCarousel';
-import CustomSelect from '../../components/CustomSelect/CustomSelect';
+import SignUpInfo from './SignUpInfo';
+import ExtraStep from './ExtraStep';
+
+const PageDisplay = (formData, setFormData, page, formErrors) => {
+  if (page === 0) {
+    return (
+      <SignUpInfo
+        formData={formData}
+        setFormData={setFormData}
+        formErrors={formErrors}
+      />
+    );
+  }
+  return <ExtraStep formData={formData} setFormData={setFormData} />;
+};
 
 const RegisterScreen = (props) => {
-  const { routes } = props;
+  const initialValues = {
+    firstName: '',
+    surname: '',
+    birthDate: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+    noDisability: false,
+    motorDisability: false,
+    visualDisability: false,
+    hearingDisability: false,
+    intellectualDisability: false,
+  };
 
+  const { history, routes } = props;
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const fontSize = useSelector((state) => state.accessibility.fontSize);
+  const [page, setPage] = useState(0);
+  const [formData, setFormData] = useState(initialValues);
+  const [formErrors, setFormErrors] = useState({});
 
-  const loading = useSelector((state) => state.auth.loading);
-  const user = useSelector((state) => state.auth.user);
+  function changePage(value) {
+    setPage((currPage) => currPage + value);
+  }
 
-  const [avatar, setAvatar] = useState(AVATARS[0]);
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [region, setRegion] = useState(null);
-  const [privacyPolicyConditionsChecked, setPrivacyPolicyChecked] =
-    useState(false);
+  // Validates the fields
+  const validate = (values) => {
+    const errors = {};
+    const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
+    const regexPassword = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
 
-  const registerClickHandler = () => {
-    if (!privacyPolicyConditionsChecked) {
-      alert(t('privacy_policy_error'));
-      return;
+    if (!values.firstName) {
+      errors.firstName = 'First Name is required';
     }
+
+    if (!values.surname) {
+      errors.surname = 'Surname is required';
+    }
+
+    if (!values.birthDate) {
+      errors.birthDate = 'Birth Date is required';
+    }
+
+    if (!values.email) {
+      errors.email = 'Email is required';
+    } else if (!regexEmail.test(values.email)) {
+      errors.email = 'Invalid Email';
+    }
+
+    if (!values.password) {
+      errors.password = 'Password is required';
+    } else if (values.password !== values.confirmPassword) {
+      errors.password = 'Passwords do not match';
+    } else if (!regexPassword.test(values.password)) {
+      errors.password =
+        'Password must have: 8 characters, 1 letter and 1 number';
+    }
+
+    if (!values.confirmPassword) {
+      errors.confirmPassword = 'Password Confirmation is required';
+    } else if (values.password !== values.confirmPassword) {
+      errors.confirmPassword = 'Passwords do not match';
+    }
+
+    return errors;
+  };
+
+  // ClickHandlers
+  const registerClickHandler = useCallback(() => {
+    const disabilities = [
+      formData.noDisability,
+      formData.motorDisability,
+      formData.visualDisability,
+      formData.hearingDisability,
+      formData.intellectualDisability,
+    ];
+
     dispatch(
       signup(
-        avatar?.id ?? AVATARS[0].id,
-        name,
-        email,
-        username,
-        password,
-        region?.value,
-        t,
+        formData.firstName,
+        formData.surname,
+        formData.birthDate,
+        formData.email,
+        formData.password,
+        formData.confirmPassword,
+        disabilities.join(','),
       ),
     ).catch((error) => {
       alert(error);
     });
+  }, [dispatch, formData]);
+
+  const openAccessibility = useCallback(() => {
+    history.push(routes.ACCESSIBILITY.path);
+  }, [history, routes]);
+
+  const backClickHandler = (page) => {
+    if (page === 0) {
+      history.goBack();
+    }
+    changePage(-1);
   };
 
-  useEffect(() => {
-    if (user) {
-      alert("TODO")
+  const nextClickHandler = (page, formErrors) => {
+    if (page === 0) {
+      setFormErrors(validate(formData));
+      if (Object.keys(validate(formData)).length === 0) {
+        changePage(1);
+        return;
+      }
+      return;
     }
-  }, [user]);
+    if (Object.keys(formErrors).length === 0) {
+      registerClickHandler();
+    } else {
+      setPage(0);
+    }
+  };
 
   return (
     <Page>
-      <TopBar hasBackButton />
+      <TopBar hasLogo hasAccessibilityButton={openAccessibility} />
       <Container>
-        <LogoImage className="logo_img" alt="logo" src={Logo} />
-        <AvatarWrapper>
-          <AvatarCarousel onChange={setAvatar} />
-        </AvatarWrapper>
-        <CustomInput
-          style={{
-            marginTop: 30,
-          }}
-          placeholder={t('name')}
-          onChange={(e) => setName(e.target.value)}
-          value={name}
-        />
-        <CustomInput
-          style={{
-            marginTop: 13,
-          }}
-          placeholder={t('username')}
-          onChange={(e) => setUsername(e.target.value)}
-          value={username}
-        />
-        <CustomInput
-          style={{
-            marginTop: 13,
-          }}
-          placeholder={t('email')}
-          type="email"
-          onChange={(e) => setEmail(e.target.value)}
-          value={email}
-        />
-        <CustomInput
-          style={{
-            marginTop: 13,
-          }}
-          placeholder={t('password')}
-          type="password"
-          onChange={(e) => setPassword(e.target.value)}
-          value={password}
-        />
-
-        <CustomSelect
-          style={{
-            marginTop: 13,
-          }}
-          options={regions.map((r) => ({
-            value: r.id,
-            label: r.name,
-          }))}
-          onChange={(value) => setRegion(value)}
-        />
-
-        <CheckboxWrapper>
-          <input type="checkbox"
-            checked={privacyPolicyConditionsChecked}
-            onChange={setPrivacyPolicyChecked}
-          />
-          <PrivacyPolicyLabel
-            onClick={() => setPrivacyPolicyChecked((prevState) => !prevState)}
-            dangerouslySetInnerHTML={{
-              __html: t('privacy_policy_message', {
-                link: routes.POLICY.path,
-                privacy_policy: t('privacy_policy'),
-              }),
-            }}
-          />
-        </CheckboxWrapper>
-
+        <BackButton fontSize={fontSize} onClick={() => backClickHandler(page)}>
+          <img src={ArrowBack} alt="Back" />
+          <span>{t('Back')}</span>
+        </BackButton>
+        {PageDisplay(formData, setFormData, page, formErrors)}
         <CustomButton
           style={{
-            marginTop: 40,
-            marginBottom: 40,
+            marginTop: 30,
+            marginBottom: 20,
+            width: '100%',
+            borderRadius: '25px',
           }}
           backgroundColor={colors.orange}
-          text={t('register')}
-          onClick={registerClickHandler}
-          disabled={loading}
+          text={page === 0 ? t('next') : t('create_account')}
+          icon={page === 0 ? ArrowRight : ProfileIcon}
+          onClick={() => nextClickHandler(page, formErrors)}
         />
+
+        {page === 0 && (
+          <Box>
+            <TextSecondary fontSize={fontSize}>
+              {t('already_have_account')}
+            </TextSecondary>
+            <CustomButton
+              style={{
+                width: 'auto',
+                borderRadius: '25px',
+                color: colors.primaryColor,
+                boxShadow: 'none',
+              }}
+              backgroundColor={colors.transparent}
+              text={t('login')}
+              icon={LoginIcon}
+              onClick={() => history.push(routes.LOGIN.path)}
+            />
+          </Box>
+        )}
       </Container>
     </Page>
   );
 };
 
-export default RegisterScreen;
+export default withRouter(RegisterScreen);

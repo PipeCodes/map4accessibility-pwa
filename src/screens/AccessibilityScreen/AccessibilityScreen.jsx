@@ -53,6 +53,7 @@ const AccessibilityScreen = (props) => {
   return (
     <Page backgroundColor={backgroundColor}>
       <TopBar
+        accessibility
         hasCloseButton
         hasIcon
         backgroundColor={backgroundColor}

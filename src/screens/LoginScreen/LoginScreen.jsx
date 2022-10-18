@@ -32,8 +32,6 @@ const LoginScreen = (props) => {
     history.push(routes.ACCESSIBILITY.path);
   }, [history, routes]);
 
-
-
   const loginClickHandler = () => {
     dispatch(login(emailOrUsername, password, t)).catch((error) => {
       alert(error);
@@ -42,13 +40,13 @@ const LoginScreen = (props) => {
 
   useEffect(() => {
     if (user) {
-      alert("TODO")
+      alert('TODO');
     }
   }, [user]);
 
   return (
     <Page>
-      <TopBar hasAccessibilityButton={openAccessibility}/>
+      <TopBar hasAccessibilityButton={openAccessibility} />
       <LogoImage className="logo_img" alt="logo" src={Logo} />
       <Subtitle>{t('login_subtitle')}</Subtitle>
       <CustomInput
@@ -93,7 +91,7 @@ const LoginScreen = (props) => {
         }}
         backgroundColor={colors.orange}
         text={t('register')}
-        onClick={() => history.push(routes.REGISTER.path)}
+        onClick={() => history.push(routes.REGISTER_OPTIONS.path)}
         disabled={loading}
       />
     </Page>

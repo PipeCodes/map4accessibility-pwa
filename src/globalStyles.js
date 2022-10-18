@@ -33,17 +33,15 @@ const GlobalStyles = createGlobalStyle`
     margin: 0;
     overscroll-behavior-y: contain;
     max-width: 820px;
+    height: 100vh;
     margin: 0px auto;
     background-color: ${(props) =>
-      updateValue(colors.lightBlue, props.backgroundColor)};
+      updateValue(colors.background, props.backgroundColor)};
+
 
     a {
       text-decoration: ${(props) => setUnderline('none', props.underline)};
       background-color: ${(props) => setHighlight('unset', props.highlight)};
-    }
-
-    #root {
-      background-color: #fff;
     }
 
     b {

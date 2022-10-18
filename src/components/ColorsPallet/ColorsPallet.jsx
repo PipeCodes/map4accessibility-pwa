@@ -13,8 +13,8 @@ const ColorsPallet = (props) => {
         onClick={() => dispatch(setBackgroundColor('black'))}
       />
       <Color
-        color="gray"
-        onClick={() => dispatch(setBackgroundColor('gray'))}
+        color="grey"
+        onClick={() => dispatch(setBackgroundColor('grey'))}
       />
       <Color
         color="green"

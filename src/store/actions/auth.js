@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import axios, { Endpoints, getErrorMessage } from '../../services/api';
 import {
   AUTH_START,
@@ -7,6 +8,7 @@ import {
   LOGOUT,
 } from './types';
 import { HTTP_STATUS } from '../../constants';
+
 import {
   clearLocalStorage,
   getAuthToken,
@@ -14,49 +16,49 @@ import {
   saveUserData,
 } from '../../services/local';
 
-export const login =
-  (emailOrUsername, password, translate) => async (dispatch) => {
-    dispatch({ type: AUTH_START });
-
-    const body = {
-      email_username: emailOrUsername?.trim(),
-      password,
-    };
-
-    try {
-      const response = await axios.post(Endpoints.LOGIN, body);
-
-      const statusCode = response.status;
-
-      if (statusCode === HTTP_STATUS.SUCCESS) {
-        saveUserData(response.data?.data?._token, response.data?.data?.user);
-
-        dispatch({
-          type: AUTH_SUCCESS,
-          user: response.data?.data?.user,
-        });
-      }
-    } catch (error) {
-      dispatch({ type: AUTH_ERROR });
-
-      return Promise.reject(
-        error?.response?.data?.message ?? translate('something_wrong'),
-      );
-    }
+export const login = (emailOrUsername, password) => async (dispatch) => {
+  const { t } = useTranslation();
+  dispatch({ type: AUTH_START });
+  const body = {
+    email_username: emailOrUsername?.trim(),
+    password,
   };
 
+  try {
+    const response = await axios.post(Endpoints.LOGIN, body);
+
+    const statusCode = response.status;
+
+    if (statusCode === HTTP_STATUS.SUCCESS) {
+      saveUserData(response.data?.data?._token, response.data?.data?.user);
+
+      dispatch({
+        type: AUTH_SUCCESS,
+        user: response.data?.data?.user,
+      });
+    }
+  } catch (error) {
+    dispatch({ type: AUTH_ERROR });
+
+    return Promise.reject(
+      error?.response?.data?.message ?? t('something_wrong'),
+    );
+  }
+};
+
 export const signup =
-  (avatar, name, email, username, password, region, translate) =>
+  (firstName, surname, birthDate, email, password, disabilities) =>
   async (dispatch) => {
+    const { t } = useTranslation();
     dispatch({ type: AUTH_START });
 
     const body = {
-      avatar,
-      name,
+      firstName,
+      surname,
+      birthDate,
       email: email?.trim().toLowerCase(),
-      username: username?.trim(),
       password,
-      region_id: region,
+      disabilities,
     };
 
     try {
@@ -66,18 +68,16 @@ export const signup =
 
       if (statusCode === HTTP_STATUS.SUCCESS) {
         saveUserData(response.data?.data?._token, response.data?.data?.user);
-
         dispatch({
           type: AUTH_SUCCESS,
           user: response.data?.data?.user,
         });
       }
     } catch (error) {
+      // debugger;
       dispatch({ type: AUTH_ERROR });
 
-      return Promise.reject(
-        getErrorMessage(error, translate('something_wrong')),
-      );
+      return Promise.reject(getErrorMessage(error, t('something_wrong')));
     }
   };
 

@@ -7,10 +7,12 @@ import {
   AccessibilityButton,
   CloseButton,
   TopBarContainer,
+  Logo,
 } from './TopBar.styles';
 import BackIcon from '../../assets/images/old_delete/back.svg';
 import CloseIcon from '../../assets/icons/close.svg';
 import AccessibilityIcon from '../../assets/icons/accessibility.svg';
+import map4AccessibilityIcon from '../../assets/icons/map4accessibility_logo.svg';
 
 const TopBar = (props) => {
   const {
@@ -22,13 +24,18 @@ const TopBar = (props) => {
     hasAccessibilityButton,
     leftButton,
     hasCloseButton,
+    hasLogo,
+    accessibility,
   } = props;
 
   const fontSize = useSelector((state) => state.accessibility.fontSize);
   const font = useSelector((state) => state.accessibility.font);
 
   return (
-    <TopBarContainer backgroundColor={backgroundColor}>
+    <TopBarContainer
+      backgroundColor={backgroundColor}
+      className={accessibility ? 'accessibility' : null}
+    >
       {hasBackButton && (
         <LeftButton type="button" onClick={history.goBack}>
           <img src={BackIcon} alt="back" />
@@ -58,6 +65,12 @@ const TopBar = (props) => {
         <CloseButton type="button" onClick={history.goBack}>
           <img src={CloseIcon} alt="back" />
         </CloseButton>
+      )}
+
+      {hasLogo && (
+        <Logo>
+          <img src={map4AccessibilityIcon} alt="Logo" />
+        </Logo>
       )}
     </TopBarContainer>
   );
