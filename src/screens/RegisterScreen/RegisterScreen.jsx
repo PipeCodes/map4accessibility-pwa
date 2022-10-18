@@ -119,7 +119,6 @@ const RegisterScreen = (props) => {
         formData.birthDate,
         formData.email,
         formData.password,
-        formData.confirmPassword,
         disabilities.join(','),
       ),
     ).catch((error) => {

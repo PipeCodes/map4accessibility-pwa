@@ -8,6 +8,7 @@ import {
   LOGOUT,
 } from './types';
 import { HTTP_STATUS } from '../../constants';
+import i18n from '../../i18n';
 
 import {
   clearLocalStorage,
@@ -49,7 +50,6 @@ export const login = (emailOrUsername, password) => async (dispatch) => {
 export const signup =
   (firstName, surname, birthDate, email, password, disabilities) =>
   async (dispatch) => {
-    const { t } = useTranslation();
     dispatch({ type: AUTH_START });
 
     const body = {
@@ -74,10 +74,9 @@ export const signup =
         });
       }
     } catch (error) {
-      // debugger;
       dispatch({ type: AUTH_ERROR });
 
-      return Promise.reject(getErrorMessage(error, t('something_wrong')));
+      return Promise.reject(getErrorMessage(error, i18n.t('something_wrong')));
     }
   };
 
