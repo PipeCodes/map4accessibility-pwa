@@ -46,7 +46,7 @@ export const LeftButton = styled.button`
   top: 30px;
   -ms-transform: translateY(-50%);
   transform: translateY(-50%);
-  left: 5px;
+  left: 15px;
   width: 35px;
   height: 35px;
   display: flex;
@@ -54,7 +54,8 @@ export const LeftButton = styled.button`
   align-items: center;
 
   img {
-    height: 25px;
+    height: 100%;
+    width: auto;
   }
 `;
 
@@ -102,4 +103,8 @@ export const Logo = styled.div`
   margin-left: auto;
   margin-right: auto;
   justify-self: center;
+
+  &.aligned {
+    margin-top: 0px;
+  }
 `;

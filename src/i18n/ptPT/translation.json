@@ -77,5 +77,14 @@
   "motor_disability": "Deficiência motora",
   "visual_disability": "Deficiência visual",
   "hearing_disability": "Deficiência auditiva",
-  "intellectual_disability": "Deficiência intelectual"
+  "intellectual_disability": "Deficiência intelectual",
+  "required_firstName": "Nome é um campo obrigatório",
+  "required_surname": "Apelido é um campo obrigatório",
+  "required_birthDate": "Data de Nascimento é um campo obrigatório",
+  "required_email": "Email é um campo obrigatório",
+  "invalid_email": "Email inválido",
+  "required_password": "Password é um campo obrigatório",
+  "passwords_match": "Passwords não são iguais",
+  "password_rules": "Password tem de conter: 8 caracteres, 1 letra and 1 número",
+  "required_confirmPassword": "Confirmar Password é um campo obrigatório"
 }

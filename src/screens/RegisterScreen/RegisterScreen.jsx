@@ -3,17 +3,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { signup } from '../../store/actions/auth';
-import {
-  Page,
-  Container,
-  Box,
-  TextSecondary,
-  BackButton,
-} from './RegisterScreen.styles';
+import { Page, Container, Box, TextSecondary } from './RegisterScreen.styles';
 import CustomButton from '../../components/CustomButton/CustomButton';
 import LoginIcon from '../../assets/icons/login.svg';
 import { colors } from '../../constants/colors';
-import ArrowBack from '../../assets/icons/arrow-back.svg';
 import ArrowRight from '../../assets/icons/arrow-right.svg';
 import ProfileIcon from '../../assets/icons/profile.svg';
 import TopBar from '../../components/TopBar/TopBar';
@@ -67,36 +60,35 @@ const RegisterScreen = (props) => {
     const regexPassword = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
 
     if (!values.firstName) {
-      errors.firstName = 'First Name is required';
+      errors.firstName = t('required_firstName');
     }
 
     if (!values.surname) {
-      errors.surname = 'Surname is required';
+      errors.surname = t('required_surname');
     }
 
     if (!values.birthDate) {
-      errors.birthDate = 'Birth Date is required';
+      errors.birthDate = t('required_birthDate');
     }
 
     if (!values.email) {
-      errors.email = 'Email is required';
+      errors.email = t('required_email');
     } else if (!regexEmail.test(values.email)) {
-      errors.email = 'Invalid Email';
+      errors.email = t('invalid_email');
     }
 
     if (!values.password) {
-      errors.password = 'Password is required';
+      errors.password = t('required_password');
     } else if (values.password !== values.confirmPassword) {
-      errors.password = 'Passwords do not match';
+      errors.password = t('passwords_match');
     } else if (!regexPassword.test(values.password)) {
-      errors.password =
-        'Password must have: 8 characters, 1 letter and 1 number';
+      errors.password = t('password_rules');
     }
 
     if (!values.confirmPassword) {
-      errors.confirmPassword = 'Password Confirmation is required';
+      errors.confirmPassword = t('required_confirmPassword');
     } else if (values.password !== values.confirmPassword) {
-      errors.confirmPassword = 'Passwords do not match';
+      errors.confirmPassword = t('passwords_match');
     }
 
     return errors;
@@ -155,12 +147,14 @@ const RegisterScreen = (props) => {
 
   return (
     <Page>
-      <TopBar hasLogo hasAccessibilityButton={openAccessibility} />
+      <TopBar
+        backTarget={() => backClickHandler(page)}
+        aligned
+        hasBackButton
+        hasLogo
+        hasAccessibilityButton={openAccessibility}
+      />
       <Container>
-        <BackButton fontSize={fontSize} onClick={() => backClickHandler(page)}>
-          <img src={ArrowBack} alt="Back" />
-          <span>{t('Back')}</span>
-        </BackButton>
         {PageDisplay(formData, setFormData, page, formErrors)}
         <CustomButton
           style={{

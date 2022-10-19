@@ -21,7 +21,7 @@ export const Container = styled.div`
   .fullDiv {
     height: 100%;
     width: 100%;
-    margin-top: 10px;
+    margin-top: 30px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -43,21 +43,6 @@ export const Box = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-`;
-
-export const BackButton = styled.a`
-  font-size: ${(props) => updateFontSize(14, props.fontSize)};
-  font-family: ${(props) => updateValue('EasyReadingPro', props.font)};
-  color: ${colors.grey};
-  margin-top: 20px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  cursor: pointer;
-
-  img {
-    margin-right: 5px;
-  }
 `;
 
 export const Text = styled.span`

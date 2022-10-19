@@ -9,7 +9,7 @@ import {
   TopBarContainer,
   Logo,
 } from './TopBar.styles';
-import BackIcon from '../../assets/images/old_delete/back.svg';
+import BackIcon from '../../assets/icons/back.svg';
 import CloseIcon from '../../assets/icons/close.svg';
 import AccessibilityIcon from '../../assets/icons/accessibility.svg';
 import map4AccessibilityIcon from '../../assets/icons/map4accessibility_logo.svg';
@@ -18,6 +18,7 @@ const TopBar = (props) => {
   const {
     history,
     hasBackButton,
+    backTarget,
     backgroundColor,
     title,
     hasIcon,
@@ -26,6 +27,7 @@ const TopBar = (props) => {
     hasCloseButton,
     hasLogo,
     accessibility,
+    aligned,
   } = props;
 
   const fontSize = useSelector((state) => state.accessibility.fontSize);
@@ -37,7 +39,7 @@ const TopBar = (props) => {
       className={accessibility ? 'accessibility' : null}
     >
       {hasBackButton && (
-        <LeftButton type="button" onClick={history.goBack}>
+        <LeftButton type="button" onClick={backTarget || history.goBack}>
           <img src={BackIcon} alt="back" />
         </LeftButton>
       )}
@@ -68,7 +70,7 @@ const TopBar = (props) => {
       )}
 
       {hasLogo && (
-        <Logo>
+        <Logo className={aligned ? 'aligned' : null}>
           <img src={map4AccessibilityIcon} alt="Logo" />
         </Logo>
       )}
