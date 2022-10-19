@@ -29,9 +29,7 @@ import {
 } from '../../store/actions/accessibility';
 import ColorsPallet from '../../components/ColorsPallet/ColorsPallet';
 
-const AccessibilityScreen = (props) => {
-  const { routes, history } = props;
-
+const AccessibilityScreen = () => {
   const { t } = useTranslation();
 
   const dispatch = useDispatch();
