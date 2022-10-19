@@ -1,28 +1,78 @@
 import styled from 'styled-components';
-import BackgroundImage from '../../assets/images/old_delete/bg_blue.svg';
+import { updateFontSize, updateValue } from '../../helpers/utils';
 import { colors } from '../../constants/colors';
 
 export const Page = styled.div`
   display: flex;
   flex-direction: column;
-  height: 100vh;
   align-items: center;
-  background: url(${BackgroundImage}) no-repeat center center fixed;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-  background-color: ${colors.bgBlue};
+  height: 100%;
+  z-index: 54;
 `;
 
-export const LogoImage = styled.img`
-  width: 90%;
-  max-width: 220px;
+export const Container = styled.div`
+  display: flex;
+  padding: 0px 15px;
+  flex-direction: column;
+  align-items: center;
+  z-index: 54;
+  width: 100%;
+
+  .fullDiv {
+    height: 100%;
+    width: 100%;
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 
-export const Subtitle = styled.label`
-  font-family: 'Rubik-Regular';
-  font-size: 20px;
-  color: white;
-  margin-top: 70px;
+export const Error = styled.div`
+  font-size: ${(props) => updateFontSize(10, props.fontSize)};
+  place-self: start;
+  color: orange;
+  margin-left: 10px;
+`;
+
+export const Box = styled.div`
+  width: 100%;
+  height: auto;
+  padding: 20px 0;
+  border-top: 1px solid #d3d2da;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+export const Text = styled.span`
+  font-size: ${(props) => updateFontSize(20, props.fontSize)};
+  font-family: ${(props) => updateValue('EasyReadingPro', props.font)};
+  color: ${colors.primaryColorText};
+  margin-bottom: 10px;
+  span {
+    font-size: ${(props) => updateFontSize(14, props.fontSize)};
+    color: ${colors.primaryColor};
+    margin-left: 5px;
+  }
+`;
+
+export const TextSecondary = styled.span`
+  font-size: ${(props) => updateFontSize(16, props.fontSize)};
+  font-family: ${(props) => updateValue('EasyReadingPro', props.font)};
+  color: ${colors.grey};
+`;
+
+export const InputLabel = styled.div`
+  font-size: ${(props) => updateFontSize(16, props.fontSize)};
+  font-family: ${(props) => updateValue('EasyReadingPro', props.font)};
+  color: ${colors.grey};
+  place-self: start;
+  margin-top: 10px;
+  margin-bottom: 5px;
+  margin-left: 10px;
+
+  span {
+    color: ${colors.orange};
+  }
 `;
