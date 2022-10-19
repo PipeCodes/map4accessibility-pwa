@@ -1,4 +1,4 @@
-export const SIGNUP = '/appuser/register';
+export const SIGNUP = '/auth/register';
 
 export const FAQS = '/faqs';
 export const POLICY = '/terms-conditions';

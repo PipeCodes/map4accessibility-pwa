@@ -8,6 +8,8 @@ export const Page = styled.div`
   align-items: center;
   height: 100%;
   z-index: 54;
+  background-color: ${(props) =>
+    updateValue(colors.transparent, props.backgroundColor)};
 `;
 
 export const Container = styled.div`

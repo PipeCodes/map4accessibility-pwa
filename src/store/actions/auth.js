@@ -48,16 +48,17 @@ export const login = (emailOrUsername, password) => async (dispatch) => {
 };
 
 export const signup =
-  (firstName, surname, birthDate, email, password, disabilities) =>
+  (name, surname, birthdate, email, password, disabilities) =>
   async (dispatch) => {
     dispatch({ type: AUTH_START });
 
     const body = {
-      firstName,
+      name,
       surname,
-      birthDate,
+      birthdate,
       email: email?.trim().toLowerCase(),
       password,
+      terms_accepted: true,
       disabilities,
     };
 
@@ -70,7 +71,7 @@ export const signup =
         saveUserData(response.data?.data?._token, response.data?.data?.user);
         dispatch({
           type: AUTH_SUCCESS,
-          user: response.data?.data?.user,
+          user: response.data?.data,
         });
       }
     } catch (error) {

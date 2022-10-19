@@ -28,10 +28,14 @@ const RegisterOptionsScreen = (props) => {
     history.push(routes.ACCESSIBILITY.path);
   }, [history, routes]);
 
+  const backgroundColor = useSelector(
+    (state) => state.accessibility.backgroundColor,
+  );
+
   const fontSize = useSelector((state) => state.accessibility.fontSize);
 
   return (
-    <Page>
+    <Page backgroundColor={backgroundColor}>
       <TopBar hasLogo hasAccessibilityButton={openAccessibility} />
       <Container>
         <Text fontSize={fontSize}>{t('sign_in')}</Text>
