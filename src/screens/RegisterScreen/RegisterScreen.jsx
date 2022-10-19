@@ -69,13 +69,12 @@ const RegisterScreen = (props) => {
     if (!values.surname) {
       errors.surname = t('required_surname');
     } else if (typeof values.surname !== 'string') {
-      errors.surname = t('string_firstName');
+      errors.surname = t('string_surname');
     }
 
     if (!values.birthDate) {
       errors.birthDate = t('required_birthDate');
     } else if (!regexDate.test(values.birthDate)) {
-      console.log(values.birthDate);
       errors.birthDate = t('invalid_birthDate');
     }
 
