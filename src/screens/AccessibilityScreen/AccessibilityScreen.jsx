@@ -131,7 +131,9 @@ const AccessibilityScreen = (props) => {
             text={t('choose_color')}
             onClick={() => dispatch(toggleColors())}
           />
-          <ColorsPallet open={toggleColor} />
+
+          {toggleColor && <ColorsPallet />}
+
           <CustomButton
             style={{
               backgroundColor: underline ? 'white' : 'transparent',
