@@ -86,5 +86,8 @@
   "required_password": "Password é um campo obrigatório",
   "passwords_match": "Passwords não são iguais",
   "password_rules": "Password tem de conter: 8 caracteres, 1 letra and 1 número",
-  "required_confirmPassword": "Confirmar Password é um campo obrigatório"
+  "required_confirmPassword": "Confirmar Password é um campo obrigatório",
+  "string_firstName": "O campo nome tem texto inválido",
+  "string_surname": "O campo apelido tem texto inválido",
+  "invalid_birthDate": "Data inválida"
 }
