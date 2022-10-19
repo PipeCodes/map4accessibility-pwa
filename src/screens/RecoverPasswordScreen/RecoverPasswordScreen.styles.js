@@ -39,7 +39,6 @@ export const Box = styled.div`
   width: 100%;
   height: auto;
   padding: 20px 0;
-  border-top: 1px solid #d3d2da;
   display: flex;
   justify-content: space-between;
   align-items: center;
