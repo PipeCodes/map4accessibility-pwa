@@ -29,9 +29,7 @@ import {
 } from '../../store/actions/accessibility';
 import ColorsPallet from '../../components/ColorsPallet/ColorsPallet';
 
-const AccessibilityScreen = (props) => {
-  const { routes, history } = props;
-
+const AccessibilityScreen = () => {
   const { t } = useTranslation();
 
   const dispatch = useDispatch();
@@ -53,6 +51,7 @@ const AccessibilityScreen = (props) => {
   return (
     <Page backgroundColor={backgroundColor}>
       <TopBar
+        accessibility
         hasCloseButton
         hasIcon
         backgroundColor={backgroundColor}
@@ -130,7 +129,9 @@ const AccessibilityScreen = (props) => {
             text={t('choose_color')}
             onClick={() => dispatch(toggleColors())}
           />
-          <ColorsPallet open={toggleColor} />
+
+          {toggleColor && <ColorsPallet />}
+
           <CustomButton
             style={{
               backgroundColor: underline ? 'white' : 'transparent',

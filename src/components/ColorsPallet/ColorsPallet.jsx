@@ -3,18 +3,18 @@ import { useDispatch } from 'react-redux';
 import { setBackgroundColor } from '../../store/actions/accessibility';
 import { ColorsPalletContainer, Color } from './ColorsPallet.styles';
 
-const ColorsPallet = (props) => {
-  const { open } = props;
+const ColorsPallet = () => {
   const dispatch = useDispatch();
+
   return (
-    <ColorsPalletContainer open={open}>
+    <ColorsPalletContainer>
       <Color
         color="black"
         onClick={() => dispatch(setBackgroundColor('black'))}
       />
       <Color
-        color="gray"
-        onClick={() => dispatch(setBackgroundColor('gray'))}
+        color="grey"
+        onClick={() => dispatch(setBackgroundColor('grey'))}
       />
       <Color
         color="green"

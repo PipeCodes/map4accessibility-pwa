@@ -3,8 +3,8 @@ import styled from 'styled-components';
 export const ColorsPalletContainer = styled.div`
   justify-content: space-evenly;
   margin-top: 30px;
-  height: ${(props) => (props.open ? 'auto' : 0)};
-  display: ${(props) => (props.open ? 'flex' : 'none')};
+  height: auto;
+  display: flex;
 `;
 
 export const Color = styled.button`

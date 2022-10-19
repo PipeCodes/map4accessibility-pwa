@@ -25,7 +25,16 @@ export const TopBarContainer = styled.div`
     updateValue(colors.primaryColor, props.backgroundColor)};
   padding: 10px 15px;
   height: auto;
-  margin-bottom: 15px;
+
+  &.accessibility {
+    background: unset;
+    box-shadow: unset;
+    border-radius: unset;
+  }
+
+  background: #ffffff 0% 0% no-repeat padding-box;
+  box-shadow: 0px 2px 4px #00000005;
+  border-radius: 0 0 100% 100%;
 `;
 
 export const LeftButton = styled.button`
@@ -34,10 +43,10 @@ export const LeftButton = styled.button`
   border: 0;
   margin: 0;
   position: absolute;
-  top: 50%;
+  top: 30px;
   -ms-transform: translateY(-50%);
   transform: translateY(-50%);
-  left: 5px;
+  left: 15px;
   width: 35px;
   height: 35px;
   display: flex;
@@ -45,7 +54,8 @@ export const LeftButton = styled.button`
   align-items: center;
 
   img {
-    height: 25px;
+    height: 100%;
+    width: auto;
   }
 `;
 
@@ -57,10 +67,10 @@ export const AccessibilityButton = styled.button`
   color: white;
   margin: 0;
   position: absolute;
-  top: 50%;
+  top: 30px;
   -ms-transform: translateY(-50%);
   transform: translateY(-50%);
-  right: 0px;
+  right: 15px;
   width: 42px;
   height: 42px;
   display: flex;
@@ -85,4 +95,16 @@ export const CloseButton = styled.button`
   border: none;
   padding-right: 15px;
   justify-content: flex-end;
+`;
+
+export const Logo = styled.div`
+  margin-top: 20px;
+  margin-bottom: 22px;
+  margin-left: auto;
+  margin-right: auto;
+  justify-self: center;
+
+  &.aligned {
+    margin-top: 0px;
+  }
 `;

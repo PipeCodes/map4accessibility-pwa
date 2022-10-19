@@ -1,151 +1,207 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import CustomButton from '../../components/CustomButton/CustomButton';
-import CustomInput from '../../components/CustomInput/CustomInput';
-import { colors } from '../../constants/colors';
-import {
-  Page,
-  LogoImage,
-  CheckboxWrapper,
-  PrivacyPolicyLabel,
-  AvatarWrapper,
-  Container,
-} from './RegisterScreen.styles';
-import Logo from '../../assets/images/old_delete/logo.svg';
 import { signup } from '../../store/actions/auth';
+import { Page, Container, Box, TextSecondary } from './RegisterScreen.styles';
+import CustomButton from '../../components/CustomButton/CustomButton';
+import LoginIcon from '../../assets/icons/login.svg';
+import { colors } from '../../constants/colors';
+import ArrowRight from '../../assets/icons/arrow-right.svg';
+import ProfileIcon from '../../assets/icons/profile.svg';
 import TopBar from '../../components/TopBar/TopBar';
-import { AVATARS, regions } from '../../constants';
-import AvatarCarousel from '../../components/AvatarCarousel/AvatarCarousel';
-import CustomSelect from '../../components/CustomSelect/CustomSelect';
+import SignUpInfo from './SignUpInfo';
+import ExtraStep from './ExtraStep';
+
+const PageDisplay = (formData, setFormData, page, formErrors) => {
+  if (page === 0) {
+    return (
+      <SignUpInfo
+        formData={formData}
+        setFormData={setFormData}
+        formErrors={formErrors}
+      />
+    );
+  }
+  return <ExtraStep formData={formData} setFormData={setFormData} />;
+};
 
 const RegisterScreen = (props) => {
-  const { routes } = props;
+  const initialValues = {
+    firstName: '',
+    surname: '',
+    birthDate: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+    noDisability: false,
+    motorDisability: false,
+    visualDisability: false,
+    hearingDisability: false,
+    intellectualDisability: false,
+  };
 
+  const { history, routes } = props;
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const fontSize = useSelector((state) => state.accessibility.fontSize);
+  const [page, setPage] = useState(0);
+  const [formData, setFormData] = useState(initialValues);
+  const [formErrors, setFormErrors] = useState({});
 
-  const loading = useSelector((state) => state.auth.loading);
-  const user = useSelector((state) => state.auth.user);
+  function changePage(value) {
+    setPage((currPage) => currPage + value);
+  }
 
-  const [avatar, setAvatar] = useState(AVATARS[0]);
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [region, setRegion] = useState(null);
-  const [privacyPolicyConditionsChecked, setPrivacyPolicyChecked] =
-    useState(false);
+  // Validates the fields
+  const validate = (values) => {
+    const errors = {};
+    const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
+    const regexPassword = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+    const regexDate =
+      /^(?:(?:31(\/|-|\.)(?:0?[13578]|1[02]))\1|(?:(?:29|30)(\/|-|\.)(?:0?[13-9]|1[0-2])\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/|-|\.)0?2\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\/|-|\.)(?:(?:0?[1-9])|(?:1[0-2]))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$/;
 
-  const registerClickHandler = () => {
-    if (!privacyPolicyConditionsChecked) {
-      alert(t('privacy_policy_error'));
-      return;
+    if (!values.firstName) {
+      errors.firstName = t('required_firstName');
+    } else if (values.firstName !== 'string') {
+      errors.firstName = t('string_firstName');
     }
+
+    if (!values.surname) {
+      errors.surname = t('required_surname');
+    } else if (values.surname !== 'string') {
+      errors.firstName = t('string_firstName');
+    }
+
+    if (!values.birthDate) {
+      errors.birthDate = t('required_birthDate');
+    } else if (!regexDate.test(values.birthDate)) {
+      errors.email = t('invalid_birthDate');
+    }
+
+    if (!values.email) {
+      errors.email = t('required_email');
+    } else if (!regexEmail.test(values.email)) {
+      errors.email = t('invalid_email');
+    }
+
+    if (!values.password) {
+      errors.password = t('required_password');
+    } else if (values.password !== values.confirmPassword) {
+      errors.password = t('passwords_match');
+    } else if (!regexPassword.test(values.password)) {
+      errors.password = t('password_rules');
+    }
+
+    if (!values.confirmPassword) {
+      errors.confirmPassword = t('required_confirmPassword');
+    } else if (values.password !== values.confirmPassword) {
+      errors.confirmPassword = t('passwords_match');
+    }
+
+    return errors;
+  };
+
+  // ClickHandlers
+  const registerClickHandler = useCallback(() => {
+    const disabilities = [];
+    if (formData.motorDisability) {
+      disabilities.push('motor');
+    } else if (formData.visualDisability) {
+      disabilities.push('visual');
+    } else if (formData.hearingDisability) {
+      disabilities.push('hearing');
+    } else if (formData.intellectualDisability) {
+      disabilities.push('intellectual');
+    }
+
     dispatch(
       signup(
-        avatar?.id ?? AVATARS[0].id,
-        name,
-        email,
-        username,
-        password,
-        region?.value,
-        t,
+        formData.firstName,
+        formData.surname,
+        formData.birthDate,
+        formData.email,
+        formData.password,
+        disabilities,
       ),
     ).catch((error) => {
       alert(error);
     });
+  }, [dispatch, formData]);
+
+  const openAccessibility = useCallback(() => {
+    history.push(routes.ACCESSIBILITY.path);
+  }, [history, routes]);
+
+  const backClickHandler = (page) => {
+    if (page === 0) {
+      history.goBack();
+    }
+    changePage(-1);
   };
 
-  useEffect(() => {
-    if (user) {
-      alert("TODO")
+  const nextClickHandler = (page, formErrors) => {
+    if (page === 0) {
+      setFormErrors(validate(formData));
+      if (Object.keys(validate(formData)).length === 0) {
+        changePage(1);
+        return;
+      }
+      return;
     }
-  }, [user]);
+    if (Object.keys(formErrors).length === 0) {
+      registerClickHandler();
+    } else {
+      setPage(0);
+    }
+  };
 
   return (
     <Page>
-      <TopBar hasBackButton />
+      <TopBar
+        backTarget={() => backClickHandler(page)}
+        aligned
+        hasBackButton
+        hasLogo
+        hasAccessibilityButton={openAccessibility}
+      />
       <Container>
-        <LogoImage className="logo_img" alt="logo" src={Logo} />
-        <AvatarWrapper>
-          <AvatarCarousel onChange={setAvatar} />
-        </AvatarWrapper>
-        <CustomInput
-          style={{
-            marginTop: 30,
-          }}
-          placeholder={t('name')}
-          onChange={(e) => setName(e.target.value)}
-          value={name}
-        />
-        <CustomInput
-          style={{
-            marginTop: 13,
-          }}
-          placeholder={t('username')}
-          onChange={(e) => setUsername(e.target.value)}
-          value={username}
-        />
-        <CustomInput
-          style={{
-            marginTop: 13,
-          }}
-          placeholder={t('email')}
-          type="email"
-          onChange={(e) => setEmail(e.target.value)}
-          value={email}
-        />
-        <CustomInput
-          style={{
-            marginTop: 13,
-          }}
-          placeholder={t('password')}
-          type="password"
-          onChange={(e) => setPassword(e.target.value)}
-          value={password}
-        />
-
-        <CustomSelect
-          style={{
-            marginTop: 13,
-          }}
-          options={regions.map((r) => ({
-            value: r.id,
-            label: r.name,
-          }))}
-          onChange={(value) => setRegion(value)}
-        />
-
-        <CheckboxWrapper>
-          <input type="checkbox"
-            checked={privacyPolicyConditionsChecked}
-            onChange={setPrivacyPolicyChecked}
-          />
-          <PrivacyPolicyLabel
-            onClick={() => setPrivacyPolicyChecked((prevState) => !prevState)}
-            dangerouslySetInnerHTML={{
-              __html: t('privacy_policy_message', {
-                link: routes.POLICY.path,
-                privacy_policy: t('privacy_policy'),
-              }),
-            }}
-          />
-        </CheckboxWrapper>
-
+        {PageDisplay(formData, setFormData, page, formErrors)}
         <CustomButton
           style={{
-            marginTop: 40,
-            marginBottom: 40,
+            marginTop: 30,
+            marginBottom: 20,
+            width: '100%',
+            borderRadius: '25px',
           }}
           backgroundColor={colors.orange}
-          text={t('register')}
-          onClick={registerClickHandler}
-          disabled={loading}
+          text={page === 0 ? t('next') : t('create_account')}
+          icon={page === 0 ? ArrowRight : ProfileIcon}
+          onClick={() => nextClickHandler(page, formErrors)}
         />
+
+        {page === 0 && (
+          <Box>
+            <TextSecondary fontSize={fontSize}>
+              {t('already_have_account')}
+            </TextSecondary>
+            <CustomButton
+              style={{
+                width: 'auto',
+                borderRadius: '25px',
+                color: colors.primaryColor,
+                boxShadow: 'none',
+              }}
+              backgroundColor={colors.transparent}
+              text={t('login')}
+              icon={LoginIcon}
+              onClick={() => history.push(routes.LOGIN.path)}
+            />
+          </Box>
+        )}
       </Container>
     </Page>
   );
 };
 
-export default RegisterScreen;
+export default withRouter(RegisterScreen);
