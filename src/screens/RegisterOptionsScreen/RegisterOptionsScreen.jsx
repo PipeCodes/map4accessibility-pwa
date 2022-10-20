@@ -21,8 +21,6 @@ import LoginIcon from '../../assets/icons/login.svg';
 
 const RegisterOptionsScreen = (props) => {
   const { routes, history } = props;
-  const [provider, setProvider] = useState('');
-  const [profile, setProfile] = useState(null);
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
@@ -40,11 +38,8 @@ const RegisterOptionsScreen = (props) => {
 
   const fontSize = useSelector((state) => state.accessibility.fontSize);
 
-  const registerClickHandler = useCallback(
-    (provider, data) => {
-      console.log(data);
-      console.log(provider);
-
+  const registerClickHandlerGoogle = useCallback(
+    (data) => {
       if (data !== undefined && data !== null) {
         dispatch(
           signupProviderGoogle(
@@ -84,9 +79,7 @@ const RegisterOptionsScreen = (props) => {
             appId={process.env.REACT_APP_FB_APP_ID || ''}
             onLoginStart={onLoginStart}
             onResolve={({ provider, data }) => {
-              setProvider(provider);
-              setProfile(data);
-              registerClickHandler(provider, data);
+              console.log('TODO FACEBOOK REGISTER');
             }}
             onReject={(err) => {
               console.log(err);
@@ -108,10 +101,8 @@ const RegisterOptionsScreen = (props) => {
             client_id={process.env.REACT_APP_GG_APP_ID || ''}
             onLoginStart={onLoginStart}
             scope="https://www.googleapis.com/auth/userinfo.email"
-            onResolve={({ provider, data }) => {
-              setProvider(provider);
-              setProfile(data);
-              registerClickHandler(provider, data);
+            onResolve={({ data }) => {
+              registerClickHandlerGoogle(data);
             }}
             onReject={(err) => {
               console.log(err);
