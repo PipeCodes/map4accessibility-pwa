@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { LoginSocialGoogle, LoginSocialFacebook } from 'reactjs-social-login';
-import { signupSocial } from '../../store/actions/auth';
+import { signupProviderGoogle } from '../../store/actions/auth';
 import CustomButton from '../../components/CustomButton/CustomButton';
 import { colors } from '../../constants/colors';
 import {
@@ -30,12 +30,6 @@ const RegisterOptionsScreen = (props) => {
     alert('login start');
   }, []);
 
-  // const onLogoutSuccess = useCallback(() => {
-  //   setProfile(null);
-  //   setProvider('');
-  //   alert('logout success');
-  // }, []);
-
   const openAccessibility = useCallback(() => {
     history.push(routes.ACCESSIBILITY.path);
   }, [history, routes]);
@@ -46,17 +40,27 @@ const RegisterOptionsScreen = (props) => {
 
   const fontSize = useSelector((state) => state.accessibility.fontSize);
 
-  const registerClickHandler = useCallback(() => {
-    if (profile !== undefined && profile !== null) {
-      if (profile.access_token !== undefined && profile.access_token !== null) {
+  const registerClickHandler = useCallback(
+    (provider, data) => {
+      console.log(data);
+      console.log(provider);
+
+      if (data !== undefined && data !== null) {
         dispatch(
-          signupSocial('provider@email.com', provider, profile.access_token),
+          signupProviderGoogle(
+            data.email,
+            data.given_name,
+            data.family_name,
+            data.id,
+          ),
         ).catch((error) => {
+          debugger;
           alert(error);
         });
       }
-    }
-  }, [dispatch, profile, provider]);
+    },
+    [dispatch],
+  );
 
   return (
     <Page backgroundColor={backgroundColor}>
@@ -77,13 +81,12 @@ const RegisterOptionsScreen = (props) => {
         />
         <Box>
           <LoginSocialFacebook
-            isOnlyGetToken
             appId={process.env.REACT_APP_FB_APP_ID || ''}
             onLoginStart={onLoginStart}
             onResolve={({ provider, data }) => {
               setProvider(provider);
               setProfile(data);
-              registerClickHandler();
+              registerClickHandler(provider, data);
             }}
             onReject={(err) => {
               console.log(err);
@@ -102,13 +105,13 @@ const RegisterOptionsScreen = (props) => {
           </LoginSocialFacebook>
 
           <LoginSocialGoogle
-            isOnlyGetToken
             client_id={process.env.REACT_APP_GG_APP_ID || ''}
             onLoginStart={onLoginStart}
+            scope="https://www.googleapis.com/auth/userinfo.email"
             onResolve={({ provider, data }) => {
               setProvider(provider);
               setProfile(data);
-              registerClickHandler();
+              registerClickHandler(provider, data);
             }}
             onReject={(err) => {
               console.log(err);
