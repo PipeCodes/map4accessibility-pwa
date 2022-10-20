@@ -1,7 +1,12 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import { withRouter } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import {
+  LoginSocialGoogle,
+  LoginSocialFacebook,
+  IResolveParams,
+} from 'reactjs-social-login';
 import CustomButton from '../../components/CustomButton/CustomButton';
 import { colors } from '../../constants/colors';
 import {
@@ -16,11 +21,30 @@ import ProfileIcon from '../../assets/icons/profile.svg';
 import FacebookIcon from '../../assets/icons/facebook.svg';
 import GoogleIcon from '../../assets/icons/google.svg';
 import LoginIcon from '../../assets/icons/login.svg';
-// import SocialButton from '../../components/SocialButton/SocialButton';
-// Social Button commented for the time being, changed social media buttons to CustomButtons and unnistalled social-login lib
 
 const RegisterOptionsScreen = (props) => {
   const { routes, history } = props;
+  const [provider, setProvider] = useState('');
+  const [profile, setProfile] = useState(null);
+
+  const onLoginStart = useCallback(() => {
+    alert('login start');
+    console.log('Login');
+    console.log(provider);
+    console.log(profile);
+  }, []);
+
+  const onLogoutSuccess = useCallback(() => {
+    console.log('Before Logout');
+    console.log(provider);
+    console.log(profile);
+    setProfile(null);
+    setProvider('');
+    alert('logout success');
+    console.log('After Logout');
+    console.log(provider);
+    console.log(profile);
+  }, []);
 
   const { t } = useTranslation();
 
@@ -52,29 +76,58 @@ const RegisterOptionsScreen = (props) => {
           icon={ProfileIcon}
         />
         <Box>
-          <CustomButton
-            // provider="facebook"
-            // appId="YOUR_APP_ID"
-            style={{
-              marginBottom: 20,
-              width: '100%',
-              borderRadius: '25px',
+          <LoginSocialFacebook
+            isOnlyGetToken
+            appId={process.env.REACT_APP_FB_APP_ID || ''}
+            onLoginStart={onLoginStart}
+            onResolve={({ provider, data }) => {
+              setProvider(provider);
+              setProfile(data);
+              console.log('On Button');
+              console.log(provider);
+              console.log(profile);
             }}
-            backgroundColor={colors.facebook_blue}
-            text={t('sign_in_facebook')}
-            icon={FacebookIcon}
-          />
-          <CustomButton
-            // provider="google"
-            // appId="YOUR_APP_ID"
-            style={{
-              width: '100%',
-              borderRadius: '25px',
+            onReject={(err) => {
+              console.log(err);
             }}
-            backgroundColor={colors.google_red}
-            text={t('sign_in_google')}
-            icon={GoogleIcon}
-          />
+          >
+            <CustomButton
+              style={{
+                marginBottom: 20,
+                width: '100%',
+                borderRadius: '25px',
+              }}
+              backgroundColor={colors.facebook_blue}
+              text={t('sign_in_facebook')}
+              icon={FacebookIcon}
+            />
+          </LoginSocialFacebook>
+
+          <LoginSocialGoogle
+            isOnlyGetToken
+            client_id={process.env.REACT_APP_GG_APP_ID || ''}
+            onLoginStart={onLoginStart}
+            onResolve={({ provider, data }) => {
+              setProvider(provider);
+              setProfile(data);
+              console.log('On Button');
+              console.log(provider);
+              console.log(profile);
+            }}
+            onReject={(err) => {
+              console.log(err);
+            }}
+          >
+            <CustomButton
+              style={{
+                width: '100%',
+                borderRadius: '25px',
+              }}
+              backgroundColor={colors.google_red}
+              text={t('sign_in_google')}
+              icon={GoogleIcon}
+            />
+          </LoginSocialGoogle>
         </Box>
         <Box>
           <TextSecondary fontSize={fontSize}>
