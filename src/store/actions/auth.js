@@ -93,7 +93,6 @@ export const signupProviderGoogle =
       name,
       surname,
       birthdate: '2022-10-20',
-      password: 'imadefaultpassword1.',
       terms_accepted: true,
       auth_providers: {
         gmail: id,
