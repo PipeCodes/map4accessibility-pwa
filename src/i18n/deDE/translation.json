@@ -86,5 +86,8 @@
   "required_password": "Password is required",
   "passwords_match": "Passwords do not match",
   "password_rules": "Password must have: 8 characters, 1 letter and 1 number",
-  "required_confirmPassword": "Password Confirmation is required"
+  "required_confirmPassword": "Password Confirmation is required",
+  "string_firstName": "First Name is an invalid string",
+  "string_surname": "Surname is an invalid string",
+  "invalid_birthDate": "Date is invalid"
 }
