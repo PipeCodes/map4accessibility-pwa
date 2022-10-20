@@ -81,6 +81,33 @@ export const signup =
     }
   };
 
+export const signupSocial = (email, authType, authCode) => async (dispatch) => {
+  dispatch({ type: AUTH_START });
+
+  const body = {
+    email,
+    auth_type: authType,
+    auth_code: authCode,
+  };
+
+  try {
+    const response = await axios.post(Endpoints.SIGNUP_SOCIAL, body);
+    const statusCode = response.status;
+
+    if (statusCode === HTTP_STATUS.SUCCESS) {
+      saveUserData(response.data?.data?._token, response.data?.data?.user);
+      dispatch({
+        type: AUTH_SUCCESS,
+        user: response.data?.data,
+      });
+    }
+  } catch (error) {
+    dispatch({ type: AUTH_ERROR });
+
+    return Promise.reject(getErrorMessage(error, i18n.t('something_wrong')));
+  }
+};
+
 export const recoverPassword = (emailOrUsername) => async (dispatch) => {
   dispatch({ type: AUTH_START });
 

@@ -1,4 +1,5 @@
 export const SIGNUP = '/auth/register';
+export const SIGNUP_SOCIAL = '/auth/login-by-provider';
 
 export const FAQS = '/faqs';
 export const POLICY = '/terms-conditions';

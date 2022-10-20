@@ -1,12 +1,9 @@
 import React, { useCallback, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import {
-  LoginSocialGoogle,
-  LoginSocialFacebook,
-  IResolveParams,
-} from 'reactjs-social-login';
+import { LoginSocialGoogle, LoginSocialFacebook } from 'reactjs-social-login';
+import { signupSocial } from '../../store/actions/auth';
 import CustomButton from '../../components/CustomButton/CustomButton';
 import { colors } from '../../constants/colors';
 import {
@@ -26,27 +23,18 @@ const RegisterOptionsScreen = (props) => {
   const { routes, history } = props;
   const [provider, setProvider] = useState('');
   const [profile, setProfile] = useState(null);
+  const { t } = useTranslation();
+  const dispatch = useDispatch();
 
   const onLoginStart = useCallback(() => {
     alert('login start');
-    console.log('Login');
-    console.log(provider);
-    console.log(profile);
   }, []);
 
-  const onLogoutSuccess = useCallback(() => {
-    console.log('Before Logout');
-    console.log(provider);
-    console.log(profile);
-    setProfile(null);
-    setProvider('');
-    alert('logout success');
-    console.log('After Logout');
-    console.log(provider);
-    console.log(profile);
-  }, []);
-
-  const { t } = useTranslation();
+  // const onLogoutSuccess = useCallback(() => {
+  //   setProfile(null);
+  //   setProvider('');
+  //   alert('logout success');
+  // }, []);
 
   const openAccessibility = useCallback(() => {
     history.push(routes.ACCESSIBILITY.path);
@@ -57,6 +45,18 @@ const RegisterOptionsScreen = (props) => {
   );
 
   const fontSize = useSelector((state) => state.accessibility.fontSize);
+
+  const registerClickHandler = useCallback(() => {
+    if (profile !== undefined && profile !== null) {
+      if (profile.access_token !== undefined && profile.access_token !== null) {
+        dispatch(
+          signupSocial('provider@email.com', provider, profile.access_token),
+        ).catch((error) => {
+          alert(error);
+        });
+      }
+    }
+  }, [dispatch, profile, provider]);
 
   return (
     <Page backgroundColor={backgroundColor}>
@@ -83,9 +83,7 @@ const RegisterOptionsScreen = (props) => {
             onResolve={({ provider, data }) => {
               setProvider(provider);
               setProfile(data);
-              console.log('On Button');
-              console.log(provider);
-              console.log(profile);
+              registerClickHandler();
             }}
             onReject={(err) => {
               console.log(err);
@@ -110,9 +108,7 @@ const RegisterOptionsScreen = (props) => {
             onResolve={({ provider, data }) => {
               setProvider(provider);
               setProfile(data);
-              console.log('On Button');
-              console.log(provider);
-              console.log(profile);
+              registerClickHandler();
             }}
             onReject={(err) => {
               console.log(err);
