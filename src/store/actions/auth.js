@@ -68,10 +68,13 @@ export const signup =
       const statusCode = response.status;
 
       if (statusCode === HTTP_STATUS.SUCCESS) {
-        saveUserData(response.data?.data?.token, response.data?.data);
+        saveUserData(
+          response.data?.result?.authorization?.token,
+          response.data?.result?.user,
+        );
         dispatch({
           type: AUTH_SUCCESS,
-          user: response.data?.data,
+          user: response.data?.result?.user,
         });
       }
     } catch (error) {
@@ -90,6 +93,7 @@ export const signupProviderGoogle =
       name,
       surname,
       birthdate: '2022-10-20',
+      password: 'imadefaultpassword1.',
       terms_accepted: true,
       auth_providers: {
         gmail: id,
@@ -101,10 +105,13 @@ export const signupProviderGoogle =
       const statusCode = response.status;
 
       if (statusCode === HTTP_STATUS.SUCCESS) {
-        saveUserData(response.data?.data?._token, response.data?.data?.user);
+        saveUserData(
+          response.data?.result?.authorization?.token,
+          response.data?.result?.user,
+        );
         dispatch({
           type: AUTH_SUCCESS,
-          user: response.data?.data,
+          user: response.data?.result?.user,
         });
       }
     } catch (error) {
