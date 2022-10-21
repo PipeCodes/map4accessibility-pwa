@@ -71,16 +71,8 @@ const RegisterScreen = (props) => {
   }
 
   // Validates the fields
-<<<<<<< HEAD
   const validate = (field, values, errors) => {
     let error;
-=======
-  const validate = (values) => {
-    const errors = {};
-    const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
-    const regexPassword = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
-    const regexDate = /^[0-9]{1,4}[-,/][0-9]{1,2}[-,/][0-9]{1,4}$/;
->>>>>>> develop
 
     switch (field) {
       case 'firstName':
