@@ -22,7 +22,9 @@ const SignUpInfo = (props) => {
         placeholder={t('email_placeholder')}
         type="email"
         value={formData.email}
-        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+        onChange={(e) => {
+          setFormData((prev) => ({ ...prev, email: e.target.value }));
+        }}
       />
       {formErrors.email && (
         <Error fontSize={fontSize}>{formErrors.email}</Error>
@@ -36,7 +38,9 @@ const SignUpInfo = (props) => {
         placeholder={t('password_placeholder')}
         type="password"
         value={formData.password}
-        onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+        onChange={(e) => {
+          setFormData((prev) => ({ ...prev, password: e.target.value }));
+        }}
       />
       {formErrors.password && (
         <Error fontSize={fontSize}>{formErrors.password}</Error>

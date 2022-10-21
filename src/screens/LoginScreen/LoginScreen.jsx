@@ -25,10 +25,10 @@ const LoginScreen = (props) => {
   const user = useSelector((state) => state.auth.user);
 
   useEffect(() => {
-    if (user) {
+    if (user && history) {
       history.replace(routes.DASHBOARD.path);
     }
-  }, [user]);
+  }, [user, history]);
 
   // Validates the fields
   const validate = (values) => {
