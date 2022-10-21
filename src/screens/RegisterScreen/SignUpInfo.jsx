@@ -5,10 +5,15 @@ import CustomInput from '../../components/CustomInput/CustomInput';
 import { Text, InputLabel, Error } from './RegisterScreen.styles';
 
 const SignUpInfo = (props) => {
-  const { formData, setFormData, formErrors } = props;
+  const { formData, setFormData, formErrors, setFormErrors, validate } = props;
   const { t } = useTranslation();
   const fontSize = useSelector((state) => state.accessibility.fontSize);
   const font = useSelector((state) => state.accessibility.font);
+
+  function focusHandler(target) {
+    setFormErrors((prevState) => validate(target, formData, prevState));
+    console.log(formErrors);
+  }
 
   return (
     <div className="fullDiv">
@@ -23,9 +28,14 @@ const SignUpInfo = (props) => {
         style={{}}
         placeholder={t('first_name_placeholder')}
         value={formData.firstName}
-        onChange={(e) =>
-          setFormData({ ...formData, firstName: e.target.value })
-        }
+        name="firstName"
+        onBlur={(e) => focusHandler(e.target.name)}
+        onChange={(e) => {
+          setFormData((prevState) => ({
+            ...prevState,
+            firstName: e.target.value,
+          }));
+        }}
       />
       {formErrors.firstName && (
         <Error fontSize={fontSize}>{formErrors.firstName}</Error>
@@ -38,10 +48,17 @@ const SignUpInfo = (props) => {
         style={{}}
         placeholder={t('surname_placeholder')}
         value={formData.surname}
-        onChange={(e) => setFormData({ ...formData, surname: e.target.value })}
+        name="surname"
+        onBlur={(e) => focusHandler(e.target.name)}
+        onChange={(e) => {
+          setFormData((prevState) => ({
+            ...prevState,
+            surname: e.target.value,
+          }));
+        }}
       />
       {formErrors.surname && (
-        <Error fontSize={fontSize}>{formErrors.surname}</Error>
+        <Error fontSize={fontSize}>{t(formErrors.surname)}</Error>
       )}
 
       <InputLabel fontSize={fontSize}>
@@ -53,9 +70,14 @@ const SignUpInfo = (props) => {
         placeholder={t('birth_date_placeholder')}
         type="date"
         value={formData.birthDate}
-        onChange={(e) =>
-          setFormData({ ...formData, birthDate: e.target.value })
-        }
+        name="birthDate"
+        onBlur={(e) => focusHandler(e.target.name)}
+        onChange={(e) => {
+          setFormData((prevState) => ({
+            ...prevState,
+            birthDate: e.target.value,
+          }));
+        }}
       />
       {formErrors.birthDate && (
         <Error fontSize={fontSize}>{formErrors.birthDate}</Error>
@@ -69,7 +91,11 @@ const SignUpInfo = (props) => {
         placeholder={t('email_placeholder')}
         type="email"
         value={formData.email}
-        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+        name="email"
+        onBlur={(e) => focusHandler(e.target.name)}
+        onChange={(e) => {
+          setFormData((prevState) => ({ ...prevState, email: e.target.value }));
+        }}
       />
       {formErrors.email && (
         <Error fontSize={fontSize}>{formErrors.email}</Error>
@@ -83,7 +109,14 @@ const SignUpInfo = (props) => {
         placeholder={t('password_placeholder')}
         type="password"
         value={formData.password}
-        onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+        name="password"
+        onBlur={(e) => focusHandler(e.target.name)}
+        onChange={(e) => {
+          setFormData((prevState) => ({
+            ...prevState,
+            password: e.target.value,
+          }));
+        }}
       />
       {formErrors.password && (
         <Error fontSize={fontSize}>{formErrors.password}</Error>
@@ -96,10 +129,15 @@ const SignUpInfo = (props) => {
         style={{}}
         placeholder={t('confirm_password_placeholder')}
         type="password"
+        name="confirmPassword"
+        onBlur={(e) => focusHandler(e.target.name)}
         value={formData.confirmPassword}
-        onChange={(e) =>
-          setFormData({ ...formData, confirmPassword: e.target.value })
-        }
+        onChange={(e) => {
+          setFormData((prevState) => ({
+            ...prevState,
+            confirmPassword: e.target.value,
+          }));
+        }}
       />
       {formErrors.confirmPassword && (
         <Error fontSize={fontSize}>{formErrors.confirmPassword}</Error>

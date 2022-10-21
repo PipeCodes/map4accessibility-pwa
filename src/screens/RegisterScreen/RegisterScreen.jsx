@@ -12,14 +12,31 @@ import ProfileIcon from '../../assets/icons/profile.svg';
 import TopBar from '../../components/TopBar/TopBar';
 import SignUpInfo from './SignUpInfo';
 import ExtraStep from './ExtraStep';
+import {
+  validateBirthDate,
+  validateConfirmPassword,
+  validateEmail,
+  validateFirstName,
+  validatePassword,
+  validateSurname,
+} from './validate';
 
-const PageDisplay = (formData, setFormData, page, formErrors) => {
+const PageDisplay = (
+  formData,
+  setFormData,
+  page,
+  formErrors,
+  setFormErrors,
+  validate,
+) => {
   if (page === 0) {
     return (
       <SignUpInfo
         formData={formData}
         setFormData={setFormData}
         formErrors={formErrors}
+        setFormErrors={setFormErrors}
+        validate={validate}
       />
     );
   }
@@ -54,50 +71,70 @@ const RegisterScreen = (props) => {
   }
 
   // Validates the fields
-  const validate = (values) => {
-    const errors = {};
-    const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
-    const regexPassword = /^[a-zA-Z0-9]{8,}$/;
-    const regexDate = /^[0-9]{1,4}[-,/][0-9]{1,2}[-,/][0-9]{1,4}$/;
+  const validate = (field, values, errors) => {
+    let error;
 
-    if (!values.firstName) {
-      errors.firstName = t('required_firstName');
-    } else if (typeof values.firstName !== 'string') {
-      errors.firstName = t('string_firstName');
+    switch (field) {
+      case 'firstName':
+        delete errors.firstName;
+        error = validateFirstName(values.firstName);
+        if (error !== null) {
+          errors.firstName = t(error);
+        }
+        break;
+      case 'surname':
+        delete errors.surname;
+        error = validateSurname(values.surname);
+        if (error !== null) {
+          errors.surname = t(error);
+        }
+        break;
+      case 'birthDate':
+        delete errors.birthDate;
+        error = validateBirthDate(values.birthDate);
+        if (error !== null) {
+          errors.birthDate = t(error);
+        }
+        break;
+      case 'email':
+        delete errors.email;
+        error = validateEmail(values.email);
+        if (error !== null) {
+          errors.email = t(error);
+        }
+
+        break;
+      case 'password':
+        delete errors.password;
+        error = validatePassword(values.password, values.confirmPassword);
+        if (error !== null) {
+          errors.password = t(error);
+        }
+        break;
+      case 'confirmPassword':
+        delete errors.confirmPassword;
+        error = validateConfirmPassword(
+          values.password,
+          values.confirmPassword,
+        );
+        if (error !== null) {
+          errors.confirmPassword = t(error);
+        }
+        break;
+
+      default:
+        errors.firstName = t(validateFirstName(values.firstName));
+        errors.surname = t(validateSurname(values.surname));
+        errors.birthDate = t(validateBirthDate(values.birthDate));
+        errors.email = t(validateEmail(values.email));
+        errors.password = t(
+          validatePassword(values.password, values.confirmPassword),
+        );
+        errors.confirmPassword = t(
+          validateConfirmPassword(values.password, values.confirmPassword),
+        );
+        break;
     }
-
-    if (!values.surname) {
-      errors.surname = t('required_surname');
-    } else if (typeof values.surname !== 'string') {
-      errors.surname = t('string_surname');
-    }
-
-    if (!values.birthDate) {
-      errors.birthDate = t('required_birthDate');
-    } else if (!regexDate.test(values.birthDate)) {
-      errors.birthDate = t('invalid_birthDate');
-    }
-
-    if (!values.email) {
-      errors.email = t('required_email');
-    } else if (!regexEmail.test(values.email)) {
-      errors.email = t('invalid_email');
-    }
-
-    if (!values.password) {
-      errors.password = t('required_password');
-    } else if (values.password !== values.confirmPassword) {
-      errors.password = t('passwords_match');
-    } else if (!regexPassword.test(values.password)) {
-      errors.password = t('password_rules');
-    }
-
-    if (!values.confirmPassword) {
-      errors.confirmPassword = t('required_confirmPassword');
-    } else if (values.password !== values.confirmPassword) {
-      errors.confirmPassword = t('passwords_match');
-    }
-
     return errors;
   };
 
@@ -141,8 +178,8 @@ const RegisterScreen = (props) => {
 
   const nextClickHandler = (page, formErrors) => {
     if (page === 0) {
-      setFormErrors(validate(formData));
-      if (Object.keys(validate(formData)).length === 0) {
+      setFormErrors(validate('', formData, formErrors));
+      if (Object.keys(validate('', formData, formErrors)).length === 0) {
         changePage(1);
         return;
       }
@@ -165,7 +202,14 @@ const RegisterScreen = (props) => {
         hasAccessibilityButton={openAccessibility}
       />
       <Container>
-        {PageDisplay(formData, setFormData, page, formErrors)}
+        {PageDisplay(
+          formData,
+          setFormData,
+          page,
+          formErrors,
+          setFormErrors,
+          validate,
+        )}
         <CustomButton
           style={{
             marginTop: 30,

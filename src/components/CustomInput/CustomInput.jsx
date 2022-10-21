@@ -9,6 +9,8 @@ const CustomInput = (props) => {
     type = 'text',
     onChange,
     value,
+    name,
+    onBlur,
   } = props;
 
   return (
@@ -18,6 +20,8 @@ const CustomInput = (props) => {
       placeholder={placeholder}
       onChange={onChange}
       value={value}
+      name={name}
+      onBlur={onBlur}
       {...{ borderColor }}
     />
   );
