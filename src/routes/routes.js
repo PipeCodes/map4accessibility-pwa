@@ -73,7 +73,7 @@ const routes = {
   },
   DASHBOARD: {
     path: '/dashboard',
-    component: OnboardingScreen,
+    component: OnboardingScreen, // Needs to change when we create a dashboard screen
     private: false,
   },
 };
