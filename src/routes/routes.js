@@ -14,6 +14,7 @@ import FAQsScreen from '../screens/FAQsScreen/FAQsScreen';
 import TrackedRoute from './TrackedRoute';
 import ChangePasswordScreen from '../screens/ChangePasswordScreen/ChangePasswordScreen';
 import EditProfileScreen from '../screens/EditProfileScreen/EditProfileScreen';
+import OnboardingScreen from '../screens/OnboardingScreen/OnboardingScreen';
 import { isAuthenticated } from '../services/local';
 
 const history = createBrowserHistory({ forceRefresh: true });
@@ -69,6 +70,11 @@ const routes = {
     path: '/changepassword',
     component: ChangePasswordScreen,
     private: false,
+  },
+  DASHBOARD: {
+    path: '/dashboard',
+    component: OnboardingScreen, // Needs to change when we create a dashboard screen
+    private: true,
   },
 };
 

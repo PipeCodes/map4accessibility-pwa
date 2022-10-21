@@ -1,99 +1,127 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useTranslation } from 'react-i18next';
 import { withRouter } from 'react-router-dom';
-import CustomInput from '../../components/CustomInput/CustomInput';
-import { colors } from '../../constants/colors';
-import CustomButton from '../../components/CustomButton/CustomButton';
-import TopBar from '../../components/TopBar/TopBar';
-import AccessibilityIcon from '../../assets/icons/accessibility.svg';
-import {
-  Page,
-  LogoImage,
-  RecoverPassword,
-  Subtitle,
-} from './LoginScreen.styles';
-import Logo from '../../assets/images/old_delete/logo.svg';
+import { useTranslation } from 'react-i18next';
 import { login } from '../../store/actions/auth';
+import { Page, Container, Box } from './LoginScreen.styles';
+import CustomButton from '../../components/CustomButton/CustomButton';
+import { colors } from '../../constants/colors';
+import OpenAccountLogin from '../../assets/icons/open-account-login.svg';
+import TopBar from '../../components/TopBar/TopBar';
+import LoginInfo from './LoginInfo';
 
 const LoginScreen = (props) => {
-  const { routes, history } = props;
+  const initialValues = {
+    email: '',
+    password: '',
+  };
 
+  const { history, routes } = props;
   const { t } = useTranslation();
   const dispatch = useDispatch();
-
-  const loading = useSelector((state) => state.auth.loading);
+  const fontSize = useSelector((state) => state.accessibility.fontSize);
+  const [formData, setFormData] = useState(initialValues);
+  const [formErrors, setFormErrors] = useState({});
   const user = useSelector((state) => state.auth.user);
 
-  const [emailOrUsername, setEmailOrUsername] = useState('');
-  const [password, setPassword] = useState('');
+  useEffect(() => {
+    if (user && history) {
+      history.replace(routes.DASHBOARD.path);
+    }
+  }, [user, history]);
+
+  // Validates the fields
+  const validate = (values) => {
+    const errors = {};
+    const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
+    const regexPassword = /^[a-zA-Z0-9]{8,}$/;
+
+    if (!values.email) {
+      errors.email = t('required_email');
+    } else if (!regexEmail.test(values.email)) {
+      errors.email = t('invalid_email');
+    }
+
+    if (!values.password) {
+      errors.password = t('required_password');
+    } else if (!regexPassword.test(values.password)) {
+      errors.password = t('password_rules');
+    }
+
+    return errors;
+  };
+
+  // ClickHandlers
+  const loginClickHandler = useCallback(() => {
+    dispatch(login(formData.email, formData.password)).catch((error) => {
+      alert(error);
+    });
+  }, [dispatch, formData]);
 
   const openAccessibility = useCallback(() => {
     history.push(routes.ACCESSIBILITY.path);
   }, [history, routes]);
 
-  const loginClickHandler = () => {
-    dispatch(login(emailOrUsername, password, t)).catch((error) => {
-      alert(error);
-    });
-  };
-
-  useEffect(() => {
-    if (user) {
-      alert('TODO');
+  const validateFormErrorsClickHandler = () => {
+    const errors = validate(formData);
+    setFormErrors(errors);
+    if (Object.keys(errors).length === 0) {
+      loginClickHandler();
     }
-  }, [user]);
+  };
 
   return (
     <Page>
-      <TopBar hasAccessibilityButton={openAccessibility} />
-      <LogoImage className="logo_img" alt="logo" src={Logo} />
-      <Subtitle>{t('login_subtitle')}</Subtitle>
-      <CustomInput
-        style={{
-          marginTop: 20,
-        }}
-        placeholder={t('username_email')}
-        type="email"
-        onChange={(e) => setEmailOrUsername(e.target.value)}
-        value={emailOrUsername}
+      <TopBar
+        aligned
+        hasBackButton
+        hasLogo
+        hasAccessibilityButton={openAccessibility}
       />
-      <CustomInput
-        style={{
-          marginTop: 13,
-        }}
-        placeholder={t('password')}
-        type="password"
-        onChange={(e) => setPassword(e.target.value)}
-        value={password}
-      />
-      <RecoverPassword
-        onClick={() => history.push(routes.RECOVER_PASSWORD.path)}
-      >
-        {t('recover_password')}
-      </RecoverPassword>
+      <Container>
+        <LoginInfo
+          formData={formData}
+          setFormData={setFormData}
+          formErrors={formErrors}
+        />
+        <CustomButton
+          style={{
+            marginTop: 30,
+            marginBottom: 20,
+            width: '100%',
+            borderRadius: '25px',
+          }}
+          backgroundColor={colors.orange}
+          text={t('login')}
+          icon={OpenAccountLogin}
+          onClick={() => validateFormErrorsClickHandler(formErrors)}
+        />
 
-      <CustomButton
-        style={{
-          marginTop: 20,
-        }}
-        backgroundColor={colors.green}
-        text={t('login')}
-        onClick={loginClickHandler}
-        disabled={loading}
-      />
-
-      <Subtitle>{t('dont_have_an_account_yet')}</Subtitle>
-
-      <CustomButton
-        style={{
-          marginTop: 10,
-        }}
-        backgroundColor={colors.orange}
-        text={t('register')}
-        onClick={() => history.push(routes.REGISTER_OPTIONS.path)}
-        disabled={loading}
-      />
+        <Box>
+          <CustomButton
+            style={{
+              width: 'auto',
+              color: colors.primaryColor,
+              fontSize: { fontSize },
+              boxShadow: 'none',
+            }}
+            backgroundColor={colors.transparent}
+            text={t('create_account')}
+            onClick={() => history.push(routes.REGISTER.path)}
+          />
+          <CustomButton
+            style={{
+              width: 'auto',
+              color: colors.primaryColor,
+              fontSize: { fontSize },
+              boxShadow: 'none',
+            }}
+            backgroundColor={colors.transparent}
+            text={t('recover_password')}
+            onClick={() => history.push(routes.LOGIN.path)}
+          />
+        </Box>
+      </Container>
     </Page>
   );
 };
