@@ -45,7 +45,7 @@ export const login = (email, password) => async (dispatch) => {
 };
 
 export const signup =
-  (name, surname, birthdate, email, password, disabilities) =>
+  (name, surname, birthdate, email, password, termsAccepted, disabilities) =>
   async (dispatch) => {
     dispatch({ type: AUTH_START });
 
@@ -55,7 +55,7 @@ export const signup =
       birthdate,
       email: email?.trim().toLowerCase(),
       password,
-      terms_accepted: true,
+      terms_accepted: termsAccepted,
       disabilities,
     };
 

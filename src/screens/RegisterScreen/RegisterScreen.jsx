@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -18,6 +18,7 @@ import {
   validateEmail,
   validateFirstName,
   validatePassword,
+  validatePolicy,
   validateSurname,
 } from './validate';
 
@@ -51,6 +52,7 @@ const RegisterScreen = (props) => {
     email: '',
     password: '',
     confirmPassword: '',
+    termsAccepted: false,
     noDisability: false,
     motorDisability: false,
     visualDisability: false,
@@ -65,50 +67,78 @@ const RegisterScreen = (props) => {
   const [page, setPage] = useState(0);
   const [formData, setFormData] = useState(initialValues);
   const [formErrors, setFormErrors] = useState({});
+  const [notReadySubmit, setNotReadySubmit] = useState(true);
+  const user = useSelector((state) => state.auth.user);
+
+  useEffect(() => {
+    if (user && history) {
+      history.replace(routes.LOGIN.path);
+    }
+  }, [user, history]);
 
   function changePage(value) {
     setPage((currPage) => currPage + value);
   }
 
-  // Validates the fields
-  const validate = (field, values, errors) => {
-    let error;
+  useEffect(() => {
+    if (
+      (validatePolicy(formData.termsAccepted) ||
+        validateFirstName(formData.firstName) ||
+        validateSurname(formData.surname) ||
+        validateBirthDate(formData.birthDate) ||
+        validateEmail(formData.email) ||
+        validatePassword(formData.password, formData.confirmPassword) ||
+        validateConfirmPassword(
+          formData.password,
+          formData.confirmPassword,
+        )) === null
+    ) {
+      setNotReadySubmit(false);
+      setFormErrors({});
+    } else {
+      setNotReadySubmit(true);
+    }
+  }, [formData]);
 
+  // Validates the fields
+  const validate = (field, values, lastErrors) => {
+    const errors = { ...lastErrors };
+    let error;
     switch (field) {
       case 'firstName':
         delete errors.firstName;
         error = validateFirstName(values.firstName);
         if (error !== null) {
-          errors.firstName = t(error);
+          errors.firstName = error;
         }
         break;
       case 'surname':
         delete errors.surname;
         error = validateSurname(values.surname);
         if (error !== null) {
-          errors.surname = t(error);
+          errors.surname = error;
         }
         break;
       case 'birthDate':
         delete errors.birthDate;
         error = validateBirthDate(values.birthDate);
         if (error !== null) {
-          errors.birthDate = t(error);
+          errors.birthDate = error;
         }
         break;
       case 'email':
         delete errors.email;
         error = validateEmail(values.email);
         if (error !== null) {
-          errors.email = t(error);
+          errors.email = error;
         }
 
         break;
       case 'password':
         delete errors.password;
         error = validatePassword(values.password, values.confirmPassword);
-        if (error !== null) {
-          errors.password = t(error);
+        if (error !== null && error !== undefined) {
+          errors.password = error;
         }
         break;
       case 'confirmPassword':
@@ -118,23 +148,15 @@ const RegisterScreen = (props) => {
           values.confirmPassword,
         );
         if (error !== null) {
-          errors.confirmPassword = t(error);
+          errors.confirmPassword = error;
         }
         break;
 
       default:
-        errors.firstName = t(validateFirstName(values.firstName));
-        errors.surname = t(validateSurname(values.surname));
-        errors.birthDate = t(validateBirthDate(values.birthDate));
-        errors.email = t(validateEmail(values.email));
-        errors.password = t(
-          validatePassword(values.password, values.confirmPassword),
-        );
-        errors.confirmPassword = t(
-          validateConfirmPassword(values.password, values.confirmPassword),
-        );
+        console.log('Field does not exist');
         break;
     }
+
     return errors;
   };
 
@@ -158,6 +180,7 @@ const RegisterScreen = (props) => {
         formData.birthDate,
         formData.email,
         formData.password,
+        formData.termsAccepted,
         disabilities,
       ),
     ).catch((error) => {
@@ -178,8 +201,8 @@ const RegisterScreen = (props) => {
 
   const nextClickHandler = (page, formErrors) => {
     if (page === 0) {
-      setFormErrors(validate('', formData, formErrors));
-      if (Object.keys(validate('', formData, formErrors)).length === 0) {
+      setFormErrors(validate('', formData, {}));
+      if (Object.keys(validate('', formData, {})).length === 0) {
         changePage(1);
         return;
       }
@@ -217,7 +240,8 @@ const RegisterScreen = (props) => {
             width: '100%',
             borderRadius: '25px',
           }}
-          backgroundColor={colors.orange}
+          disabled={notReadySubmit}
+          backgroundColor={notReadySubmit ? colors.grey : colors.orange}
           text={page === 0 ? t('next') : t('create_account')}
           icon={page === 0 ? ArrowRight : ProfileIcon}
           onClick={() => nextClickHandler(page, formErrors)}

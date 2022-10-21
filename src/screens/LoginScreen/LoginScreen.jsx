@@ -9,6 +9,7 @@ import { colors } from '../../constants/colors';
 import OpenAccountLogin from '../../assets/icons/open-account-login.svg';
 import TopBar from '../../components/TopBar/TopBar';
 import LoginInfo from './LoginInfo';
+import { REGEX_PASSWORD, REGEX_EMAIL } from '../../constants';
 
 const LoginScreen = (props) => {
   const initialValues = {
@@ -33,18 +34,16 @@ const LoginScreen = (props) => {
   // Validates the fields
   const validate = (values) => {
     const errors = {};
-    const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
-    const regexPassword = /^[a-zA-Z0-9]{8,}$/;
 
     if (!values.email) {
       errors.email = t('required_email');
-    } else if (!regexEmail.test(values.email)) {
+    } else if (!REGEX_EMAIL.test(values.email)) {
       errors.email = t('invalid_email');
     }
 
     if (!values.password) {
       errors.password = t('required_password');
-    } else if (!regexPassword.test(values.password)) {
+    } else if (!REGEX_PASSWORD.test(values.password)) {
       errors.password = t('password_rules');
     }
 

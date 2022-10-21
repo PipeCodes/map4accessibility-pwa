@@ -2,7 +2,13 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import CustomInput from '../../components/CustomInput/CustomInput';
-import { Text, InputLabel, Error } from './RegisterScreen.styles';
+import {
+  Text,
+  InputLabel,
+  Error,
+  CheckboxWrapper,
+  PrivacyPolicyLabel,
+} from './RegisterScreen.styles';
 
 const SignUpInfo = (props) => {
   const { formData, setFormData, formErrors, setFormErrors, validate } = props;
@@ -11,8 +17,14 @@ const SignUpInfo = (props) => {
   const font = useSelector((state) => state.accessibility.font);
 
   function focusHandler(target) {
-    setFormErrors((prevState) => validate(target, formData, prevState));
-    console.log(formErrors);
+    setFormErrors(validate(target, formData, formErrors));
+  }
+
+  function setPrivacyPolicyChecked() {
+    setFormData((prev) => ({
+      ...prev,
+      termsAccepted: !formData.termsAccepted,
+    }));
   }
 
   return (
@@ -38,13 +50,15 @@ const SignUpInfo = (props) => {
         }}
       />
       {formErrors.firstName && (
-        <Error fontSize={fontSize}>{formErrors.firstName}</Error>
+        <Error fontSize={fontSize}>{t(formErrors.firstName)}</Error>
       )}
       <InputLabel fontSize={fontSize}>
         {t('surname')}
         <span>*</span>
       </InputLabel>
       <CustomInput
+        fontSize={fontSize}
+        font={font}
         style={{}}
         placeholder={t('surname_placeholder')}
         value={formData.surname}
@@ -80,13 +94,15 @@ const SignUpInfo = (props) => {
         }}
       />
       {formErrors.birthDate && (
-        <Error fontSize={fontSize}>{formErrors.birthDate}</Error>
+        <Error fontSize={fontSize}>{t(formErrors.birthDate)}</Error>
       )}
       <InputLabel fontSize={fontSize}>
         {t('email')}
         <span>*</span>
       </InputLabel>
       <CustomInput
+        fontSize={fontSize}
+        font={font}
         style={{}}
         placeholder={t('email_placeholder')}
         type="email"
@@ -98,13 +114,15 @@ const SignUpInfo = (props) => {
         }}
       />
       {formErrors.email && (
-        <Error fontSize={fontSize}>{formErrors.email}</Error>
+        <Error fontSize={fontSize}>{t(formErrors.email)}</Error>
       )}
       <InputLabel fontSize={fontSize}>
         {t('password')}
         <span>*</span>
       </InputLabel>
       <CustomInput
+        fontSize={fontSize}
+        font={font}
         style={{}}
         placeholder={t('password_placeholder')}
         type="password"
@@ -119,13 +137,15 @@ const SignUpInfo = (props) => {
         }}
       />
       {formErrors.password && (
-        <Error fontSize={fontSize}>{formErrors.password}</Error>
+        <Error fontSize={fontSize}>{t(formErrors.password)}</Error>
       )}
       <InputLabel fontSize={fontSize}>
         {t('confirm_password')}
         <span>*</span>
       </InputLabel>
       <CustomInput
+        fontSize={fontSize}
+        font={font}
         style={{}}
         placeholder={t('confirm_password_placeholder')}
         type="password"
@@ -140,7 +160,29 @@ const SignUpInfo = (props) => {
         }}
       />
       {formErrors.confirmPassword && (
-        <Error fontSize={fontSize}>{formErrors.confirmPassword}</Error>
+        <Error fontSize={fontSize}>{t(formErrors.confirmPassword)}</Error>
+      )}
+      <CheckboxWrapper fontSize={fontSize} font={font}>
+        <input
+          type="checkbox"
+          checked={formData.termsAccepted}
+          onChange={() => setPrivacyPolicyChecked()}
+        />
+        <PrivacyPolicyLabel
+          fontSize={fontSize}
+          font={font}
+          onClick={() => setPrivacyPolicyChecked()}
+          dangerouslySetInnerHTML={{
+            __html: t('privacy_policy_message', {
+              link: 'https://google.com',
+              privacy_policy: t('privacy_policy'),
+            }),
+          }}
+        />
+      </CheckboxWrapper>
+
+      {formErrors.termsAccepted && (
+        <Error fontSize={fontSize}>{t(formErrors.termsAccepted)}</Error>
       )}
     </div>
   );

@@ -76,3 +76,28 @@ export const InputLabel = styled.div`
     color: ${colors.orange};
   }
 `;
+
+export const CheckboxWrapper = styled.div`
+  cursor: pointer;
+  display: flex;
+  place-self: start;
+  align-items: center;
+  margin-left: 10px;
+  margin-top: 18px;
+
+  input {
+    height: 18px;
+    width: 18px;
+  }
+`;
+
+export const PrivacyPolicyLabel = styled.div`
+  color: ${colors.grey};
+  font-size: ${(props) => updateFontSize(14, props.fontSize)};
+  font-family: ${(props) => updateValue('EasyReadingPro', props.font)};
+  margin-left: 10px;
+  a {
+    color: ${colors.primaryColor};
+    text-decoration: underline;
+  }
+`;

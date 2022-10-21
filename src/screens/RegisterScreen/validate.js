@@ -41,7 +41,7 @@ export const validateEmail = (email) => {
 };
 
 export const validatePassword = (password, confirmPassword) => {
-  let error;
+  let error = null;
   if (!password) {
     error = 'required_password';
   } else if (password !== confirmPassword) {
@@ -53,11 +53,19 @@ export const validatePassword = (password, confirmPassword) => {
 };
 
 export const validateConfirmPassword = (password, confirmPassword) => {
-  let error;
+  let error = null;
   if (!confirmPassword) {
     error = 'required_password';
   } else if (password !== confirmPassword) {
     error = 'passwords_match';
+  }
+  return error;
+};
+
+export const validatePolicy = (policy) => {
+  let error = null;
+  if (policy !== true) {
+    error = 'privacy_policy_error';
   }
   return error;
 };
