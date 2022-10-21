@@ -1,26 +1,14 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { login } from '../../store/actions/auth';
-import { Page, Container, Box, TextSecondary } from './LoginScreen.styles';
+import { Page, Container, Box } from './LoginScreen.styles';
 import CustomButton from '../../components/CustomButton/CustomButton';
 import { colors } from '../../constants/colors';
 import OpenAccountLogin from '../../assets/icons/open-account-login.svg';
 import TopBar from '../../components/TopBar/TopBar';
-import SignUpInfo from './SignUpInfo';
-
-const PageDisplay = (formData, setFormData, page, formErrors) => {
-  if (page === 0) {
-    return (
-      <SignUpInfo
-        formData={formData}
-        setFormData={setFormData}
-        formErrors={formErrors}
-      />
-    );
-  }
-};
+import LoginInfo from './LoginInfo';
 
 const LoginScreen = (props) => {
   const initialValues = {
@@ -32,13 +20,15 @@ const LoginScreen = (props) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const fontSize = useSelector((state) => state.accessibility.fontSize);
-  const [page, setPage] = useState(0);
   const [formData, setFormData] = useState(initialValues);
   const [formErrors, setFormErrors] = useState({});
+  const user = useSelector((state) => state.auth.user);
 
-  function changePage(value) {
-    setPage((currPage) => currPage + value);
-  }
+  useEffect(() => {
+    if (user) {
+      history.replace(routes.DASHBOARD.path);
+    }
+  }, [user]);
 
   // Validates the fields
   const validate = (values) => {
@@ -54,8 +44,6 @@ const LoginScreen = (props) => {
 
     if (!values.password) {
       errors.password = t('required_password');
-    } else if (values.password !== values.confirmPassword) {
-      errors.password = t('passwords_match');
     } else if (!regexPassword.test(values.password)) {
       errors.password = t('password_rules');
     }
@@ -64,7 +52,7 @@ const LoginScreen = (props) => {
   };
 
   // ClickHandlers
-  const registerClickHandler = useCallback(() => {
+  const loginClickHandler = useCallback(() => {
     dispatch(login(formData.email, formData.password)).catch((error) => {
       alert(error);
     });
@@ -74,40 +62,28 @@ const LoginScreen = (props) => {
     history.push(routes.ACCESSIBILITY.path);
   }, [history, routes]);
 
-  const backClickHandler = (page) => {
-    if (page === 0) {
-      history.goBack();
-    }
-    changePage(-1);
-  };
-
-  const nextClickHandler = (page, formErrors) => {
-    if (page === 0) {
-      setFormErrors(validate(formData));
-      if (Object.keys(validate(formData)).length === 0) {
-        changePage(1);
-        return;
-      }
-      return;
-    }
-    if (Object.keys(formErrors).length === 0) {
-      registerClickHandler();
-    } else {
-      setPage(0);
+  const validateFormErrorsClickHandler = () => {
+    const errors = validate(formData);
+    setFormErrors(errors);
+    if (Object.keys(errors).length === 0) {
+      loginClickHandler();
     }
   };
 
   return (
     <Page>
       <TopBar
-        backTarget={() => backClickHandler(page)}
         aligned
         hasBackButton
         hasLogo
         hasAccessibilityButton={openAccessibility}
       />
       <Container>
-        {PageDisplay(formData, setFormData, page, formErrors)}
+        <LoginInfo
+          formData={formData}
+          setFormData={setFormData}
+          formErrors={formErrors}
+        />
         <CustomButton
           style={{
             marginTop: 30,
@@ -118,35 +94,33 @@ const LoginScreen = (props) => {
           backgroundColor={colors.orange}
           text={t('login')}
           icon={OpenAccountLogin}
-          onClick={() => nextClickHandler(page, formErrors)}
+          onClick={() => validateFormErrorsClickHandler(formErrors)}
         />
 
-        {page === 0 && (
-          <Box>
-            <CustomButton
-              style={{
-                width: 'auto',
-                color: colors.primaryColor,
-                fontSize: { fontSize },
-                boxShadow: 'none',
-              }}
-              backgroundColor={colors.transparent}
-              text={t('create_account')}
-              onClick={() => history.push(routes.REGISTER.path)}
-            />
-            <CustomButton
-              style={{
-                width: 'auto',
-                color: colors.primaryColor,
-                fontSize: { fontSize },
-                boxShadow: 'none',
-              }}
-              backgroundColor={colors.transparent}
-              text={t('recover_password')}
-              onClick={() => history.push(routes.LOGIN.path)}
-            />
-          </Box>
-        )}
+        <Box>
+          <CustomButton
+            style={{
+              width: 'auto',
+              color: colors.primaryColor,
+              fontSize: { fontSize },
+              boxShadow: 'none',
+            }}
+            backgroundColor={colors.transparent}
+            text={t('create_account')}
+            onClick={() => history.push(routes.REGISTER.path)}
+          />
+          <CustomButton
+            style={{
+              width: 'auto',
+              color: colors.primaryColor,
+              fontSize: { fontSize },
+              boxShadow: 'none',
+            }}
+            backgroundColor={colors.transparent}
+            text={t('recover_password')}
+            onClick={() => history.push(routes.LOGIN.path)}
+          />
+        </Box>
       </Container>
     </Page>
   );
