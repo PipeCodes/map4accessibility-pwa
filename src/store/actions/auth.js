@@ -1,4 +1,3 @@
-import { useTranslation } from 'react-i18next';
 import axios, { Endpoints, getErrorMessage } from '../../services/api';
 import {
   AUTH_START,
@@ -13,8 +12,7 @@ import i18n from '../../i18n';
 import {
   clearLocalStorage,
   getAuthToken,
-  saveUser,
-  saveUserData,
+  saveAuthToken,
 } from '../../services/local';
 
 export const login = (email, password) => async (dispatch) => {
@@ -30,10 +28,7 @@ export const login = (email, password) => async (dispatch) => {
     const statusCode = response.status;
 
     if (statusCode === HTTP_STATUS.SUCCESS) {
-      saveUserData(
-        response.data?.result?.authorization?.token,
-        response.data?.result?.user,
-      );
+      saveAuthToken(response.data?.result?.authorization?.token);
 
       dispatch({
         type: AUTH_SUCCESS,
@@ -70,10 +65,7 @@ export const signup =
       const statusCode = response.status;
 
       if (statusCode === HTTP_STATUS.SUCCESS_CREATED) {
-        saveUserData(
-          response.data?.result?.authorization?.token,
-          response.data?.result?.user,
-        );
+        saveAuthToken(response.data?.result?.authorization?.token);
         dispatch({
           type: AUTH_SUCCESS,
           user: response.data?.result?.user,
@@ -106,10 +98,7 @@ export const signupProviderGoogle =
       const statusCode = response.status;
 
       if (statusCode === HTTP_STATUS.SUCCESS) {
-        saveUserData(
-          response.data?.result?.authorization?.token,
-          response.data?.result?.user,
-        );
+        saveAuthToken(response.data?.result?.authorization?.token);
         dispatch({
           type: AUTH_SUCCESS,
           user: response.data?.result?.user,
@@ -203,8 +192,6 @@ export const getUser = () => async (dispatch) => {
         points: response.data?.data?.points,
       };
 
-      saveUser(user);
-
       dispatch({
         type: GET_USER_SUCCESS,
         user,
@@ -249,8 +236,6 @@ export const updateUser =
           ...user,
           username: response.data?.data?.user?.username,
         };
-
-        saveUser(updatedUser);
 
         dispatch({
           type: GET_USER_SUCCESS,
