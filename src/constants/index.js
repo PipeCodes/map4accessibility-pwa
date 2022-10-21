@@ -40,6 +40,10 @@ export const AVATARS = [
 export const SUCCESS = 'success';
 export const ERROR = 'error';
 
+// SOCIAL LOGIN PROVIDERS
+export const PROVIDER_FB = 'facebook';
+export const PROVIDER_GG = 'google';
+
 // HTTP STATUS
 export const HTTP_STATUS = {
   UNHAUTORIZED: 401,
