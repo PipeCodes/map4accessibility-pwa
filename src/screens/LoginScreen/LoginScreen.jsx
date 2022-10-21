@@ -34,7 +34,7 @@ const LoginScreen = (props) => {
   const validate = (values) => {
     const errors = {};
     const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
-    const regexPassword = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+    const regexPassword = /^[a-zA-Z0-9]{8,}$/;
 
     if (!values.email) {
       errors.email = t('required_email');
