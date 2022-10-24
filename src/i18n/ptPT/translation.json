@@ -89,5 +89,8 @@
   "required_confirmPassword": "Confirmar Password é um campo obrigatório",
   "string_firstName": "O campo nome tem texto inválido",
   "string_surname": "O campo apelido tem texto inválido",
-  "invalid_birthDate": "Data inválida"
+  "invalid_birthDate": "Data inválida",
+  "email_confirmation": "Email Confirmado",
+  "email_confirmed": "O seu email foi confirmado.",
+  "proceed_login": "Prosseguir para Login"
 }
