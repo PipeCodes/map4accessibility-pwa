@@ -89,5 +89,8 @@
   "required_confirmPassword": "Password Confirmation is required",
   "string_firstName": "First Name is an invalid string",
   "string_surname": "Surname is an invalid string",
-  "invalid_birthDate": "Date is invalid"
+  "invalid_birthDate": "Date is invalid",
+  "email_confirmation": "Email Confirmation",
+  "email_confirmed": "Your email was confirmed.",
+  "proceed_login": "Proceed to Login"
 }
