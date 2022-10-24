@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -12,14 +12,32 @@ import ProfileIcon from '../../assets/icons/profile.svg';
 import TopBar from '../../components/TopBar/TopBar';
 import SignUpInfo from './SignUpInfo';
 import ExtraStep from './ExtraStep';
+import {
+  validateBirthDate,
+  validateConfirmPassword,
+  validateEmail,
+  validateFirstName,
+  validatePassword,
+  validatePolicy,
+  validateSurname,
+} from './validate';
 
-const PageDisplay = (formData, setFormData, page, formErrors) => {
+const PageDisplay = (
+  formData,
+  setFormData,
+  page,
+  formErrors,
+  setFormErrors,
+  validate,
+) => {
   if (page === 0) {
     return (
       <SignUpInfo
         formData={formData}
         setFormData={setFormData}
         formErrors={formErrors}
+        setFormErrors={setFormErrors}
+        validate={validate}
       />
     );
   }
@@ -34,6 +52,7 @@ const RegisterScreen = (props) => {
     email: '',
     password: '',
     confirmPassword: '',
+    termsAccepted: false,
     noDisability: false,
     motorDisability: false,
     visualDisability: false,
@@ -48,54 +67,94 @@ const RegisterScreen = (props) => {
   const [page, setPage] = useState(0);
   const [formData, setFormData] = useState(initialValues);
   const [formErrors, setFormErrors] = useState({});
+  const [notReadySubmit, setNotReadySubmit] = useState(true);
+  const user = useSelector((state) => state.auth.user);
+
+  useEffect(() => {
+    if (user && history) {
+      history.replace(routes.LOGIN.path);
+    }
+  }, [user, history]);
 
   function changePage(value) {
     setPage((currPage) => currPage + value);
   }
 
+  useEffect(() => {
+    if (
+      (validatePolicy(formData.termsAccepted) ||
+        validateFirstName(formData.firstName) ||
+        validateSurname(formData.surname) ||
+        validateBirthDate(formData.birthDate) ||
+        validateEmail(formData.email) ||
+        validatePassword(formData.password, formData.confirmPassword) ||
+        validateConfirmPassword(
+          formData.password,
+          formData.confirmPassword,
+        )) === null
+    ) {
+      setNotReadySubmit(false);
+      setFormErrors({});
+    } else {
+      setNotReadySubmit(true);
+    }
+  }, [formData]);
+
   // Validates the fields
-  const validate = (values) => {
-    const errors = {};
-    const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
-    const regexPassword = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
-    const regexDate = /^[0-9]{1,4}[-,/][0-9]{1,2}[-,/][0-9]{1,4}$/;
+  const validate = (field, values, lastErrors) => {
+    const errors = { ...lastErrors };
+    let error;
+    switch (field) {
+      case 'firstName':
+        delete errors.firstName;
+        error = validateFirstName(values.firstName);
+        if (error !== null) {
+          errors.firstName = error;
+        }
+        break;
+      case 'surname':
+        delete errors.surname;
+        error = validateSurname(values.surname);
+        if (error !== null) {
+          errors.surname = error;
+        }
+        break;
+      case 'birthDate':
+        delete errors.birthDate;
+        error = validateBirthDate(values.birthDate);
+        if (error !== null) {
+          errors.birthDate = error;
+        }
+        break;
+      case 'email':
+        delete errors.email;
+        error = validateEmail(values.email);
+        if (error !== null) {
+          errors.email = error;
+        }
 
-    if (!values.firstName) {
-      errors.firstName = t('required_firstName');
-    } else if (typeof values.firstName !== 'string') {
-      errors.firstName = t('string_firstName');
-    }
+        break;
+      case 'password':
+        delete errors.password;
+        error = validatePassword(values.password, values.confirmPassword);
+        if (error !== null && error !== undefined) {
+          errors.password = error;
+        }
+        break;
+      case 'confirmPassword':
+        delete errors.confirmPassword;
+        error = validateConfirmPassword(
+          values.password,
+          values.confirmPassword,
+        );
+        if (error !== null) {
+          errors.confirmPassword = error;
+        }
+        break;
 
-    if (!values.surname) {
-      errors.surname = t('required_surname');
-    } else if (typeof values.surname !== 'string') {
-      errors.surname = t('string_surname');
-    }
-
-    if (!values.birthDate) {
-      errors.birthDate = t('required_birthDate');
-    } else if (!regexDate.test(values.birthDate)) {
-      errors.birthDate = t('invalid_birthDate');
-    }
-
-    if (!values.email) {
-      errors.email = t('required_email');
-    } else if (!regexEmail.test(values.email)) {
-      errors.email = t('invalid_email');
-    }
-
-    if (!values.password) {
-      errors.password = t('required_password');
-    } else if (values.password !== values.confirmPassword) {
-      errors.password = t('passwords_match');
-    } else if (!regexPassword.test(values.password)) {
-      errors.password = t('password_rules');
-    }
-
-    if (!values.confirmPassword) {
-      errors.confirmPassword = t('required_confirmPassword');
-    } else if (values.password !== values.confirmPassword) {
-      errors.confirmPassword = t('passwords_match');
+      default:
+        console.log('Field does not exist');
+        break;
     }
 
     return errors;
@@ -121,6 +180,7 @@ const RegisterScreen = (props) => {
         formData.birthDate,
         formData.email,
         formData.password,
+        formData.termsAccepted,
         disabilities,
       ),
     ).catch((error) => {
@@ -141,8 +201,8 @@ const RegisterScreen = (props) => {
 
   const nextClickHandler = (page, formErrors) => {
     if (page === 0) {
-      setFormErrors(validate(formData));
-      if (Object.keys(validate(formData)).length === 0) {
+      setFormErrors(validate('', formData, {}));
+      if (Object.keys(validate('', formData, {})).length === 0) {
         changePage(1);
         return;
       }
@@ -165,7 +225,14 @@ const RegisterScreen = (props) => {
         hasAccessibilityButton={openAccessibility}
       />
       <Container>
-        {PageDisplay(formData, setFormData, page, formErrors)}
+        {PageDisplay(
+          formData,
+          setFormData,
+          page,
+          formErrors,
+          setFormErrors,
+          validate,
+        )}
         <CustomButton
           style={{
             marginTop: 30,
@@ -173,7 +240,8 @@ const RegisterScreen = (props) => {
             width: '100%',
             borderRadius: '25px',
           }}
-          backgroundColor={colors.orange}
+          disabled={notReadySubmit}
+          backgroundColor={notReadySubmit ? colors.grey : colors.orange}
           text={page === 0 ? t('next') : t('create_account')}
           icon={page === 0 ? ArrowRight : ProfileIcon}
           onClick={() => nextClickHandler(page, formErrors)}
