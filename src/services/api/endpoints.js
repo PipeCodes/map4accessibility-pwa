@@ -1,5 +1,6 @@
 export const SIGNUP = '/auth/register';
 export const LOGIN = '/auth/login';
+export const CHECK_EMAIL = 'auth/check-email';
 
 export const FAQS = '/faqs';
 export const POLICY = '/terms-conditions';

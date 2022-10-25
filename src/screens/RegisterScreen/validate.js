@@ -30,12 +30,14 @@ export const validateBirthDate = (birthDate) => {
   return error;
 };
 
-export const validateEmail = (email) => {
+export const validateEmail = (email, duplicate) => {
   let error = null;
   if (!email) {
     error = 'required_email';
   } else if (!REGEX_EMAIL.test(email)) {
     error = 'invalid_email';
+  } else if (duplicate) {
+    error = 'duplicate_email';
   }
   return error;
 };
