@@ -14,6 +14,8 @@ import FAQsScreen from '../screens/FAQsScreen/FAQsScreen';
 import TrackedRoute from './TrackedRoute';
 import ChangePasswordScreen from '../screens/ChangePasswordScreen/ChangePasswordScreen';
 import EditProfileScreen from '../screens/EditProfileScreen/EditProfileScreen';
+import OnboardingScreen from '../screens/OnboardingScreen/OnboardingScreen';
+import ConfirmedEmailScreen from '../screens/EmailConfirmationScreen/EmailConfirmationScreen';
 import { isAuthenticated } from '../services/local';
 
 const history = createBrowserHistory({ forceRefresh: true });
@@ -45,6 +47,11 @@ const routes = {
     component: RegisterScreen,
     private: false,
   },
+  EMAIL_CONFIRMATION: {
+    path: '/email-confirmation',
+    component: ConfirmedEmailScreen,
+    private: false,
+  },
   PROFILE: {
     path: '/profile',
     component: ProfileScreen,
@@ -69,6 +76,11 @@ const routes = {
     path: '/changepassword',
     component: ChangePasswordScreen,
     private: false,
+  },
+  DASHBOARD: {
+    path: '/dashboard',
+    component: OnboardingScreen, // Needs to change when we create a dashboard screen
+    private: true,
   },
 };
 

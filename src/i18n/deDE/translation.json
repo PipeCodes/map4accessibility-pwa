@@ -83,8 +83,15 @@
   "required_birthDate": "Birth Date is required",
   "required_email": "Email is required",
   "invalid_email": "Email is invalid",
+  "duplicate_email": "Email already in use",
   "required_password": "Password is required",
   "passwords_match": "Passwords do not match",
   "password_rules": "Password must have: 8 characters, 1 letter and 1 number",
-  "required_confirmPassword": "Password Confirmation is required"
+  "required_confirmPassword": "Password Confirmation is required",
+  "string_firstName": "First Name is an invalid string",
+  "string_surname": "Surname is an invalid string",
+  "invalid_birthDate": "Date is invalid",
+  "email_confirmation": "Email Confirmation",
+  "email_confirmed": "Your email was confirmed.",
+  "proceed_login": "Proceed to Login"
 }

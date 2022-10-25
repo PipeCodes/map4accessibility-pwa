@@ -28,20 +28,12 @@ export const Container = styled.div`
   }
 `;
 
-export const Error = styled.div`
-  font-size: ${(props) => updateFontSize(10, props.fontSize)};
-  place-self: start;
-  color: orange;
-  margin-left: 10px;
-`;
-
 export const Box = styled.div`
   width: 100%;
   height: auto;
   padding: 20px 0;
-  border-top: 1px solid #d3d2da;
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
   align-items: center;
 `;
 
@@ -77,27 +69,4 @@ export const InputLabel = styled.div`
   }
 `;
 
-export const CheckboxWrapper = styled.div`
-  cursor: pointer;
-  display: flex;
-  place-self: start;
-  align-items: center;
-  margin-left: 10px;
-  margin-top: 18px;
-
-  input {
-    height: 18px;
-    width: 18px;
-  }
-`;
-
-export const PrivacyPolicyLabel = styled.div`
-  color: ${colors.grey};
-  font-size: ${(props) => updateFontSize(14, props.fontSize)};
-  font-family: ${(props) => updateValue('EasyReadingPro', props.font)};
-  margin-left: 10px;
-  a {
-    color: ${colors.primaryColor};
-    text-decoration: underline;
-  }
-`;
+export const PopUp = styled.div``;

@@ -1,7 +1,9 @@
 import React, { useCallback } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import { LoginSocialGoogle, LoginSocialFacebook } from 'reactjs-social-login';
+import { signupProviderGoogle } from '../../store/actions/auth';
 import CustomButton from '../../components/CustomButton/CustomButton';
 import { colors } from '../../constants/colors';
 import {
@@ -16,13 +18,15 @@ import ProfileIcon from '../../assets/icons/profile.svg';
 import FacebookIcon from '../../assets/icons/facebook.svg';
 import GoogleIcon from '../../assets/icons/google.svg';
 import LoginIcon from '../../assets/icons/login.svg';
-// import SocialButton from '../../components/SocialButton/SocialButton';
-// Social Button commented for the time being, changed social media buttons to CustomButtons and unnistalled social-login lib
 
 const RegisterOptionsScreen = (props) => {
   const { routes, history } = props;
-
   const { t } = useTranslation();
+  const dispatch = useDispatch();
+
+  const onLoginStart = useCallback(() => {
+    alert('login start');
+  }, []);
 
   const openAccessibility = useCallback(() => {
     history.push(routes.ACCESSIBILITY.path);
@@ -33,6 +37,25 @@ const RegisterOptionsScreen = (props) => {
   );
 
   const fontSize = useSelector((state) => state.accessibility.fontSize);
+
+  const registerClickHandlerGoogle = useCallback(
+    (data) => {
+      if (data !== undefined && data !== null) {
+        dispatch(
+          signupProviderGoogle(
+            data.email,
+            data.given_name,
+            data.family_name,
+            data.id,
+          ),
+        ).catch((error) => {
+          debugger;
+          alert(error);
+        });
+      }
+    },
+    [dispatch],
+  );
 
   return (
     <Page backgroundColor={backgroundColor}>
@@ -52,29 +75,49 @@ const RegisterOptionsScreen = (props) => {
           icon={ProfileIcon}
         />
         <Box>
-          <CustomButton
-            // provider="facebook"
-            // appId="YOUR_APP_ID"
-            style={{
-              marginBottom: 20,
-              width: '100%',
-              borderRadius: '25px',
+          <LoginSocialFacebook
+            appId={process.env.REACT_APP_FB_APP_ID || ''}
+            onLoginStart={onLoginStart}
+            onResolve={({ provider, data }) => {
+              console.log('TODO FACEBOOK REGISTER');
             }}
-            backgroundColor={colors.facebook_blue}
-            text={t('sign_in_facebook')}
-            icon={FacebookIcon}
-          />
-          <CustomButton
-            // provider="google"
-            // appId="YOUR_APP_ID"
-            style={{
-              width: '100%',
-              borderRadius: '25px',
+            onReject={(err) => {
+              console.log(err);
             }}
-            backgroundColor={colors.google_red}
-            text={t('sign_in_google')}
-            icon={GoogleIcon}
-          />
+          >
+            <CustomButton
+              style={{
+                marginBottom: 20,
+                width: '100%',
+                borderRadius: '25px',
+              }}
+              backgroundColor={colors.facebook_blue}
+              text={t('sign_in_facebook')}
+              icon={FacebookIcon}
+            />
+          </LoginSocialFacebook>
+
+          <LoginSocialGoogle
+            client_id={process.env.REACT_APP_GG_APP_ID || ''}
+            onLoginStart={onLoginStart}
+            scope="https://www.googleapis.com/auth/userinfo.email"
+            onResolve={({ data }) => {
+              registerClickHandlerGoogle(data);
+            }}
+            onReject={(err) => {
+              console.log(err);
+            }}
+          >
+            <CustomButton
+              style={{
+                width: '100%',
+                borderRadius: '25px',
+              }}
+              backgroundColor={colors.google_red}
+              text={t('sign_in_google')}
+              icon={GoogleIcon}
+            />
+          </LoginSocialGoogle>
         </Box>
         <Box>
           <TextSecondary fontSize={fontSize}>

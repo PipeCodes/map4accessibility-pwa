@@ -1,4 +1,3 @@
-import { useTranslation } from 'react-i18next';
 import axios, { Endpoints, getErrorMessage } from '../../services/api';
 import {
   AUTH_START,
@@ -13,15 +12,13 @@ import i18n from '../../i18n';
 import {
   clearLocalStorage,
   getAuthToken,
-  saveUser,
-  saveUserData,
+  saveAuthToken,
 } from '../../services/local';
 
-export const login = (emailOrUsername, password) => async (dispatch) => {
-  const { t } = useTranslation();
+export const login = (email, password) => async (dispatch) => {
   dispatch({ type: AUTH_START });
   const body = {
-    email_username: emailOrUsername?.trim(),
+    email: email?.trim(),
     password,
   };
 
@@ -31,24 +28,24 @@ export const login = (emailOrUsername, password) => async (dispatch) => {
     const statusCode = response.status;
 
     if (statusCode === HTTP_STATUS.SUCCESS) {
-      saveUserData(response.data?.data?._token, response.data?.data?.user);
+      saveAuthToken(response.data?.result?.authorization?.token);
 
       dispatch({
         type: AUTH_SUCCESS,
-        user: response.data?.data?.user,
+        user: response.data?.result?.user,
       });
     }
   } catch (error) {
     dispatch({ type: AUTH_ERROR });
 
     return Promise.reject(
-      error?.response?.data?.message ?? t('something_wrong'),
+      error?.response?.data?.message ?? i18n.t('something_wrong'),
     );
   }
 };
 
 export const signup =
-  (name, surname, birthdate, email, password, disabilities) =>
+  (name, surname, birthdate, email, password, termsAccepted, disabilities) =>
   async (dispatch) => {
     dispatch({ type: AUTH_START });
 
@@ -58,7 +55,7 @@ export const signup =
       birthdate,
       email: email?.trim().toLowerCase(),
       password,
-      terms_accepted: true,
+      terms_accepted: termsAccepted,
       disabilities,
     };
 
@@ -67,11 +64,11 @@ export const signup =
 
       const statusCode = response.status;
 
-      if (statusCode === HTTP_STATUS.SUCCESS) {
-        saveUserData(response.data?.data?._token, response.data?.data?.user);
+      if (statusCode === HTTP_STATUS.SUCCESS_CREATED) {
+        saveAuthToken(response.data?.result?.authorization?.token);
         dispatch({
           type: AUTH_SUCCESS,
-          user: response.data?.data,
+          user: response.data?.result?.user,
         });
       }
     } catch (error) {
@@ -80,6 +77,61 @@ export const signup =
       return Promise.reject(getErrorMessage(error, i18n.t('something_wrong')));
     }
   };
+
+export const signupProviderGoogle =
+  (email, name, surname, id) => async (dispatch) => {
+    dispatch({ type: AUTH_START });
+
+    const body = {
+      email,
+      name,
+      surname,
+      birthdate: '2022-10-20',
+      terms_accepted: true,
+      auth_providers: {
+        gmail: id,
+      },
+    };
+
+    try {
+      const response = await axios.post(Endpoints.SIGNUP, body);
+      const statusCode = response.status;
+
+      if (statusCode === HTTP_STATUS.SUCCESS) {
+        saveAuthToken(response.data?.result?.authorization?.token);
+        dispatch({
+          type: AUTH_SUCCESS,
+          user: response.data?.result?.user,
+        });
+      }
+    } catch (error) {
+      dispatch({ type: AUTH_ERROR });
+
+      return Promise.reject(getErrorMessage(error, i18n.t('something_wrong')));
+    }
+  };
+
+export const checkEmail = (email) => async () => {
+  const body = {
+    email: email?.trim(),
+  };
+  try {
+    const response = await axios.post(Endpoints.CHECK_EMAIL, body);
+    const statusCode = response.status;
+
+    if (statusCode === HTTP_STATUS.SUCCESS) {
+      return Promise.resolve(false);
+    }
+  } catch (error) {
+    if (error?.response?.data?.error_code === 409) {
+      return Promise.resolve(true);
+    }
+
+    return Promise.reject(
+      error?.response?.data?.message ?? i18n.t('something_wrong'),
+    );
+  }
+};
 
 export const recoverPassword = (emailOrUsername) => async (dispatch) => {
   dispatch({ type: AUTH_START });
@@ -162,8 +214,6 @@ export const getUser = () => async (dispatch) => {
         points: response.data?.data?.points,
       };
 
-      saveUser(user);
-
       dispatch({
         type: GET_USER_SUCCESS,
         user,
@@ -208,8 +258,6 @@ export const updateUser =
           ...user,
           username: response.data?.data?.user?.username,
         };
-
-        saveUser(updatedUser);
 
         dispatch({
           type: GET_USER_SUCCESS,

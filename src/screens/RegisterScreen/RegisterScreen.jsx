@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -12,35 +12,56 @@ import ProfileIcon from '../../assets/icons/profile.svg';
 import TopBar from '../../components/TopBar/TopBar';
 import SignUpInfo from './SignUpInfo';
 import ExtraStep from './ExtraStep';
+import {
+  validateBirthDate,
+  validateConfirmPassword,
+  validateEmail,
+  validateFirstName,
+  validatePassword,
+  validatePolicy,
+  validateSurname,
+} from './validate';
 
-const PageDisplay = (formData, setFormData, page, formErrors) => {
+const PageDisplay = ({
+  formData,
+  setFormData,
+  page,
+  formErrors,
+  setFormErrors,
+  validate,
+  setNotReadySubmit,
+}) => {
   if (page === 0) {
     return (
       <SignUpInfo
         formData={formData}
         setFormData={setFormData}
         formErrors={formErrors}
+        setFormErrors={setFormErrors}
+        validate={validate}
+        setNotReadySubmit={setNotReadySubmit}
       />
     );
   }
   return <ExtraStep formData={formData} setFormData={setFormData} />;
 };
 
-const RegisterScreen = (props) => {
-  const initialValues = {
-    firstName: '',
-    surname: '',
-    birthDate: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
-    noDisability: false,
-    motorDisability: false,
-    visualDisability: false,
-    hearingDisability: false,
-    intellectualDisability: false,
-  };
+const initialValues = {
+  firstName: '',
+  surname: '',
+  birthDate: '',
+  email: '',
+  password: '',
+  confirmPassword: '',
+  termsAccepted: false,
+  noDisability: false,
+  motorDisability: false,
+  visualDisability: false,
+  hearingDisability: false,
+  intellectualDisability: false,
+};
 
+const RegisterScreen = (props) => {
   const { history, routes } = props;
   const { t } = useTranslation();
   const dispatch = useDispatch();
@@ -48,55 +69,73 @@ const RegisterScreen = (props) => {
   const [page, setPage] = useState(0);
   const [formData, setFormData] = useState(initialValues);
   const [formErrors, setFormErrors] = useState({});
+  const [notReadySubmit, setNotReadySubmit] = useState(true);
+  const user = useSelector((state) => state.auth.user);
+
+  useEffect(() => {
+    if (user && history) {
+      history.replace(routes.LOGIN.path);
+    }
+  }, [user, history]);
 
   function changePage(value) {
     setPage((currPage) => currPage + value);
   }
-
   // Validates the fields
-  const validate = (values) => {
-    const errors = {};
-    const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
-    const regexPassword = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
-    const regexDate =
-      /^(?:(?:31(\/|-|\.)(?:0?[13578]|1[02]))\1|(?:(?:29|30)(\/|-|\.)(?:0?[13-9]|1[0-2])\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/|-|\.)0?2\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\/|-|\.)(?:(?:0?[1-9])|(?:1[0-2]))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$/;
+  const validate = (field, values, lastErrors, duplicatedEmail = false) => {
+    const errors = { ...lastErrors };
+    let error;
+    switch (field) {
+      case 'firstName':
+        delete errors.firstName;
+        error = validateFirstName(values.firstName);
+        if (error !== null) {
+          errors.firstName = error;
+        }
+        break;
+      case 'surname':
+        delete errors.surname;
+        error = validateSurname(values.surname);
+        if (error !== null) {
+          errors.surname = error;
+        }
+        break;
+      case 'birthDate':
+        delete errors.birthDate;
+        error = validateBirthDate(values.birthDate);
+        if (error !== null) {
+          errors.birthDate = error;
+        }
+        break;
+      case 'email':
+        delete errors.email;
+        error = validateEmail(values.email, duplicatedEmail);
+        if (error !== null) {
+          errors.email = error;
+        }
 
-    if (!values.firstName) {
-      errors.firstName = t('required_firstName');
-    } else if (values.firstName !== 'string') {
-      errors.firstName = t('string_firstName');
-    }
+        break;
+      case 'password':
+        delete errors.password;
+        error = validatePassword(values.password, values.confirmPassword);
+        if (error !== null && error !== undefined) {
+          errors.password = error;
+        }
+        break;
+      case 'confirmPassword':
+        delete errors.confirmPassword;
+        error = validateConfirmPassword(
+          values.password,
+          values.confirmPassword,
+        );
+        if (error !== null) {
+          errors.confirmPassword = error;
+        }
+        break;
 
-    if (!values.surname) {
-      errors.surname = t('required_surname');
-    } else if (values.surname !== 'string') {
-      errors.firstName = t('string_firstName');
-    }
-
-    if (!values.birthDate) {
-      errors.birthDate = t('required_birthDate');
-    } else if (!regexDate.test(values.birthDate)) {
-      errors.email = t('invalid_birthDate');
-    }
-
-    if (!values.email) {
-      errors.email = t('required_email');
-    } else if (!regexEmail.test(values.email)) {
-      errors.email = t('invalid_email');
-    }
-
-    if (!values.password) {
-      errors.password = t('required_password');
-    } else if (values.password !== values.confirmPassword) {
-      errors.password = t('passwords_match');
-    } else if (!regexPassword.test(values.password)) {
-      errors.password = t('password_rules');
-    }
-
-    if (!values.confirmPassword) {
-      errors.confirmPassword = t('required_confirmPassword');
-    } else if (values.password !== values.confirmPassword) {
-      errors.confirmPassword = t('passwords_match');
+      default:
+        console.log('Field does not exist');
+        break;
     }
 
     return errors;
@@ -122,6 +161,7 @@ const RegisterScreen = (props) => {
         formData.birthDate,
         formData.email,
         formData.password,
+        formData.termsAccepted,
         disabilities,
       ),
     ).catch((error) => {
@@ -142,8 +182,8 @@ const RegisterScreen = (props) => {
 
   const nextClickHandler = (page, formErrors) => {
     if (page === 0) {
-      setFormErrors(validate(formData));
-      if (Object.keys(validate(formData)).length === 0) {
+      setFormErrors(validate('', formData, {}));
+      if (Object.keys(validate('', formData, {})).length === 0) {
         changePage(1);
         return;
       }
@@ -166,7 +206,15 @@ const RegisterScreen = (props) => {
         hasAccessibilityButton={openAccessibility}
       />
       <Container>
-        {PageDisplay(formData, setFormData, page, formErrors)}
+        <PageDisplay
+          formData={formData}
+          setFormData={setFormData}
+          page={page}
+          formErrors={formErrors}
+          setFormErrors={setFormErrors}
+          validate={validate}
+          setNotReadySubmit={setNotReadySubmit}
+        />
         <CustomButton
           style={{
             marginTop: 30,
@@ -174,7 +222,8 @@ const RegisterScreen = (props) => {
             width: '100%',
             borderRadius: '25px',
           }}
-          backgroundColor={colors.orange}
+          disabled={notReadySubmit}
+          backgroundColor={notReadySubmit ? colors.grey : colors.orange}
           text={page === 0 ? t('next') : t('create_account')}
           icon={page === 0 ? ArrowRight : ProfileIcon}
           onClick={() => nextClickHandler(page, formErrors)}

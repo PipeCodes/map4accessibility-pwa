@@ -29,6 +29,10 @@ export const Box = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  div {
+    width: 100%;
+  }
 `;
 
 export const Text = styled.span`
