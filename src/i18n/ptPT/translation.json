@@ -83,6 +83,7 @@
   "required_birthDate": "Data de Nascimento é um campo obrigatório",
   "required_email": "Email é um campo obrigatório",
   "invalid_email": "Email inválido",
+  "duplicate_email": "Email já em uso",
   "required_password": "Password é um campo obrigatório",
   "passwords_match": "Passwords não são iguais",
   "password_rules": "Password tem de conter: 8 caracteres, 1 letra and 1 número",

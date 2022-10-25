@@ -111,6 +111,28 @@ export const signupProviderGoogle =
     }
   };
 
+export const checkEmail = (email) => async () => {
+  const body = {
+    email: email?.trim(),
+  };
+  try {
+    const response = await axios.post(Endpoints.CHECK_EMAIL, body);
+    const statusCode = response.status;
+
+    if (statusCode === HTTP_STATUS.SUCCESS) {
+      return Promise.resolve(false);
+    }
+  } catch (error) {
+    if (error?.response?.data?.error_code === 409) {
+      return Promise.resolve(true);
+    }
+
+    return Promise.reject(
+      error?.response?.data?.message ?? i18n.t('something_wrong'),
+    );
+  }
+};
+
 export const recoverPassword = (emailOrUsername) => async (dispatch) => {
   dispatch({ type: AUTH_START });
 

@@ -1,7 +1,8 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useCallback, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import CustomInput from '../../components/CustomInput/CustomInput';
+import { checkEmail } from '../../store/actions/auth';
 import {
   Text,
   InputLabel,
@@ -9,23 +10,78 @@ import {
   CheckboxWrapper,
   PrivacyPolicyLabel,
 } from './RegisterScreen.styles';
+import {
+  validateBirthDate,
+  validateConfirmPassword,
+  validateEmail,
+  validateFirstName,
+  validatePassword,
+  validatePolicy,
+  validateSurname,
+} from './validate';
 
 const SignUpInfo = (props) => {
-  const { formData, setFormData, formErrors, setFormErrors, validate } = props;
+  const {
+    formData,
+    setFormData,
+    formErrors,
+    setFormErrors,
+    validate,
+    setNotReadySubmit,
+  } = props;
   const { t } = useTranslation();
   const fontSize = useSelector((state) => state.accessibility.fontSize);
   const font = useSelector((state) => state.accessibility.font);
+  const dispatch = useDispatch();
 
-  function focusHandler(target) {
-    setFormErrors(validate(target, formData, formErrors));
-  }
+  const duplicate = useCallback(
+    (email) =>
+      dispatch(checkEmail(email))
+        .then((value) => {
+          setFormErrors((prevErrors) =>
+            validate('email', formData, prevErrors, value),
+          );
+        })
+        .catch((error) => {
+          alert(error);
+        }),
+    [dispatch, formData, validate],
+  );
 
-  function setPrivacyPolicyChecked() {
+  const focusHandler = useCallback(
+    (target) => {
+      setFormErrors((prevErrors) => validate(target, formData, prevErrors));
+    },
+    [validate, formData],
+  );
+
+  const setPrivacyPolicyChecked = () => {
     setFormData((prev) => ({
       ...prev,
       termsAccepted: !formData.termsAccepted,
     }));
-  }
+  };
+
+  useEffect(() => {
+    console.log(formErrors);
+    if (
+      (validatePolicy(formData.termsAccepted) ||
+        validateFirstName(formData.firstName) ||
+        validateSurname(formData.surname) ||
+        validateBirthDate(formData.birthDate) ||
+        validateEmail(formData.email, false) ||
+        validatePassword(formData.password, formData.confirmPassword) ||
+        validateConfirmPassword(
+          formData.password,
+          formData.confirmPassword,
+        )) === null &&
+      Object.keys(formErrors).length === 0
+    ) {
+      setNotReadySubmit(false);
+    } else {
+      setNotReadySubmit(true);
+    }
+  }, [formData, formErrors]);
 
   return (
     <div className="fullDiv">
@@ -108,7 +164,13 @@ const SignUpInfo = (props) => {
         type="email"
         value={formData.email}
         name="email"
-        onBlur={(e) => focusHandler(e.target.name)}
+        onBlur={(e) => {
+          if (e.target.value.length > 0) {
+            duplicate(e.target.value);
+          } else {
+            focusHandler(e.target.name);
+          }
+        }}
         onChange={(e) => {
           setFormData((prevState) => ({ ...prevState, email: e.target.value }));
         }}

@@ -22,14 +22,15 @@ import {
   validateSurname,
 } from './validate';
 
-const PageDisplay = (
+const PageDisplay = ({
   formData,
   setFormData,
   page,
   formErrors,
   setFormErrors,
   validate,
-) => {
+  setNotReadySubmit,
+}) => {
   if (page === 0) {
     return (
       <SignUpInfo
@@ -38,28 +39,29 @@ const PageDisplay = (
         formErrors={formErrors}
         setFormErrors={setFormErrors}
         validate={validate}
+        setNotReadySubmit={setNotReadySubmit}
       />
     );
   }
   return <ExtraStep formData={formData} setFormData={setFormData} />;
 };
 
-const RegisterScreen = (props) => {
-  const initialValues = {
-    firstName: '',
-    surname: '',
-    birthDate: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
-    termsAccepted: false,
-    noDisability: false,
-    motorDisability: false,
-    visualDisability: false,
-    hearingDisability: false,
-    intellectualDisability: false,
-  };
+const initialValues = {
+  firstName: '',
+  surname: '',
+  birthDate: '',
+  email: '',
+  password: '',
+  confirmPassword: '',
+  termsAccepted: false,
+  noDisability: false,
+  motorDisability: false,
+  visualDisability: false,
+  hearingDisability: false,
+  intellectualDisability: false,
+};
 
+const RegisterScreen = (props) => {
   const { history, routes } = props;
   const { t } = useTranslation();
   const dispatch = useDispatch();
@@ -79,29 +81,8 @@ const RegisterScreen = (props) => {
   function changePage(value) {
     setPage((currPage) => currPage + value);
   }
-
-  useEffect(() => {
-    if (
-      (validatePolicy(formData.termsAccepted) ||
-        validateFirstName(formData.firstName) ||
-        validateSurname(formData.surname) ||
-        validateBirthDate(formData.birthDate) ||
-        validateEmail(formData.email) ||
-        validatePassword(formData.password, formData.confirmPassword) ||
-        validateConfirmPassword(
-          formData.password,
-          formData.confirmPassword,
-        )) === null
-    ) {
-      setNotReadySubmit(false);
-      setFormErrors({});
-    } else {
-      setNotReadySubmit(true);
-    }
-  }, [formData]);
-
   // Validates the fields
-  const validate = (field, values, lastErrors) => {
+  const validate = (field, values, lastErrors, duplicatedEmail = false) => {
     const errors = { ...lastErrors };
     let error;
     switch (field) {
@@ -128,7 +109,7 @@ const RegisterScreen = (props) => {
         break;
       case 'email':
         delete errors.email;
-        error = validateEmail(values.email);
+        error = validateEmail(values.email, duplicatedEmail);
         if (error !== null) {
           errors.email = error;
         }
@@ -225,14 +206,15 @@ const RegisterScreen = (props) => {
         hasAccessibilityButton={openAccessibility}
       />
       <Container>
-        {PageDisplay(
-          formData,
-          setFormData,
-          page,
-          formErrors,
-          setFormErrors,
-          validate,
-        )}
+        <PageDisplay
+          formData={formData}
+          setFormData={setFormData}
+          page={page}
+          formErrors={formErrors}
+          setFormErrors={setFormErrors}
+          validate={validate}
+          setNotReadySubmit={setNotReadySubmit}
+        />
         <CustomButton
           style={{
             marginTop: 30,
