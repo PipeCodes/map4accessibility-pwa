@@ -1,141 +1,150 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { signup } from '../../store/actions/auth';
-import { Page, Container, Box } from './RecoverPasswordScreen.styles';
+import { recoverPassword } from '../../store/actions/auth';
+import {
+  Page,
+  Container,
+  Box,
+  Text,
+  InputLabel,
+} from './RecoverPasswordScreen.styles';
 import CustomButton from '../../components/CustomButton/CustomButton';
 import { colors } from '../../constants/colors';
 import MaterialLoop from '../../assets/icons/material-loop.svg';
 import TopBar from '../../components/TopBar/TopBar';
-import SignUpInfo from './SignUpInfo';
+import CustomInput from '../../components/CustomInput/CustomInput';
+import { validateEmail } from '../RegisterScreen/validate';
 
-const PageDisplay = (formData, setFormData, page, formErrors) => {
-  if (page === 0) {
-    return (
-      <SignUpInfo
-        formData={formData}
-        setFormData={setFormData}
-        formErrors={formErrors}
-      />
-    );
-  }
+const initialValues = {
+  email: '',
 };
 
 const RecoverPasswordScreen = (props) => {
-  const initialValues = {
-    email: '',
-  };
-
   const { history, routes } = props;
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const fontSize = useSelector((state) => state.accessibility.fontSize);
-  const [page, setPage] = useState(0);
+  const fontFamily = useSelector((state) => state.accessibility.fontFamily);
   const [formData, setFormData] = useState(initialValues);
   const [formErrors, setFormErrors] = useState({});
+  const [notReadySubmit, setNotReadySubmit] = useState(true);
 
-  function changePage(value) {
-    setPage((currPage) => currPage + value);
-  }
+  const recoverPasswordHandler = useCallback(() => {
+    dispatch(recoverPassword(formData.email))
+      .then(history.push(routes.LOGIN.path))
+      .catch((error) => {
+        alert(error);
+      });
+  }, [dispatch, formData]);
 
-  // Validates the fields
-  const validate = (values) => {
-    const errors = {};
-    const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
-
-    if (!values.email) {
-      errors.email = t('required_email');
-    } else if (!regexEmail.test(values.email)) {
-      errors.email = t('invalid_email');
+  useEffect(() => {
+    if (validateEmail(formData.email, false) === null) {
+      setNotReadySubmit(false);
+    } else {
+      setNotReadySubmit(true);
     }
+  }, [formData, formErrors]);
 
+  //  Validates the fields
+  const validate = (values, lastErrors) => {
+    const errors = { ...lastErrors };
+    const error = validateEmail(values.email, false);
+    delete errors.email;
+    if (error !== null) {
+      errors.email = error;
+    }
     return errors;
   };
 
-  const recoverPasswordClickHandler = useCallback(() => {
-    dispatch(signup(formData.email)).catch((error) => {
-      alert(error);
-    });
-  }, [dispatch, formData]);
+  //  Click Handlers
+  const clickHandler = () => {
+    setFormErrors((prevErrors) => validate(formData, prevErrors));
+    if (Object.keys(formErrors).length === 0) {
+      recoverPasswordHandler();
+    }
+  };
 
   const openAccessibility = useCallback(() => {
     history.push(routes.ACCESSIBILITY.path);
   }, [history, routes]);
 
-  const backClickHandler = (page) => {
-    if (page === 0) {
-      history.goBack();
-    }
-    changePage(-1);
-  };
-
-  const nextClickHandler = (page, formErrors) => {
-    if (page === 0) {
-      setFormErrors(validate(formData));
-      if (Object.keys(validate(formData)).length === 0) {
-        changePage(1);
-        return;
-      }
-      return;
-    }
-    if (Object.keys(formErrors).length === 0) {
-      recoverPasswordClickHandler();
-    } else {
-      setPage(0);
-    }
+  const backClickHandler = () => {
+    history.goBack();
   };
 
   return (
     <Page>
       <TopBar
-        backTarget={() => backClickHandler(page)}
+        backTarget={() => backClickHandler()}
         aligned
         hasBackButton
         hasLogo
         hasAccessibilityButton={openAccessibility}
       />
       <Container>
-        {PageDisplay(formData, setFormData, page, formErrors)}
+        <div className="fullDiv">
+          <Text fontSize={fontSize} fontFamily={fontFamily}>
+            {t('recover_password')}
+          </Text>
+          <InputLabel fontSize={fontSize} fontFamily={fontFamily}>
+            {t('email')}
+            <span>*</span>
+          </InputLabel>
+          <CustomInput
+            style={{}}
+            placeholder={t('email_placeholder')}
+            type="email"
+            value={formData.email}
+            fontFamily={fontFamily}
+            fontSize={fontSize}
+            onChange={(e) =>
+              setFormData({ ...formData, email: e.target.value })
+            }
+          />
+        </div>
         <CustomButton
           style={{
             marginTop: 30,
             marginBottom: 20,
             width: '100%',
             borderRadius: '25px',
+            fontSize: { fontSize },
+            fontFamily: { fontFamily },
           }}
-          backgroundColor={colors.orange}
+          disabled={notReadySubmit}
+          backgroundColor={notReadySubmit ? colors.grey : colors.orange}
           text={t('recover')}
           icon={MaterialLoop}
-          onClick={() => nextClickHandler(page, formErrors)}
+          onClick={() => clickHandler()}
         />
-
-        {page === 0 && (
-          <Box>
-            <CustomButton
-              style={{
-                width: 'auto',
-                color: colors.primaryColor,
-                fontSize: { fontSize },
-                boxShadow: 'none',
-              }}
-              backgroundColor={colors.transparent}
-              text={t('create_account')}
-              onClick={() => history.push(routes.REGISTER.path)}
-            />
-            <CustomButton
-              style={{
-                width: 'auto',
-                color: colors.primaryColor,
-                fontSize: { fontSize },
-                boxShadow: 'none',
-              }}
-              backgroundColor={colors.transparent}
-              text={t('login')}
-              onClick={() => history.push(routes.LOGIN.path)}
-            />
-          </Box>
-        )}
+        <Box>
+          <CustomButton
+            style={{
+              width: 'auto',
+              color: colors.primaryColor,
+              fontSize: { fontSize },
+              fontFamily: { fontFamily },
+              boxShadow: 'none',
+            }}
+            backgroundColor={colors.transparent}
+            text={t('create_account')}
+            onClick={() => history.push(routes.REGISTER.path)}
+          />
+          <CustomButton
+            style={{
+              width: 'auto',
+              color: colors.primaryColor,
+              fontSize: { fontSize },
+              fontFamily: { fontFamily },
+              boxShadow: 'none',
+            }}
+            backgroundColor={colors.transparent}
+            text={t('login')}
+            onClick={() => history.push(routes.LOGIN.path)}
+          />
+        </Box>
       </Container>
     </Page>
   );

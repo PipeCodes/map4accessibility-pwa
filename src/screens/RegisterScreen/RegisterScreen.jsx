@@ -18,7 +18,6 @@ import {
   validateEmail,
   validateFirstName,
   validatePassword,
-  validatePolicy,
   validateSurname,
 } from './validate';
 
@@ -78,9 +77,10 @@ const RegisterScreen = (props) => {
     }
   }, [user, history]);
 
-  function changePage(value) {
+  const changePage = (value) => {
     setPage((currPage) => currPage + value);
-  }
+  };
+
   // Validates the fields
   const validate = (field, values, lastErrors, duplicatedEmail = false) => {
     const errors = { ...lastErrors };
@@ -180,16 +180,12 @@ const RegisterScreen = (props) => {
     changePage(-1);
   };
 
-  const nextClickHandler = (page, formErrors) => {
+  const nextClickHandler = (page) => {
     if (page === 0) {
-      setFormErrors(validate('', formData, {}));
-      if (Object.keys(validate('', formData, {})).length === 0) {
-        changePage(1);
-        return;
-      }
+      changePage(1);
       return;
     }
-    if (Object.keys(formErrors).length === 0) {
+    if (page === 1) {
       registerClickHandler();
     } else {
       setPage(0);
@@ -226,7 +222,7 @@ const RegisterScreen = (props) => {
           backgroundColor={notReadySubmit ? colors.grey : colors.orange}
           text={page === 0 ? t('next') : t('create_account')}
           icon={page === 0 ? ArrowRight : ProfileIcon}
-          onClick={() => nextClickHandler(page, formErrors)}
+          onClick={() => nextClickHandler(page)}
         />
 
         {page === 0 && (

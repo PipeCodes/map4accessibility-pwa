@@ -28,13 +28,6 @@ export const Container = styled.div`
   }
 `;
 
-export const Error = styled.div`
-  font-size: ${(props) => updateFontSize(10, props.fontSize)};
-  place-self: start;
-  color: orange;
-  margin-left: 10px;
-`;
-
 export const Box = styled.div`
   width: 100%;
   height: auto;
