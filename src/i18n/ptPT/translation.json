@@ -26,7 +26,7 @@
   "cancel": "Cancelar",
   "pwa_prompt_message": "Este website tem a funcionalidade de aplicação. Adicione ao Ecrã principal e utilize em modo aplicação.",
   "ranking": "Ranking",
-  "my_profile": "O meu perfil",
+  "profile": "Perfil",
   "something_wrong": "Ocorreu um error. Tente mais tarde.",
   "privacy_policy_message": "Declaro que li e concordo com os <a href='{{link}}' rel='noreferrer noopener'>{{privacy_policy}}</a> da app GuestAccess",
   "privacy_policy": "Política de Privacidade",

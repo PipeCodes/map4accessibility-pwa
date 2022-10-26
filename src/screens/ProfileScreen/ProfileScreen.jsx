@@ -1,80 +1,30 @@
-import React, { useEffect, useMemo, useCallback } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import {
-  Page,
-  Container,
-  Region,
-  Avatar,
-  UsernameContainer,
-  Username,
-  EditButton,
-  ScoreContainer,
-  ScoreImg,
-  Score,
-  PrivacyPolicyLink,
-  UserInfoContainer,
-  EditableContainer,
-  StatsContainer,
-  StatsItem,
-  StatsItemCount,
-  StatsItemTitle,
-  TopWrapper,
-  BottomWrapper,
-  LogoutButton,
-} from './ProfileScreen.styles';
+import { Page, Container } from './ProfileScreen.styles';
 import TopBar from '../../components/TopBar/TopBar';
-import { getUser, logout } from '../../store/actions/auth';
-import FooterBar from '../../components/FooterBar/FooterBar';
-import FAQsIcon from '../../assets/images/old_delete/faqs.svg';
-import LogoutIcon from '../../assets/images/old_delete/logout.svg';
-import EditIcon from '../../assets/images/old_delete/edit.svg';
-import StarIcon from '../../assets/images/old_delete/star.svg';
-import { AVATARS } from '../../constants';
+import { getUser } from '../../store/actions/auth';
+import FooterMenu from '../../components/FooterMenu/FooterMenu';
 
 const ProfileScreen = (props) => {
   const { history, routes } = props;
-
   const dispatch = useDispatch();
-
   const { t } = useTranslation();
-
+  const fontSize = useSelector((state) => state.accessibility.fontSize);
+  const font = useSelector((state) => state.accessibility.font);
+  const backgroundColor = useSelector(
+    (state) => state.accessibility.backgroundColor,
+  );
   const user = useSelector((state) => state.auth.user);
 
-  const avatar = useMemo(
-    () => AVATARS.find((a) => a.id === user?.avatar)?.element,
-    [user],
-  );
-
-  const openFAQs = useCallback(() => {
-    history.push(routes.FAQS.path);
-  }, [history, routes]);
-
-  const logoutHandler = useCallback(() => {
-    const canLogout = confirm(t('logout_confirm_message'));
-
-    if (canLogout) {
-      dispatch(logout());
-    }
-  }, [dispatch, t]);
-
-  const topRightButton = useMemo(
-    () => ({
-      action: openFAQs,
-      icon: FAQsIcon,
-      description: 'faqs',
-    }),
-    [openFAQs],
-  );
-
   const editHandler = () => {
-    history.push(routes.EDIT_PROFILE.path);
+    // history.push(routes.EDIT_PROFILE.path);
   };
 
-  const privacyHandler = () => {
-    history.push(routes.POLICY.path);
-  };
+  const openAccessibility = useCallback(() => {
+    history.push(routes.ACCESSIBILITY.path);
+  }, [history, routes]);
 
   useEffect(() => {
     dispatch(getUser());
@@ -82,56 +32,17 @@ const ProfileScreen = (props) => {
 
   return (
     <Page>
-      <TopBar title={t('my_profile')} rightButton={topRightButton} />
+      <TopBar
+        aligned
+        page
+        hasAccessibilityButton={openAccessibility}
+        backgroundColor={backgroundColor}
+        title={t('profile')}
+      />
       <Container>
-        <TopWrapper>
-          <ScoreContainer>
-            <Score>{user?.points}</Score>
-            <ScoreImg src={StarIcon} alt="points" />
-          </ScoreContainer>
-
-          <EditableContainer>
-            <UserInfoContainer>
-              <Avatar src={avatar} alt="avatar" />
-              <UsernameContainer>
-                <Username>{user?.username}</Username>
-                <Region>{user?.region?.name}</Region>
-              </UsernameContainer>
-            </UserInfoContainer>
-            <EditButton onClick={editHandler} src={EditIcon} />
-          </EditableContainer>
-
-          <StatsContainer>
-            <StatsItem>
-              <StatsItemCount>{user?.quizzes_played}</StatsItemCount>
-              <StatsItemTitle
-                dangerouslySetInnerHTML={{ __html: t('quizzes_played') }}
-              />
-            </StatsItem>
-            <StatsItem>
-              <StatsItemCount>{user?.quizzes_completed}</StatsItemCount>
-              <StatsItemTitle
-                dangerouslySetInnerHTML={{ __html: t('quizzes_completed') }}
-              />
-            </StatsItem>
-          </StatsContainer>
-        </TopWrapper>
-
-        <BottomWrapper>
-          <PrivacyPolicyLink
-            onClick={privacyHandler}
-          >
-            {t('privacy_policy')}
-          </PrivacyPolicyLink>
-
-          <LogoutButton onClick={logoutHandler}>
-            <img src={LogoutIcon} alt="logout" />
-            <span>{t('logout')}</span>
-          </LogoutButton>
-        </BottomWrapper>
+        <div>Im content</div>
       </Container>
-
-      <FooterBar routes={routes} />
+      <FooterMenu routes={routes} profile />
     </Page>
   );
 };

@@ -27,7 +27,7 @@ const LoginScreen = (props) => {
 
   useEffect(() => {
     if (user && history) {
-      history.replace(routes.DASHBOARD.path);
+      history.replace(routes.HOME.path);
     }
   }, [user, history]);
 

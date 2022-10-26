@@ -26,7 +26,7 @@
   "cancel": "Cancel",
   "pwa_prompt_message": "This website has app functionality. Add it to your home screen to use it in fullscreen.",
   "ranking": "Ranking",
-  "my_profile": "My profile",
+  "profile": "Profile",
   "something_wrong": "An error was occured. Please try again.",
   "privacy_policy_message": "I declare that I have read and agree to the GuestAccess app <a href='{{link}}' rel='noreferrer noopener'>{{privacy_policy}}</a>",
   "privacy_policy": "Privacy Policy",

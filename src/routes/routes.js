@@ -57,14 +57,14 @@ const routes = {
     component: ProfileScreen,
     private: true,
   },
-  EDIT_PROFILE: {
-    path: '/edit-profile',
-    component: EditProfileScreen,
+  MAP: {
+    path: '/map',
+    component: OnboardingScreen, // Needs to change when we create a map screen
     private: true,
   },
-  RANKING: {
-    path: '/ranking',
-    component: RankingScreen,
+  HOME: {
+    path: '/home',
+    component: OnboardingScreen, // Needs to change when we create a home screen
     private: true,
   },
   FAQS: {
@@ -76,11 +76,6 @@ const routes = {
     path: '/changepassword',
     component: ChangePasswordScreen,
     private: false,
-  },
-  DASHBOARD: {
-    path: '/dashboard',
-    component: OnboardingScreen, // Needs to change when we create a dashboard screen
-    private: true,
   },
 };
 
