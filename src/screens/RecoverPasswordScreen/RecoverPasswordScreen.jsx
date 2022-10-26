@@ -37,7 +37,7 @@ const RecoverPasswordScreen = (props) => {
       .catch((error) => {
         alert(error);
       });
-  }, [dispatch, formData.email]);
+  }, [dispatch, formData.email, history, routes]);
 
   useEffect(() => {
     if (validateEmail(formData.email, false) === null) {
