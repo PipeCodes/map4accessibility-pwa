@@ -63,7 +63,6 @@ const SignUpInfo = (props) => {
   };
 
   useEffect(() => {
-    console.log(formErrors);
     if (
       (validatePolicy(formData.termsAccepted) ||
         validateFirstName(formData.firstName) ||

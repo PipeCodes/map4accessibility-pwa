@@ -133,28 +133,19 @@ export const checkEmail = (email) => async () => {
   }
 };
 
-export const recoverPassword = (emailOrUsername) => async (dispatch) => {
-  dispatch({ type: AUTH_START });
-
+export const recoverPassword = (email) => async () => {
   const body = {
-    email_username: emailOrUsername?.trim(),
+    email: email?.trim(),
   };
 
   try {
     const response = await axios.post(Endpoints.RECOVER_PASSWORD, body);
-
     const statusCode = response.status;
 
     if (statusCode === HTTP_STATUS.SUCCESS) {
-      dispatch({
-        type: AUTH_SUCCESS,
-      });
-
       return Promise.resolve(response?.data?.message);
     }
   } catch (error) {
-    dispatch({ type: AUTH_ERROR });
-
     return Promise.reject(error?.response?.data?.message);
   }
 };

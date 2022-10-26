@@ -117,7 +117,7 @@ const LoginScreen = (props) => {
             }}
             backgroundColor={colors.transparent}
             text={t('recover_password')}
-            onClick={() => history.push(routes.LOGIN.path)}
+            onClick={() => history.push(routes.RECOVER_PASSWORD.path)}
           />
         </Box>
       </Container>
