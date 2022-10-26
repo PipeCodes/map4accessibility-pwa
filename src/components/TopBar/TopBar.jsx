@@ -28,6 +28,7 @@ const TopBar = (props) => {
     hasLogo,
     accessibility,
     aligned,
+    page,
   } = props;
 
   const fontSize = useSelector((state) => state.accessibility.fontSize);
@@ -51,7 +52,7 @@ const TopBar = (props) => {
       )}
 
       {title && (
-        <Title fontSize={fontSize} font={font}>
+        <Title className={page ? 'page' : null} fontSize={fontSize} font={font}>
           {hasIcon && <img src={AccessibilityIcon} alt="Accessibility" />}
           {title}
         </Title>

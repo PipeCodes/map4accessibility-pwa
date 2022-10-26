@@ -11,6 +11,11 @@ export const Title = styled.span`
   img {
     margin-right: 10px;
   }
+
+  &.page {
+    color: ${colors.primaryTextColor};
+    align-self: flex-start;
+  }
 `;
 
 export const TopBarContainer = styled.div`
@@ -18,7 +23,7 @@ export const TopBarContainer = styled.div`
   display: flex;
   z-index: 51;
   width: 100%;
-  min-height: 42px;
+  min-height: 92px;
   align-items: center;
   justify-content: left;
   background-color: ${(props) =>
