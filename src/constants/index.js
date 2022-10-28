@@ -47,7 +47,7 @@ export const PROVIDER_GG = 'google';
 // REGEX
 
 export const REGEX_EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
-export const REGEX_PASSWORD = /^[a-zA-Z0-9]{8,}$/;
+export const REGEX_PASSWORD = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
 export const REGEX_DATE = /^[0-9]{1,4}[-,/][0-9]{1,2}[-,/][0-9]{1,4}$/;
 
 // HTTP STATUS
