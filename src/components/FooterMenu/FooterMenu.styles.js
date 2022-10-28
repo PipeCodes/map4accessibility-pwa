@@ -5,8 +5,7 @@ import { updateValue } from '../../helpers/utils';
 export const FooterBarContainter = styled.div`
   padding: 10px 15px;
   bottom: 0;
-  position: absolute;
-  display flex;
+  position: fixed;
   width: 100%;
   max-width: 820px;
   min-height: 72px;
@@ -17,6 +16,7 @@ export const FooterBarContainter = styled.div`
   display: flex;
   justify-content: space-around;
   align-items: center;
+  z-index: 55;
   background-color: ${(props) =>
     updateValue(colors.white, props.backgroundColor)};
 `;

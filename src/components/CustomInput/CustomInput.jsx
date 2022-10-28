@@ -11,6 +11,7 @@ const CustomInput = (props) => {
     value,
     name,
     onBlur,
+    readOnly,
   } = props;
 
   return (
@@ -30,6 +31,7 @@ const CustomInput = (props) => {
       value={value}
       name={name}
       onBlur={onBlur}
+      {...{ readOnly }}
       {...{ borderColor }}
     />
   );
