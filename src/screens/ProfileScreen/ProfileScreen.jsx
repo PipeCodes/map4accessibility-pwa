@@ -37,7 +37,14 @@ import TopBar from '../../components/TopBar/TopBar';
 import { getUser, logout } from '../../store/actions/auth';
 import FooterMenu from '../../components/FooterMenu/FooterMenu';
 
-const initialValues = (user) => {
+const initialValues = {
+  firstName: '',
+  surname: '',
+  birthDate: '',
+  email: '',
+};
+
+const setUser = (user) => {
   const values = {
     firstName: user.name,
     surname: user.surname,
@@ -57,11 +64,15 @@ const ProfileScreen = (props) => {
     (state) => state.accessibility.backgroundColor,
   );
   const user = useSelector((state) => state.auth.user);
-  const [formData, setFormData] = useState(initialValues(user));
+  const [formData, setFormData] = useState(initialValues);
   const [formErrors, setFormErrors] = useState({});
   const [editActive, setEditActive] = useState(false);
   useEffect(() => {}, [editActive, formData.firstName, formData.surname]);
-
+  useEffect(() => {
+    if (user) {
+      setFormData(setUser(user));
+    }
+  }, [user]);
   useEffect(() => {
     dispatch(getUser());
   }, [dispatch]);
@@ -96,10 +107,8 @@ const ProfileScreen = (props) => {
 
   // Click Handlers
   const editHandler = () => {
-    setEditActive((prevState) => {
-      setFormData(initialValues(user));
-      return !prevState;
-    });
+    setFormData(initialValues(user));
+    setEditActive((prevState) => !prevState);
   };
 
   const confirmEditHandler = () => {
