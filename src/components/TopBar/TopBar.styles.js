@@ -47,7 +47,6 @@ export const LeftButton = styled.button`
   background-color: transparent;
   border: 0;
   margin: 0;
-  position: absolute;
   top: 30px;
   -ms-transform: translateY(-50%);
   transform: translateY(-50%);

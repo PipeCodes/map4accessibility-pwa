@@ -95,5 +95,12 @@
   "invalid_birthDate": "Data inválida",
   "email_confirmation": "Email Confirmado",
   "email_confirmed": "O seu email foi confirmado.",
-  "proceed_login": "Prosseguir para Login"
+  "proceed_login": "Prosseguir para Login",
+  "country": "País",
+  "location": "Localização",
+  "portugal": "Portugal",
+  "belgium": "Belgica",
+  "germany": "Alemanha",
+  "us": "Estados Unidos",
+  "uk": "Reino Unido"
 }

@@ -1,7 +1,7 @@
 import Select from 'react-select';
 import styled from 'styled-components';
 import { colors } from '../../constants/colors';
-import { SELECT_MODE } from './CustomSelect.constants';
+import { updateFontSize, updateValue } from '../../helpers/utils';
 
 export const StyledSelect = styled(Select)`
   .react-select__indicator-separator {
@@ -9,43 +9,38 @@ export const StyledSelect = styled(Select)`
   }
 
   .react-select__control {
-    height: 37px;
-    min-height: 37px;
-    width: 276px;
+    height: 31px;
+    min-height: 31px;
+    width: 100%;
     outline: none;
     border-color: transparent;
+    flex-wrap: nowrap;
 
-    font-family: ${(props) =>
-      props.mode === SELECT_MODE.light ? 'Rubik-Regular' : 'Rubik-Bold'};
-    font-size: ${(props) =>
-      props.mode === SELECT_MODE.light ? '13px' : '16px'};
-    background-color: ${(props) =>
-      props.mode === SELECT_MODE.light ? '#fff' : colors.darkBlue};
+    font-size: 16px;
+    background-color: ${colors.white};
 
     .react-select__value-container {
-      padding-left: 14px;
-      padding-right: 14px;
+      padding-left: 10px;
+      padding-right: 10px;
+      flex-wrap: nowrap;
+      display: flex;
 
       .react-select__placeholder {
-        color: ${(props) =>
-          props.mode === SELECT_MODE.light ? colors.grey : '#fff'};
+        color: ${colors.grey};
       }
 
       .react-select__single-value {
-        color: ${(props) =>
-          props.mode === SELECT_MODE.light ? colors.grey : '#fff'};
+        color: ${colors.grey};
       }
 
       .react-select__input {
-        color: ${(props) =>
-          props.mode === SELECT_MODE.light ? colors.grey : '#fff'};
+        color: ${colors.grey};
       }
     }
 
     .react-select__indicators,
     .react-select__dropdown-indicator {
-      color: ${(props) =>
-        props.mode === SELECT_MODE.light ? colors.grey : '#fff'};
+      color: primaryColor;
     }
   }
 
@@ -55,14 +50,11 @@ export const StyledSelect = styled(Select)`
   }
 
   .react-select__menu {
-    font-family: ${(props) =>
-      props.mode === SELECT_MODE.light ? 'Rubik-Regular' : 'Rubik-Bold'};
-    font-size: ${(props) =>
-      props.mode === SELECT_MODE.light ? '13px' : '16px'};
+    font-size: 16px;
     color: ${colors.grey};
 
     .react-select__option--is-selected {
-      background-color: ${colors.green};
+      background-color: ${colors.primaryColor};
     }
   }
 `;

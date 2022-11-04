@@ -1,34 +1,38 @@
-import React, { useMemo } from 'react';
-import { AVATARS } from '../../constants';
+import React from 'react';
+import { useSelector } from 'react-redux';
+import ThubsUpIcon from '../../assets/icons/ratings/thumbs-up.svg';
+
 import {
   ItemContainer,
-  LeftContainer,
-  Position,
-  Avatar,
-  Username,
-  Points,
+  Rank,
+  Image,
+  TextWrapper,
+  Name,
+  City,
+  LikesWrapper,
+  Icon,
+  Number,
 } from './RankingItem.styles';
 
 const RankingItem = (props) => {
-  const { item, isLoggedUser } = props;
-
-  const avatar = useMemo(
-    () => AVATARS.find((a) => a.id === item.avatar)?.element,
-    [item, isLoggedUser],
-  );
+  const { item } = props;
+  const fontSize = useSelector((state) => state.accessibility.fontSize);
 
   return (
-    <ItemContainer isLoggedUser={isLoggedUser} {...props}>
-      <LeftContainer>
-        <Position isLoggedUser={isLoggedUser} position={item.ranking_order}>
-          {item.ranking_order ?? '-'}
-        </Position>
-        <Avatar isLoggedUser={isLoggedUser} src={avatar} />
-        <Username isLoggedUser={isLoggedUser}>
-          {item.username ?? item.name}
-        </Username>
-      </LeftContainer>
-      <Points isLoggedUser={isLoggedUser}>{`${item.points ?? '0'} pts`}</Points>
+    <ItemContainer>
+      <Rank fontSize={fontSize}>{item.id}</Rank>
+      <Image src={item.image} />
+
+      <TextWrapper>
+        <Name fontSize={fontSize}>{item.name}</Name>
+        <City fontSize={fontSize}>{item.city}</City>
+      </TextWrapper>
+      <LikesWrapper>
+        <Icon>
+          <img src={ThubsUpIcon} alt="Likes" />
+        </Icon>
+        <Number fontSize={fontSize}>{item.likes}</Number>
+      </LikesWrapper>
     </ItemContainer>
   );
 };
