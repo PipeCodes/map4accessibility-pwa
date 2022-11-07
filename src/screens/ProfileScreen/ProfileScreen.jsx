@@ -121,7 +121,7 @@ const ProfileScreen = (props) => {
 
   const rankingHandler = () => {
     console.log('Needs to be updated when ranking is implemented');
-    history.push(routes.HOME.path);
+    history.push(routes.RANKING.path);
   };
 
   const openAccessibility = useCallback(() => {

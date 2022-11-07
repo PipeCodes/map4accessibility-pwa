@@ -13,7 +13,6 @@ import AccessibilityScreen from '../screens/AccessibilityScreen/AccessibilityScr
 import FAQsScreen from '../screens/FAQsScreen/FAQsScreen';
 import TrackedRoute from './TrackedRoute';
 import ChangePasswordScreen from '../screens/ChangePasswordScreen/ChangePasswordScreen';
-import EditProfileScreen from '../screens/EditProfileScreen/EditProfileScreen';
 import OnboardingScreen from '../screens/OnboardingScreen/OnboardingScreen';
 import ConfirmedEmailScreen from '../screens/EmailConfirmationScreen/EmailConfirmationScreen';
 import { isAuthenticated } from '../services/local';
@@ -65,6 +64,11 @@ const routes = {
   HOME: {
     path: '/home',
     component: OnboardingScreen, // Needs to change when we create a home screen
+    private: true,
+  },
+  RANKING: {
+    path: '/ranking',
+    component: RankingScreen,
     private: true,
   },
   FAQS: {
