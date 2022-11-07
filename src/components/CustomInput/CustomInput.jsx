@@ -9,6 +9,9 @@ const CustomInput = (props) => {
     type = 'text',
     onChange,
     value,
+    name,
+    onBlur,
+    readOnly,
   } = props;
 
   return (
@@ -17,7 +20,18 @@ const CustomInput = (props) => {
       type={type}
       placeholder={placeholder}
       onChange={onChange}
+      onPaste={(e) => {
+        e.preventDefault();
+        return false;
+      }}
+      onCopy={(e) => {
+        e.preventDefault();
+        return false;
+      }}
       value={value}
+      name={name}
+      onBlur={onBlur}
+      {...{ readOnly }}
       {...{ borderColor }}
     />
   );

@@ -1,17 +1,23 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { SELECT_MODE } from './CustomSelect.constants';
+import { components } from 'react-select';
 import { StyledSelect } from './CustomSelect.styles';
 
+const { Option } = components;
+const IconOption = (props) => {
+  const { data } = props;
+  const { icon, label } = data;
+
+  return (
+    <Option {...props}>
+      <img src={icon} style={{ height: 16, marginRight: 7 }} alt={label} />
+      {label}
+    </Option>
+  );
+};
+
 const CustomSelect = (props) => {
-  const {
-    style,
-    options,
-    onChange,
-    defaultValue,
-    value,
-    mode = SELECT_MODE.light,
-  } = props;
+  const { style, options, onChange, defaultValue, value } = props;
 
   const { t } = useTranslation();
 
@@ -22,10 +28,10 @@ const CustomSelect = (props) => {
         options={options}
         defaultValue={defaultValue}
         value={value}
-        mode={mode}
         placeholder={t('region')}
         noOptionsMessage={() => t('no_options')}
         onChange={onChange}
+        components={{ Option: IconOption, SingleValue: IconOption }}
       />
     </div>
   );

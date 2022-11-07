@@ -1,17 +1,30 @@
 import styled from 'styled-components';
-import { colors } from '../../constants/colors';
+import { updateFontSize } from '../../helpers/utils';
 
 const ButtonStyle = styled.button`
   background-color: ${(props) => props.backgroundColor};
-  color: ${(props) => (props.small ? colors.grey : '#ffffff')};
-  border: 0;
-  font-family: 'Rubik-Bold';
-  margin-top: ${(props) => props.marginTop};
-  font-size: ${(props) => (props.small ? '13px' : '23px')};
-  width: ${(props) => (props.small ? '100px' : '189px')};
-  height: ${(props) => (props.small ? '20px' : '42px')};
-  min-height: ${(props) => (props.small ? '20px' : '42px')};
-  border-radius: ${(props) => (props.small ? '2px' : '5px')};
+  box-shadow: ${(props) =>
+    props.boxShadow ? props.boxShadow : '0px 2px 2px #00000029'};
+  color: ${(props) => (props.color ? props.color : '#ffffff')};
+  border: ${(props) => (props.border ? props.border : 0)};
+  border-radius: ${(props) => (props.borderRadius ? props.borderRadius : 0)};
+  margin: ${(props) => (props.margin ? props.margin : 'unset')};
+  margin-top: ${(props) => (props.marginTop ? props.marginTop : 0)};
+  font-size: ${(props) => updateFontSize(16, props.fontSize)};
+  width: ${(props) => (props.width ? props.width : '189px')};
+  height: ${(props) => (props.height ? props.height : 'auto')};
+  min-height: ${(props) => (props.minHeight ? props.minHeight : '42px')};
+  padding-top: 12px;
+  padding-bottom: 12px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+
+  img {
+    margin-right: 10px;
+  }
+
   &:focus {
     outline: 0;
   }

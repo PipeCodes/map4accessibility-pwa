@@ -1,27 +1,28 @@
 import React from 'react';
-import { BrowserRouter, Switch } from 'react-router-dom';
+import { BrowserRouter, Switch, Redirect, Route } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 import PrivateRoute from './PrivateRoute';
-import WelcomeScreen from '../screens/WelcomeScreen/WelcomeScreen';
-import OnboardingScreen from '../screens/OnboardingScreen/OnboardingScreen';
 import PolicyScreen from '../screens/PolicyScreen/PolicyScreen';
 import LoginScreen from '../screens/LoginScreen/LoginScreen';
 import RecoverPasswordScreen from '../screens/RecoverPasswordScreen/RecoverPasswordScreen';
 import RegisterScreen from '../screens/RegisterScreen/RegisterScreen';
+import RegisterOptionsScreen from '../screens/RegisterOptionsScreen/RegisterOptionsScreen';
 import ProfileScreen from '../screens/ProfileScreen/ProfileScreen';
 import RankingScreen from '../screens/RankingScreen/RankingScreen';
+import AccessibilityScreen from '../screens/AccessibilityScreen/AccessibilityScreen';
 import FAQsScreen from '../screens/FAQsScreen/FAQsScreen';
 import TrackedRoute from './TrackedRoute';
 import ChangePasswordScreen from '../screens/ChangePasswordScreen/ChangePasswordScreen';
-import EditProfileScreen from '../screens/EditProfileScreen/EditProfileScreen';
+import OnboardingScreen from '../screens/OnboardingScreen/OnboardingScreen';
+import ConfirmedEmailScreen from '../screens/EmailConfirmationScreen/EmailConfirmationScreen';
+import { isAuthenticated } from '../services/local';
 
-const history = createBrowserHistory({forceRefresh:true});
+const history = createBrowserHistory({ forceRefresh: true });
 
 const routes = {
-  WELCOME: { path: '/', component: WelcomeScreen, private: false },
-  ONBOARDING: {
-    path: '/onboarding',
-    component: OnboardingScreen,
+  ACCESSIBILITY: {
+    path: '/accessibility',
+    component: AccessibilityScreen,
     private: false,
   },
   POLICY: {
@@ -35,9 +36,19 @@ const routes = {
     component: RecoverPasswordScreen,
     private: false,
   },
+  REGISTER_OPTIONS: {
+    path: '/register-options',
+    component: RegisterOptionsScreen,
+    private: false,
+  },
   REGISTER: {
     path: '/register',
     component: RegisterScreen,
+    private: false,
+  },
+  EMAIL_CONFIRMATION: {
+    path: '/email-confirmation',
+    component: ConfirmedEmailScreen,
     private: false,
   },
   PROFILE: {
@@ -45,9 +56,14 @@ const routes = {
     component: ProfileScreen,
     private: true,
   },
-  EDIT_PROFILE: {
-    path: '/edit-profile',
-    component: EditProfileScreen,
+  MAP: {
+    path: '/map',
+    component: OnboardingScreen, // Needs to change when we create a map screen
+    private: true,
+  },
+  HOME: {
+    path: '/home',
+    component: OnboardingScreen, // Needs to change when we create a home screen
     private: true,
   },
   RANKING: {
@@ -70,6 +86,13 @@ const routes = {
 const GlobalRoutes = () => (
   <BrowserRouter history={history}>
     <Switch>
+      <Route
+        exact
+        path="/"
+        render={() =>
+          isAuthenticated() ? <Redirect to="/home" /> : <Redirect to="/login" />
+        }
+      />
       {Object.values(routes).map((route) => {
         if (route.private) {
           return (

@@ -1,34 +1,51 @@
 import { createGlobalStyle } from 'styled-components';
-import RubikRegular from './assets/fonts/Rubik-Regular.ttf';
-import RubikBold from './assets/fonts/Rubik-Bold.ttf';
+import { updateValue, setUnderline, setHighlight } from './helpers/utils';
+import NotoSansRegular from './assets/fonts/NotoSans-Regular.ttf';
+import NotoSansBold from './assets/fonts/NotoSans-Bold.ttf';
+import EasyReadingPro from './assets/fonts/EasyReadingPRO.ttf';
+import EasyReadingProBold from './assets/fonts/EasyReadingPROBold.ttf';
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import { colors } from './constants/colors';
 
 const GlobalStyles = createGlobalStyle`
   @font-face {
-    font-family: 'Rubik-Regular';
-    src: url(${RubikRegular}) format('truetype');
+    font-family: 'NotoSans-Regular';
+    src: url(${NotoSansRegular}) format('truetype');
   }
   @font-face {
-    font-family: 'Rubik-Bold';
-    src: url(${RubikBold}) format('truetype');
+    font-family: 'NotoSans-Bold';
+    src: url(${NotoSansBold}) format('truetype');
+  }
+
+  @font-face {
+    font-family: 'EasyReadingPro';
+    src: url(${EasyReadingPro}) format('truetype');
+  }
+  @font-face {
+    font-family: 'EasyReadingPro-Bold';
+    src: url(${EasyReadingProBold}) format('truetype');
   }
 
   body {
-    font-family: 'Rubik-Regular';
+    font-family: ${(props) => updateValue('NotoSans-Regular', props.font)};
     margin: 0;
     overscroll-behavior-y: contain;
     max-width: 820px;
+    height: 100vh;
     margin: 0px auto;
-    background-color: ${colors.lightBlue};
+    background-color: ${(props) =>
+      updateValue(colors.background, props.backgroundColor)};
 
-    #root {
-      background-color: #fff;
+
+    a {
+      text-decoration: ${(props) => setUnderline('none', props.underline)};
+      background-color: ${(props) => setHighlight('unset', props.highlight)};
     }
 
     b {
-      font-family: 'Rubik-Bold';
+      font-family: 'NotoSans-Bold';
     }
 
     button {

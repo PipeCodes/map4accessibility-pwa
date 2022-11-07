@@ -7,56 +7,56 @@ import {
   LOGOUT,
 } from './types';
 import { HTTP_STATUS } from '../../constants';
+import i18n from '../../i18n';
+
 import {
   clearLocalStorage,
   getAuthToken,
-  saveUser,
-  saveUserData,
+  saveAuthToken,
 } from '../../services/local';
 
-export const login =
-  (emailOrUsername, password, translate) => async (dispatch) => {
-    dispatch({ type: AUTH_START });
-
-    const body = {
-      email_username: emailOrUsername?.trim(),
-      password,
-    };
-
-    try {
-      const response = await axios.post(Endpoints.LOGIN, body);
-
-      const statusCode = response.status;
-
-      if (statusCode === HTTP_STATUS.SUCCESS) {
-        saveUserData(response.data?.data?._token, response.data?.data?.user);
-
-        dispatch({
-          type: AUTH_SUCCESS,
-          user: response.data?.data?.user,
-        });
-      }
-    } catch (error) {
-      dispatch({ type: AUTH_ERROR });
-
-      return Promise.reject(
-        error?.response?.data?.message ?? translate('something_wrong'),
-      );
-    }
+export const login = (email, password) => async (dispatch) => {
+  dispatch({ type: AUTH_START });
+  const body = {
+    email: email?.trim(),
+    password,
   };
 
+  try {
+    const response = await axios.post(Endpoints.LOGIN, body);
+
+    const statusCode = response.status;
+
+    if (statusCode === HTTP_STATUS.SUCCESS) {
+      saveAuthToken(response.data?.result?.authorization?.token);
+
+      dispatch({
+        type: AUTH_SUCCESS,
+        user: response.data?.result?.user,
+      });
+    }
+  } catch (error) {
+    dispatch({ type: AUTH_ERROR });
+
+    return Promise.reject(
+      error?.response?.data?.message ?? i18n.t('something_wrong'),
+    );
+  }
+};
+
 export const signup =
-  (avatar, name, email, username, password, region, translate) =>
+  (name, surname, birthdate, email, password, termsAccepted, disabilities) =>
   async (dispatch) => {
     dispatch({ type: AUTH_START });
 
     const body = {
-      avatar,
       name,
+      surname,
+      birthdate,
       email: email?.trim().toLowerCase(),
-      username: username?.trim(),
       password,
-      region_id: region,
+      terms_accepted: termsAccepted,
+      disabilities,
     };
 
     try {
@@ -64,45 +64,88 @@ export const signup =
 
       const statusCode = response.status;
 
-      if (statusCode === HTTP_STATUS.SUCCESS) {
-        saveUserData(response.data?.data?._token, response.data?.data?.user);
-
+      if (statusCode === HTTP_STATUS.SUCCESS_CREATED) {
+        saveAuthToken(response.data?.result?.authorization?.token);
         dispatch({
           type: AUTH_SUCCESS,
-          user: response.data?.data?.user,
+          user: response.data?.result?.user,
         });
       }
     } catch (error) {
       dispatch({ type: AUTH_ERROR });
 
-      return Promise.reject(
-        getErrorMessage(error, translate('something_wrong')),
-      );
+      return Promise.reject(getErrorMessage(error, i18n.t('something_wrong')));
     }
   };
 
-export const recoverPassword = (emailOrUsername) => async (dispatch) => {
-  dispatch({ type: AUTH_START });
+export const signupProviderGoogle =
+  (email, name, surname, id) => async (dispatch) => {
+    dispatch({ type: AUTH_START });
 
+    const body = {
+      email,
+      name,
+      surname,
+      birthdate: '2022-10-20',
+      terms_accepted: true,
+      auth_providers: {
+        gmail: id,
+      },
+    };
+
+    try {
+      const response = await axios.post(Endpoints.SIGNUP, body);
+      const statusCode = response.status;
+
+      if (statusCode === HTTP_STATUS.SUCCESS) {
+        saveAuthToken(response.data?.result?.authorization?.token);
+        dispatch({
+          type: AUTH_SUCCESS,
+          user: response.data?.result?.user,
+        });
+      }
+    } catch (error) {
+      dispatch({ type: AUTH_ERROR });
+
+      return Promise.reject(getErrorMessage(error, i18n.t('something_wrong')));
+    }
+  };
+
+export const checkEmail = (email) => async () => {
   const body = {
-    email_username: emailOrUsername?.trim(),
+    email: email?.trim(),
+  };
+  try {
+    const response = await axios.post(Endpoints.CHECK_EMAIL, body);
+    const statusCode = response.status;
+
+    if (statusCode === HTTP_STATUS.SUCCESS) {
+      return Promise.resolve(false);
+    }
+  } catch (error) {
+    if (error?.response?.data?.error_code === 409) {
+      return Promise.resolve(true);
+    }
+
+    return Promise.reject(
+      error?.response?.data?.message ?? i18n.t('something_wrong'),
+    );
+  }
+};
+
+export const recoverPassword = (email) => async () => {
+  const body = {
+    email: email?.trim(),
   };
 
   try {
     const response = await axios.post(Endpoints.RECOVER_PASSWORD, body);
-
     const statusCode = response.status;
 
     if (statusCode === HTTP_STATUS.SUCCESS) {
-      dispatch({
-        type: AUTH_SUCCESS,
-      });
-
       return Promise.resolve(response?.data?.message);
     }
   } catch (error) {
-    dispatch({ type: AUTH_ERROR });
-
     return Promise.reject(error?.response?.data?.message);
   }
 };
@@ -162,8 +205,6 @@ export const getUser = () => async (dispatch) => {
         points: response.data?.data?.points,
       };
 
-      saveUser(user);
-
       dispatch({
         type: GET_USER_SUCCESS,
         user,
@@ -208,8 +249,6 @@ export const updateUser =
           ...user,
           username: response.data?.data?.user?.username,
         };
-
-        saveUser(updatedUser);
 
         dispatch({
           type: GET_USER_SUCCESS,

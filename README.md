@@ -2,10 +2,7 @@
 
 ## Versions
 
-Node: v14.15.5
-
-nvm: 0.37.2
-
+Node: v17.4.0
 ## Starting Dev:
 <ol>
 <li>Make sure you have the Prettier VSCode extension</li>

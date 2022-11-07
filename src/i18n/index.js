@@ -1,6 +1,7 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
+import enGBTranslation from './en/translation.json';
 import ptPTTranslation from './ptPT/translation.json';
 import deDETranslation from './deDE/translation.json';
 import bgBGTranslation from './bgBG/translation.json';
@@ -14,6 +15,9 @@ const resources = {
   },
   'bg-BG': {
     translation: bgBGTranslation,
+  },
+  'en-GB': {
+    translation: enGBTranslation,
   },
 };
 

@@ -1,151 +1,252 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import CustomButton from '../../components/CustomButton/CustomButton';
-import CustomInput from '../../components/CustomInput/CustomInput';
-import { colors } from '../../constants/colors';
-import {
-  Page,
-  LogoImage,
-  CheckboxWrapper,
-  PrivacyPolicyLabel,
-  AvatarWrapper,
-  Container,
-} from './RegisterScreen.styles';
-import Logo from '../../assets/images/old_delete/logo.svg';
 import { signup } from '../../store/actions/auth';
+import { Page, Container, Box, TextSecondary } from './RegisterScreen.styles';
+import CustomButton from '../../components/CustomButton/CustomButton';
+import LoginIcon from '../../assets/icons/login.svg';
+import { colors } from '../../constants/colors';
+import ArrowRight from '../../assets/icons/arrow-right.svg';
+import ProfileIcon from '../../assets/icons/profile.svg';
 import TopBar from '../../components/TopBar/TopBar';
-import { AVATARS, regions } from '../../constants';
-import AvatarCarousel from '../../components/AvatarCarousel/AvatarCarousel';
-import CustomSelect from '../../components/CustomSelect/CustomSelect';
+import SignUpInfo from './SignUpInfo';
+import ExtraStep from './ExtraStep';
+import {
+  validateBirthDate,
+  validateConfirmPassword,
+  validateEmail,
+  validateFirstName,
+  validatePassword,
+  validateSurname,
+} from './validate';
+
+const PageDisplay = ({
+  formData,
+  setFormData,
+  page,
+  formErrors,
+  setFormErrors,
+  validate,
+  setNotReadySubmit,
+}) => {
+  if (page === 0) {
+    return (
+      <SignUpInfo
+        formData={formData}
+        setFormData={setFormData}
+        formErrors={formErrors}
+        setFormErrors={setFormErrors}
+        validate={validate}
+        setNotReadySubmit={setNotReadySubmit}
+      />
+    );
+  }
+  return <ExtraStep formData={formData} setFormData={setFormData} />;
+};
+
+const initialValues = {
+  firstName: '',
+  surname: '',
+  birthDate: '',
+  email: '',
+  password: '',
+  confirmPassword: '',
+  termsAccepted: false,
+  noDisability: false,
+  motorDisability: false,
+  visualDisability: false,
+  hearingDisability: false,
+  intellectualDisability: false,
+};
 
 const RegisterScreen = (props) => {
-  const { routes } = props;
-
+  const { history, routes } = props;
   const { t } = useTranslation();
   const dispatch = useDispatch();
-
-  const loading = useSelector((state) => state.auth.loading);
+  const fontSize = useSelector((state) => state.accessibility.fontSize);
+  const [page, setPage] = useState(0);
+  const [formData, setFormData] = useState(initialValues);
+  const [formErrors, setFormErrors] = useState({});
+  const [notReadySubmit, setNotReadySubmit] = useState(true);
   const user = useSelector((state) => state.auth.user);
 
-  const [avatar, setAvatar] = useState(AVATARS[0]);
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [region, setRegion] = useState(null);
-  const [privacyPolicyConditionsChecked, setPrivacyPolicyChecked] =
-    useState(false);
-
-  const registerClickHandler = () => {
-    if (!privacyPolicyConditionsChecked) {
-      alert(t('privacy_policy_error'));
-      return;
+  useEffect(() => {
+    if (user && history) {
+      history.replace(routes.LOGIN.path);
     }
+  }, [user, history]);
+
+  const changePage = (value) => {
+    setPage((currPage) => currPage + value);
+  };
+
+  // Validates the fields
+  const validate = (field, values, lastErrors, duplicatedEmail = false) => {
+    const errors = { ...lastErrors };
+    let error;
+    switch (field) {
+      case 'firstName':
+        delete errors.firstName;
+        error = validateFirstName(values.firstName);
+        if (error !== null) {
+          errors.firstName = error;
+        }
+        break;
+      case 'surname':
+        delete errors.surname;
+        error = validateSurname(values.surname);
+        if (error !== null) {
+          errors.surname = error;
+        }
+        break;
+      case 'birthDate':
+        delete errors.birthDate;
+        error = validateBirthDate(values.birthDate);
+        if (error !== null) {
+          errors.birthDate = error;
+        }
+        break;
+      case 'email':
+        delete errors.email;
+        error = validateEmail(values.email, duplicatedEmail);
+        if (error !== null) {
+          errors.email = error;
+        }
+
+        break;
+      case 'password':
+        delete errors.password;
+        error = validatePassword(values.password, values.confirmPassword);
+        if (error !== null && error !== undefined) {
+          errors.password = error;
+        }
+        break;
+      case 'confirmPassword':
+        delete errors.confirmPassword;
+        error = validateConfirmPassword(
+          values.password,
+          values.confirmPassword,
+        );
+        if (error !== null) {
+          errors.confirmPassword = error;
+        }
+        break;
+
+      default:
+        console.log('Field does not exist');
+        break;
+    }
+
+    return errors;
+  };
+
+  // ClickHandlers
+  const registerClickHandler = useCallback(() => {
+    const disabilities = [];
+    if (formData.motorDisability) {
+      disabilities.push('motor');
+    } else if (formData.visualDisability) {
+      disabilities.push('visual');
+    } else if (formData.hearingDisability) {
+      disabilities.push('hearing');
+    } else if (formData.intellectualDisability) {
+      disabilities.push('intellectual');
+    }
+
     dispatch(
       signup(
-        avatar?.id ?? AVATARS[0].id,
-        name,
-        email,
-        username,
-        password,
-        region?.value,
-        t,
+        formData.firstName,
+        formData.surname,
+        formData.birthDate,
+        formData.email,
+        formData.password,
+        formData.termsAccepted,
+        disabilities,
       ),
     ).catch((error) => {
       alert(error);
     });
+  }, [dispatch, formData]);
+
+  const openAccessibility = useCallback(() => {
+    history.push(routes.ACCESSIBILITY.path);
+  }, [history, routes]);
+
+  const backClickHandler = (page) => {
+    if (page === 0) {
+      history.goBack();
+    }
+    changePage(-1);
   };
 
-  useEffect(() => {
-    if (user) {
-      alert("TODO")
+  const nextClickHandler = (page) => {
+    if (page === 0) {
+      changePage(1);
+      return;
     }
-  }, [user]);
+    if (page === 1) {
+      registerClickHandler();
+    } else {
+      setPage(0);
+    }
+  };
 
   return (
     <Page>
-      <TopBar hasBackButton />
+      <TopBar
+        backTarget={() => backClickHandler(page)}
+        aligned
+        hasBackButton
+        hasLogo
+        hasAccessibilityButton={openAccessibility}
+      />
       <Container>
-        <LogoImage className="logo_img" alt="logo" src={Logo} />
-        <AvatarWrapper>
-          <AvatarCarousel onChange={setAvatar} />
-        </AvatarWrapper>
-        <CustomInput
-          style={{
-            marginTop: 30,
-          }}
-          placeholder={t('name')}
-          onChange={(e) => setName(e.target.value)}
-          value={name}
+        <PageDisplay
+          formData={formData}
+          setFormData={setFormData}
+          page={page}
+          formErrors={formErrors}
+          setFormErrors={setFormErrors}
+          validate={validate}
+          setNotReadySubmit={setNotReadySubmit}
         />
-        <CustomInput
-          style={{
-            marginTop: 13,
-          }}
-          placeholder={t('username')}
-          onChange={(e) => setUsername(e.target.value)}
-          value={username}
-        />
-        <CustomInput
-          style={{
-            marginTop: 13,
-          }}
-          placeholder={t('email')}
-          type="email"
-          onChange={(e) => setEmail(e.target.value)}
-          value={email}
-        />
-        <CustomInput
-          style={{
-            marginTop: 13,
-          }}
-          placeholder={t('password')}
-          type="password"
-          onChange={(e) => setPassword(e.target.value)}
-          value={password}
-        />
-
-        <CustomSelect
-          style={{
-            marginTop: 13,
-          }}
-          options={regions.map((r) => ({
-            value: r.id,
-            label: r.name,
-          }))}
-          onChange={(value) => setRegion(value)}
-        />
-
-        <CheckboxWrapper>
-          <input type="checkbox"
-            checked={privacyPolicyConditionsChecked}
-            onChange={setPrivacyPolicyChecked}
-          />
-          <PrivacyPolicyLabel
-            onClick={() => setPrivacyPolicyChecked((prevState) => !prevState)}
-            dangerouslySetInnerHTML={{
-              __html: t('privacy_policy_message', {
-                link: routes.POLICY.path,
-                privacy_policy: t('privacy_policy'),
-              }),
-            }}
-          />
-        </CheckboxWrapper>
-
         <CustomButton
           style={{
-            marginTop: 40,
-            marginBottom: 40,
+            marginTop: 30,
+            marginBottom: 20,
+            width: '100%',
+            borderRadius: '25px',
           }}
-          backgroundColor={colors.orange}
-          text={t('register')}
-          onClick={registerClickHandler}
-          disabled={loading}
+          disabled={notReadySubmit}
+          backgroundColor={notReadySubmit ? colors.grey : colors.orange}
+          text={page === 0 ? t('next') : t('create_account')}
+          icon={page === 0 ? ArrowRight : ProfileIcon}
+          onClick={() => nextClickHandler(page)}
         />
+
+        {page === 0 && (
+          <Box>
+            <TextSecondary fontSize={fontSize}>
+              {t('already_have_account')}
+            </TextSecondary>
+            <CustomButton
+              style={{
+                width: 'auto',
+                borderRadius: '25px',
+                color: colors.primaryColor,
+                boxShadow: 'none',
+              }}
+              backgroundColor={colors.transparent}
+              text={t('login')}
+              icon={LoginIcon}
+              onClick={() => history.push(routes.LOGIN.path)}
+            />
+          </Box>
+        )}
       </Container>
     </Page>
   );
 };
 
-export default RegisterScreen;
+export default withRouter(RegisterScreen);

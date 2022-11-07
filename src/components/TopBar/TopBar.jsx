@@ -1,27 +1,46 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import {
   Title,
   LeftButton,
-  RightButton,
+  AccessibilityButton,
+  CloseButton,
   TopBarContainer,
+  Logo,
 } from './TopBar.styles';
-import BackIcon from '../../assets/images/old_delete/back.svg';
+import BackIcon from '../../assets/icons/back.svg';
+import CloseIcon from '../../assets/icons/close.svg';
+import AccessibilityIcon from '../../assets/icons/accessibility.svg';
+import map4AccessibilityIcon from '../../assets/icons/map4accessibility_logo.svg';
 
 const TopBar = (props) => {
   const {
     history,
     hasBackButton,
+    backTarget,
     backgroundColor,
     title,
-    rightButton,
+    hasIcon,
+    hasAccessibilityButton,
     leftButton,
+    hasCloseButton,
+    hasLogo,
+    accessibility,
+    aligned,
+    page,
   } = props;
 
+  const fontSize = useSelector((state) => state.accessibility.fontSize);
+  const font = useSelector((state) => state.accessibility.font);
+
   return (
-    <TopBarContainer backgroundColor={backgroundColor}>
+    <TopBarContainer
+      backgroundColor={backgroundColor}
+      className={accessibility ? 'accessibility' : null}
+    >
       {hasBackButton && (
-        <LeftButton type="button" onClick={history.goBack}>
+        <LeftButton type="button" onClick={backTarget || history.goBack}>
           <img src={BackIcon} alt="back" />
         </LeftButton>
       )}
@@ -32,12 +51,29 @@ const TopBar = (props) => {
         </LeftButton>
       )}
 
-      {title && <Title>{title}</Title>}
+      {title && (
+        <Title className={page ? 'page' : null} fontSize={fontSize} font={font}>
+          {hasIcon && <img src={AccessibilityIcon} alt="Accessibility" />}
+          {title}
+        </Title>
+      )}
 
-      {rightButton && (
-        <RightButton type="button" onClick={rightButton.action}>
-          <img src={rightButton.icon} alt={rightButton.description} />
-        </RightButton>
+      {hasAccessibilityButton && (
+        <AccessibilityButton type="button" onClick={hasAccessibilityButton}>
+          <img src={AccessibilityIcon} alt="Accessibility" />
+        </AccessibilityButton>
+      )}
+
+      {hasCloseButton && (
+        <CloseButton type="button" onClick={history.goBack}>
+          <img src={CloseIcon} alt="back" />
+        </CloseButton>
+      )}
+
+      {hasLogo && (
+        <Logo className={aligned ? 'aligned' : null}>
+          <img src={map4AccessibilityIcon} alt="Logo" />
+        </Logo>
       )}
     </TopBarContainer>
   );
