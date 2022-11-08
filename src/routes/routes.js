@@ -10,6 +10,7 @@ import RegisterOptionsScreen from '../screens/RegisterOptionsScreen/RegisterOpti
 import ProfileScreen from '../screens/ProfileScreen/ProfileScreen';
 import RankingScreen from '../screens/RankingScreen/RankingScreen';
 import AccessibilityScreen from '../screens/AccessibilityScreen/AccessibilityScreen';
+import RoutePlannerScreen from '../screens/RoutePlannerScreen/RoutePlannerScreen';
 import FAQsScreen from '../screens/FAQsScreen/FAQsScreen';
 import TrackedRoute from './TrackedRoute';
 import ChangePasswordScreen from '../screens/ChangePasswordScreen/ChangePasswordScreen';
@@ -54,6 +55,11 @@ const routes = {
   PROFILE: {
     path: '/profile',
     component: ProfileScreen,
+    private: true,
+  },
+  ROUTE_PLANNER: {
+    path: '/route-planner',
+    component: RoutePlannerScreen,
     private: true,
   },
   MAP: {
