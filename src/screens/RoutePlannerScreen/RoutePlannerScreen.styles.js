@@ -6,7 +6,7 @@ export const Page = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 100%;
+  height: 100vh;
   z-index: 54;
   background-color: ${(props) =>
     updateValue(colors.background, props.backgroundColor)};
@@ -19,6 +19,7 @@ export const Container = styled.div`
   align-items: center;
   z-index: 54;
   width: 100%;
+  height: 100%;
 `;
 
 export const Map = styled.div`
@@ -34,19 +35,35 @@ export const TopContainer = styled.div`
   display: flex;
   padding: 10px 15px;
   flex-direction: row;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
   z-index: 54;
   width: 100%;
 `;
 
-export const RouteInputs = styled.div`
+export const Inputs = styled.div`
   display: flex;
   gap: 8px;
   flex-direction: column;
   align-items: center;
 `;
 
+export const Input = styled.input`
+  background: white 0% 0% no-repeat padding-box;
+  border: 1px solid #d3d2da;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  border: 1px solid #d3d2da;
+  border-radius: 4px;
+  opacity: 1;
+  padding: 6px 10px;
+  font-size: ${(props) => updateFontSize(14, props.fontSize)};
+`;
+
+export const RouteInputs = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+`;
 export const LeftButton = styled.button`
   color: white;
   background-color: transparent;
@@ -79,4 +96,12 @@ export const AccessibilityButton = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
+`;
+
+export const Icons = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 5px;
+  margin-right: 10px;
 `;
