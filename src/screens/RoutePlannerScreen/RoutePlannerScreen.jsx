@@ -7,7 +7,7 @@ import LocationIcon from '../../assets/icons/maps/location.svg';
 import DestinationIcon from '../../assets/icons/maps/destination.svg';
 import ArrowsIcon from '../../assets/icons/arrows.svg';
 import Map from '../../components/Map/Map';
-
+import i18n from '../../i18n';
 import {
   Page,
   Container,
@@ -43,7 +43,7 @@ const RoutePlannerScreen = (props) => {
         const longitude = position.coords.longitude;
         setLocation({ lat: latitude, lng: longitude });
         setOrigin({ lat: latitude, lng: longitude });
-        document.querySelector('#origin').value = 'Your Location';
+        document.querySelector('#origin').value = i18n.t('your_location');
       },
       (error) => {
         console.error(`Error Code = ${error.code} - ${error.message}`);
@@ -95,7 +95,7 @@ const RoutePlannerScreen = (props) => {
       <Container>
         {destination !== null ? (
           <Map
-            origin={origin === 'Your Location' ? location : origin}
+            origin={typeof origin === 'string' ? origin : location}
             destination={destination}
             isLoaded={isLoaded}
             location={location}

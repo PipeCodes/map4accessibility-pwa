@@ -87,7 +87,7 @@ const Map = ({ origin, destination, isLoaded, location }) => {
     };
 
     setMarkers(markerList);
-  }, [map, directions, location]);
+  }, [map, directions]);
 
   return isLoaded ? (
     <div style={{ width: '100%', height: '100%' }}>

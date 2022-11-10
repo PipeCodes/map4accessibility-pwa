@@ -1,21 +1,20 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Marker, InfoBox } from '@react-google-maps/api';
-import Icon from '../../assets/icons/maps/red-alert-icon.svg';
+import DangerIcon from '../../assets/icons/maps/red-alert-icon.svg';
+import DefaultIcon from '../../assets/icons/maps/destination.svg';
 import ThumbsUp from '../../assets/icons/maps/up.svg';
 import ThumbsDown from '../../assets/icons/maps/down.svg';
 
 import classes from './CustomMarker.module.css';
 
 const CustomMarker = ({ marker }) => {
-  let icon = null;
+  const icon = useMemo(() => {
+    if (marker?.placeType === 'danger') {
+      return DangerIcon;
+    }
 
-  switch (marker.placeType) {
-    case 'danger':
-      icon = Icon;
-      break;
-    default:
-      icon = Icon;
-  }
+    return DefaultIcon;
+  }, [marker]);
 
   return (
     <Marker icon={icon} position={marker.coords}>
