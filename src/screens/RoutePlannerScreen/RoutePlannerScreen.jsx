@@ -58,7 +58,7 @@ const RoutePlannerScreen = (props) => {
 
   return (
     <Page backgroundColor={backgroundColor}>
-      <TopContainer>
+      <TopContainer destination={destination}>
         <LeftButton type="button" onClick={history.goBack}>
           <img src={BackIcon} alt="back" />
         </LeftButton>

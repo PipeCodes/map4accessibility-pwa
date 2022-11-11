@@ -14,7 +14,6 @@ export const Page = styled.div`
 
 export const Container = styled.div`
   display: flex;
-  padding: 10px 15px;
   flex-direction: column;
   align-items: center;
   z-index: 54;
@@ -37,8 +36,9 @@ export const TopContainer = styled.div`
   flex-direction: row;
   align-items: flex-start;
   justify-content: space-between;
-  z-index: 54;
+  z-index: 55;
   width: 100%;
+  box-shadow: ${(props) => props.destination && '0px 2px 6px #00000029'};
 `;
 
 export const Inputs = styled.div`

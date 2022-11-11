@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { GoogleMap, DirectionsRenderer } from '@react-google-maps/api';
 import CustomMarker from '../CustomMarker/CustomMarker';
+import { Routes } from './Map.styles';
+import MapRoute from '../MapRoute/MapRoute';
 
 // Needs to be called from the API in the future
 const markerList = [
@@ -23,6 +25,22 @@ const markerList = [
       lat: 48.122,
       lng: 2.144,
     },
+  },
+];
+
+// Needs to be called from the API in the future
+const routes = [
+  {
+    name: 'Route A',
+    distance: '2.8km',
+    likes: 234,
+    dislikes: 197,
+  },
+  {
+    name: 'Route B',
+    distance: '2.2km',
+    likes: 261,
+    dislikes: 192,
   },
 ];
 
@@ -90,7 +108,15 @@ const Map = ({ origin, destination, isLoaded, location }) => {
   }, [map, directions]);
 
   return isLoaded ? (
-    <div style={{ width: '100%', height: '100%' }}>
+    <div
+      style={{
+        width: '100vw',
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        maxWidth: '820px',
+      }}
+    >
       <GoogleMap
         mapContainerStyle={{
           width: '100%',
@@ -107,6 +133,11 @@ const Map = ({ origin, destination, isLoaded, location }) => {
           markers.length > 0 &&
           markers.map((marker, i) => <CustomMarker marker={marker} key={i} />)}
       </GoogleMap>
+      <Routes>
+        {routes &&
+          routes.length > 0 &&
+          routes.map((route, i) => <MapRoute route={route} key={i} />)}
+      </Routes>
     </div>
   ) : (
     <p>Problems with google maps</p>
