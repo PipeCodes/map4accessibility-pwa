@@ -48,7 +48,6 @@ const Map = ({ origin, destination, isLoaded, location }) => {
     setRoutes(formatRoutes(directions.routes));
     setCenter(directions.routes[0].bounds.getCenter());
     setDirections(directions);
-    //
   };
 
   // Loads Map
@@ -102,7 +101,7 @@ const Map = ({ origin, destination, isLoaded, location }) => {
         onLoad={onLoad}
         onUnmount={onUnmount}
       >
-        <DirectionsRenderer direction={directions} />
+        <DirectionsRenderer directions={directions} />
 
         {markers &&
           markers.length > 0 &&
