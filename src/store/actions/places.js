@@ -3,29 +3,31 @@ import { GET_PLACES_RANKING_START, GET_PLACES_RANKING_SUCCESS } from './types';
 import { HTTP_STATUS } from '../../constants';
 import i18n from '../../i18n';
 
-export const getRanking = (country) => async (dispatch) => {
-  dispatch({ type: GET_PLACES_RANKING_START });
-  const body = {
-    geo_query_radius: 5,
-    country,
-    asc_order_by: 'thumb_direction',
-    desc_order_by: 'thumb_direction',
-    page: 1,
-    per_page: 10,
-  };
+export const getPlacesRadius =
+  (lat, lon, geoQueryRadius) => async (dispatch) => {
+    dispatch({ type: GET_PLACES_RANKING_START });
+    const body = {
+      latitude: lat,
+      longitude: lon,
+      geo_query_radius: geoQueryRadius,
+      asc_order_by: 'thumb_direction',
+      desc_order_by: 'thumb_direction',
+      page: 1,
+      per_page: 10,
+    };
 
-  try {
-    const response = await axios.post(Endpoints.PLACE_EVALUTATIONS, body);
+    try {
+      const response = await axios.post(Endpoints.PLACE_EVALUTATIONS, body);
 
-    const statusCode = response.status;
+      const statusCode = response.status;
 
-    if (statusCode === HTTP_STATUS.SUCCESS) {
-      dispatch({
-        type: GET_PLACES_RANKING_SUCCESS,
-        ranking: response.data?.result ?? [],
-      });
+      if (statusCode === HTTP_STATUS.SUCCESS) {
+        dispatch({
+          type: GET_PLACES_RANKING_SUCCESS,
+          ranking: response.data?.result ?? [],
+        });
+      }
+    } catch (error) {
+      return Promise.reject(error?.response?.data?.message);
     }
-  } catch (error) {
-    return Promise.reject(error?.response?.data?.message);
-  }
-};
+  };
