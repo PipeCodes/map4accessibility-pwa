@@ -1,6 +1,7 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback, useRef } from 'react';
 import { GoogleMap, DirectionsRenderer } from '@react-google-maps/api';
 import { useDispatch } from 'react-redux';
+import { set } from 'react-ga';
 import CustomMarker from '../CustomMarker/CustomMarker';
 import { Routes } from './Map.styles';
 import MapRoute from '../MapRoute/MapRoute';
@@ -10,10 +11,9 @@ import markers from '../../helpers/DemoData/MarkerList.json';
 const markerList = markers;
 
 const Map = ({ origin, destination, isLoaded, location }) => {
-  const dispatch = useDispatch();
   const [directions, setDirections] = useState(null);
   const [markers, setMarkers] = useState([]);
-  const [center, setCenter] = useState(location || { lat: 38.0, lng: -9.0 });
+  const [center, setCenter] = useState(location || { lat: 38.0, lng: -9.0 }); // Default Center is LX
   const [routes, setRoutes] = useState(null);
   const [map, setMap] = useState(null);
   const containerStyle = {
@@ -36,7 +36,8 @@ const Map = ({ origin, destination, isLoaded, location }) => {
     setCenter(null);
     setDirections(null);
     setRoutes(null);
-
+    setMarkers([]);
+    setMarkers(markerList);
     const directionsService = new window.google.maps.DirectionsService();
     const directions = await directionsService.route({
       origin,
@@ -45,8 +46,11 @@ const Map = ({ origin, destination, isLoaded, location }) => {
       provideRouteAlternatives: true,
     });
 
+    console.log(directions);
+
     setRoutes(formatRoutes(directions.routes));
-    setCenter(directions.routes[0].bounds.getCenter());
+    // setCenter(directions.routes[0].bounds.getCenter());
+    setCenter(origin);
     setDirections(directions);
   };
 
@@ -64,25 +68,14 @@ const Map = ({ origin, destination, isLoaded, location }) => {
 
   useEffect(() => {
     if (
-      origin === null ||
-      origin === '' ||
-      destination === null ||
-      destination === ''
+      (origin === null || origin === '') &&
+      (destination === null || destination === '')
     ) {
       return;
     }
 
     drawRoute(origin, destination);
   }, [origin, destination]);
-
-  /* MARKERS FROM API */
-  useEffect(() => {
-    setMarkers([]);
-    if (!directions) {
-      return;
-    }
-    setMarkers(markerList);
-  }, [map, directions]);
 
   return isLoaded ? (
     <div
@@ -97,12 +90,11 @@ const Map = ({ origin, destination, isLoaded, location }) => {
       <GoogleMap
         mapContainerStyle={containerStyle}
         center={center}
-        zoom={12}
+        zoom={8}
         onLoad={onLoad}
         onUnmount={onUnmount}
       >
-        <DirectionsRenderer directions={directions} />
-
+        {directions && <DirectionsRenderer directions={directions} />}
         {markers &&
           markers.length > 0 &&
           markers.map((marker, i) => <CustomMarker marker={marker} key={i} />)}
