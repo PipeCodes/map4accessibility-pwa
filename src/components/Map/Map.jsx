@@ -1,30 +1,33 @@
-import React, { useEffect, useState, useCallback, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { GoogleMap, DirectionsRenderer } from '@react-google-maps/api';
-import { useDispatch } from 'react-redux';
-import { set } from 'react-ga';
 import CustomMarker from '../CustomMarker/CustomMarker';
 import { Routes } from './Map.styles';
 import MapRoute from '../MapRoute/MapRoute';
 import markers from '../../helpers/DemoData/MarkerList.json';
+import { colors } from '../../constants/colors';
 
 // Needs to be called from the API in the future
 const markerList = markers;
 
 const Map = ({ origin, destination, isLoaded, location }) => {
-  const [directions, setDirections] = useState(null);
-  const [markers, setMarkers] = useState([]);
+  const [directions, setDirections] = useState(null); // Possible Routes from google maps api
+  const [markers, setMarkers] = useState([]); // Markers Around the route
   const [center, setCenter] = useState(location || { lat: 38.0, lng: -9.0 }); // Default Center is LX
-  const [routes, setRoutes] = useState(null);
-  const [map, setMap] = useState(null);
+  const [routes, setRoutes] = useState(null); // Fills List on the bottom of the page
+  const [selectedRoute, setSelectedRoute] = useState(0); // Route thats active
+  const [map, setMap] = useState(/** @type google.maps.Map */ (null));
+  // Map styling
   const containerStyle = {
     width: '100%',
     height: '100%',
     position: 'relative',
   };
-  const options = ['A', 'B', 'C'];
+  const options = ['A', 'B', 'C', 'D', 'E']; // List for Route Keys
 
+  // Formats routes extracted from the directions given by GoogleMaps API to have info to show in list
   const formatRoutes = (routes) =>
     routes.map((route, i) => ({
+      key: options[i],
       name: 'Route '.concat(options[i]),
       distance: route.legs[0].distance.text,
       likes: 234,
@@ -32,39 +35,35 @@ const Map = ({ origin, destination, isLoaded, location }) => {
       steps: [route.legs[0].steps],
     }));
 
-  const drawRoute = async (origin, destination) => {
+  // Resets the all the variables around the map state
+  const resetRoutes = () => {
     setCenter(null);
     setDirections(null);
     setRoutes(null);
     setMarkers([]);
-    setMarkers(markerList);
-    const directionsService = new window.google.maps.DirectionsService();
-    const directions = await directionsService.route({
-      origin,
-      destination,
-      travelMode: window.google.maps.TravelMode.WALKING,
-      provideRouteAlternatives: true,
-    });
-
-    console.log(directions);
-
-    setRoutes(formatRoutes(directions.routes));
-    // setCenter(directions.routes[0].bounds.getCenter());
-    setCenter(origin);
-    setDirections(directions);
   };
 
-  // Loads Map
-  const onLoad = useCallback((map) => {
-    const bounds = new window.google.maps.LatLngBounds(center);
-    map.fitBounds(bounds);
-    setMap(map);
-  }, []);
+  // Draws the routes in the map using the directions from Dirtections Service and resets the variables
+  const drawRoute = async (origin, destination, selectedRoute) => {
+    resetRoutes();
+    setMarkers(markerList);
 
-  // Unmounts Map
-  const onUnmount = useCallback((_) => {
-    setMap(null);
-  }, []);
+    // eslint-disable-next-line no-undef
+    const directionsService = new google.maps.DirectionsService();
+
+    const results = await directionsService.route({
+      origin,
+      destination,
+      // eslint-disable-next-line no-undef
+      travelMode: google.maps.TravelMode.WALKING,
+      provideRouteAlternatives: true,
+    });
+    console.log(results);
+    console.log(map);
+    setDirections(results);
+    setSelectedRoute(selectedRoute);
+    setRoutes(formatRoutes(results.routes));
+  };
 
   useEffect(() => {
     if (
@@ -73,9 +72,8 @@ const Map = ({ origin, destination, isLoaded, location }) => {
     ) {
       return;
     }
-
-    drawRoute(origin, destination);
-  }, [origin, destination]);
+    drawRoute(origin, destination, selectedRoute);
+  }, [origin, destination, selectedRoute]);
 
   return isLoaded ? (
     <div
@@ -91,10 +89,47 @@ const Map = ({ origin, destination, isLoaded, location }) => {
         mapContainerStyle={containerStyle}
         center={center}
         zoom={8}
-        onLoad={onLoad}
-        onUnmount={onUnmount}
+        onLoad={(map) => setMap(map)}
+        onUnmount={(_) => setMap(null)}
+        options={{
+          zoomControl: false,
+          streetViewControl: false,
+          mapTypeControl: false,
+          fullscreenControl: false,
+          disableDefaultUI: true,
+        }}
       >
-        {directions && <DirectionsRenderer directions={directions} />}
+        {directions &&
+          routes.length > 0 &&
+          routes.map((route, i) =>
+            i === selectedRoute ? (
+              <DirectionsRenderer
+                directions={directions}
+                routeIndex={i}
+                key={route.key}
+                options={{
+                  polylineOptions: {
+                    strokeColor: '#34518d',
+                    strokeOpacity: 1,
+                    strokeWeight: 6,
+                  },
+                }}
+              />
+            ) : (
+              <DirectionsRenderer
+                directions={directions}
+                routeIndex={i}
+                key={route.key}
+                options={{
+                  polylineOptions: {
+                    strokeColor: colors.grey,
+                    strokeOpacity: 0.4,
+                    strokeWeight: 6,
+                  },
+                }}
+              />
+            ),
+          )}
         {markers &&
           markers.length > 0 &&
           markers.map((marker, i) => <CustomMarker marker={marker} key={i} />)}
@@ -102,7 +137,14 @@ const Map = ({ origin, destination, isLoaded, location }) => {
       <Routes>
         {routes &&
           routes.length > 0 &&
-          routes.map((route, i) => <MapRoute route={route} key={i} />)}
+          routes.map((route, i) => (
+            <MapRoute
+              route={route}
+              setRoute={setSelectedRoute}
+              keyProp={i}
+              key={i}
+            />
+          ))}
       </Routes>
     </div>
   ) : (
