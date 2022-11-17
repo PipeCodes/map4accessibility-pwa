@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { GoogleMap, DirectionsRenderer } from '@react-google-maps/api';
 import CustomMarker from '../CustomMarker/CustomMarker';
 import { Routes } from './Map.styles';
@@ -10,18 +10,37 @@ import { colors } from '../../constants/colors';
 const markerList = markers;
 
 const Map = ({ origin, destination, isLoaded, location }) => {
+  const [center, setCenter] = useState(location || { lat: 38.0, lng: -9.0 }); // Default Center is LX
+  const [map, setMap] = useState(/** @type google.maps.Map */ (null));
   const [directions, setDirections] = useState(null); // Possible Routes from google maps api
   const [markers, setMarkers] = useState([]); // Markers Around the route
-  const [center, setCenter] = useState(location || { lat: 38.0, lng: -9.0 }); // Default Center is LX
   const [routes, setRoutes] = useState(null); // Fills List on the bottom of the page
   const [selectedRoute, setSelectedRoute] = useState(0); // Route thats active
-  const [map, setMap] = useState(/** @type google.maps.Map */ (null));
+  const polylineOptions = useCallback(
+    (index) => {
+      if (index === selectedRoute) {
+        return {
+          strokeColor: '#34518d',
+          strokeOpacity: 1,
+          strokeWeight: 6,
+        };
+      }
+      return {
+        strokeColor: colors.grey,
+        strokeOpacity: 0.4,
+        strokeWeight: 6,
+      };
+    },
+    [selectedRoute],
+  );
+
   // Map styling
   const containerStyle = {
     width: '100%',
     height: '100%',
     position: 'relative',
   };
+
   const options = ['A', 'B', 'C', 'D', 'E']; // List for Route Keys
 
   // Formats routes extracted from the directions given by GoogleMaps API to have info to show in list
@@ -44,9 +63,8 @@ const Map = ({ origin, destination, isLoaded, location }) => {
   };
 
   // Draws the routes in the map using the directions from Dirtections Service and resets the variables
-  const drawRoute = async (origin, destination, selectedRoute) => {
-    resetRoutes();
-    setMarkers(markerList);
+  const drawRoute = async (origin, destination, selectedRoute = 0) => {
+    // setMarkers(markerList);
 
     // eslint-disable-next-line no-undef
     const directionsService = new google.maps.DirectionsService();
@@ -60,20 +78,24 @@ const Map = ({ origin, destination, isLoaded, location }) => {
     });
     console.log(results);
     console.log(map);
+    // setCenter();
     setDirections(results);
+    console.log(selectedRoute);
     setSelectedRoute(selectedRoute);
     setRoutes(formatRoutes(results.routes));
   };
 
   useEffect(() => {
     if (
-      (origin === null || origin === '') &&
-      (destination === null || destination === '')
+      origin === null ||
+      origin === '' ||
+      destination === null ||
+      destination === ''
     ) {
       return;
     }
-    drawRoute(origin, destination, selectedRoute);
-  }, [origin, destination, selectedRoute]);
+    drawRoute(origin, destination);
+  }, [origin, destination]);
 
   return isLoaded ? (
     <div
@@ -99,37 +121,17 @@ const Map = ({ origin, destination, isLoaded, location }) => {
           disableDefaultUI: true,
         }}
       >
-        {directions &&
-          routes.length > 0 &&
-          routes.map((route, i) =>
-            i === selectedRoute ? (
-              <DirectionsRenderer
-                directions={directions}
-                routeIndex={i}
-                key={route.key}
-                options={{
-                  polylineOptions: {
-                    strokeColor: '#34518d',
-                    strokeOpacity: 1,
-                    strokeWeight: 6,
-                  },
-                }}
-              />
-            ) : (
-              <DirectionsRenderer
-                directions={directions}
-                routeIndex={i}
-                key={route.key}
-                options={{
-                  polylineOptions: {
-                    strokeColor: colors.grey,
-                    strokeOpacity: 0.4,
-                    strokeWeight: 6,
-                  },
-                }}
-              />
-            ),
-          )}
+        {routes?.length > 0 &&
+          routes?.map((route, i) => (
+            <DirectionsRenderer
+              directions={directions}
+              routeIndex={i}
+              key={route.key}
+              options={{
+                polylineOptions: polylineOptions(i),
+              }}
+            />
+          ))}
         {markers &&
           markers.length > 0 &&
           markers.map((marker, i) => <CustomMarker marker={marker} key={i} />)}
@@ -140,7 +142,7 @@ const Map = ({ origin, destination, isLoaded, location }) => {
           routes.map((route, i) => (
             <MapRoute
               route={route}
-              setRoute={setSelectedRoute}
+              setRoute={(route) => drawRoute(origin, destination, route)}
               keyProp={i}
               key={i}
             />

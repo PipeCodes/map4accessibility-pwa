@@ -37,6 +37,7 @@ const RoutePlannerScreen = (props) => {
   });
 
   useEffect(() => {
+    // Asks and sets user position (lat, long)
     navigator.geolocation.getCurrentPosition(
       (position) => {
         const latitude = position.coords.latitude;
