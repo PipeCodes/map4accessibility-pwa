@@ -20,7 +20,6 @@ import FooterMenu from '../../components/FooterMenu/FooterMenu';
 import RankingItem from '../../components/RankingItem/RankingItem';
 import CustomSelect from '../../components/CustomSelect/CustomSelect';
 import { countries } from '../../constants';
-import { getRanking } from '../../store/actions/places';
 
 const resultsArray = [
   {
@@ -108,11 +107,7 @@ const RankingScreen = (props) => {
 
   useEffect(() => {
     if (country) {
-      console.log(country);
       console.log('Call API');
-      dispatch(getRanking(country.label)).catch((error) => {
-        alert(error);
-      });
     }
   }, [sliderActive, country, ascDescActive, dispatch]);
 

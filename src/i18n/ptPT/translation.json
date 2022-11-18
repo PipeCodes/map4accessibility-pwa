@@ -102,5 +102,9 @@
   "belgium": "Belgica",
   "germany": "Alemanha",
   "us": "Estados Unidos",
-  "uk": "Reino Unido"
+  "uk": "Reino Unido",
+  "your_location": "Minha Localização",
+  "go_to_maps": "Ir para o Mapas",
+  "steps": "Passos",
+  "route": "Caminho"
 }

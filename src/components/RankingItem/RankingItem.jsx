@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import ThubsUpIcon from '../../assets/icons/ratings/thumbs-up.svg';
+import ThubsUpIcon from '../../assets/icons/maps/up.svg';
 
 import {
   ItemContainer,

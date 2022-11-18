@@ -1,0 +1,22 @@
+[
+  {
+    "name": "Place 1",
+    "placeType": "danger",
+    "likes": 152,
+    "dislikes": 0,
+    "coords": {
+      "lat": 46.122,
+      "lng": 4.144
+    }
+  },
+  {
+    "name": "Place 2",
+    "placeType": "danger",
+    "likes": 14,
+    "dislikes": 771,
+    "coords": {
+      "lat": 48.122,
+      "lng": 2.144
+    }
+  }
+]
