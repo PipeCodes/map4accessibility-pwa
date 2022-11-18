@@ -103,5 +103,8 @@
   "germany": "Germany",
   "us": "United States",
   "uk": "United Kingdom",
-  "your_location": "Your Location"
+  "your_location": "Your Location",
+  "go_to_maps": "Go to maps",
+  "steps": "Steps",
+  "route": "Route"
 }

@@ -1,0 +1,14 @@
+[
+  {
+    "name": "Route A",
+    "distance": "2.8km",
+    "likes": 234,
+    "dislikes": 197
+  },
+  {
+    "name": "Route B",
+    "distance": "2.2km",
+    "likes": 261,
+    "dislikes": 192
+  }
+]

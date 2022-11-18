@@ -1,115 +1,161 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { GoogleMap, DirectionsRenderer } from '@react-google-maps/api';
+import { useTranslation } from 'react-i18next';
 import CustomMarker from '../CustomMarker/CustomMarker';
+import { Routes } from './Map.styles';
+import MapRoute from '../MapRoute/MapRoute';
+import markers from '../../helpers/DemoData/MarkerList.json';
+import { colors } from '../../constants/colors';
 
 // Needs to be called from the API in the future
-const markerList = [
-  {
-    name: 'Place 1',
-    placeType: 'danger',
-    likes: 152,
-    dislikes: 0,
-    coords: {
-      lat: 46.122,
-      lng: 4.144,
-    },
-  },
-  {
-    name: 'Place 2',
-    placeType: 'danger',
-    likes: 14,
-    dislikes: 771,
-    coords: {
-      lat: 48.122,
-      lng: 2.144,
-    },
-  },
-];
+const markerList = markers;
 
-const Map = ({ origin, destination, isLoaded, location }) => {
-  const [directions, setDirections] = useState(null);
-  const [markers, setMarkers] = useState([]);
+// Map styling
+const containerStyle = {
+  width: '100%',
+  height: '100%',
+  position: 'relative',
+};
+
+const options = ['A', 'B', 'C', 'D', 'E']; // List for Route Keys
+
+const Map = ({ origin, destination, userLocation }) => {
+  // const [center, setCenter] = useState({ lat: 38.0, lng: -9.0 }); // Default Center is LX
   const [map, setMap] = useState(/** @type google.maps.Map */ (null));
-  const [center, setCenter] = useState(
-    location || {
-      lat: 15.0,
-      lng: 15.0,
+  const [directions, setDirections] = useState(null); // Possible Routes from google maps api
+  // const [markers, setMarkers] = useState([]); // Markers Around the route
+  const [routes, setRoutes] = useState(null); // Fills List on the bottom of the page
+  const [selectedRoute, setSelectedRoute] = useState(0); // Route thats active
+
+  const [generatingRoutes, setGeneratingRoutes] = useState(false);
+  const { t } = useTranslation();
+  const polylineOptions = useCallback(
+    (index) => {
+      if (index === selectedRoute) {
+        return {
+          strokeColor: '#34518d',
+          strokeOpacity: 1,
+          strokeWeight: 6,
+        };
+      }
+      return {
+        strokeColor: colors.grey,
+        strokeOpacity: 0.4,
+        strokeWeight: 6,
+      };
     },
+    [selectedRoute],
   );
 
-  const drawRoute = async (origin, destination) => {
-    setCenter(null);
-    setDirections(null);
-    setMarkers([]);
-    const directionsService = new window.google.maps.DirectionsService();
-    const directions = await directionsService.route({
-      origin,
-      destination,
-      travelMode: window.google.maps.TravelMode.WALKING,
-    });
+  // Formats routes extracted from the directions given by GoogleMaps API to have info to show in list
+  const formatRoutes = (routes) =>
+    routes.map((route, i) => ({
+      key: options[i],
+      name: t('route'),
+      distance: route.legs[0].distance.text,
+      likes: 234,
+      dislikes: 197,
+      steps: [route.legs[0].steps],
+    }));
 
-    setCenter(directions.routes[0].bounds.getCenter());
-    setDirections(directions);
+  // Draws the routes in the map using the directions from Dirtections Service and resets the variables
+  const drawRoute = (originRoute, destinationRoute, selectedRouteId) => {
+    // setMarkers(markerList);
+    setGeneratingRoutes(true);
+
+    const directionsService = new google.maps.DirectionsService();
+
+    directionsService
+      .route({
+        origin: originRoute,
+        destination: destinationRoute,
+        travelMode: google.maps.TravelMode.WALKING,
+        provideRouteAlternatives: true,
+      })
+      .then((results) => {
+        setDirections(results);
+        setSelectedRoute(selectedRouteId);
+      });
   };
 
-  // Loads Map
-  const onLoad = useCallback((/** @type google.maps.Map */ map) => {
-    setMap(map);
-  }, []);
+  useEffect(() => {
+    setRoutes(directions ? [...formatRoutes(directions.routes)] : []);
+  }, [directions]);
 
-  // Unmounts Map
-  const onUnmount = useCallback((_) => {
-    setMap(null);
-  }, []);
+  useEffect(() => {
+    if (routes) {
+      setGeneratingRoutes(false);
+    }
+  }, [routes]);
 
   useEffect(() => {
     if (
-      origin === null ||
-      origin === '' ||
-      destination === null ||
-      destination === ''
+      !(
+        origin === null ||
+        origin === '' ||
+        destination === null ||
+        destination === ''
+      )
     ) {
-      return;
+      drawRoute(origin, destination, 0);
     }
-
-    drawRoute(origin, destination);
   }, [origin, destination]);
 
-  /* MARKERS FROM API */
-  useEffect(() => {
-    if (!directions) {
-      return;
-    }
+  if (!destination) {
+    return <>ADD LOCALSTORAGE LIST HERE</>;
+  }
 
-    const newCenter = {
-      lat: map.getCenter().lat(),
-      lng: map.getCenter().lng(),
-    };
-
-    setMarkers(markerList);
-  }, [map, directions]);
-
-  return isLoaded ? (
-    <div style={{ width: '100%', height: '100%' }}>
+  return (
+    <div
+      style={{
+        width: '100vw',
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        maxWidth: '820px',
+      }}
+    >
       <GoogleMap
-        mapContainerStyle={{
-          width: '100%',
-          height: '100%',
-          position: 'relative',
+        mapContainerStyle={containerStyle}
+        center={userLocation || { lat: 38.0, lng: -9.0 }}
+        zoom={8}
+        onLoad={(map) => setMap(map)}
+        onUnmount={() => setMap(null)}
+        options={{
+          zoomControl: false,
+          streetViewControl: false,
+          mapTypeControl: false,
+          fullscreenControl: false,
+          disableDefaultUI: true,
         }}
-        center={center}
-        zoom={10}
-        onLoad={onLoad}
-        onUnmount={onUnmount}
       >
-        {directions && <DirectionsRenderer directions={directions} />}
-        {markers &&
-          markers.length > 0 &&
-          markers.map((marker, i) => <CustomMarker marker={marker} key={i} />)}
+        {!generatingRoutes &&
+          routes?.length > 0 &&
+          routes?.map((route, i) => (
+            <DirectionsRenderer
+              directions={directions}
+              routeIndex={i}
+              key={route.key}
+              options={{
+                polylineOptions: polylineOptions(i),
+              }}
+            />
+          ))}
       </GoogleMap>
+      <Routes>
+        {routes &&
+          routes.length > 0 &&
+          routes.map((route, i) => (
+            <MapRoute
+              route={route}
+              setRoute={(routeId) => drawRoute(origin, destination, routeId)}
+              keyProp={i}
+              key={i}
+              active={selectedRoute === i}
+            />
+          ))}
+      </Routes>
     </div>
-  ) : (
-    <p>Problems with google maps</p>
   );
 };
 
