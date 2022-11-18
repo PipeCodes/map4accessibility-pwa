@@ -1,13 +1,14 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { Autocomplete, useJsApiLoader } from '@react-google-maps/api';
+import { withRouter } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import AccessibilityIcon from '../../assets/icons/accessibility.svg';
 import BackIcon from '../../assets/icons/back.svg';
 import LocationIcon from '../../assets/icons/maps/location.svg';
 import DestinationIcon from '../../assets/icons/maps/destination.svg';
 import ArrowsIcon from '../../assets/icons/arrows.svg';
 import Map from '../../components/Map/Map';
-import i18n from '../../i18n';
 import {
   Page,
   Container,
@@ -20,37 +21,49 @@ import {
   Inputs,
 } from './RoutePlannerScreen.styles';
 
+const libraries = ['places'];
+
 const RoutePlannerScreen = (props) => {
   const { history, routes } = props;
+
+  const { t } = useTranslation();
+
+  const originInputRef = useRef(null);
+
   const backgroundColor = useSelector(
     (state) => state.accessibility.backgroundColor,
   );
   const fontSize = useSelector((state) => state.accessibility.fontSize);
 
   const [origin, setOrigin] = useState(null);
+  const [userLocation, setUserLocation] = useState(null);
   const [destination, setDestination] = useState(null);
-  const [location, setLocation] = useState(null);
+
   const { isLoaded } = useJsApiLoader({
-    id: 'google-map-script',
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
-    libraries: ['places'],
+    libraries,
   });
 
   useEffect(() => {
-    // Asks and sets user position (lat, long)
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        const latitude = position.coords.latitude;
-        const longitude = position.coords.longitude;
-        setLocation({ lat: latitude, lng: longitude });
-        setOrigin({ lat: latitude, lng: longitude });
-        document.querySelector('#origin').value = i18n.t('your_location');
-      },
-      (error) => {
-        console.error(`Error Code = ${error.code} - ${error.message}`);
-      },
-    );
-  }, []);
+    if (isLoaded) {
+      // Asks and sets user position (lat, long)
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const latitude = position.coords.latitude;
+          const longitude = position.coords.longitude;
+          setOrigin({ lat: latitude, lng: longitude });
+          setUserLocation({ lat: latitude, lng: longitude });
+
+          if (originInputRef.current) {
+            originInputRef.current.value = t('your_location');
+          }
+        },
+        (error) => {
+          console.error(`Error Code = ${error.code} - ${error.message}`);
+        },
+      );
+    }
+  }, [isLoaded, t]);
 
   // Click handlers
   const openAccessibility = useCallback(() => {
@@ -73,8 +86,8 @@ const RoutePlannerScreen = (props) => {
             <Inputs>
               <Autocomplete>
                 <Input
+                  ref={originInputRef}
                   fontSize={fontSize}
-                  id="origin"
                   type="text"
                   onBlur={(e) => setOrigin(e.target.value)}
                 />
@@ -94,19 +107,14 @@ const RoutePlannerScreen = (props) => {
         </AccessibilityButton>
       </TopContainer>
       <Container>
-        {destination !== null ? (
-          <Map
-            origin={typeof origin === 'string' ? origin : location}
-            destination={destination}
-            isLoaded={isLoaded}
-            location={location}
-          />
-        ) : (
-          <div>RECENTLY VISITED COMPONENT PLACEHOLDER</div>
-        )}
+        <Map
+          origin={origin}
+          destination={destination}
+          userLocation={userLocation}
+        />
       </Container>
     </Page>
   );
 };
 
-export default RoutePlannerScreen;
+export default withRouter(RoutePlannerScreen);

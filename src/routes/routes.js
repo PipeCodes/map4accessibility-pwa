@@ -60,7 +60,7 @@ const routes = {
   ROUTE_PLANNER: {
     path: '/route-planner',
     component: RoutePlannerScreen,
-    private: true,
+    private: false,
   },
   MAP: {
     path: '/map',

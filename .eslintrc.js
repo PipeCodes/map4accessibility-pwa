@@ -53,6 +53,7 @@ module.exports = {
     'no-unused-vars': 'warn',
     'consistent-return': 'off',
     'no-alert': 'off',
+    'no-undef': 'warn',
     'no-unused-expressions': [
       'error',
       {
