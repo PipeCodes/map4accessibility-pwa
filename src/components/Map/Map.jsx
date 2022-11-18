@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { GoogleMap, DirectionsRenderer } from '@react-google-maps/api';
+import { useTranslation } from 'react-i18next';
 import CustomMarker from '../CustomMarker/CustomMarker';
 import { Routes } from './Map.styles';
 import MapRoute from '../MapRoute/MapRoute';
@@ -27,7 +28,7 @@ const Map = ({ origin, destination, userLocation }) => {
   const [selectedRoute, setSelectedRoute] = useState(0); // Route thats active
 
   const [generatingRoutes, setGeneratingRoutes] = useState(false);
-
+  const { t } = useTranslation();
   const polylineOptions = useCallback(
     (index) => {
       if (index === selectedRoute) {
@@ -50,7 +51,7 @@ const Map = ({ origin, destination, userLocation }) => {
   const formatRoutes = (routes) =>
     routes.map((route, i) => ({
       key: options[i],
-      name: 'Route '.concat(options[i]),
+      name: t('route'),
       distance: route.legs[0].distance.text,
       likes: 234,
       dislikes: 197,
@@ -101,7 +102,7 @@ const Map = ({ origin, destination, userLocation }) => {
   }, [origin, destination]);
 
   if (!destination) {
-    return <>test</>;
+    return <>ADD LOCALSTORAGE LIST HERE</>;
   }
 
   return (
@@ -150,6 +151,7 @@ const Map = ({ origin, destination, userLocation }) => {
               setRoute={(routeId) => drawRoute(origin, destination, routeId)}
               keyProp={i}
               key={i}
+              active={selectedRoute === i}
             />
           ))}
       </Routes>

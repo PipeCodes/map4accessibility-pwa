@@ -10,9 +10,24 @@ export const RouteContainer = styled.div`
   min-height: 160px;
   margin: 20px 0;
 `;
+
+export const ContainerName = styled.div`
+  width: 100%;
+  display: flex;
+`;
 export const Name = styled.div`
   color: ${colors.primaryTextColor};
   font-size: ${(props) => updateFontSize(18, props.fontSize)};
+  margin-right: 5px;
+`;
+export const Index = styled.div`
+  width: 26px;
+  color: white;
+  background: ${(props) =>
+    props.active === true ? colors.primaryColor : colors.grey};
+  border: 1px solid #ffffff;
+  border-radius: 3px;
+  text-align: center;
 `;
 export const Distance = styled.div`
   color: ${colors.grey};

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import ThubsUpIcon from '../../assets/icons/maps/up.svg';
@@ -9,6 +9,7 @@ import { colors } from '../../constants/colors';
 import {
   RouteContainer,
   Name,
+  ContainerName,
   Distance,
   Ratings,
   CTA,
@@ -17,15 +18,19 @@ import {
   Rating,
   Icon,
   Number,
+  Index,
 } from './MapRoute.styles';
 
-const MapRoute = ({ route, setRoute, keyProp }) => {
+const MapRoute = ({ route, setRoute, keyProp, active }) => {
   const { t } = useTranslation();
   const fontSize = useSelector((state) => state.accessibility.fontSize);
 
   return (
     <RouteContainer onClick={() => setRoute(keyProp)}>
-      <Name fontSize={fontSize}>{route.name}</Name>
+      <ContainerName>
+        <Name fontSize={fontSize}>{route.name}</Name>
+        <Index active={active}>{route.key}</Index>
+      </ContainerName>
       <Distance fontSize={fontSize}>{route.distance}</Distance>
       <Ratings fontSize={fontSize}>
         <Rating>
