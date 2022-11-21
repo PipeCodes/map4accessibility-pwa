@@ -26,8 +26,7 @@ export const TopBarContainer = styled.div`
   min-height: 92px;
   align-items: center;
   justify-content: left;
-  background-color: ${(props) =>
-    updateValue(colors.primaryColor, props.backgroundColor)};
+  background-color: ${(props) => updateValue('white', props.backgroundColor)};
   padding: 10px 15px;
   height: auto;
 
@@ -37,7 +36,6 @@ export const TopBarContainer = styled.div`
     border-radius: unset;
   }
 
-  background: #ffffff 0% 0% no-repeat padding-box;
   box-shadow: 0px 2px 4px #00000005;
   border-radius: 0 0 100% 100%;
 `;

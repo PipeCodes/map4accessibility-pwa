@@ -40,6 +40,9 @@ export const ERROR = 'error';
 export const PROVIDER_FB = 'facebook';
 export const PROVIDER_GG = 'google';
 
+// EXTERNAL WEBSITES -> Needs to be changed when in Staging (current url is for dev)
+export const EXTERNAL_LINKS_BASE = 'https://map4accessibility-backend.test';
+
 // REGEX
 
 export const REGEX_EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;

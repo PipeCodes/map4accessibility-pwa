@@ -46,8 +46,6 @@ export const FormWrapper = styled.div`
     border: none;
     border-radius: 4px;
     box-shadow: 0px 2px 2px #0000000a;
-    font-size: ${(props) => updateFontSize(14, props.fontSize)};
-    font-family: ${(props) => updateValue('EasyReadingPro', props.font)};
     padding: 5px;
     padding-left: 10px;
     color: ${colors.grey};
@@ -132,6 +130,7 @@ export const InputLabel = styled.span`
 
 export const Error = styled.div`
   font-size: ${(props) => updateFontSize(10, props.fontSize)};
+  font-family: ${(props) => updateValue('NotoSans-Regular', props.font)};
   place-self: start;
   color: orange;
   margin-left: 10px;

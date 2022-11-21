@@ -185,26 +185,81 @@ export const logout = () => (dispatch) => {
   window.location.replace(`${process.env.REACT_APP_URL}/`);
 };
 
+// "Patch" Endpoint for User Profile (Updates user info)
+// Headers: AuthToken (Token for the current authentication)
+// Params: Users's info fields values to update
+// Result: Message of Success/Failure
+export const updateProfile =
+  ({ firstName, surname, birthDate, email, avatar }) =>
+  async (dispatch, getState) => {
+    const body = new FormData();
+    body.append('name', firstName);
+    body.append('surname', surname);
+    body.append('birthdate', birthDate);
+    body.append('email', email?.trim().toLowerCase());
+
+    if (avatar) {
+      body.append('avatar', avatar);
+    }
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${getAuthToken()}`,
+        'Content-Type': 'multipart/form-data',
+      },
+    };
+
+    try {
+      const response = await axios.post(Endpoints.UPDATE_USER, body, config);
+      const statusCode = response.status;
+
+      if (statusCode === HTTP_STATUS.SUCCESS) {
+        const user = getState().auth.user;
+
+        const updatedUser = {
+          ...user,
+          body,
+        };
+
+        dispatch({
+          type: GET_USER_SUCCESS,
+          user: updatedUser,
+        });
+
+        return Promise.resolve('profile_updated_successfully');
+      }
+    } catch (error) {
+      const statusCode = error?.response?.status ?? HTTP_STATUS.ERROR;
+      if (
+        statusCode === HTTP_STATUS.UNHAUTORIZED ||
+        statusCode === HTTP_STATUS.FORBIDDEN
+      ) {
+        dispatch(logout());
+      } else {
+        return Promise.reject(getErrorMessage(error, 'something_wrong'));
+      }
+    }
+  };
+
+// "Get" Endpoint for User Profile (Gets user info)
+// Headers: AuthToken (Token for the current authentication)
+// Params: No parameters needed
+// Result: User (User's info fields)
 export const getUser = () => async (dispatch) => {
   const config = {
     headers: {
       Authorization: `Bearer ${getAuthToken()}`,
+      'Content-Type': 'multipart/form-data',
     },
   };
-
   try {
     const response = await axios.get(Endpoints.GET_USER, config);
-
     const statusCode = response.status;
 
     if (statusCode === HTTP_STATUS.SUCCESS) {
       const user = {
-        ...response.data?.data?.user,
-        quizzes_played: response.data?.data?.quizzes_played,
-        quizzes_completed: response.data?.data?.quizzes_completed,
-        points: response.data?.data?.points,
+        ...response.data?.result,
       };
-
       dispatch({
         type: GET_USER_SUCCESS,
         user,
@@ -220,54 +275,3 @@ export const getUser = () => async (dispatch) => {
     }
   }
 };
-
-export const updateUser =
-  (avatar, name, username, region, translate) => async (dispatch, getState) => {
-    const body = {
-      avatar,
-      name,
-      username: username?.trim(),
-      region_id: region,
-      _method: 'PATCH',
-    };
-
-    const config = {
-      headers: {
-        Authorization: `Bearer ${getAuthToken()}`,
-      },
-    };
-
-    try {
-      const response = await axios.post(Endpoints.UPDATE_USER, body, config);
-
-      const statusCode = response.status;
-
-      if (statusCode === HTTP_STATUS.SUCCESS) {
-        const user = getState().auth.user;
-
-        const updatedUser = {
-          ...user,
-          username: response.data?.data?.user?.username,
-        };
-
-        dispatch({
-          type: GET_USER_SUCCESS,
-          user: updatedUser,
-        });
-
-        return Promise.resolve(translate('profile_updated_successfully'));
-      }
-    } catch (error) {
-      const statusCode = error?.response?.status ?? HTTP_STATUS.ERROR;
-      if (
-        statusCode === HTTP_STATUS.UNHAUTORIZED ||
-        statusCode === HTTP_STATUS.FORBIDDEN
-      ) {
-        dispatch(logout());
-      } else {
-        return Promise.reject(
-          getErrorMessage(error, translate('something_wrong')),
-        );
-      }
-    }
-  };

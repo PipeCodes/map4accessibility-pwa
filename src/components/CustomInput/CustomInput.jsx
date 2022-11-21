@@ -12,11 +12,15 @@ const CustomInput = (props) => {
     name,
     onBlur,
     readOnly,
+    fontSize,
+    font,
   } = props;
 
   return (
     <InputStyle
       style={style}
+      fontSize={fontSize}
+      font={font}
       type={type}
       placeholder={placeholder}
       onChange={onChange}
