@@ -57,9 +57,11 @@ const setUser = (user) => {
   return values;
 };
 
-const termsConditions = () => `${EXTERNAL_LINKS_BASE}/terms-conditions`;
+const termsConditions = () =>
+  `${process.env.REACT_APP_EXTERNAL_LINKS_BASE}/terms-conditions`;
 
-const privacyPolicy = () => `${EXTERNAL_LINKS_BASE}/privacy-policy`;
+const privacyPolicy = () =>
+  `${process.env.REACT_APP_EXTERNAL_LINKS_BASE}/privacy-policy`;
 
 const ProfileScreen = (props) => {
   const { history, routes } = props;
@@ -187,7 +189,9 @@ const ProfileScreen = (props) => {
             <Avatar
               src={
                 user.avatar
-                  ? EXTERNAL_LINKS_BASE.concat(`/${user.avatar}`)
+                  ? process.env.REACT_APP_EXTERNAL_LINKS_BASE.concat(
+                      `/${user.avatar}`,
+                    )
                   : AvatarImg
               }
               alt="avatar"
