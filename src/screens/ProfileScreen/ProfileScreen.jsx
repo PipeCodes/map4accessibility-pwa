@@ -11,7 +11,6 @@ import EditIcon from '../../assets/icons/edit.svg';
 import EditActiveIcon from '../../assets/icons/edit-active.svg';
 import PodiumIcon from '../../assets/icons/podium.svg';
 import AvatarImg from '../../assets/images/avatarDefault.png';
-import { EXTERNAL_LINKS_BASE } from '../../constants';
 import {
   Page,
   Container,
@@ -57,11 +56,9 @@ const setUser = (user) => {
   return values;
 };
 
-const termsConditions = () =>
-  `${process.env.REACT_APP_EXTERNAL_LINKS_BASE}/terms-conditions`;
+const termsConditions = `${process.env.REACT_APP_EXTERNAL_LINKS_BASE}/terms-conditions`;
 
-const privacyPolicy = () =>
-  `${process.env.REACT_APP_EXTERNAL_LINKS_BASE}/privacy-policy`;
+const privacyPolicy = `${process.env.REACT_APP_EXTERNAL_LINKS_BASE}/privacy-policy`;
 
 const ProfileScreen = (props) => {
   const { history, routes } = props;
@@ -77,10 +74,10 @@ const ProfileScreen = (props) => {
   const [formErrors, setFormErrors] = useState({});
   const [editActive, setEditActive] = useState(false);
 
-  // Gets user info everytime it gets edited
+  // Gets user info on load
   useEffect(() => {
     dispatch(getUser());
-  }, [dispatch, editActive]);
+  }, [dispatch]);
 
   // Adds User data to the form with the user data
   useEffect(() => {
@@ -147,6 +144,7 @@ const ProfileScreen = (props) => {
         )
           .then(() => {
             setEditActive((prevState) => !prevState);
+            dispatch(getUser());
           })
           .catch((error) => {
             alert(error);
@@ -155,6 +153,7 @@ const ProfileScreen = (props) => {
         dispatch(updateProfile(formData))
           .then(() => {
             setEditActive((prevState) => !prevState);
+            dispatch(getUser());
           })
           .catch((error) => {
             alert(error);
@@ -378,10 +377,10 @@ const ProfileScreen = (props) => {
             text={t('faqs')}
             icon={QuestionsIcon}
           />
-          <Link fontSize={fontSize} href={termsConditions()} target="_blank">
+          <Link fontSize={fontSize} href={termsConditions} target="_blank">
             {t('terms_conditions')}
           </Link>
-          <Link fontSize={fontSize} href={privacyPolicy()} target="_blank">
+          <Link fontSize={fontSize} href={privacyPolicy} target="_blank">
             {t('privacy_policy')}
           </Link>
         </BottomWrapper>

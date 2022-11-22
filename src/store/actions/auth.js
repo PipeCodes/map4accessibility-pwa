@@ -249,7 +249,6 @@ export const getUser = () => async (dispatch) => {
   const config = {
     headers: {
       Authorization: `Bearer ${getAuthToken()}`,
-      'Content-Type': 'multipart/form-data',
     },
   };
   try {
