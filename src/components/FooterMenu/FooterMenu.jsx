@@ -1,5 +1,6 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { FooterBarContainter, MenuButton } from './FooterMenu.styles';
 import { colors } from '../../constants/colors';
 import HomeIcon from '../../assets/icons/menu-home.svg';
@@ -12,6 +13,9 @@ import MapActiveIcon from '../../assets/icons/menu-map-active.svg';
 const FooterBar = (props) => {
   const { history, routes, home, map, profile } = props;
 
+  const backgroundColor = useSelector(
+    (state) => state.accessibility.backgroundColor,
+  );
   const homeClickHandler = () => {
     history.push(routes.HOME.path);
   };
@@ -25,7 +29,7 @@ const FooterBar = (props) => {
   };
 
   return (
-    <FooterBarContainter {...colors}>
+    <FooterBarContainter backgroundColor={backgroundColor} {...colors}>
       <MenuButton type="button" onClick={mapClickHandler}>
         {map ? (
           <img src={MapActiveIcon} alt="map" />
