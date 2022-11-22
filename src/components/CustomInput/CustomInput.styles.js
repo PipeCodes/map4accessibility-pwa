@@ -7,7 +7,7 @@ const InputStyle = styled.input`
   height: 40px;
   min-height: 40px;
   width: 100%;
-  font-size: ${(props) => updateFontSize(16, props.fontSize)};
+  font-size: ${(props) => updateFontSize(14, props.fontSize)};
   font-family: ${(props) => updateValue('EasyReadingPro', props.font)};
   padding-left: 15px;
   padding-right: 15px;

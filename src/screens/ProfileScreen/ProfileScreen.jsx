@@ -2,6 +2,7 @@ import React, { useEffect, useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import { updateProfile, getUser, logout } from '../../store/actions/auth';
 import { colors } from '../../constants/colors';
 import LogoutIcon from '../../assets/icons/logout.svg';
 import LockIcon from '../../assets/icons/lock.svg';
@@ -9,7 +10,7 @@ import QuestionsIcon from '../../assets/icons/questions.svg';
 import EditIcon from '../../assets/icons/edit.svg';
 import EditActiveIcon from '../../assets/icons/edit-active.svg';
 import PodiumIcon from '../../assets/icons/podium.svg';
-import AvatarImg from '../../assets/icons/avatar_1.png';
+import AvatarImg from '../../assets/images/avatarDefault.png';
 import {
   Page,
   Container,
@@ -34,7 +35,6 @@ import {
 import CustomInput from '../../components/CustomInput/CustomInput';
 import CustomButton from '../../components/CustomButton/CustomButton';
 import TopBar from '../../components/TopBar/TopBar';
-import { getUser, logout } from '../../store/actions/auth';
 import FooterMenu from '../../components/FooterMenu/FooterMenu';
 
 const initialValues = {
@@ -42,6 +42,7 @@ const initialValues = {
   surname: '',
   birthDate: '',
   email: '',
+  avatar: '',
 };
 
 const setUser = (user) => {
@@ -50,9 +51,14 @@ const setUser = (user) => {
     surname: user.surname,
     birthDate: user.birthdate,
     email: user.email,
+    avatar: user.avatar,
   };
   return values;
 };
+
+const termsConditions = `${process.env.REACT_APP_EXTERNAL_LINKS_BASE}/terms-conditions`;
+
+const privacyPolicy = `${process.env.REACT_APP_EXTERNAL_LINKS_BASE}/privacy-policy`;
 
 const ProfileScreen = (props) => {
   const { history, routes } = props;
@@ -67,15 +73,18 @@ const ProfileScreen = (props) => {
   const [formData, setFormData] = useState(initialValues);
   const [formErrors, setFormErrors] = useState({});
   const [editActive, setEditActive] = useState(false);
-  useEffect(() => {}, [editActive, formData.firstName, formData.surname]);
+
+  // Gets user info on load
+  useEffect(() => {
+    dispatch(getUser());
+  }, [dispatch]);
+
+  // Adds User data to the form with the user data
   useEffect(() => {
     if (user) {
       setFormData(setUser(user));
     }
   }, [user]);
-  useEffect(() => {
-    dispatch(getUser());
-  }, [dispatch]);
 
   //  Validates the fields
   const validate = (values) => {
@@ -107,20 +116,53 @@ const ProfileScreen = (props) => {
 
   // Click Handlers
   const editHandler = () => {
-    setFormData(initialValues(user));
+    setFormData(setUser(user));
     setEditActive((prevState) => !prevState);
   };
 
-  const confirmEditHandler = () => {
+  const confirmEdit = () => {
     setFormErrors(validate(formData));
     if (Object.keys(validate(formData)).length === 0) {
-      setEditActive((prevState) => !prevState);
-      console.log('CALL API');
+      return true;
     }
+    return false;
   };
 
+  // Makes the call to the API after confirming all fields are validated,
+  // If the avatar is not a file it is changed.
+  const updateProfileHandler = useCallback(() => {
+    const result = confirmEdit();
+    if (result) {
+      if (typeof formData.avatar === 'string') {
+        dispatch(
+          updateProfile({
+            firstName: formData.firstName,
+            surname: formData.surname,
+            birthDate: formData.birthDate,
+            email: formData.email,
+          }),
+        )
+          .then(() => {
+            setEditActive((prevState) => !prevState);
+            dispatch(getUser());
+          })
+          .catch((error) => {
+            alert(error);
+          });
+      } else {
+        dispatch(updateProfile(formData))
+          .then(() => {
+            setEditActive((prevState) => !prevState);
+            dispatch(getUser());
+          })
+          .catch((error) => {
+            alert(error);
+          });
+      }
+    }
+  }, [dispatch, formData]);
+
   const rankingHandler = () => {
-    console.log('Needs to be updated when ranking is implemented');
     history.push(routes.RANKING.path);
   };
 
@@ -129,7 +171,7 @@ const ProfileScreen = (props) => {
   }, [history, routes]);
 
   return (
-    <Page>
+    <Page backgroundColor={backgroundColor}>
       <TopBar
         aligned
         page
@@ -143,7 +185,16 @@ const ProfileScreen = (props) => {
             <img src={PodiumIcon} alt="Ranking" />
           </RankingButton>
           <StackContainer>
-            <Avatar src={AvatarImg} alt="avatar" />
+            <Avatar
+              src={
+                user.avatar
+                  ? process.env.REACT_APP_EXTERNAL_LINKS_BASE.concat(
+                      `/${user.avatar}`,
+                    )
+                  : AvatarImg
+              }
+              alt="avatar"
+            />
             <Name fontSize={fontSize}>
               {formData.firstName} {formData.surname}
             </Name>
@@ -158,7 +209,9 @@ const ProfileScreen = (props) => {
         <FormWrapper>
           {editActive && (
             <div>
-              <InputLabel fontSize={fontSize}>{t('first_name')}</InputLabel>
+              <InputLabel fontSize={fontSize} font={font}>
+                {t('first_name')}
+              </InputLabel>
               <CustomInput
                 fontSize={fontSize}
                 font={font}
@@ -174,9 +227,13 @@ const ProfileScreen = (props) => {
                 }}
               />
               {formErrors.firstName && (
-                <Error fontSize={fontSize}>{t(formErrors.firstName)}</Error>
+                <Error fontSize={fontSize} font={font}>
+                  {t(formErrors.firstName)}
+                </Error>
               )}
-              <InputLabel fontSize={fontSize}>{t('surname')}</InputLabel>
+              <InputLabel fontSize={fontSize} font={font}>
+                {t('surname')}
+              </InputLabel>
               <CustomInput
                 fontSize={fontSize}
                 font={font}
@@ -192,12 +249,33 @@ const ProfileScreen = (props) => {
                 }}
               />
               {formErrors.surname && (
-                <Error fontSize={fontSize}>{t(formErrors.surname)}</Error>
+                <Error fontSize={fontSize} font={font}>
+                  {t(formErrors.surname)}
+                </Error>
               )}
+              <InputLabel fontSize={fontSize} font={font}>
+                {t('avatar')}
+              </InputLabel>
+              <CustomInput
+                type="file"
+                fontSize={fontSize}
+                font={font}
+                style={{}}
+                placeholder={t('avatar_placeholder')}
+                name="avatar"
+                onChange={(e) => {
+                  setFormData((prevState) => ({
+                    ...prevState,
+                    avatar: e.target.files[0],
+                  }));
+                }}
+              />
             </div>
           )}
 
-          <InputLabel fontSize={fontSize}>{t('email')}</InputLabel>
+          <InputLabel fontSize={fontSize} font={font}>
+            {t('email')}
+          </InputLabel>
           <CustomInput
             fontSize={fontSize}
             font={font}
@@ -215,9 +293,13 @@ const ProfileScreen = (props) => {
             }}
           />
           {formErrors.email && (
-            <Error fontSize={fontSize}>{t(formErrors.email)}</Error>
+            <Error fontSize={fontSize} font={font}>
+              {t(formErrors.email)}
+            </Error>
           )}
-          <InputLabel fontSize={fontSize}>{t('birth_date')}</InputLabel>
+          <InputLabel fontSize={fontSize} font={font}>
+            {t('birth_date')}
+          </InputLabel>
           <CustomInput
             fontSize={fontSize}
             font={font}
@@ -235,7 +317,9 @@ const ProfileScreen = (props) => {
             }}
           />
           {formErrors.birthDate && (
-            <Error fontSize={fontSize}>{t(formErrors.birthDate)}</Error>
+            <Error fontSize={fontSize} font={font}>
+              {t(formErrors.birthDate)}
+            </Error>
           )}
           {editActive && (
             <CustomButton
@@ -248,7 +332,7 @@ const ProfileScreen = (props) => {
               }}
               backgroundColor={colors.primaryColor}
               text={t('confirm')}
-              onClick={() => confirmEditHandler(formErrors, formData)}
+              onClick={() => updateProfileHandler()}
               icon={EditActiveIcon}
             />
           )}
@@ -293,10 +377,10 @@ const ProfileScreen = (props) => {
             text={t('faqs')}
             icon={QuestionsIcon}
           />
-          <Link fontSize={fontSize} href="google.com">
+          <Link fontSize={fontSize} href={termsConditions} target="_blank">
             {t('terms_conditions')}
           </Link>
-          <Link fontSize={fontSize} href="google.com">
+          <Link fontSize={fontSize} href={privacyPolicy} target="_blank">
             {t('privacy_policy')}
           </Link>
         </BottomWrapper>
