@@ -16,10 +16,13 @@ import { colors } from '../../constants/colors';
 const PopUpComponent = (props) => {
   const { title, text, buttonText, action, buttonIcon, icon } = props;
   const fontSize = useSelector((state) => state.accessibility.fontSize);
+  const backgroundColor = useSelector(
+    (state) => state.accessibility.backgroundColor,
+  );
   return (
     <Container>
       <DarkOverlayContainer />
-      <PopUp>
+      <PopUp backgroundColor={backgroundColor}>
         <Icon>
           <img src={icon} alt="back" />
         </Icon>

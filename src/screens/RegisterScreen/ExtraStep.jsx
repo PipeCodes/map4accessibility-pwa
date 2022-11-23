@@ -19,6 +19,7 @@ const ExtraStep = (props) => {
   const { formData, setFormData } = props;
   const { t } = useTranslation();
   const fontSize = useSelector((state) => state.accessibility.fontSize);
+  const font = useSelector((state) => state.accessibility.font);
 
   const activeButton = {
     width: '100%',
@@ -41,7 +42,7 @@ const ExtraStep = (props) => {
 
   return (
     <div className="fullDiv">
-      <Text fontSize={fontSize}>
+      <Text fontSize={fontSize} font={font}>
         {t('disability_profile')}
         <span>{t('optional')}</span>
       </Text>

@@ -8,6 +8,8 @@ export const Page = styled.div`
   align-items: center;
   height: 100%;
   z-index: 54;
+  background-color: ${(props) =>
+    updateValue(colors.transparent, props.backgroundColor)};
 `;
 
 export const Container = styled.div`
@@ -48,8 +50,9 @@ export const Box = styled.div`
 export const Text = styled.span`
   font-size: ${(props) => updateFontSize(20, props.fontSize)};
   font-family: ${(props) => updateValue('EasyReadingPro', props.font)};
-  color: ${colors.primaryColorText};
+  color: ${colors.primaryTextColor};
   margin-bottom: 10px;
+  text-align: center;
   span {
     font-size: ${(props) => updateFontSize(14, props.fontSize)};
     color: ${colors.primaryColor};
