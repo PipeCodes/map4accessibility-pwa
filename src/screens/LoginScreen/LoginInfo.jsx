@@ -8,16 +8,21 @@ const SignUpInfo = (props) => {
   const { formData, setFormData, formErrors } = props;
   const { t } = useTranslation();
   const fontSize = useSelector((state) => state.accessibility.fontSize);
+  const font = useSelector((state) => state.accessibility.font);
 
   return (
     <div className="fullDiv">
-      <Text fontSize={fontSize}>{t('login')}</Text>
+      <Text fontSize={fontSize} font={font}>
+        {t('login')}
+      </Text>
 
-      <InputLabel fontSize={fontSize}>
+      <InputLabel fontSize={fontSize} font={font}>
         {t('email')}
         <span>*</span>
       </InputLabel>
       <CustomInput
+        fontSize={fontSize}
+        font={font}
         style={{}}
         placeholder={t('email_placeholder')}
         type="email"
@@ -27,13 +32,17 @@ const SignUpInfo = (props) => {
         }}
       />
       {formErrors.email && (
-        <Error fontSize={fontSize}>{formErrors.email}</Error>
+        <Error fontSize={fontSize} font={font}>
+          {formErrors.email}
+        </Error>
       )}
-      <InputLabel fontSize={fontSize}>
+      <InputLabel fontSize={fontSize} font={font}>
         {t('password')}
         <span>*</span>
       </InputLabel>
       <CustomInput
+        fontSize={fontSize}
+        font={font}
         style={{}}
         placeholder={t('password_placeholder')}
         type="password"
@@ -43,7 +52,9 @@ const SignUpInfo = (props) => {
         }}
       />
       {formErrors.password && (
-        <Error fontSize={fontSize}>{formErrors.password}</Error>
+        <Error fontSize={fontSize} font={font}>
+          {formErrors.password}
+        </Error>
       )}
     </div>
   );

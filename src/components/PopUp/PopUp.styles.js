@@ -9,7 +9,7 @@ export const Container = styled.div`
 `;
 
 export const PopUp = styled.div`
-  background: white;
+  background-color: ${(props) => updateValue('white', props.backgroundColor)};
   display: flex;
   flex-direction: column;
   align-items: center;

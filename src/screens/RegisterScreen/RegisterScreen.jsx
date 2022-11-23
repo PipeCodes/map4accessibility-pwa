@@ -65,6 +65,10 @@ const RegisterScreen = (props) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const fontSize = useSelector((state) => state.accessibility.fontSize);
+  const font = useSelector((state) => state.accessibility.font);
+  const backgroundColor = useSelector(
+    (state) => state.accessibility.backgroundColor,
+  );
   const [page, setPage] = useState(0);
   const [formData, setFormData] = useState(initialValues);
   const [formErrors, setFormErrors] = useState({});
@@ -193,12 +197,13 @@ const RegisterScreen = (props) => {
   };
 
   return (
-    <Page>
+    <Page backgroundColor={backgroundColor}>
       <TopBar
         backTarget={() => backClickHandler(page)}
         aligned
         hasBackButton
         hasLogo
+        backgroundColor={backgroundColor}
         hasAccessibilityButton={openAccessibility}
       />
       <Container>
@@ -227,7 +232,7 @@ const RegisterScreen = (props) => {
 
         {page === 0 && (
           <Box>
-            <TextSecondary fontSize={fontSize}>
+            <TextSecondary fontSize={fontSize} font={font}>
               {t('already_have_account')}
             </TextSecondary>
             <CustomButton

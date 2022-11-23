@@ -28,15 +28,18 @@ const GlobalStyles = createGlobalStyle`
     src: url(${EasyReadingProBold}) format('truetype');
   }
 
+  #root {
+    height: 100%;
+  }
+
   body {
-    font-family: ${(props) => updateValue('NotoSans-Regular', props.font)};
+    font-family: 'NotoSans-Regular';
     margin: 0;
     overscroll-behavior-y: contain;
     max-width: 820px;
-    height: 100vh;
+    height: 100%;
     margin: 0px auto;
-    background-color: ${(props) =>
-      updateValue(colors.background, props.backgroundColor)};
+    background-color: ${colors.background};
 
 
     a {

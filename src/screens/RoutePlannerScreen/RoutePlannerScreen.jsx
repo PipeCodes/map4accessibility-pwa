@@ -34,6 +34,7 @@ const RoutePlannerScreen = (props) => {
     (state) => state.accessibility.backgroundColor,
   );
   const fontSize = useSelector((state) => state.accessibility.fontSize);
+  const font = useSelector((state) => state.accessibility.font);
 
   const [origin, setOrigin] = useState(null);
   const [userLocation, setUserLocation] = useState(null);
@@ -88,6 +89,7 @@ const RoutePlannerScreen = (props) => {
                 <Input
                   ref={originInputRef}
                   fontSize={fontSize}
+                  font={font}
                   type="text"
                   onBlur={(e) => setOrigin(e.target.value)}
                 />
@@ -95,6 +97,7 @@ const RoutePlannerScreen = (props) => {
               <Autocomplete>
                 <Input
                   fontSize={fontSize}
+                  font={font}
                   type="text"
                   onBlur={(e) => setDestination(e.target.value)}
                 />

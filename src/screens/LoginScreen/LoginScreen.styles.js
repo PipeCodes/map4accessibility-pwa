@@ -6,8 +6,10 @@ export const Page = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 100%;
+  height: 100vh;
   z-index: 54;
+  background-color: ${(props) =>
+    updateValue(colors.transparent, props.backgroundColor)};
 `;
 
 export const Container = styled.div`
@@ -30,6 +32,7 @@ export const Container = styled.div`
 
 export const Error = styled.div`
   font-size: ${(props) => updateFontSize(10, props.fontSize)};
+  font-family: ${(props) => updateValue('EasyReadingPro', props.font)};
   place-self: start;
   color: orange;
   margin-left: 10px;
@@ -47,7 +50,7 @@ export const Box = styled.div`
 export const Text = styled.span`
   font-size: ${(props) => updateFontSize(20, props.fontSize)};
   font-family: ${(props) => updateValue('EasyReadingPro', props.font)};
-  color: ${colors.primaryColorText};
+  color: ${colors.primaryTextColor};
   margin-bottom: 10px;
   span {
     font-size: ${(props) => updateFontSize(14, props.fontSize)};

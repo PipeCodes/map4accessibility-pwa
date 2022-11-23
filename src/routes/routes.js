@@ -14,7 +14,7 @@ import RoutePlannerScreen from '../screens/RoutePlannerScreen/RoutePlannerScreen
 import FAQsScreen from '../screens/FAQsScreen/FAQsScreen';
 import TrackedRoute from './TrackedRoute';
 import ChangePasswordScreen from '../screens/ChangePasswordScreen/ChangePasswordScreen';
-import OnboardingScreen from '../screens/OnboardingScreen/OnboardingScreen';
+import HomeScreen from '../screens/HomeScreen/HomeScreen';
 import ConfirmedEmailScreen from '../screens/EmailConfirmationScreen/EmailConfirmationScreen';
 import { isAuthenticated } from '../services/local';
 
@@ -64,12 +64,12 @@ const routes = {
   },
   MAP: {
     path: '/map',
-    component: OnboardingScreen, // Needs to change when we create a map screen
+    component: HomeScreen, // Needs to change when we create a map screen
     private: true,
   },
   HOME: {
     path: '/home',
-    component: OnboardingScreen, // Needs to change when we create a home screen
+    component: HomeScreen,
     private: true,
   },
   RANKING: {

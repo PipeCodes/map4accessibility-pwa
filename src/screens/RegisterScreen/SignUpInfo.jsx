@@ -84,8 +84,10 @@ const SignUpInfo = (props) => {
 
   return (
     <div className="fullDiv">
-      <Text fontSize={fontSize}>{t('Create Account')}</Text>
-      <InputLabel fontSize={fontSize}>
+      <Text fontSize={fontSize} font={font}>
+        {t('Create Account')}
+      </Text>
+      <InputLabel fontSize={fontSize} font={font}>
         {t('first_name')}
         <span>*</span>
       </InputLabel>
@@ -107,7 +109,7 @@ const SignUpInfo = (props) => {
       {formErrors.firstName && (
         <Error fontSize={fontSize}>{t(formErrors.firstName)}</Error>
       )}
-      <InputLabel fontSize={fontSize}>
+      <InputLabel fontSize={fontSize} font={font}>
         {t('surname')}
         <span>*</span>
       </InputLabel>
@@ -130,11 +132,13 @@ const SignUpInfo = (props) => {
         <Error fontSize={fontSize}>{t(formErrors.surname)}</Error>
       )}
 
-      <InputLabel fontSize={fontSize}>
+      <InputLabel fontSize={fontSize} font={font}>
         {t('birth_date')}
         <span>*</span>
       </InputLabel>
       <CustomInput
+        fontSize={fontSize}
+        font={font}
         style={{}}
         placeholder={t('birth_date_placeholder')}
         type="date"
@@ -151,7 +155,7 @@ const SignUpInfo = (props) => {
       {formErrors.birthDate && (
         <Error fontSize={fontSize}>{t(formErrors.birthDate)}</Error>
       )}
-      <InputLabel fontSize={fontSize}>
+      <InputLabel fontSize={fontSize} font={font}>
         {t('email')}
         <span>*</span>
       </InputLabel>
@@ -177,7 +181,7 @@ const SignUpInfo = (props) => {
       {formErrors.email && (
         <Error fontSize={fontSize}>{t(formErrors.email)}</Error>
       )}
-      <InputLabel fontSize={fontSize}>
+      <InputLabel fontSize={fontSize} font={font}>
         {t('password')}
         <span>*</span>
       </InputLabel>
@@ -200,7 +204,7 @@ const SignUpInfo = (props) => {
       {formErrors.password && (
         <Error fontSize={fontSize}>{t(formErrors.password)}</Error>
       )}
-      <InputLabel fontSize={fontSize}>
+      <InputLabel fontSize={fontSize} font={font}>
         {t('confirm_password')}
         <span>*</span>
       </InputLabel>

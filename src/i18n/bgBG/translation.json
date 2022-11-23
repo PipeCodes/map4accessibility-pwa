@@ -106,5 +106,7 @@
   "your_location": "Your Location",
   "go_to_maps": "Go to maps",
   "steps": "Steps",
-  "route": "Route"
+  "route": "Route",
+  "home": "Home",
+  "welcome": "Welcome"
 }

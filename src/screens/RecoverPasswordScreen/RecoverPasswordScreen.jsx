@@ -25,8 +25,11 @@ const RecoverPasswordScreen = (props) => {
   const { history, routes } = props;
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const backgroundColor = useSelector(
+    (state) => state.accessibility.backgroundColor,
+  );
   const fontSize = useSelector((state) => state.accessibility.fontSize);
-  const fontFamily = useSelector((state) => state.accessibility.fontFamily);
+  const font = useSelector((state) => state.accessibility.font);
   const [formData, setFormData] = useState(initialValues);
   const [formErrors, setFormErrors] = useState({});
   const [notReadySubmit, setNotReadySubmit] = useState(true);
@@ -75,30 +78,31 @@ const RecoverPasswordScreen = (props) => {
   };
 
   return (
-    <Page>
+    <Page backgroundColor={backgroundColor}>
       <TopBar
         backTarget={() => backClickHandler()}
         aligned
         hasBackButton
         hasLogo
         hasAccessibilityButton={openAccessibility}
+        backgroundColor={backgroundColor}
       />
       <Container>
         <div className="fullDiv">
-          <Text fontSize={fontSize} fontFamily={fontFamily}>
+          <Text fontSize={fontSize} font={font}>
             {t('recover_password')}
           </Text>
-          <InputLabel fontSize={fontSize} fontFamily={fontFamily}>
+          <InputLabel fontSize={fontSize} font={font}>
             {t('email')}
             <span>*</span>
           </InputLabel>
           <CustomInput
+            fontSize={fontSize}
+            font={font}
             style={{}}
             placeholder={t('email_placeholder')}
             type="email"
             value={formData.email}
-            fontFamily={fontFamily}
-            fontSize={fontSize}
             onChange={(e) =>
               setFormData({ ...formData, email: e.target.value })
             }
@@ -110,8 +114,6 @@ const RecoverPasswordScreen = (props) => {
             marginBottom: 20,
             width: '100%',
             borderRadius: '25px',
-            fontSize: { fontSize },
-            fontFamily: { fontFamily },
           }}
           disabled={notReadySubmit}
           backgroundColor={notReadySubmit ? colors.grey : colors.orange}
@@ -124,8 +126,6 @@ const RecoverPasswordScreen = (props) => {
             style={{
               width: 'auto',
               color: colors.primaryColor,
-              fontSize: { fontSize },
-              fontFamily: { fontFamily },
               boxShadow: 'none',
             }}
             backgroundColor={colors.transparent}
@@ -136,8 +136,6 @@ const RecoverPasswordScreen = (props) => {
             style={{
               width: 'auto',
               color: colors.primaryColor,
-              fontSize: { fontSize },
-              fontFamily: { fontFamily },
               boxShadow: 'none',
             }}
             backgroundColor={colors.transparent}

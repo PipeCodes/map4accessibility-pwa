@@ -171,7 +171,7 @@ const ProfileScreen = (props) => {
   }, [history, routes]);
 
   return (
-    <Page backgroundColor={backgroundColor}>
+    <Page backgroundColor={backgroundColor} editActive={editActive}>
       <TopBar
         aligned
         page

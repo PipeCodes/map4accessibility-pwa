@@ -21,13 +21,19 @@ const EmailConfirmationScreen = (props) => {
   const { history, routes } = props;
   const { t } = useTranslation();
   const fontSize = useSelector((state) => state.accessibility.fontSize);
-
+  const font = useSelector((state) => state.accessibility.font);
+  const backgroundColor = useSelector(
+    (state) => state.accessibility.backgroundColor,
+  );
   const proceedLogin = useCallback(() => {
     history.push(routes.LOGIN.path);
   }, [history, routes]);
+  const openAccessibility = useCallback(() => {
+    history.push(routes.ACCESSIBILITY.path);
+  }, [history, routes]);
 
   return (
-    <Page>
+    <Page backgroundColor={backgroundColor}>
       <PopUp
         title={t('email_confirmation')}
         text={t('email_confirmed')}
@@ -35,24 +41,36 @@ const EmailConfirmationScreen = (props) => {
         action={proceedLogin}
         icon={NotificationIcon}
       />
-      <TopBar aligned hasBackButton hasLogo />
+      <TopBar
+        aligned
+        hasBackButton
+        hasLogo
+        hasAccessibilityButton={openAccessibility}
+        backgroundColor={backgroundColor}
+      />
       <Container>
         <div className="fullDiv">
-          <Text fontSize={fontSize}>{t('login')}</Text>
-          <InputLabel fontSize={fontSize}>
+          <Text fontSize={fontSize} font={font}>
+            {t('login')}
+          </Text>
+          <InputLabel fontSize={fontSize} font={font}>
             {t('email')}
             <span>*</span>
           </InputLabel>
           <CustomInput
+            fontSize={fontSize}
+            font={font}
             style={{}}
             placeholder={t('email_placeholder')}
             type="email"
           />
-          <InputLabel fontSize={fontSize}>
+          <InputLabel fontSize={fontSize} font={font}>
             {t('password')}
             <span>*</span>
           </InputLabel>
           <CustomInput
+            fontSize={fontSize}
+            font={font}
             style={{}}
             placeholder={t('password_placeholder')}
             type="password"
