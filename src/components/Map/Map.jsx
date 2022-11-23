@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { GoogleMap, DirectionsRenderer } from '@react-google-maps/api';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 import CustomMarker from '../CustomMarker/CustomMarker';
 import { Routes } from './Map.styles';
 import MapRoute from '../MapRoute/MapRoute';
@@ -26,7 +27,9 @@ const Map = ({ origin, destination, userLocation }) => {
   // const [markers, setMarkers] = useState([]); // Markers Around the route
   const [routes, setRoutes] = useState(null); // Fills List on the bottom of the page
   const [selectedRoute, setSelectedRoute] = useState(0); // Route thats active
-
+  const backgroundColor = useSelector(
+    (state) => state.accessibility.backgroundColor,
+  );
   const [generatingRoutes, setGeneratingRoutes] = useState(false);
   const { t } = useTranslation();
   const polylineOptions = useCallback(
@@ -142,7 +145,7 @@ const Map = ({ origin, destination, userLocation }) => {
             />
           ))}
       </GoogleMap>
-      <Routes>
+      <Routes backgroundColor={backgroundColor}>
         {routes &&
           routes.length > 0 &&
           routes.map((route, i) => (

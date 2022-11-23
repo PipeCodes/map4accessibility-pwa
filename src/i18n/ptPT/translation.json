@@ -106,5 +106,7 @@
   "your_location": "Minha Localização",
   "go_to_maps": "Ir para o Mapas",
   "steps": "Passos",
-  "route": "Caminho"
+  "route": "Caminho",
+  "home": "Inicio",
+  "welcome": "Bem vind@"
 }

@@ -8,6 +8,8 @@ export const Page = styled.div`
   align-items: center;
   height: 100%;
   z-index: 54;
+  background-color: ${(props) =>
+    updateValue(colors.transparent, props.backgroundColor)};
 `;
 
 export const Container = styled.div`
@@ -68,5 +70,3 @@ export const InputLabel = styled.div`
     color: ${colors.orange};
   }
 `;
-
-export const PopUp = styled.div``;

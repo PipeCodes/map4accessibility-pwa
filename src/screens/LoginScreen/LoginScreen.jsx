@@ -21,6 +21,9 @@ const LoginScreen = (props) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const fontSize = useSelector((state) => state.accessibility.fontSize);
+  const backgroundColor = useSelector(
+    (state) => state.accessibility.backgroundColor,
+  );
   const [formData, setFormData] = useState(initialValues);
   const [formErrors, setFormErrors] = useState({});
   const user = useSelector((state) => state.auth.user);
@@ -70,12 +73,13 @@ const LoginScreen = (props) => {
   };
 
   return (
-    <Page>
+    <Page backgroundColor={backgroundColor}>
       <TopBar
         aligned
         hasBackButton
         hasLogo
         hasAccessibilityButton={openAccessibility}
+        backgroundColor={backgroundColor}
       />
       <Container>
         <LoginInfo

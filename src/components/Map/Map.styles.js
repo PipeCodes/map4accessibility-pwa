@@ -1,6 +1,8 @@
 import styled, { css } from 'styled-components';
+import { updateValue } from '../../helpers/utils';
 
 export const Routes = styled.div`
+  background-color: ${(props) => updateValue('white', props.backgroundColor)};
   align-items: center;
   padding-left: 15px;
   padding-top: 20px;
@@ -8,7 +10,6 @@ export const Routes = styled.div`
   display: flex;
   flex-directions: row;
   gap: 15px;
-  background-color: white;
   overflow-x: auto;
   overflow-y: clip;
   border-radius: 14px 14px 0 0;

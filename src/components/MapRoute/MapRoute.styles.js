@@ -3,7 +3,9 @@ import { updateFontSize, updateValue } from '../../helpers/utils';
 import { colors } from '../../constants/colors';
 
 export const RouteContainer = styled.div`
-  background-color: ${colors.background};
+  background-color: ${(props) =>
+    updateValue(colors.background, props.backgroundColor)};
+  border: 1px solid ${colors.lightGrey};
   border-radius: 4px;
   padding: 10px;
   min-width: 236px;
@@ -18,6 +20,7 @@ export const ContainerName = styled.div`
 export const Name = styled.div`
   color: ${colors.primaryTextColor};
   font-size: ${(props) => updateFontSize(18, props.fontSize)};
+  font-family: ${(props) => updateValue('EasyReadingPro', props.font)};
   margin-right: 5px;
 `;
 export const Index = styled.div`
@@ -33,9 +36,11 @@ export const Distance = styled.div`
   color: ${colors.grey};
   padding: 8px 0;
   font-size: ${(props) => updateFontSize(16, props.fontSize)};
+  font-family: ${(props) => updateValue('EasyReadingPro', props.font)};
 `;
 export const Ratings = styled.div`
   font-size: ${(props) => updateFontSize(16, props.fontSize)};
+  font-family: ${(props) => updateValue('EasyReadingPro', props.font)};
   display: flex;
   gap: 12px;
 `;
@@ -57,6 +62,7 @@ export const Icon = styled.div`
 
 export const Number = styled.span`
   font-size: ${(props) => updateFontSize(14, props.fontSize)};
+  font-family: ${(props) => updateValue('EasyReadingPro', props.font)};
   color: ${(props) => props.color};
 `;
 
@@ -74,6 +80,8 @@ export const GoToMaps = styled.button`
   opacity: 1;
   display: flex;
   align-items: center;
+  font-size: ${(props) => updateFontSize(14, props.fontSize)};
+  font-family: ${(props) => updateValue('EasyReadingPro', props.font)};
 `;
 export const Steps = styled.button`
   background-color: white;
@@ -82,4 +90,6 @@ export const Steps = styled.button`
   opacity: 1;
   display: flex;
   align-items: center;
+  font-size: ${(props) => updateFontSize(14, props.fontSize)};
+  font-family: ${(props) => updateValue('EasyReadingPro', props.font)};
 `;

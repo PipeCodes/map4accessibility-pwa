@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { updateFontSize } from '../../helpers/utils';
+import { updateFontSize, updateValue } from '../../helpers/utils';
 
 const ButtonStyle = styled.button`
   background-color: ${(props) => props.backgroundColor};
@@ -11,6 +11,7 @@ const ButtonStyle = styled.button`
   margin: ${(props) => (props.margin ? props.margin : 'unset')};
   margin-top: ${(props) => (props.marginTop ? props.marginTop : 0)};
   font-size: ${(props) => updateFontSize(16, props.fontSize)};
+  font-family: ${(props) => updateValue('NotoSans-Regular', props.font)};
   width: ${(props) => (props.width ? props.width : '189px')};
   height: ${(props) => (props.height ? props.height : 'auto')};
   min-height: ${(props) => (props.minHeight ? props.minHeight : '42px')};

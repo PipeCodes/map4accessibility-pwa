@@ -57,6 +57,7 @@ export const Input = styled.input`
   opacity: 1;
   padding: 6px 10px;
   font-size: ${(props) => updateFontSize(14, props.fontSize)};
+  font-family: ${(props) => updateValue('NotoSans-Regular', props.font)};
 `;
 
 export const RouteInputs = styled.div`

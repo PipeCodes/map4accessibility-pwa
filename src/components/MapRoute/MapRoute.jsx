@@ -24,15 +24,20 @@ import {
 const MapRoute = ({ route, setRoute, keyProp, active }) => {
   const { t } = useTranslation();
   const fontSize = useSelector((state) => state.accessibility.fontSize);
+  const font = useSelector((state) => state.accessibility.font);
 
   return (
     <RouteContainer onClick={() => setRoute(keyProp)}>
       <ContainerName>
-        <Name fontSize={fontSize}>{route.name}</Name>
+        <Name fontSize={fontSize} font={font}>
+          {route.name}
+        </Name>
         <Index active={active}>{route.key}</Index>
       </ContainerName>
-      <Distance fontSize={fontSize}>{route.distance}</Distance>
-      <Ratings fontSize={fontSize}>
+      <Distance fontSize={fontSize} font={font}>
+        {route.distance}
+      </Distance>
+      <Ratings fontSize={fontSize} font={font}>
         <Rating>
           <Icon>
             <img src={ThubsUpIcon} alt="Likes" />
@@ -47,13 +52,13 @@ const MapRoute = ({ route, setRoute, keyProp, active }) => {
         </Rating>
       </Ratings>
       <CTA>
-        <GoToMaps fontSize={fontSize}>
+        <GoToMaps fontSize={fontSize} font={font}>
           <Icon>
             <img src={GoToIcon} alt="GoTo" />
           </Icon>
           {t('go_to_maps')}
         </GoToMaps>
-        <Steps fontSize={fontSize}>
+        <Steps fontSize={fontSize} font={font}>
           <Icon>
             <img src={StepsIcon} alt="Steps" />
           </Icon>
