@@ -37,6 +37,7 @@ const RegisterOptionsScreen = (props) => {
   );
 
   const fontSize = useSelector((state) => state.accessibility.fontSize);
+  const font = useSelector((state) => state.accessibility.font);
 
   const registerClickHandlerGoogle = useCallback(
     (data) => {
@@ -59,9 +60,15 @@ const RegisterOptionsScreen = (props) => {
 
   return (
     <Page backgroundColor={backgroundColor}>
-      <TopBar hasLogo hasAccessibilityButton={openAccessibility} />
+      <TopBar
+        backgroundColor={backgroundColor}
+        hasLogo
+        hasAccessibilityButton={openAccessibility}
+      />
       <Container>
-        <Text fontSize={fontSize}>{t('sign_in')}</Text>
+        <Text fontSize={fontSize} font={font}>
+          {t('sign_in')}
+        </Text>
         <CustomButton
           style={{
             marginTop: 30,
@@ -120,7 +127,7 @@ const RegisterOptionsScreen = (props) => {
           </LoginSocialGoogle>
         </Box>
         <Box>
-          <TextSecondary fontSize={fontSize}>
+          <TextSecondary fontSize={fontSize} font={font}>
             {t('already_have_account')}
           </TextSecondary>
           <CustomButton
