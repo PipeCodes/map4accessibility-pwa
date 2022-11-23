@@ -110,7 +110,7 @@ const LoginScreen = (props) => {
             }}
             backgroundColor={colors.transparent}
             text={t('create_account')}
-            onClick={() => history.push(routes.REGISTER.path)}
+            onClick={() => history.push(routes.REGISTER_OPTIONS.path)}
           />
           <CustomButton
             style={{

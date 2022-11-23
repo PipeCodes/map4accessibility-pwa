@@ -35,9 +35,9 @@ const EmailConfirmationScreen = (props) => {
   return (
     <Page backgroundColor={backgroundColor}>
       <PopUp
-        title={t('email_confirmation')}
-        text={t('email_confirmed')}
-        buttonText={t('proceed_login')}
+        title={t('email_validation')}
+        text={t('email_confirmation')}
+        buttonText={t('back')}
         action={proceedLogin}
         icon={NotificationIcon}
       />

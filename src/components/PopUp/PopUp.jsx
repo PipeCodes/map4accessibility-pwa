@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import ArrowLeft from '../../assets/icons/arrow-left.svg';
 
 import {
   PopUp,
@@ -41,6 +42,7 @@ const PopUpComponent = (props) => {
           text={buttonText}
           onClick={action}
           buttonicon={buttonIcon}
+          icon={ArrowLeft}
         />
       </PopUp>
     </Container>

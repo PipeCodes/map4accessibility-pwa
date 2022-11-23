@@ -168,9 +168,13 @@ const RegisterScreen = (props) => {
         formData.termsAccepted,
         disabilities,
       ),
-    ).catch((error) => {
-      alert(error);
-    });
+    )
+      .then(() => {
+        history.push(routes.EMAIL_CONFIRMATION.path);
+      })
+      .catch((error) => {
+        alert(error);
+      });
   }, [dispatch, formData]);
 
   const openAccessibility = useCallback(() => {
