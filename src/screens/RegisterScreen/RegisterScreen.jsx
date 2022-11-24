@@ -170,7 +170,7 @@ const RegisterScreen = (props) => {
       ),
     )
       .then(() => {
-        history.push(routes.EMAIL_CONFIRMATION.path);
+        history.push(routes.EMAIL_VALIDATION.path);
       })
       .catch((error) => {
         alert(error);

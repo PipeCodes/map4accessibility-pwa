@@ -15,7 +15,8 @@ import FAQsScreen from '../screens/FAQsScreen/FAQsScreen';
 import TrackedRoute from './TrackedRoute';
 import ChangePasswordScreen from '../screens/ChangePasswordScreen/ChangePasswordScreen';
 import HomeScreen from '../screens/HomeScreen/HomeScreen';
-import ConfirmedEmailScreen from '../screens/EmailConfirmationScreen/EmailConfirmationScreen';
+import ValidateEmailScreen from '../screens/EmailValidationScreen/EmailValidationScreen';
+import ConfirmationEmailScreen from '../screens/EmailConfirmationScreen/EmailConfirmationScreen';
 import { isAuthenticated } from '../services/local';
 
 const history = createBrowserHistory({ forceRefresh: true });
@@ -47,9 +48,14 @@ const routes = {
     component: RegisterScreen,
     private: false,
   },
+  EMAIL_VALIDATION: {
+    path: '/email-validation',
+    component: ValidateEmailScreen,
+    private: false,
+  },
   EMAIL_CONFIRMATION: {
     path: '/email-confirmation',
-    component: ConfirmedEmailScreen,
+    component: ConfirmationEmailScreen,
     private: false,
   },
   PROFILE: {
@@ -63,7 +69,7 @@ const routes = {
     private: false,
   },
   MAP: {
-    path: '/map',
+    path: '/route-planner',
     component: HomeScreen, // Needs to change when we create a map screen
     private: true,
   },
