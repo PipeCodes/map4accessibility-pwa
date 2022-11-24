@@ -34,6 +34,16 @@ const SignUpInfo = (props) => {
   const font = useSelector((state) => state.accessibility.font);
   const dispatch = useDispatch();
 
+  const checkPasswords = (name, value) => {
+    const form = { ...formData, [name]: value };
+
+    setFormErrors((prevErrors) => {
+      const firstForm = validate('password', form, prevErrors);
+      const secondForm = validate('confirmPassword', form, firstForm);
+      return secondForm;
+    });
+  };
+
   const duplicate = useCallback(
     (email) =>
       dispatch(checkEmail(email))
@@ -199,6 +209,7 @@ const SignUpInfo = (props) => {
             ...prevState,
             password: e.target.value,
           }));
+          checkPasswords(e.target.name, e.target.value);
         }}
       />
       {formErrors.password && (
@@ -222,6 +233,7 @@ const SignUpInfo = (props) => {
             ...prevState,
             confirmPassword: e.target.value,
           }));
+          checkPasswords(e.target.name, e.target.value);
         }}
       />
       {formErrors.confirmPassword && (

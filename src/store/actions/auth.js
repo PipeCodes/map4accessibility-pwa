@@ -65,11 +65,7 @@ export const signup =
       const statusCode = response.status;
 
       if (statusCode === HTTP_STATUS.SUCCESS_CREATED) {
-        saveAuthToken(response.data?.result?.authorization?.token);
-        dispatch({
-          type: AUTH_SUCCESS,
-          user: response.data?.result?.user,
-        });
+        return Promise.resolve(response?.data?.message);
       }
     } catch (error) {
       dispatch({ type: AUTH_ERROR });
