@@ -8,7 +8,7 @@ import {
   Box,
   Text,
   InputLabel,
-} from './EmailConfirmationScreen.styles';
+} from './EmailValidationScreen.styles';
 import CustomInput from '../../components/CustomInput/CustomInput';
 import CustomButton from '../../components/CustomButton/CustomButton';
 import { colors } from '../../constants/colors';
@@ -35,8 +35,8 @@ const EmailConfirmationScreen = (props) => {
   return (
     <Page backgroundColor={backgroundColor}>
       <PopUp
-        title={t('email_confirmation_title')}
-        text={t('email_confirmation_text')}
+        title={t('email_validation_title')}
+        text={t('email_validation_text')}
         buttonText={t('back')}
         action={proceedLogin}
         icon={NotificationIcon}
