@@ -83,14 +83,14 @@ const routes = {
     component: RankingScreen,
     private: true,
   },
+  CHANGE_PASSWORD: {
+    path: '/change-password',
+    component: ChangePasswordScreen,
+    private: false,
+  },
   FAQS: {
     path: '/faqs',
     component: FAQsScreen,
-    private: false,
-  },
-  CHANGE_PASSWORD: {
-    path: '/changepassword',
-    component: ChangePasswordScreen,
     private: false,
   },
 };
