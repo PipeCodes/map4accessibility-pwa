@@ -36,10 +36,12 @@ const SignUpInfo = (props) => {
 
   const checkPasswords = (name, value) => {
     const form = { ...formData, [name]: value };
-    setFormErrors((prevErrors) => validate('password', form, prevErrors));
-    setFormErrors((prevErrors) =>
-      validate('confirmPassword', form, prevErrors),
-    );
+
+    setFormErrors((prevErrors) => {
+      const firstForm = validate('password', form, prevErrors);
+      const secondForm = validate('confirmPassword', form, firstForm);
+      return secondForm;
+    });
   };
 
   const duplicate = useCallback(
