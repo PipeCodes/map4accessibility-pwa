@@ -66,7 +66,7 @@ const ChangePasswordScreen = (props) => {
     } else {
       setNotReadySubmit(true);
     }
-  }, [formData]);
+  }, [formData, formErrors]);
 
   const openAccessibility = useCallback(() => {
     history.push(routes.ACCESSIBILITY.path);
