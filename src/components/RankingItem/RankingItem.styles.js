@@ -45,6 +45,15 @@ export const LikesWrapper = styled.div`
   align-items: center;
   width: 100%;
   flex-direction: row;
+  color: ${colors.green};
+`;
+
+export const DislikesWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  width: 100%;
+  flex-direction: row;
+  color: ${colors.google_red};
 `;
 
 export const Icon = styled.div`
@@ -53,5 +62,4 @@ export const Icon = styled.div`
 
 export const Number = styled.span`
   font-size: ${(props) => updateFontSize(14, props.fontSize)};
-  color: ${colors.green};
 `;
