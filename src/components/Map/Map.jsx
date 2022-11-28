@@ -1,15 +1,13 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { GoogleMap, DirectionsRenderer } from '@react-google-maps/api';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import CustomMarker from '../CustomMarker/CustomMarker';
 import { Routes } from './Map.styles';
 import MapRoute from '../MapRoute/MapRoute';
-import markers from '../../helpers/DemoData/MarkerList.json';
-import { colors } from '../../constants/colors';
 
-// Needs to be called from the API in the future
-const markerList = markers;
+import { colors } from '../../constants/colors';
+import { getPlacesRadiusMarkers } from '../../store/actions/places';
 
 // Map styling
 const containerStyle = {
@@ -21,10 +19,9 @@ const containerStyle = {
 const options = ['A', 'B', 'C', 'D', 'E']; // List for Route Keys
 
 const Map = ({ origin, destination, userLocation }) => {
-  // const [center, setCenter] = useState({ lat: 38.0, lng: -9.0 }); // Default Center is LX
   const [map, setMap] = useState(/** @type google.maps.Map */ (null));
   const [directions, setDirections] = useState(null); // Possible Routes from google maps api
-  // const [markers, setMarkers] = useState([]); // Markers Around the route
+  const [markers, setMarkers] = useState([]);
   const [routes, setRoutes] = useState(null); // Fills List on the bottom of the page
   const [selectedRoute, setSelectedRoute] = useState(0); // Route thats active
   const backgroundColor = useSelector(
@@ -32,6 +29,7 @@ const Map = ({ origin, destination, userLocation }) => {
   );
   const [generatingRoutes, setGeneratingRoutes] = useState(false);
   const { t } = useTranslation();
+  const dispatch = useDispatch();
   const polylineOptions = useCallback(
     (index) => {
       if (index === selectedRoute) {
@@ -59,13 +57,14 @@ const Map = ({ origin, destination, userLocation }) => {
       likes: 234,
       dislikes: 197,
       steps: [route.legs[0].steps],
+      origin,
+      destination,
     }));
 
   // Draws the routes in the map using the directions from Dirtections Service and resets the variables
   const drawRoute = (originRoute, destinationRoute, selectedRouteId) => {
-    // setMarkers(markerList);
     setGeneratingRoutes(true);
-
+    setMarkers([]);
     const directionsService = new google.maps.DirectionsService();
 
     directionsService
@@ -78,6 +77,23 @@ const Map = ({ origin, destination, userLocation }) => {
       .then((results) => {
         setDirections(results);
         setSelectedRoute(selectedRouteId);
+        // Requests markers from API using the center coords of
+        // the directions and a radius thats half the distance +25% margin for error
+        const radius = Math.round(results.routes[0].legs[0].distance.value / 2);
+        const middle = Math.round(results.routes[0].legs[0].steps.length / 2);
+        const latitude =
+          results.routes[0].legs[0].steps[middle].start_location.lat();
+        const longitude =
+          results.routes[0].legs[0].steps[middle].start_location.lng();
+        dispatch(
+          getPlacesRadiusMarkers(
+            latitude,
+            longitude,
+            Math.round(radius + radius / 4),
+          ),
+        ).then((markersList) => {
+          setMarkers(markersList);
+        });
       });
   };
 
@@ -144,6 +160,9 @@ const Map = ({ origin, destination, userLocation }) => {
               }}
             />
           ))}
+        {markers &&
+          markers.length > 0 &&
+          markers.map((marker, i) => <CustomMarker marker={marker} key={i} />)}
       </GoogleMap>
       <Routes backgroundColor={backgroundColor}>
         {routes &&
