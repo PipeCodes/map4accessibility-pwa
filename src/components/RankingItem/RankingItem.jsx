@@ -1,4 +1,4 @@
-import { t } from 'i18next';
+import { useTranslation } from 'react-i18next';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import ThubsUpIcon from '../../assets/icons/maps/up.svg';
@@ -20,7 +20,7 @@ import placeImage from '../../assets/images/place.png';
 const RankingItem = (props) => {
   const { item, ascDescActive, rank } = props;
   const fontSize = useSelector((state) => state.accessibility.fontSize);
-
+  const { t } = useTranslation();
   return (
     <ItemContainer>
       <Rank fontSize={fontSize}>{rank + 1}</Rank>
