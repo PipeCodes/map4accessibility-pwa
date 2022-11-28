@@ -19,7 +19,7 @@ import FooterMenu from '../../components/FooterMenu/FooterMenu';
 import RankingItem from '../../components/RankingItem/RankingItem';
 import CustomSelect from '../../components/CustomSelect/CustomSelect';
 import { countries } from '../../constants';
-import { getPlacesCountry } from '../../store/actions/places';
+import { getPlacesCountry, getPlacesRadius } from '../../store/actions/places';
 
 const RankingScreen = (props) => {
   const { history, routes } = props;
@@ -35,7 +35,19 @@ const RankingScreen = (props) => {
 
   useEffect(() => {
     const order = ascDescActive ? 'thumbs_down_count' : 'thumbs_up_count';
-    if (country) {
+
+    if (sliderActive) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const latitude = position.coords.latitude;
+          const longitude = position.coords.longitude;
+          dispatch(getPlacesRadius(latitude, longitude, order));
+        },
+        (error) => {
+          console.error(`Error Code = ${error.code} - ${error.message}`);
+        },
+      );
+    } else if (country) {
       dispatch(getPlacesCountry(country.label, order));
     }
   }, [sliderActive, country, ascDescActive, dispatch]);
