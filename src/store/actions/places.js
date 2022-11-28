@@ -33,3 +33,35 @@ export const getPlacesCountry = (country, order) => async (dispatch) => {
     return Promise.reject(error?.response?.data?.message);
   }
 };
+
+export const getPlacesRadius =
+  (latitude, longitude, order) => async (dispatch) => {
+    dispatch({ type: GET_PLACES_RANKING_START });
+    const queryParams = {
+      latitude,
+      longitude,
+      desc_order_by: order,
+      page: 1,
+      size: 10,
+    };
+    const url = generatePath(
+      Endpoints.PLACES_RADIUS.concat(
+        '?latitude=:latitude&longitude=:longitude&geo_query_radius=5000&desc_order_by=:desc_order_by&page=:page&size=:size',
+      ),
+      queryParams,
+    );
+
+    try {
+      const response = await axios.get(url);
+      const statusCode = response.status;
+
+      if (statusCode === HTTP_STATUS.SUCCESS) {
+        dispatch({
+          type: GET_PLACES_RANKING_SUCCESS,
+          ranking: response.data?.result.data ?? [],
+        });
+      }
+    } catch (error) {
+      return Promise.reject(error?.response?.data?.message);
+    }
+  };
