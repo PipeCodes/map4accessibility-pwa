@@ -13,13 +13,13 @@ const placesReducer = (state = initialState, action) => {
     case GET_PLACES_RANKING_START:
       return {
         ...state,
-        generalRanking: [],
+        ranking: [],
         loading: true,
       };
     case GET_PLACES_RANKING_SUCCESS:
       return {
         ...state,
-        generalRanking: state.generalRanking.concat(action.ranking),
+        ranking: state.ranking.concat(action.ranking),
         loading: false,
       };
 

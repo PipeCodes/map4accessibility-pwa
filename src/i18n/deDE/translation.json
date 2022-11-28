@@ -110,5 +110,7 @@
   "steps": "Steps",
   "route": "Route",
   "home": "Home",
-  "welcome": "Welcome"
+  "welcome": "Welcome",
+  "no_results": "No Results",
+  "obstacle": "Obstacle"
 }
