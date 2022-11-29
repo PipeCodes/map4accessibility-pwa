@@ -71,12 +71,12 @@ export const CTA = styled.div`
   gap: 15px;
   margin-top: 15px;
 `;
-export const GoToMaps = styled.button`
+export const GoToMaps = styled.a`
   background-color: ${colors.primaryColor};
   padding: 0 10px;
   border: none;
   border-radius: 16px;
-  color: white;
+  color: white !important;
   opacity: 1;
   display: flex;
   align-items: center;

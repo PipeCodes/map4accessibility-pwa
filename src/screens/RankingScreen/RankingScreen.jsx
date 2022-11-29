@@ -35,13 +35,13 @@ const RankingScreen = (props) => {
 
   useEffect(() => {
     const order = ascDescActive ? 'thumbs_down_count' : 'thumbs_up_count';
-
+    const radius = 5000; // Default radius for location, needs to be discussed and set in another place
     if (sliderActive) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
           const latitude = position.coords.latitude;
           const longitude = position.coords.longitude;
-          dispatch(getPlacesRadius(latitude, longitude, order));
+          dispatch(getPlacesRadius(latitude, longitude, order, radius));
         },
         (error) => {
           console.error(`Error Code = ${error.code} - ${error.message}`);
