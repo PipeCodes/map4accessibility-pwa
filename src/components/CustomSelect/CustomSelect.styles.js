@@ -13,11 +13,14 @@ export const StyledSelect = styled(Select)`
     min-height: 31px;
     width: 100%;
     outline: none;
-    border-color: transparent;
+    border-color: 0.5px solid ${colors.lightGrey};
     flex-wrap: nowrap;
 
-    font-size: 16px;
+    font-size: ${(props) => updateFontSize(14, props.fontSize)};
+    font-family: ${(props) => updateValue('EasyReadingPro', props.font)};
     background-color: ${colors.white};
+    background-color: ${(props) =>
+      updateValue(colors.white, props.backgroundColor)};
 
     .react-select__value-container {
       padding-left: 10px;
@@ -50,8 +53,11 @@ export const StyledSelect = styled(Select)`
   }
 
   .react-select__menu {
-    font-size: 16px;
+    font-size: ${(props) => updateFontSize(14, props.fontSize)};
+    font-family: ${(props) => updateValue('EasyReadingPro', props.font)};
     color: ${colors.grey};
+    background-color: ${(props) =>
+      updateValue(colors.white, props.backgroundColor)};
 
     .react-select__option--is-selected {
       background-color: ${colors.primaryColor};

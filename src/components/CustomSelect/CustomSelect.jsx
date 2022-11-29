@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { components } from 'react-select';
 import { StyledSelect } from './CustomSelect.styles';
@@ -18,12 +19,19 @@ const IconOption = (props) => {
 
 const CustomSelect = (props) => {
   const { style, options, onChange, defaultValue, value } = props;
-
   const { t } = useTranslation();
+  const font = useSelector((state) => state.accessibility.font);
+  const fontSize = useSelector((state) => state.accessibility.fontSize);
+  const backgroundColor = useSelector(
+    (state) => state.accessibility.backgroundColor,
+  );
 
   return (
     <div style={style}>
       <StyledSelect
+        font={font}
+        fontSize={fontSize}
+        backgroundColor={backgroundColor}
         classNamePrefix="react-select"
         options={options}
         defaultValue={defaultValue}

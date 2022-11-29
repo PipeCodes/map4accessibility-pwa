@@ -28,6 +28,8 @@ const RankingScreen = (props) => {
   const backgroundColor = useSelector(
     (state) => state.accessibility.backgroundColor,
   );
+  const font = useSelector((state) => state.accessibility.font);
+  const fontSize = useSelector((state) => state.accessibility.fontSize);
   const [ascDescActive, setAscDescActive] = useState(false);
   const [sliderActive, setSliderActive] = useState(false);
   const [country, setCountry] = useState(countries[0]);
@@ -80,7 +82,7 @@ const RankingScreen = (props) => {
   };
 
   return (
-    <Page>
+    <Page backgroundColor={backgroundColor}>
       <TopBar
         hasBackButton
         aligned
@@ -100,8 +102,10 @@ const RankingScreen = (props) => {
               alt="Asc-Desc"
             />
           </AscDescButton>
-          <SliderFilter>
+          <SliderFilter backgroundColor={backgroundColor}>
             <SliderButon
+              font={font}
+              fontSize={fontSize}
               onClick={setCountryHandler}
               className={sliderActive ? '' : 'active'}
             >
