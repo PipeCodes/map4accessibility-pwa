@@ -12,11 +12,15 @@ export const ItemContainer = styled.div`
   border-bottom: 1px solid ${colors.grey};
   padding: 8px 14px;
   justify-content: space-evenly;
+  background-color: ${(props) =>
+    updateValue(colors.transparent, props.backgroundColor)};
 `;
 
 export const Rank = styled.span`
   margin-right: 15px;
   justify-self: center;
+  font-size: ${(props) => updateFontSize(16, props.fontSize)};
+  font-family: ${(props) => updateValue('EasyReadingPro', props.font)};
 `;
 
 export const Image = styled.img`
@@ -32,11 +36,13 @@ export const TextWrapper = styled.div`
 
 export const Name = styled.div`
   font-size: ${(props) => updateFontSize(16, props.fontSize)};
+  font-family: ${(props) => updateValue('EasyReadingPro', props.font)};
   color: ${colors.grey};
 `;
 
 export const City = styled.div`
   font-size: ${(props) => updateFontSize(12, props.fontSize)};
+  font-family: ${(props) => updateValue('EasyReadingPro', props.font)};
   color: ${colors.grey};
 `;
 

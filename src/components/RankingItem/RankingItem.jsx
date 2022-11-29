@@ -20,21 +20,33 @@ import placeImage from '../../assets/images/place.png';
 const RankingItem = (props) => {
   const { item, ascDescActive, rank } = props;
   const fontSize = useSelector((state) => state.accessibility.fontSize);
+  const font = useSelector((state) => state.accessibility.font);
+  const backgroundColor = useSelector(
+    (state) => state.accessibility.backgroundColor,
+  );
   const { t } = useTranslation();
   return (
-    <ItemContainer>
-      <Rank fontSize={fontSize}>{rank + 1}</Rank>
+    <ItemContainer backgroundColor={backgroundColor}>
+      <Rank fontSize={fontSize} font={font}>
+        {rank + 1}
+      </Rank>
       {item.medias[0] ? (
         <Image src={item.medias[0]} />
       ) : (
         <Image src={placeImage} />
       )}
       <TextWrapper>
-        <Name fontSize={fontSize}>{item.name}</Name>
+        <Name fontSize={fontSize} font={font}>
+          {item.name}
+        </Name>
         {item.city ? (
-          <City fontSize={fontSize}>{item.city}</City>
+          <City fontSize={fontSize} font={font}>
+            {item.city}
+          </City>
         ) : (
-          <City fontSize={fontSize}>{t('obstacle')}</City>
+          <City fontSize={fontSize} font={font}>
+            {t('obstacle')}
+          </City>
         )}
       </TextWrapper>
       {ascDescActive ? (
@@ -42,14 +54,18 @@ const RankingItem = (props) => {
           <Icon>
             <img src={ThubsDownIcon} alt="Dislikes" />
           </Icon>
-          <Number fontSize={fontSize}>{item.thumbs_down_count}</Number>
+          <Number fontSize={fontSize} font={font}>
+            {item.thumbs_down_count}
+          </Number>
         </DislikesWrapper>
       ) : (
         <LikesWrapper>
           <Icon>
             <img src={ThubsUpIcon} alt="Likes" />
           </Icon>
-          <Number fontSize={fontSize}>{item.thumbs_up_count}</Number>
+          <Number fontSize={fontSize} font={font}>
+            {item.thumbs_up_count}
+          </Number>
         </LikesWrapper>
       )}
     </ItemContainer>
