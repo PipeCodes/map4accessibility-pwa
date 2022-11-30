@@ -15,6 +15,7 @@ import FAQsScreen from '../screens/FAQsScreen/FAQsScreen';
 import TrackedRoute from './TrackedRoute';
 import ChangePasswordScreen from '../screens/ChangePasswordScreen/ChangePasswordScreen';
 import HomeScreen from '../screens/HomeScreen/HomeScreen';
+import RatePlaceScreen from '../screens/RatePlaceScreen/RatePlaceScreen';
 import ValidateEmailScreen from '../screens/EmailValidationScreen/EmailValidationScreen';
 import ConfirmationEmailScreen from '../screens/EmailConfirmationScreen/EmailConfirmationScreen';
 import { isAuthenticated } from '../services/local';
@@ -63,6 +64,11 @@ const routes = {
     component: ProfileScreen,
     private: true,
   },
+  PLACE_RATE: {
+    path: '/rate-place',
+    component: RatePlaceScreen,
+    private: false,
+  },
   ROUTE_PLANNER: {
     path: '/route-planner',
     component: RoutePlannerScreen,
@@ -70,7 +76,7 @@ const routes = {
   },
   MAP: {
     path: '/route-planner',
-    component: HomeScreen, // Needs to change when we create a map screen
+    component: RoutePlannerScreen, // Needs to change when we create a map screen
     private: true,
   },
   HOME: {
