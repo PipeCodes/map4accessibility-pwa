@@ -13,86 +13,13 @@ import {
 import ArrowsIcon from '../../assets/icons/arrows.svg';
 import ArrowsActiveIcon from '../../assets/icons/arrows-active.svg';
 import FlagIcon from '../../assets/icons/flag.svg';
-import PlaceholderIcon from '../../assets/icons/avatar_1.png';
 import LocationIcon from '../../assets/icons/location.svg';
 import TopBar from '../../components/TopBar/TopBar';
 import FooterMenu from '../../components/FooterMenu/FooterMenu';
 import RankingItem from '../../components/RankingItem/RankingItem';
 import CustomSelect from '../../components/CustomSelect/CustomSelect';
 import { countries } from '../../constants';
-
-const resultsArray = [
-  {
-    id: '1',
-    image: PlaceholderIcon,
-    name: 'Green City Park',
-    city: 'Lisboa',
-    likes: 321,
-  },
-  {
-    id: '2',
-    image: PlaceholderIcon,
-    name: 'Tropic Hotel',
-    city: 'Algarve',
-    likes: 312,
-  },
-  {
-    id: '3',
-    image: PlaceholderIcon,
-    name: 'Museum Of Fine Arts',
-    city: 'Porto',
-    likes: 311,
-  },
-  {
-    id: '4',
-    image: PlaceholderIcon,
-    name: 'Seaview Hotel',
-    city: 'Lisboa',
-    likes: 231,
-  },
-  {
-    id: '5',
-    image: PlaceholderIcon,
-    name: 'Contemporary Museum',
-    city: 'Lisboa',
-    likes: 213,
-  },
-  {
-    id: '6',
-    image: PlaceholderIcon,
-    name: 'Round Table Restaurant',
-    city: 'Braga',
-    likes: 212,
-  },
-  {
-    id: '7',
-    image: PlaceholderIcon,
-    name: 'Carlos Rogers Park',
-    city: 'Lisboa',
-    likes: 193,
-  },
-  {
-    id: '8',
-    image: PlaceholderIcon,
-    name: 'Parque Las dunas',
-    city: 'Porto',
-    likes: 191,
-  },
-  {
-    id: '9',
-    image: PlaceholderIcon,
-    name: 'Miradouro Ourique',
-    city: 'Ourique',
-    likes: 189,
-  },
-  {
-    id: '10',
-    image: PlaceholderIcon,
-    name: 'AlgarvShoping',
-    city: 'Faro',
-    likes: 188,
-  },
-];
+import { getPlacesCountry, getPlacesRadius } from '../../store/actions/places';
 
 const RankingScreen = (props) => {
   const { history, routes } = props;
@@ -101,13 +28,29 @@ const RankingScreen = (props) => {
   const backgroundColor = useSelector(
     (state) => state.accessibility.backgroundColor,
   );
+  const font = useSelector((state) => state.accessibility.font);
+  const fontSize = useSelector((state) => state.accessibility.fontSize);
   const [ascDescActive, setAscDescActive] = useState(false);
   const [sliderActive, setSliderActive] = useState(false);
-  const [country, setCountry] = useState(null);
+  const [country, setCountry] = useState(countries[0]);
+  const ranking = useSelector((state) => state.places.ranking);
 
   useEffect(() => {
-    if (country) {
-      console.log('Call API');
+    const order = ascDescActive ? 'thumbs_down_count' : 'thumbs_up_count';
+    const radius = 5000; // Default radius for location, needs to be discussed and set in another place
+    if (sliderActive) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const latitude = position.coords.latitude;
+          const longitude = position.coords.longitude;
+          dispatch(getPlacesRadius(latitude, longitude, order, radius));
+        },
+        (error) => {
+          console.error(`Error Code = ${error.code} - ${error.message}`);
+        },
+      );
+    } else if (country) {
+      dispatch(getPlacesCountry(country.label, order));
     }
   }, [sliderActive, country, ascDescActive, dispatch]);
 
@@ -139,7 +82,7 @@ const RankingScreen = (props) => {
   };
 
   return (
-    <Page>
+    <Page backgroundColor={backgroundColor}>
       <TopBar
         hasBackButton
         aligned
@@ -159,8 +102,10 @@ const RankingScreen = (props) => {
               alt="Asc-Desc"
             />
           </AscDescButton>
-          <SliderFilter>
+          <SliderFilter backgroundColor={backgroundColor}>
             <SliderButon
+              font={font}
+              fontSize={fontSize}
               onClick={setCountryHandler}
               className={sliderActive ? '' : 'active'}
             >
@@ -186,21 +131,16 @@ const RankingScreen = (props) => {
           )}
         </FiltersWrapper>
         <RanksContainer>
-          {ascDescActive
-            ? [...resultsArray]
-                .reverse()
-                .map((item) => (
-                  <RankingItem
-                    key={`key_${item.id}_${item.ranking_order}`}
-                    item={item}
-                  />
-                ))
-            : resultsArray.map((item) => (
+          {ranking && Object.keys(ranking).length
+            ? ranking.map((item, id) => (
                 <RankingItem
-                  key={`key_${item.id}_${item.ranking_order}`}
+                  ascDescActive={ascDescActive}
+                  key={id}
+                  rank={id}
                   item={item}
                 />
-              ))}
+              ))
+            : t('no_results')}
         </RanksContainer>
       </Container>
 

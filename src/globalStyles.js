@@ -41,6 +41,8 @@ const GlobalStyles = createGlobalStyle`
     margin: 0px auto;
     background-color: ${colors.background};
 
+    /*Removes infoBox from googlemaps closing image */
+    .infoBox {img {display: none;}}
 
     a {
       text-decoration: ${(props) => setUnderline('none', props.underline)};

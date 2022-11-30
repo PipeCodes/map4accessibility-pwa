@@ -25,7 +25,18 @@ const MapRoute = ({ route, setRoute, keyProp, active }) => {
   const { t } = useTranslation();
   const fontSize = useSelector((state) => state.accessibility.fontSize);
   const font = useSelector((state) => state.accessibility.font);
-
+  const googleMaps =
+    typeof route.origin === 'string'
+      ? 'https://www.google.com/maps/dir/'
+          .concat(route.origin)
+          .concat('/')
+          .concat(route.destination)
+      : 'https://www.google.com/maps/dir/'
+          .concat(route.origin.lat)
+          .concat(',')
+          .concat(route.origin.lng)
+          .concat('/')
+          .concat(route.destination);
   return (
     <RouteContainer onClick={() => setRoute(keyProp)}>
       <ContainerName>
@@ -52,7 +63,12 @@ const MapRoute = ({ route, setRoute, keyProp, active }) => {
         </Rating>
       </Ratings>
       <CTA>
-        <GoToMaps fontSize={fontSize} font={font}>
+        <GoToMaps
+          fontSize={fontSize}
+          font={font}
+          href={googleMaps}
+          target="_blank"
+        >
           <Icon>
             <img src={GoToIcon} alt="GoTo" />
           </Icon>
