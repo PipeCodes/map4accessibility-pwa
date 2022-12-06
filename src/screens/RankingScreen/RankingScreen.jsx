@@ -33,7 +33,7 @@ const RankingScreen = (props) => {
   const [ascDescActive, setAscDescActive] = useState(false);
   const [sliderActive, setSliderActive] = useState(false);
   const [country, setCountry] = useState(countries[0]);
-  const ranking = useSelector((state) => state.places.ranking);
+  const ranking = useSelector((state) => state.placesRanking.ranking);
 
   useEffect(() => {
     const order = ascDescActive ? 'thumbs_down_count' : 'thumbs_up_count';

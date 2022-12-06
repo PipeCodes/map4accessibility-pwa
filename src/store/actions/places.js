@@ -1,7 +1,45 @@
 import { generatePath } from 'react-router-dom';
 import axios, { Endpoints, getErrorMessage } from '../../services/api';
-import { GET_PLACES_RANKING_START, GET_PLACES_RANKING_SUCCESS } from './types';
+import {
+  GET_PLACES_RANKING_START,
+  GET_PLACES_RANKING_SUCCESS,
+  GET_PLACE_SUCCESS,
+  GET_PLACE_START,
+} from './types';
 import { HTTP_STATUS } from '../../constants';
+import i18n from '../../i18n';
+
+import { getAuthToken } from '../../services/local';
+
+const config = {
+  headers: {
+    Authorization: `Bearer ${getAuthToken()}`,
+    'Content-Type': 'multipart/form-data',
+  },
+};
+
+export const getPlace = (id) => async (dispatch) => {
+  dispatch({ type: GET_PLACE_START });
+  const queryParams = {
+    id,
+  };
+  const url = generatePath(Endpoints.PLACES.concat('/:id'), queryParams);
+
+  try {
+    const response = await axios.get(url, config);
+
+    const statusCode = response.status;
+
+    if (statusCode === HTTP_STATUS.SUCCESS) {
+      dispatch({
+        type: GET_PLACE_SUCCESS,
+        place: response.data?.result ?? {},
+      });
+    }
+  } catch (error) {
+    return Promise.reject(error?.response?.data?.message);
+  }
+};
 
 export const getPlacesCountry = (country, order) => async (dispatch) => {
   dispatch({ type: GET_PLACES_RANKING_START });
@@ -95,3 +133,58 @@ export const getPlacesRadiusMarkers =
       return Promise.reject(error?.response?.data?.message);
     }
   };
+
+export const postPlaceEvaluation =
+  (thumbDirection, comment, answers, latitude, longitude) => async () => {
+    const body = {
+      thumb_direction: thumbDirection,
+      comment,
+      question_answers: answers,
+      latitude,
+      longitude,
+    };
+
+    try {
+      const response = await axios.post(
+        Endpoints.PLACE_EVALUTATIONS,
+        body,
+        config,
+      );
+
+      const statusCode = response.status;
+
+      console.log(response);
+      if (statusCode === HTTP_STATUS.SUCCESS) {
+        return Promise.resolve(response?.data?.result.id);
+      }
+    } catch (error) {
+      return Promise.reject(getErrorMessage(error, i18n.t('something_wrong')));
+    }
+  };
+
+export const postPlaceEvaluationMedia = (media, id) => async () => {
+  const body = {
+    media,
+  };
+
+  const queryParams = {
+    id,
+  };
+
+  const url = generatePath(
+    Endpoints.PLACE_EVALUTATIONS.concat('/:id/media'),
+    queryParams,
+  );
+
+  try {
+    const response = await axios.post(url, body, config);
+
+    const statusCode = response.status;
+
+    if (statusCode === HTTP_STATUS.SUCCESS_CREATED) {
+      return Promise.resolve(response?.data?.message);
+    }
+  } catch (error) {
+    return Promise.reject(getErrorMessage(error, i18n.t('something_wrong')));
+  }
+};

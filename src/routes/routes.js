@@ -2,7 +2,6 @@ import React from 'react';
 import { BrowserRouter, Switch, Redirect, Route } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 import PrivateRoute from './PrivateRoute';
-import PolicyScreen from '../screens/PolicyScreen/PolicyScreen';
 import LoginScreen from '../screens/LoginScreen/LoginScreen';
 import RecoverPasswordScreen from '../screens/RecoverPasswordScreen/RecoverPasswordScreen';
 import RegisterScreen from '../screens/RegisterScreen/RegisterScreen';
@@ -16,6 +15,7 @@ import TrackedRoute from './TrackedRoute';
 import ChangePasswordScreen from '../screens/ChangePasswordScreen/ChangePasswordScreen';
 import HomeScreen from '../screens/HomeScreen/HomeScreen';
 import RatePlaceScreen from '../screens/RatePlaceScreen/RatePlaceScreen';
+import PlaceDetailsScreen from '../screens/PlaceDetailsScreen/PlaceDetailsScreen';
 import ValidateEmailScreen from '../screens/EmailValidationScreen/EmailValidationScreen';
 import ConfirmationEmailScreen from '../screens/EmailConfirmationScreen/EmailConfirmationScreen';
 import { isAuthenticated } from '../services/local';
@@ -26,11 +26,6 @@ const routes = {
   ACCESSIBILITY: {
     path: '/accessibility',
     component: AccessibilityScreen,
-    private: false,
-  },
-  POLICY: {
-    path: '/policy',
-    component: PolicyScreen,
     private: false,
   },
   LOGIN: { path: '/login', component: LoginScreen, private: false },
@@ -65,9 +60,14 @@ const routes = {
     private: true,
   },
   PLACE_RATE: {
-    path: '/rate-place',
+    path: '/rate-place/:id',
     component: RatePlaceScreen,
-    private: false,
+    private: true,
+  },
+  PLACE_DETAILS: {
+    path: '/place-details/:id',
+    component: PlaceDetailsScreen,
+    private: true,
   },
   ROUTE_PLANNER: {
     path: '/route-planner',
