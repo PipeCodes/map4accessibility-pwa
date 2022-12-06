@@ -57,9 +57,7 @@ const PlaceDetailsScreen = (props) => {
       />
       <ImageSlider
         photos={
-          isEmptyObject(place?.media_evaluations)
-            ? photos
-            : place.media_evaluations
+          place?.media_evaluations?.length ? place.media_evaluations : photos
         }
       />
       <Container>

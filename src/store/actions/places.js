@@ -153,7 +153,6 @@ export const postPlaceEvaluation =
 
       const statusCode = response.status;
 
-      console.log(response);
       if (statusCode === HTTP_STATUS.SUCCESS) {
         return Promise.resolve(response?.data?.result.id);
       }

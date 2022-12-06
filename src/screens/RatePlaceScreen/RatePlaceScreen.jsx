@@ -80,7 +80,7 @@ const RatePlaceScreen = (props) => {
   useEffect(() => {
     dispatch(getQuestions());
     dispatch(getPlace(params.id));
-  }, [dispatch]);
+  }, [dispatch, params.id]);
 
   const onSubmit = () => {
     if (
@@ -140,9 +140,7 @@ const RatePlaceScreen = (props) => {
       />
       <ImageSlider
         photos={
-          isEmptyObject(place?.media_evaluations)
-            ? photos
-            : place.media_evaluations
+          place?.media_evaluations?.length ? place.media_evaluations : photos
         }
       />
       <Container>

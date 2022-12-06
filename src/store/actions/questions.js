@@ -30,7 +30,6 @@ export const getQuestions = () => async (dispatch) => {
       });
     }
   } catch (error) {
-    console.log(error);
     dispatch({ type: GET_QUESTIONS_ERROR });
   }
 };
