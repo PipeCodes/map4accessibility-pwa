@@ -112,5 +112,14 @@
   "home": "Inicio",
   "welcome": "Bem vind@",
   "no_results": "Sem Resultados",
-  "obstacle": "Obstaculo"
+  "obstacle": "Obstaculo",
+  "comment": "Comentar",
+  "rate_place": "Como avaliaria este local?",
+  "accessible": "Acessivel",
+  "not_accessible": "Não Acessivel",
+  "questions": "Questões",
+  "submit": "Enviar",
+  "rate_error": "Escreva um comentário (Min 6 caracteres) e responda ás questões.",
+  "place_details": "Detalhes",
+  "supported_formats": "Formatos suportados são:"
 }

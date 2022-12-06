@@ -7,7 +7,5 @@ export const UPDATE_USER = '/auth/profile/update';
 export const GET_USER = '/auth/profile';
 export const PLACES = '/places';
 export const PLACES_RADIUS = '/places-by-radius';
-
-export const FAQS = '/faqs';
-export const POLICY = '/terms-conditions';
-export const CHANGE_PASSWORD = '/changepassword';
+export const QUESTIONS = '/place-rate-settings';
+export const CHANGE_PASSWORD = '/change-password';

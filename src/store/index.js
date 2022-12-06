@@ -5,20 +5,22 @@ import { persistStore, persistReducer } from 'redux-persist';
 
 import onboardingReducer from './reducers/onboarding';
 import levelsReducer from './reducers/levels';
-import faqsReducer from './reducers/faqs';
+import questionsReducer from './reducers/questions';
 import authReducer from './reducers/auth';
 import policyReducer from './reducers/policy';
 import accessibilityReducer from './reducers/accessibility';
-import placesReducer from './reducers/places';
+import placesRankingReducer from './reducers/placesRanking';
+import placeReducer from './reducers/place';
 
 export const rootReducer = combineReducers({
   onboarding: onboardingReducer,
   levels: levelsReducer,
-  faqs: faqsReducer,
+  questions: questionsReducer,
   auth: authReducer,
   policy: policyReducer,
   accessibility: accessibilityReducer,
-  places: placesReducer,
+  placesRanking: placesRankingReducer,
+  place: placeReducer,
 });
 
 const persistConfig = {
