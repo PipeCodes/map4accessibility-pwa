@@ -6,8 +6,7 @@ export const Page = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: ${(props) => (props.editActive === true ? '100%' : '100vh')};
-
+  height: '100%';
   z-index: 54;
   background-color: ${(props) =>
     updateValue(colors.transparent, props.backgroundColor)};
@@ -102,6 +101,8 @@ export const ThumbsUp = styled.div`
   span {
     color: green;
     margin-top: 5px;
+    font-size: ${(props) => updateFontSize(14, props.fontSize)};
+    font-family: ${(props) => updateValue('EasyReadingPro', props.font)};
   }
 `;
 
@@ -118,6 +119,8 @@ export const ThumbsDown = styled.div`
   span {
     color: red;
     margin-top: 5px;
+    font-size: ${(props) => updateFontSize(14, props.fontSize)};
+    font-family: ${(props) => updateValue('EasyReadingPro', props.font)};
   }
 `;
 
