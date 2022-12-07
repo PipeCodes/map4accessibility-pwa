@@ -146,12 +146,14 @@ export const recoverPassword = (email) => async () => {
   }
 };
 
-export const changePassword = (token, newPassword) => async (dispatch) => {
+export const changePassword = (form, token) => async (dispatch) => {
   dispatch({ type: AUTH_START });
 
   const body = {
     token,
-    new_password: newPassword,
+    email: form.email,
+    password: form.password,
+    password_confirmation: form.confirmPassword,
   };
 
   try {
@@ -163,13 +165,12 @@ export const changePassword = (token, newPassword) => async (dispatch) => {
       dispatch({
         type: AUTH_SUCCESS,
       });
-
       return Promise.resolve(response?.data?.message);
     }
   } catch (error) {
     dispatch({ type: AUTH_ERROR });
 
-    return Promise.reject(error?.response?.data?.message);
+    return Promise.reject(getErrorMessage(error, 'something_wrong'));
   }
 };
 
