@@ -42,6 +42,18 @@ export const validateEmail = (email, duplicate) => {
   return error;
 };
 
+export const validateEmailExists = (email, exists) => {
+  let error = null;
+  if (!email) {
+    error = 'required_email';
+  } else if (!REGEX_EMAIL.test(email)) {
+    error = 'invalid_email';
+  } else if (exists === false) {
+    error = 'no_email';
+  }
+  return error;
+};
+
 export const validatePassword = (password, confirmPassword) => {
   let error = null;
   if (!password) {

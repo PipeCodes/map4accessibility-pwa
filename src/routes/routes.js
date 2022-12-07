@@ -16,8 +16,7 @@ import ChangePasswordScreen from '../screens/ChangePasswordScreen/ChangePassword
 import HomeScreen from '../screens/HomeScreen/HomeScreen';
 import RatePlaceScreen from '../screens/RatePlaceScreen/RatePlaceScreen';
 import PlaceDetailsScreen from '../screens/PlaceDetailsScreen/PlaceDetailsScreen';
-import ValidateEmailScreen from '../screens/EmailValidationScreen/EmailValidationScreen';
-import ConfirmationEmailScreen from '../screens/EmailConfirmationScreen/EmailConfirmationScreen';
+import InfoScreen from '../screens/InfoScreen/InfoScreen';
 import { isAuthenticated } from '../services/local';
 
 const history = createBrowserHistory({ forceRefresh: true });
@@ -46,12 +45,22 @@ const routes = {
   },
   EMAIL_VALIDATION: {
     path: '/email-validation',
-    component: ValidateEmailScreen,
+    component: InfoScreen,
     private: false,
   },
   EMAIL_CONFIRMATION: {
     path: '/email-confirmation',
-    component: ConfirmationEmailScreen,
+    component: InfoScreen,
+    private: false,
+  },
+  RESENT_CONFIRMATION: {
+    path: '/confirmation-resent',
+    component: InfoScreen,
+    private: false,
+  },
+  RECOVER_EMAIL: {
+    path: '/recover-email',
+    component: InfoScreen,
     private: false,
   },
   PROFILE: {

@@ -25,6 +25,7 @@ export const Rank = styled.span`
 
 export const Image = styled.img`
   height: 35px;
+  width: 35px;
   border-radius: 50%;
   backgroundcolor: ${colors.grey};
 `;

@@ -70,3 +70,10 @@ export const InputLabel = styled.div`
     color: ${colors.orange};
   }
 `;
+export const Error = styled.div`
+  font-size: ${(props) => updateFontSize(10, props.fontSize)};
+  font-family: ${(props) => updateValue('EasyReadingPro', props.font)};
+  place-self: start;
+  color: orange;
+  margin-left: 10px;
+`;

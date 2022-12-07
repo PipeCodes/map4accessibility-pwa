@@ -2,13 +2,7 @@ import React, { useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import {
-  Page,
-  Container,
-  Box,
-  Text,
-  InputLabel,
-} from './EmailValidationScreen.styles';
+import { Page, Container, Box, Text, InputLabel } from './InfoScreen.styles';
 import CustomInput from '../../components/CustomInput/CustomInput';
 import CustomButton from '../../components/CustomButton/CustomButton';
 import { colors } from '../../constants/colors';
@@ -17,8 +11,8 @@ import TopBar from '../../components/TopBar/TopBar';
 import PopUp from '../../components/PopUp/PopUp';
 import NotificationIcon from '../../assets/icons/notification.svg';
 
-const EmailConfirmationScreen = (props) => {
-  const { history, routes } = props;
+const InfoScreen = (props) => {
+  const { history, routes, location } = props;
   const { t } = useTranslation();
   const fontSize = useSelector((state) => state.accessibility.fontSize);
   const font = useSelector((state) => state.accessibility.font);
@@ -32,11 +26,14 @@ const EmailConfirmationScreen = (props) => {
     history.push(routes.ACCESSIBILITY.path);
   }, [history, routes]);
 
+  const title = location.pathname.slice(1).replace('-', '_');
+  const body = location.pathname.concat('_body').slice(1).replace('-', '_');
+
   return (
     <Page backgroundColor={backgroundColor}>
       <PopUp
-        title={t('email_validation_title')}
-        text={t('email_validation_text')}
+        title={t(title)}
+        text={t(body)}
         buttonText={t('back')}
         action={proceedLogin}
         icon={NotificationIcon}
@@ -117,4 +114,4 @@ const EmailConfirmationScreen = (props) => {
   );
 };
 
-export default withRouter(EmailConfirmationScreen);
+export default withRouter(InfoScreen);
