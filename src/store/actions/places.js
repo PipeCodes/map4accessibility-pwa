@@ -57,7 +57,7 @@ export const getPlacesCountry = (country, order) => async (dispatch) => {
   );
 
   try {
-    const response = await axios.get(url);
+    const response = await axios.get(url, config);
 
     const statusCode = response.status;
 
@@ -91,7 +91,7 @@ export const getPlacesRadius =
     );
 
     try {
-      const response = await axios.get(url);
+      const response = await axios.get(url, config);
       const statusCode = response.status;
 
       if (statusCode === HTTP_STATUS.SUCCESS) {
@@ -123,7 +123,7 @@ export const getPlacesRadiusMarkers =
     );
 
     try {
-      const response = await axios.get(url);
+      const response = await axios.get(url, config);
       const statusCode = response.status;
 
       if (statusCode === HTTP_STATUS.SUCCESS) {

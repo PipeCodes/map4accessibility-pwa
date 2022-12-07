@@ -58,6 +58,11 @@ const routes = {
     component: InfoScreen,
     private: false,
   },
+  RECOVER_EMAIL: {
+    path: '/recover-email',
+    component: InfoScreen,
+    private: false,
+  },
   PROFILE: {
     path: '/profile',
     component: ProfileScreen,

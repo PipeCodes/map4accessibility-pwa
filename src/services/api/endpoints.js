@@ -1,11 +1,11 @@
-export const SIGNUP = '/auth/register';
 export const LOGIN = '/auth/login';
+export const SIGNUP = '/auth/register';
 export const CHECK_EMAIL = '/auth/check-email';
 export const RECOVER_PASSWORD = '/auth/password-recover';
-export const UPDATE_USER = '/auth/profile/update';
-export const GET_USER = '/auth/profile';
 export const CHANGE_PASSWORD = '/auth/reset-password';
-export const PLACES = '/places';
-export const PLACES_RADIUS = '/places-by-radius';
+export const GET_USER = '/profile';
+export const UPDATE_USER = '/profile/update';
+export const PLACE_EVALUTATIONS = '/auth/place-evaluations';
+export const PLACES = '/places/';
+export const PLACES_RADIUS = '/places/radius';
 export const QUESTIONS = '/place-rate-settings';
-export const PLACE_EVALUTATIONS = '/place-evaluations';
