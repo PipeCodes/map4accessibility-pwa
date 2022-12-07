@@ -1,8 +1,9 @@
 import React, { useEffect, useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { withRouter, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { colors } from '../../constants/colors';
+import { changePassword } from '../../store/actions/auth';
 import {
   Page,
   Container,
@@ -43,15 +44,23 @@ const validate = (field, values, lastErrors) => {
 
 const initialValues = (email) => ({ email, password: '', confirmPassword: '' });
 
+// Gets query params from URL
+const useQuery = () => {
+  const { search } = useLocation();
+  return React.useMemo(() => new URLSearchParams(search), [search]);
+};
+
 const ChangePasswordScreen = (props) => {
   const { history, routes } = props;
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const query = useQuery();
+
   const fontSize = useSelector((state) => state.accessibility.fontSize);
   const font = useSelector((state) => state.accessibility.font);
   const [notReadySubmit, setNotReadySubmit] = useState(true);
   const [formErrors, setFormErrors] = useState({});
-  const [formData, setFormData] = useState(initialValues('ineedan@email.com'));
+  const [formData, setFormData] = useState(initialValues(query.get('email')));
   const backgroundColor = useSelector(
     (state) => state.accessibility.backgroundColor,
   );
@@ -83,18 +92,15 @@ const ChangePasswordScreen = (props) => {
   };
 
   const recoverPasswordHandler = useCallback(() => {
-    console.log('Call Change Password API');
-
-    // Delete next line when feature is implemented
-    history.push(routes.LOGIN.path);
-
-    // Uncomment when implemented
-    // dispatch(changePassword(formData))
-    //   .then(history.push(routes.LOGIN.path))
-    //   .catch((error) => {
-    //     alert(error);
-    //   });
-  }, [dispatch, formData, history, routes]);
+    dispatch(changePassword(formData, query.get('token')))
+      .then((result) => {
+        alert(result);
+        history.push(routes.LOGIN.path);
+      })
+      .catch((error) => {
+        alert(error);
+      });
+  }, [dispatch, formData, history, routes, query]);
 
   const clickHandler = () => {
     setFormErrors((prevErrors) => validate(formData, prevErrors));
@@ -192,7 +198,7 @@ const ChangePasswordScreen = (props) => {
             backgroundColor={notReadySubmit ? colors.grey : colors.orange}
             text={t('change_password')}
             icon={ArrowRight}
-            onClick={() => clickHandler()}
+            onClick={clickHandler}
           />
         </div>
       </Container>

@@ -7,7 +7,6 @@ import FAQsAccordion from '../../components/FAQsAccordion/FAQsAccordion';
 import { Page, Container, SpinnerWrapper } from './FAQsScreen.styles';
 import { colors } from '../../constants/colors';
 import TopBar from '../../components/TopBar/TopBar';
-import { getFAQs } from '../../store/actions/faqs';
 
 const FAQsScreen = () => {
   const dispatch = useDispatch();
@@ -37,7 +36,9 @@ const FAQsScreen = () => {
               {faqs.map((item) => (
                 <span
                   key={item.id}
-                  dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(item.body) }}
+                  dangerouslySetInnerHTML={{
+                    __html: DOMPurify.sanitize(item.body),
+                  }}
                 />
               ))}
             </FAQsAccordion>

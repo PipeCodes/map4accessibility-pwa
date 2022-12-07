@@ -8,7 +8,7 @@ const initialState = {
   loading: false,
 };
 
-const placesReducer = (state = initialState, action) => {
+const placesRankingReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_PLACES_RANKING_START:
       return {
@@ -28,4 +28,4 @@ const placesReducer = (state = initialState, action) => {
   }
 };
 
-export default placesReducer;
+export default placesRankingReducer;
