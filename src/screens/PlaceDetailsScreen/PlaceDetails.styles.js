@@ -6,8 +6,7 @@ export const Page = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: ${(props) => (props.editActive === true ? '100%' : '100vh')};
-
+  height: 100%;
   z-index: 54;
   background-color: ${(props) =>
     updateValue(colors.transparent, props.backgroundColor)};

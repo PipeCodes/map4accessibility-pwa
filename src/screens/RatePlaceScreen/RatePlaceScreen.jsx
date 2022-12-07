@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useCallback, useRef } from 'react';
+import Compressor from 'compressorjs';
 import { withRouter, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { isEmptyObject } from 'jquery';
 import ArrowRightIcon from '../../assets/icons/arrow-right.svg';
 import { colors } from '../../constants/colors';
 import {
@@ -82,6 +82,25 @@ const RatePlaceScreen = (props) => {
     dispatch(getPlace(params.id));
   }, [dispatch, params.id]);
 
+  const CompressSendImage = (image, id) => {
+    // eslint-disable-next-line no-new
+    new Compressor(image, {
+      quality: 0.6,
+      success(result) {
+        dispatch(postPlaceEvaluationMedia(result, id))
+          .then(() => {
+            history.push('/place-details/'.concat(params.id));
+          })
+          .catch((err) => {
+            alert(err);
+          });
+      },
+      error(err) {
+        alert(err.message);
+      },
+    });
+  };
+
   const onSubmit = () => {
     if (
       Object.keys(answers).length !== Object.keys(questions).length ||
@@ -101,13 +120,7 @@ const RatePlaceScreen = (props) => {
       )
         .then((result) => {
           if (img !== undefined) {
-            dispatch(postPlaceEvaluationMedia(img, result))
-              .then((result) => {
-                alert(result);
-              })
-              .catch((err) => {
-                console.log(err);
-              });
+            CompressSendImage(img, result);
           }
         })
         .catch((err) => {
@@ -158,13 +171,22 @@ const RatePlaceScreen = (props) => {
             </City>
           )}
         </TextWrapper>
-        <Text fontSize={fontSize}>{t('rate_place')}</Text>
+        <Text fontSize={fontSize} font={font}>
+          {t('rate_place')}
+        </Text>
         <Vote>
-          <ThumbsUp thumbs={accessibility} onClick={() => onClickThumbsUp()}>
+          <ThumbsUp
+            fontSize={fontSize}
+            font={font}
+            thumbs={accessibility}
+            onClick={() => onClickThumbsUp()}
+          >
             <img src={buttonUp} alt={t('accessible')} />
             <span>{t('accessible')}</span>
           </ThumbsUp>
           <ThumbsDown
+            fontSize={fontSize}
+            font={font}
             thumbs={accessibility}
             onClick={() => onClickThumbsDown()}
           >
