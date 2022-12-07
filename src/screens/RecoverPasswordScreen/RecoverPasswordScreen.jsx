@@ -2,20 +2,21 @@ import React, { useState, useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { recoverPassword } from '../../store/actions/auth';
+import { recoverPassword, checkEmail } from '../../store/actions/auth';
 import {
   Page,
   Container,
   Box,
   Text,
   InputLabel,
+  Error,
 } from './RecoverPasswordScreen.styles';
 import CustomButton from '../../components/CustomButton/CustomButton';
 import { colors } from '../../constants/colors';
 import MaterialLoop from '../../assets/icons/material-loop.svg';
 import TopBar from '../../components/TopBar/TopBar';
 import CustomInput from '../../components/CustomInput/CustomInput';
-import { validateEmail } from '../RegisterScreen/validate';
+import { validateEmailExists } from '../RegisterScreen/validate';
 
 const initialValues = {
   email: '',
@@ -36,14 +37,14 @@ const RecoverPasswordScreen = (props) => {
 
   const recoverPasswordHandler = useCallback(() => {
     dispatch(recoverPassword(formData.email))
-      .then(history.push(routes.LOGIN.path))
+      .then(() => history.push(routes.RECOVER_EMAIL.path))
       .catch((error) => {
         alert(error);
       });
   }, [dispatch, formData.email, history, routes]);
 
   useEffect(() => {
-    if (validateEmail(formData.email, false) === null) {
+    if (validateEmailExists(formData.email, true) === null) {
       setNotReadySubmit(false);
     } else {
       setNotReadySubmit(true);
@@ -51,9 +52,9 @@ const RecoverPasswordScreen = (props) => {
   }, [formData.email]);
 
   //  Validates the fields
-  const validate = (values, lastErrors) => {
+  const validate = (values, lastErrors, exists) => {
     const errors = { ...lastErrors };
-    const error = validateEmail(values.email, false);
+    const error = validateEmailExists(values.email, exists);
     delete errors.email;
     if (error !== null) {
       errors.email = error;
@@ -62,11 +63,21 @@ const RecoverPasswordScreen = (props) => {
   };
 
   //  Click Handlers
-  const clickHandler = () => {
-    setFormErrors((prevErrors) => validate(formData, prevErrors));
-    if (Object.keys(formErrors).length === 0) {
-      recoverPasswordHandler();
-    }
+  const clickHandler = (email) => {
+    let errors = {};
+    dispatch(checkEmail(email))
+      .then((value) => {
+        setFormErrors((prevErrors) => {
+          errors = validate(formData, prevErrors, value);
+          if (Object.keys(errors).length === 0) {
+            recoverPasswordHandler();
+          }
+          return errors;
+        });
+      })
+      .catch((error) => {
+        alert(error);
+      });
   };
 
   const openAccessibility = useCallback(() => {
@@ -107,6 +118,11 @@ const RecoverPasswordScreen = (props) => {
               setFormData({ ...formData, email: e.target.value })
             }
           />
+          {formErrors.email && (
+            <Error fontSize={fontSize} font={font}>
+              {t(formErrors.email)}
+            </Error>
+          )}
         </div>
         <CustomButton
           style={{
@@ -119,7 +135,7 @@ const RecoverPasswordScreen = (props) => {
           backgroundColor={notReadySubmit ? colors.grey : colors.orange}
           text={t('recover')}
           icon={MaterialLoop}
-          onClick={() => clickHandler()}
+          onClick={() => clickHandler(formData.email)}
         />
         <Box>
           <CustomButton

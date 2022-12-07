@@ -30,8 +30,8 @@ const RankingItem = (props) => {
       <Rank fontSize={fontSize} font={font}>
         {rank + 1}
       </Rank>
-      {item.medias[0] ? (
-        <Image src={item.medias[0]} />
+      {item.media_evaluations[0] ? (
+        <Image src={item.media_evaluations[0].file_url} />
       ) : (
         <Image src={placeImage} />
       )}
