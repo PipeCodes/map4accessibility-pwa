@@ -10,6 +10,7 @@ import authReducer from './reducers/auth';
 import policyReducer from './reducers/policy';
 import accessibilityReducer from './reducers/accessibility';
 import placesRankingReducer from './reducers/placesRanking';
+import placeEvaluationsReducer from './reducers/placeEvaluations';
 import placeReducer from './reducers/place';
 
 export const rootReducer = combineReducers({
@@ -20,6 +21,7 @@ export const rootReducer = combineReducers({
   policy: policyReducer,
   accessibility: accessibilityReducer,
   placesRanking: placesRankingReducer,
+  placeEvaluations: placeEvaluationsReducer,
   place: placeReducer,
 });
 
