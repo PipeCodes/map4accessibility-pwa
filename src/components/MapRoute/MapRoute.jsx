@@ -21,7 +21,7 @@ import {
   Index,
 } from './MapRoute.styles';
 
-const MapRoute = ({ route, setRoute, keyProp, active }) => {
+const MapRoute = ({ route, setRoute, active }) => {
   const { t } = useTranslation();
   const fontSize = useSelector((state) => state.accessibility.fontSize);
   const font = useSelector((state) => state.accessibility.font);
@@ -38,7 +38,7 @@ const MapRoute = ({ route, setRoute, keyProp, active }) => {
           .concat('/')
           .concat(route.destination);
   return (
-    <RouteContainer onClick={() => setRoute(keyProp)}>
+    <RouteContainer onClick={() => setRoute(route.id)}>
       <ContainerName>
         <Name fontSize={fontSize} font={font}>
           {route.name}

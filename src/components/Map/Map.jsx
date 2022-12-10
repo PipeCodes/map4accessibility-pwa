@@ -1,13 +1,13 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { GoogleMap, DirectionsRenderer } from '@react-google-maps/api';
 import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
-import CustomMarker from '../CustomMarker/CustomMarker';
 import { Routes } from './Map.styles';
-import MapRoute from '../MapRoute/MapRoute';
-
-import { colors } from '../../constants/colors';
 import { getPlacesRadiusMarkers } from '../../store/actions/places';
+import { colors } from '../../constants/colors';
+import MapRoute from '../MapRoute/MapRoute';
+import CustomMarker from '../CustomMarker/CustomMarker';
+import { SET_DIRECTIONS, SET_ROUTE } from '../../store/actions/types';
 
 // Map styling
 const containerStyle = {
@@ -20,16 +20,17 @@ const options = ['A', 'B', 'C', 'D', 'E']; // List for Route Keys
 
 const Map = ({ origin, destination, userLocation }) => {
   const [map, setMap] = useState(/** @type google.maps.Map */ (null));
-  const [directions, setDirections] = useState(null); // Possible Routes from google maps api
-  const [markers, setMarkers] = useState([]);
-  const [routes, setRoutes] = useState(null); // Fills List on the bottom of the page
-  const [selectedRoute, setSelectedRoute] = useState(0); // Route thats active
   const backgroundColor = useSelector(
     (state) => state.accessibility.backgroundColor,
   );
+  const directions = useSelector((state) => state.directions.directions);
+  const routes = useSelector((state) => state.directions.routes);
+  const selectedRoute = useSelector((state) => state.directions.selectedRoute);
   const [generatingRoutes, setGeneratingRoutes] = useState(false);
+
   const { t } = useTranslation();
   const dispatch = useDispatch();
+
   const polylineOptions = useCallback(
     (index) => {
       if (index === selectedRoute) {
@@ -48,24 +49,11 @@ const Map = ({ origin, destination, userLocation }) => {
     [selectedRoute],
   );
 
-  // Formats routes extracted from the directions given by GoogleMaps API to have info to show in list
-  const formatRoutes = (routes) =>
-    routes.map((route, i) => ({
-      key: options[i],
-      name: t('route'),
-      distance: route.legs[0].distance.text,
-      likes: 234,
-      dislikes: 197,
-      steps: [route.legs[0].steps],
-      origin,
-      destination,
-    }));
-
-  // Draws the routes in the map using the directions from Dirtections Service and resets the variables
-  const drawRoute = (originRoute, destinationRoute, selectedRouteId) => {
+  // Using Dirtections Service gets directions for current origin and destination
+  const setDirections = (originRoute, destinationRoute) => {
     setGeneratingRoutes(true);
-    setMarkers([]);
-    const directionsService = new google.maps.DirectionsService();
+
+    const directionsService = new google.maps.DirectionsService(); // Direction Service
 
     directionsService
       .route({
@@ -75,37 +63,115 @@ const Map = ({ origin, destination, userLocation }) => {
         provideRouteAlternatives: true,
       })
       .then((results) => {
-        setDirections(results);
-        setSelectedRoute(selectedRouteId);
-        // Requests markers from API using the center coords of
-        // the directions and a radius thats half the distance +25% margin for error
-        const radius = Math.round(results.routes[0].legs[0].distance.value / 2);
-        const middle = Math.round(results.routes[0].legs[0].steps.length / 2);
-        const latitude =
-          results.routes[0].legs[0].steps[middle].start_location.lat();
-        const longitude =
-          results.routes[0].legs[0].steps[middle].start_location.lng();
-        dispatch(
-          getPlacesRadiusMarkers(
-            latitude,
-            longitude,
-            Math.round(radius + radius / 4),
-          ),
-        ).then((markersList) => {
-          setMarkers(markersList);
+        let i = 1; // Counter to stop when all results were iterated
+        const verifiedRatings = []; // Array for Verified Ratings
+        const verifiedMarkers = []; // Arrau for Verified Markers
+
+        // Iterates each route from the results that Directions Service returned
+        results.routes.forEach((route, routeId) => {
+          // Requests markers from API using the center coords of
+          // the current overview Path and a radius thats half the distance
+
+          // Radius to make a circumference around the route to find markers
+          const radius = Math.round(route.legs[0].distance.value / 2);
+
+          // Latitude point of the center of the route
+          const latitude =
+            route.overview_path[
+              Math.round(route.overview_path.length / 2)
+            ].lat();
+
+          // Longitude point of the center of the path
+          const longitude =
+            route.overview_path[
+              Math.round(route.overview_path.length / 2)
+            ].lng();
+
+          // Uses previous data "radius", "latitude" and longitude to find markers around route
+          dispatch(
+            getPlacesRadiusMarkers(latitude, longitude, Math.round(radius)),
+          ).then((markersList) => {
+            // References for checking if point is inside the tolerance area near the route (currently 15m)
+            // https://googlemaps.github.io/android-maps-utils/javadoc/com/google/maps/android/PolyUtil.html#isLocationOnEdge-LatLng-java.util.List-boolean-double-
+            // https://developers.google.com/maps/documentation/javascript/reference#poly
+            // https://stackoverflow.com/questions/47860177/google-maps-js-api-b-get-is-not-a-function-errorislocationonedge
+
+            // Sets up route polyline and isLocationOnEdge function
+            const isLocationOnEdge = google.maps.geometry.poly.isLocationOnEdge;
+            const routePoly = new google.maps.Polyline({
+              path: route.overview_path,
+            });
+
+            // Local Variables to sum verified results
+            let likes = 0;
+            let dislikes = 0;
+            const markersLocal = [];
+
+            // Iterates Markers
+            markersList.forEach((marker) => {
+              // Checks if the marker is 15m around each point of the route
+              const check = isLocationOnEdge(
+                new google.maps.LatLng(marker.latitude, marker.longitude),
+                routePoly,
+                0.0015,
+              );
+              // If the marker is near the route it is added to the array,
+              // and likes/dislikes are counted
+              if (check) {
+                markersLocal.push(marker);
+                likes += marker.thumbs_up_count;
+                dislikes += marker.thumbs_down_count;
+              }
+            });
+
+            // Once all markers all markers for a route are checked the objects
+            // are pushed to the correpondent arrays
+            verifiedRatings[routeId] = { likes, dislikes };
+            verifiedMarkers[routeId] = markersLocal;
+
+            // If it has iterated all results the directions are saved with redux
+            if (results.routes.length === i) {
+              dispatch({
+                type: SET_DIRECTIONS,
+                results,
+                routes: results.routes.map((route, index) => ({
+                  id: index,
+                  key: options[index],
+                  name: t('route'),
+                  distance: route.legs[0].distance.text,
+                  likes: verifiedRatings[index].likes,
+                  dislikes: verifiedRatings[index].dislikes,
+                  steps: [route.legs[0].steps],
+                  origin: originRoute,
+                  destination: destinationRoute,
+                  markers: verifiedMarkers[index],
+                })),
+              });
+              return;
+            }
+            i += 1;
+          });
         });
       });
   };
 
-  useEffect(() => {
-    setRoutes(directions ? [...formatRoutes(directions.routes)] : []);
-  }, [directions]);
+  const changeRoute = (id) => {
+    if (id !== selectedRoute) {
+      setGeneratingRoutes(true);
+    }
+
+    dispatch({ type: SET_ROUTE, id });
+  };
 
   useEffect(() => {
     if (routes) {
       setGeneratingRoutes(false);
     }
   }, [routes]);
+
+  useEffect(() => {
+    setGeneratingRoutes(false);
+  }, [selectedRoute]);
 
   useEffect(() => {
     if (
@@ -116,7 +182,7 @@ const Map = ({ origin, destination, userLocation }) => {
         destination === ''
       )
     ) {
-      drawRoute(origin, destination, 0);
+      setDirections(origin, destination);
     }
   }, [origin, destination]);
 
@@ -138,6 +204,7 @@ const Map = ({ origin, destination, userLocation }) => {
         mapContainerStyle={containerStyle}
         center={userLocation || { lat: 38.0, lng: -9.0 }}
         zoom={8}
+        onClick={(e) => console.log(e.latLng.lat(), e.latLng.lng())}
         onLoad={(map) => setMap(map)}
         onUnmount={() => setMap(null)}
         options={{
@@ -150,30 +217,34 @@ const Map = ({ origin, destination, userLocation }) => {
       >
         {!generatingRoutes &&
           routes?.length > 0 &&
-          routes?.map((route, i) => (
+          routes?.map((route) => (
             <DirectionsRenderer
               directions={directions}
-              routeIndex={i}
-              key={route.key}
+              routeIndex={route.id}
+              key={route.id}
               options={{
-                polylineOptions: polylineOptions(i),
+                polylineOptions: polylineOptions(route.id),
               }}
             />
           ))}
-        {markers &&
-          markers.length > 0 &&
-          markers.map((marker, i) => <CustomMarker marker={marker} key={i} />)}
+
+        {routes &&
+          routes[selectedRoute]?.markers &&
+          routes[selectedRoute]?.markers?.length > 0 &&
+          routes[selectedRoute]?.markers?.map((marker, i) => (
+            <CustomMarker marker={marker} key={i} />
+          ))}
       </GoogleMap>
       <Routes backgroundColor={backgroundColor}>
         {routes &&
           routes.length > 0 &&
-          routes.map((route, i) => (
+          routes.map((route) => (
             <MapRoute
               route={route}
-              setRoute={(routeId) => drawRoute(origin, destination, routeId)}
-              keyProp={i}
-              key={i}
-              active={selectedRoute === i}
+              setRoute={(id) => changeRoute(id)}
+              keyProp={route.id}
+              key={route.id}
+              active={selectedRoute === route.id}
             />
           ))}
       </Routes>
