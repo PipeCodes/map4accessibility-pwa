@@ -41,6 +41,22 @@ export const Container = styled.div`
   padding-bottom: 92px;
   margin-top: 30px;
 
+  .card {
+    background: ${colors.white};
+    width: 100%;
+    border: transparent;
+    box-shadow: 0px 2px 2px #0000000a;
+    border-radius: 4px;
+    opacity: 1;
+
+    .header-row {
+      padding: 20px 0;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      box-shadow: 0px 2px 2px #0000000a;
+    }
+  }
   .fullDiv {
     height: 100%;
     width: 100%;
@@ -48,6 +64,43 @@ export const Container = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+  }
+`;
+
+export const PlaceInformation = styled.div`
+  font-size: ${(props) => updateFontSize(14, props.fontSize)};
+  font-family: ${(props) => updateValue('EasyReadingPro', props.font)};
+  margin: 15px;
+  display: flex;
+  flex-direction: column;
+  color: ${colors.primaryTextColor};
+`;
+
+export const Accessible = styled.div`
+  margin-right: 15px;
+  align-self: start;
+  font-size: ${(props) => updateFontSize(14, props.fontSize)};
+  font-family: ${(props) => updateValue('EasyReadingPro', props.font)};
+  color: ${colors.green};
+  text-align: right;
+
+  .up {
+    color: ${colors.green};
+  }
+  .down {
+    color: ${colors.red};
+  }
+`;
+
+export const Evaluations = styled.div`
+  .evaluations-header {
+    font-size: ${(props) => updateFontSize(18, props.fontSize)};
+    font-family: ${(props) => updateValue('EasyReadingPro', props.font)};
+    margin-left: 15px;
+    height: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
 `;
 

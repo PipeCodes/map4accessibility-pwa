@@ -19,4 +19,5 @@ export const colors = {
   silver: '#B9B9B9',
   bronze: '#DF882B',
   transparent: 'transparent',
+  white: '#fff',
 };

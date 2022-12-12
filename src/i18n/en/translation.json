@@ -134,5 +134,6 @@
   "negative": "Negative",
   "accepted": "Accepted",
   "rejected": "Rejected",
-  "pending": "Pending"
+  "pending": "Pending",
+  "latest_evaluations": "Latest Evaluations"
 }

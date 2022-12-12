@@ -2,13 +2,17 @@ import React, { useEffect, useCallback } from 'react';
 import { withRouter, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { isEmptyObject } from 'jquery';
+import ThumbsUp from '../../assets/icons/maps/up.svg';
+import ThumbsDown from '../../assets/icons/maps/down.svg';
 import {
   Page,
   Container,
   TextWrapper,
   Name,
   City,
+  Accessible,
+  Evaluations,
+  PlaceInformation,
 } from './PlaceDetails.styles';
 import TopBar from '../../components/TopBar/TopBar';
 import ImageSlider from '../../components/ImageSlider/ImageSlider';
@@ -61,20 +65,51 @@ const PlaceDetailsScreen = (props) => {
         }
       />
       <Container>
-        <TextWrapper>
-          <Name fontSize={fontSize} font={font}>
-            {place?.name}
-          </Name>
-          {place?.city ? (
-            <City fontSize={fontSize} font={font}>
-              {place?.city}
-            </City>
-          ) : (
-            <City fontSize={fontSize} font={font}>
-              {t('obstacle')}
-            </City>
-          )}
-        </TextWrapper>
+        <div className="card">
+          <div className="header-row">
+            <TextWrapper>
+              <Name fontSize={fontSize} font={font}>
+                {place?.name}
+              </Name>
+              {place?.city ? (
+                <City fontSize={fontSize} font={font}>
+                  {place?.city}
+                </City>
+              ) : (
+                <City fontSize={fontSize} font={font}>
+                  {t('obstacle')}
+                </City>
+              )}
+            </TextWrapper>
+            <Accessible fontSize={fontSize}>
+              <span>{t('accessible')}</span>
+              <div>
+                <span className="up">
+                  <img src={ThumbsUp} alt={t('positive')} />{' '}
+                  {place?.thumbs_up_count || 0}
+                </span>
+                <span className="down ms-2">
+                  <img src={ThumbsDown} alt={t('negative')} />{' '}
+                  {place?.thumbs_down_count || 0}
+                </span>
+              </div>
+            </Accessible>
+          </div>
+          <PlaceInformation fontSize={fontSize}>
+            {place?.place_type && (
+              <span className="fw-bold">{place?.place_type}</span>
+            )}
+            {place?.address && <span>{place?.address}</span>}
+            {place?.phone && <span>{place?.phone}</span>}
+            {place?.email && <span>{place?.email}</span>}
+            {place?.website && <span>{place?.website}</span>}
+            {place?.schedule && <span>{place?.schedule}</span>}
+          </PlaceInformation>
+        </div>
+        <Evaluations fontSize={fontSize} className="card mt-3">
+          <span className="evaluations-header">{t('latest_evaluations')}</span>
+          {/* "media_evaluations": [] */}
+        </Evaluations>
       </Container>
     </Page>
   );

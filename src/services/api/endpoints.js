@@ -7,6 +7,6 @@ export const GET_USER = '/profile';
 export const UPDATE_USER = '/profile/update';
 export const PLACE_EVALUTATIONS = '/place-evaluations';
 export const MY_PLACE_EVALUTATIONS = '/auth/place-evaluations';
-export const PLACES = '/places/';
+export const PLACES = '/places';
 export const PLACES_RADIUS = '/places/radius';
 export const QUESTIONS = '/place-rate-settings';
