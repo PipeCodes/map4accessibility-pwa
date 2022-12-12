@@ -121,14 +121,12 @@ const RankingScreen = (props) => {
             </SliderButon>
           </SliderFilter>
 
-          {!sliderActive && (
-            <CustomSelect
-              style={{ width: '100%' }}
-              defaultValue={filterCountries[0]}
-              options={filterCountries}
-              onChange={(value) => setCountry(value)}
-            />
-          )}
+          <CustomSelect
+            style={sliderActive ? { display: 'none' } : { width: '100%' }}
+            defaultValue={filterCountries[0]}
+            options={filterCountries}
+            onChange={(value) => setCountry(value)}
+          />
         </FiltersWrapper>
         <RanksContainer>
           {ranking && Object.keys(ranking).length
