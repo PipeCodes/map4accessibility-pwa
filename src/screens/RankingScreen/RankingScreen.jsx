@@ -122,7 +122,7 @@ const RankingScreen = (props) => {
           </SliderFilter>
 
           <CustomSelect
-            style={!sliderActive ? { width: '100%' } : { display: 'none' }}
+            style={sliderActive ? { display: 'none' } : { width: '100%' }}
             defaultValue={filterCountries[0]}
             options={filterCountries}
             onChange={(value) => setCountry(value)}
