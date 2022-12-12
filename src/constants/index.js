@@ -106,6 +106,8 @@ export const countries = [
   },
 ];
 
+export const options = ['A', 'B', 'C', 'D', 'E']; // List for Route Keys
+
 // GENERAL STATUSES
 export const SUCCESS = 'success';
 export const ERROR = 'error';
