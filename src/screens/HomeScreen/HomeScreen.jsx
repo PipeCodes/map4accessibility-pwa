@@ -4,9 +4,10 @@ import { useTranslation } from 'react-i18next';
 import { withRouter } from 'react-router-dom';
 import TopBar from '../../components/TopBar/TopBar';
 import FooterMenu from '../../components/FooterMenu/FooterMenu';
-import { Page, Container, Text } from './HomeScreen.styles';
+import { Page, Container, Text, MyArea } from './HomeScreen.styles';
 import { getUser } from '../../store/actions/auth';
-import MyComments from '../../components/MyComments/Mycomments';
+import MyComments from '../../components/MyComments/MyComments';
+import LatestComments from '../../components/LatestComments/LatestComments';
 import { getMyPlaceEvaluations } from '../../store/actions/placeEvaluations';
 
 const HomeScreen = (props) => {
@@ -46,14 +47,17 @@ const HomeScreen = (props) => {
         <Text fontSize={fontSize} font={font}>
           {t('welcome')} {user.name} {user.surname}!
         </Text>
-        <MyComments
-          positive={11} // Placeholder
-          negative={13} // Placeholder
-          accepted={21} // Placeholder
-          rejected={1} // Placeholder
-          pending={2} // Placeholder
-          comments={myEvaluations} // Placeholder
-        />
+        <MyArea backgroundColor={backgroundColor}>
+          <MyComments
+            positive={11} // Placeholder
+            negative={13} // Placeholder
+            accepted={21} // Placeholder
+            rejected={1} // Placeholder
+            pending={2} // Placeholder
+            comments={myEvaluations} // Placeholder
+          />
+          <LatestComments comments={myEvaluations} />
+        </MyArea>
       </Container>
       <FooterMenu routes={routes} home />
     </Page>
