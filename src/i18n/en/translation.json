@@ -135,5 +135,8 @@
   "accepted": "Accepted",
   "rejected": "Rejected",
   "pending": "Pending",
+  "view_all": "View All",
+  "show_less": "Show Less",
+  "latest": "Latest",
   "latest_evaluations": "Latest Evaluations"
 }
