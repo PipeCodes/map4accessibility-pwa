@@ -31,7 +31,6 @@ export const changeDirections =
           markers: verifiedMarkers[index],
         })),
       });
-
       return Promise.resolve('Success');
     } catch (error) {
       return Promise.reject(error?.response?.data?.message);
