@@ -19,9 +19,9 @@ import {
   Line,
   Box,
   Count,
-} from './MyComments.styles';
+} from './MyCommentsStatus.styles';
 
-const MyComments = (props) => {
+const MyCommentsStatus = (props) => {
   const { positive, negative, accepted, rejected, pending, comments } = props;
   const fontSize = useSelector((state) => state.accessibility.fontSize);
   const font = useSelector((state) => state.accessibility.font);
@@ -111,4 +111,4 @@ const MyComments = (props) => {
   );
 };
 
-export default MyComments;
+export default MyCommentsStatus;
