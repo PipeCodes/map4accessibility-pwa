@@ -34,11 +34,11 @@ import buttonDown from '../../assets/icons/places/dislike.svg';
 import paperclipIcon from '../../assets/icons/paperclip.svg';
 import CustomButton from '../../components/CustomButton/CustomButton';
 import { getQuestions } from '../../store/actions/questions';
+import { getPlace } from '../../store/actions/places';
 import {
-  getPlace,
   postPlaceEvaluation,
   postPlaceEvaluationMedia,
-} from '../../store/actions/places';
+} from '../../store/actions/placeEvaluations';
 import placeholder from '../../assets/images/photo-stock-1.png';
 
 const photos = [placeholder, placeholder, placeholder];

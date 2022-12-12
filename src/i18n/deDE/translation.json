@@ -126,5 +126,16 @@
   "submit": "Submit",
   "rate_error": "Please write a comment (Min 6 characters) and answer the questions",
   "place_details": "Place details",
-  "supported_formats": "Supported formats are:"
+  "supported_formats": "Supported formats are:",
+  "my_comments": "My Comments",
+  "status": "Status",
+  "total": "Total",
+  "positive": "Positive",
+  "negative": "Negative",
+  "accepted": "Accepted",
+  "rejected": "Rejected",
+  "pending": "Pending",
+  "view_all": "View All",
+  "show_less": "Show Less",
+  "latest": "Latest"
 }
