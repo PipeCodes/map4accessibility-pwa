@@ -4,10 +4,13 @@ import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 import { Routes } from './Map.styles';
 import { getPlacesRadiusMarkers } from '../../store/actions/places';
+import {
+  changeRouteId,
+  changeDirections,
+} from '../../store/actions/directions';
 import { colors } from '../../constants/colors';
 import MapRoute from '../MapRoute/MapRoute';
 import CustomMarker from '../CustomMarker/CustomMarker';
-import { SET_DIRECTIONS, SET_ROUTE } from '../../store/actions/types';
 
 // Map styling
 const containerStyle = {
@@ -15,8 +18,6 @@ const containerStyle = {
   height: '100%',
   position: 'relative',
 };
-
-const options = ['A', 'B', 'C', 'D', 'E']; // List for Route Keys
 
 const Map = ({ origin, destination, userLocation }) => {
   const [map, setMap] = useState(/** @type google.maps.Map */ (null));
@@ -131,22 +132,15 @@ const Map = ({ origin, destination, userLocation }) => {
 
             // If it has iterated all results the directions are saved with redux
             if (results.routes.length === i) {
-              dispatch({
-                type: SET_DIRECTIONS,
-                results,
-                routes: results.routes.map((route, index) => ({
-                  id: index,
-                  key: options[index],
-                  name: t('route'),
-                  distance: route.legs[0].distance.text,
-                  likes: verifiedRatings[index].likes,
-                  dislikes: verifiedRatings[index].dislikes,
-                  steps: [route.legs[0].steps],
-                  origin: originRoute,
-                  destination: destinationRoute,
-                  markers: verifiedMarkers[index],
-                })),
-              });
+              dispatch(
+                changeDirections(
+                  results,
+                  verifiedRatings,
+                  verifiedMarkers,
+                  originRoute,
+                  destinationRoute,
+                ),
+              );
               return;
             }
             i += 1;
@@ -160,7 +154,7 @@ const Map = ({ origin, destination, userLocation }) => {
       setGeneratingRoutes(true);
     }
 
-    dispatch({ type: SET_ROUTE, id });
+    dispatch(changeRouteId(id));
   };
 
   useEffect(() => {
