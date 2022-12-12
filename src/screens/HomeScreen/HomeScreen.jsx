@@ -6,9 +6,9 @@ import TopBar from '../../components/TopBar/TopBar';
 import FooterMenu from '../../components/FooterMenu/FooterMenu';
 import { Page, Container, Text, MyArea } from './HomeScreen.styles';
 import { getUser } from '../../store/actions/auth';
-import MyComments from '../../components/MyComments/MyComments';
 import LatestComments from '../../components/LatestComments/LatestComments';
 import { getMyPlaceEvaluations } from '../../store/actions/placeEvaluations';
+import MyCommentsStatus from '../../components/MyCommentsStatus/MyCommentsStatus';
 
 const HomeScreen = (props) => {
   const { history, routes } = props;
@@ -48,7 +48,7 @@ const HomeScreen = (props) => {
           {t('welcome')} {user.name} {user.surname}!
         </Text>
         <MyArea backgroundColor={backgroundColor}>
-          <MyComments
+          <MyCommentsStatus
             positive={11} // Placeholder
             negative={13} // Placeholder
             accepted={21} // Placeholder
