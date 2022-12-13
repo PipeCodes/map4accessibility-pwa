@@ -134,5 +134,13 @@
   "negative": "Negativo",
   "accepted": "Aceite",
   "rejected": "Rejeitado",
-  "pending": "Pendente"
+  "pending": "Pendente",
+  "add_place": "Adicionar Local",
+  "name": "Nome",
+  "type": "Tipo",
+  "groceries": "Compras",
+  "attractions": "Entretenimento",
+  "danger": "Obstáculo",
+  "click_to_mark": "Clique para marcar",
+  "create_error": "Escreva um nome para o local."
 }

@@ -134,5 +134,13 @@
   "negative": "Negative",
   "accepted": "Accepted",
   "rejected": "Rejected",
-  "pending": "Pending"
+  "pending": "Pending",
+  "add_place": "Add Place",
+  "name": "Name",
+  "type": "Type",
+  "groceries": "Groceries",
+  "attractions": "Attractions",
+  "danger": "Danger",
+  "click_to_mark": "Click to mark",
+  "create_error": "Write a name for the place"
 }

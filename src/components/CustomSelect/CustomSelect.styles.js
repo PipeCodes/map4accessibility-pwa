@@ -9,7 +9,7 @@ export const StyledSelect = styled(Select)`
   }
 
   .react-select__control {
-    height: 31px;
+    height: auto;
     min-height: 31px;
     width: 100%;
     outline: none;
@@ -22,11 +22,16 @@ export const StyledSelect = styled(Select)`
     background-color: ${(props) =>
       updateValue(colors.white, props.backgroundColor)};
 
+    .react-select__option {
+      padding: 4px 12px;
+    }
+
     .react-select__value-container {
       padding-left: 10px;
       padding-right: 10px;
       flex-wrap: nowrap;
       display: flex;
+      padding: 0;
 
       .react-select__placeholder {
         color: ${colors.grey};

@@ -36,7 +36,7 @@ export const Container = styled.div`
   padding: 0px 15px;
   flex-direction: column;
   align-items: center;
-  z-index: 54;
+  z-index: 55;
   width: 100%;
   padding-bottom: 92px;
   margin-top: 30px;
@@ -88,12 +88,17 @@ export const Form = styled.div`
   width: 100%;
 `;
 
-export const Label = styled.span`
+export const InputLabel = styled.span`
   font-size: ${(props) => updateFontSize(16, props.fontSize)};
   font-family: ${(props) => updateValue('EasyReadingPro', props.font)};
   color: ${colors.primaryTextColor};
-  margin-top: 30px;
-  margin-bottom: 10px;
+  place-self: start;
+  margin-top: 10px;
+  margin-bottom: 5px;
+
+  span {
+    color: ${colors.orange};
+  }
 `;
 
 export const Title = styled.span`
@@ -118,6 +123,7 @@ export const MediaLabel = styled.div`
   margin-top: 10px;
   margin-bottom: 50px;
   color: grey;
+  place-self: start;
   span {
     color: ${colors.primaryColor};
   }
