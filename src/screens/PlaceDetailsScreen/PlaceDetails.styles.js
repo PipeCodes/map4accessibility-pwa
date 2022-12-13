@@ -93,14 +93,31 @@ export const Accessible = styled.div`
 `;
 
 export const Evaluations = styled.div`
+  width: 100%;
   .evaluations-header {
     font-size: ${(props) => updateFontSize(18, props.fontSize)};
     font-family: ${(props) => updateValue('EasyReadingPro', props.font)};
-    margin-left: 15px;
     height: 50px;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    span {
+      margin-left: 15px;
+    }
+  }
+`;
+
+export const EvaluationsContainer = styled.div`
+  font-size: ${(props) => updateFontSize(14, props.fontSize)};
+  font-family: ${(props) => updateValue('EasyReadingPro', props.font)};
+  background: ${colors.whiteSmoke};
+  .user-info {
+    font-size: ${(props) => updateFontSize(16, props.fontSize)};
+    padding-left: 15px;
+  }
+  .rate-banner {
+    background: ${colors.mystic};
+    padding-left: 15px;
   }
 `;
 

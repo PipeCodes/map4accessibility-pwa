@@ -13,6 +13,7 @@ import {
   Accessible,
   Evaluations,
   PlaceInformation,
+  EvaluationsContainer,
 } from './PlaceDetails.styles';
 import TopBar from '../../components/TopBar/TopBar';
 import ImageSlider from '../../components/ImageSlider/ImageSlider';
@@ -48,6 +49,39 @@ const PlaceDetailsScreen = (props) => {
   const openAccessibility = useCallback(() => {
     history.push(routes.ACCESSIBILITY.path);
   }, [history, routes]);
+
+  const comments = [
+    {
+      id: 6,
+      thumb_direction: false,
+      comment: 'first comment',
+      questions_answers: null,
+      created_at: '2022-12-07T18:29:15.000000Z',
+      updated_at: '2022-12-07T18:29:15.000000Z',
+      deleted_at: null,
+      media_url: null,
+    },
+    {
+      id: 7,
+      thumb_direction: true,
+      comment: 'second comment',
+      questions_answers: null,
+      created_at: '2022-12-07T18:29:15.000000Z',
+      updated_at: '2022-12-07T18:29:15.000000Z',
+      deleted_at: null,
+      media_url: null,
+    },
+    {
+      id: 8,
+      thumb_direction: true,
+      comment: 'third comment',
+      questions_answers: null,
+      created_at: '2022-12-07T18:29:15.000000Z',
+      updated_at: '2022-12-07T18:29:15.000000Z',
+      deleted_at: null,
+      media_url: null,
+    },
+  ];
 
   return (
     <Page backgroundColor={backgroundColor}>
@@ -106,9 +140,35 @@ const PlaceDetailsScreen = (props) => {
             {place?.schedule && <span>{place?.schedule}</span>}
           </PlaceInformation>
         </div>
-        <Evaluations fontSize={fontSize} className="card mt-3">
-          <span className="evaluations-header">{t('latest_evaluations')}</span>
-          {/* "media_evaluations": [] */}
+        <Evaluations fontSize={fontSize} className="mt-3">
+          <div className="evaluations-header card">
+            <span>{t('latest_evaluations')}</span>
+          </div>
+          <EvaluationsContainer fontSize={fontSize}>
+            {comments?.map((comment, index) => (
+              <div id={index}>
+                <div className="user-info">
+                  <span>user name</span>
+                </div>
+                <div className="rate-banner">
+                  {comment?.thumb_direction ? (
+                    <>
+                      <img src={ThumbsUp} alt={t('positive')} />
+                      <span>Accessible</span>
+                    </>
+                  ) : (
+                    <>
+                      <img src={ThumbsDown} alt={t('negative')} />
+                      <span>Not accessible</span>
+                    </>
+                  )}
+                </div>
+                <div className="">
+                  <span>{comment?.comment}</span>
+                </div>
+              </div>
+            ))}
+          </EvaluationsContainer>
         </Evaluations>
       </Container>
     </Page>
