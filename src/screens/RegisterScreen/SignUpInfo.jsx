@@ -1,3 +1,4 @@
+import moment from 'moment';
 import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
@@ -154,6 +155,8 @@ const SignUpInfo = (props) => {
         type="date"
         value={formData.birthDate}
         name="birthDate"
+        min={moment().subtract(100, "years").format("YYYY-MM-DD")}
+        max={moment().subtract(16, "years").format('yyyy-MM-DD')}
         onBlur={(e) => focusHandler(e.target.name)}
         onChange={(e) => {
           setFormData((prevState) => ({
