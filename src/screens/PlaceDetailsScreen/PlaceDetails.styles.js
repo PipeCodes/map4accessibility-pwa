@@ -56,6 +56,17 @@ export const Container = styled.div`
       justify-content: space-between;
       box-shadow: 0px 2px 2px #0000000a;
     }
+    .comments {
+      margin-left: auto;
+      background: ${colors.orange};
+      box-shadow: 0px 2px 2px #00000029;
+      border: 1px solid #d3d2da;
+      padding: 10px;
+      border-radius: 25px;
+      button {
+        all: unset;
+      }
+    }
   }
   .fullDiv {
     height: 100%;
@@ -104,20 +115,6 @@ export const Evaluations = styled.div`
     span {
       margin-left: 15px;
     }
-  }
-`;
-
-export const EvaluationsContainer = styled.div`
-  font-size: ${(props) => updateFontSize(14, props.fontSize)};
-  font-family: ${(props) => updateValue('EasyReadingPro', props.font)};
-  background: ${colors.whiteSmoke};
-  .user-info {
-    font-size: ${(props) => updateFontSize(16, props.fontSize)};
-    padding-left: 15px;
-  }
-  .rate-banner {
-    background: ${colors.mystic};
-    padding-left: 15px;
   }
 `;
 

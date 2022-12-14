@@ -68,8 +68,8 @@ const LatestComments = (props) => {
                 <Icon src={Thumbs[comment?.thumb_direction ? 0 : 1]} />
                 <Label fontSize={fontSize} font={font}>
                   {comment?.thumb_direction
-                    ? t('not_accessible')
-                    : t('accessible')}
+                    ? t('accessible')
+                    : t('not_accessible')}
                 </Label>
               </Accessible>
               <Body fontSize={fontSize} font={font}>

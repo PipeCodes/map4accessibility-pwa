@@ -7,12 +7,14 @@ import {
   AccessibilityButton,
   CloseButton,
   TopBarContainer,
+  MagnifierButton,
   Logo,
 } from './TopBar.styles';
 import BackIcon from '../../assets/icons/back.svg';
 import CloseIcon from '../../assets/icons/close.svg';
 import AccessibilityIcon from '../../assets/icons/accessibility.svg';
 import map4AccessibilityIcon from '../../assets/icons/map4accessibility_logo.svg';
+import Magnifier from '../../assets/icons/places/magnifier.svg';
 
 const TopBar = (props) => {
   const {
@@ -29,6 +31,7 @@ const TopBar = (props) => {
     accessibility,
     aligned,
     page,
+    magnifier,
   } = props;
 
   const fontSize = useSelector((state) => state.accessibility.fontSize);
@@ -56,6 +59,12 @@ const TopBar = (props) => {
           {hasIcon && <img src={AccessibilityIcon} alt="Accessibility" />}
           {title}
         </Title>
+      )}
+
+      {magnifier && (
+        <MagnifierButton type="button">
+          <img src={Magnifier} alt="Magnifier" />
+        </MagnifierButton>
       )}
 
       {hasAccessibilityButton && (
