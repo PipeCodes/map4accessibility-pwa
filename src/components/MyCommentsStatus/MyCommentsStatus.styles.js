@@ -2,12 +2,6 @@ import styled from 'styled-components';
 import { colors } from '../../constants/colors';
 import { updateFontSize, updateValue } from '../../helpers/utils';
 
-export const Container = styled.div`
-  width: 100%;
-  background-color: ${(props) => updateValue('white', props.backgroundColor)};
-  box-shadow: 0px 2px 2px #0000000a;
-`;
-
 export const Wrapper = styled.div`
   padding: 20px 15px;
 `;

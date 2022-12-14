@@ -142,5 +142,8 @@
   "attractions": "Entretenimento",
   "danger": "Obstáculo",
   "click_to_mark": "Clique para marcar",
-  "create_error": "Escreva um nome para o local."
+  "create_error": "Escreva um nome para o local.",
+  "view_all": "Mostar Todos",
+  "show_less": "Mostrar Menos",
+  "latest": "Recentes"
 }

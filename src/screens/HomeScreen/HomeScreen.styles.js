@@ -6,7 +6,7 @@ export const Page = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: ${(props) => (props.editActive === true ? '100%' : '100vh')};
+  height: 100%;
 
   z-index: 54;
   background-color: ${(props) =>
@@ -44,4 +44,10 @@ export const Text = styled.span`
     color: ${colors.primaryColor};
     margin-left: 5px;
   }
+`;
+
+export const MyArea = styled.div`
+  width: 100%;
+  background-color: ${(props) => updateValue('white', props.backgroundColor)};
+  box-shadow: 0px 2px 2px #0000000a;
 `;
