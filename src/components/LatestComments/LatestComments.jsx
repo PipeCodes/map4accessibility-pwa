@@ -49,7 +49,7 @@ const LatestComments = (props) => {
     <Container>
       <Title>{t('latest')}</Title>
       {commentsList
-        ? commentsList.map((comment) => (
+        ? commentsList.reverse().map((comment) => (
             <Comment backgroundColor={backgroundColor} key={comment.id}>
               <Top>
                 {comment?.media_url ? (
