@@ -19,7 +19,7 @@ const containerStyle = {
   position: 'relative',
 };
 
-const Map = ({ origin, destination, userLocation }) => {
+const Map = ({ origin, destination, userLocation, history }) => {
   const [map, setMap] = useState(/** @type google.maps.Map */ (null));
   const backgroundColor = useSelector(
     (state) => state.accessibility.backgroundColor,
@@ -149,6 +149,13 @@ const Map = ({ origin, destination, userLocation }) => {
       });
   };
 
+  const openDetails = useCallback(
+    (id) => {
+      history.push('/place-details/'.concat(id));
+    },
+    [history],
+  );
+
   const changeRoute = (id) => {
     if (id !== selectedRoute) {
       setGeneratingRoutes(true);
@@ -198,7 +205,6 @@ const Map = ({ origin, destination, userLocation }) => {
         mapContainerStyle={containerStyle}
         center={userLocation || { lat: 38.0, lng: -9.0 }}
         zoom={8}
-        onClick={(e) => console.log(e.latLng.lat(), e.latLng.lng())}
         onLoad={(map) => setMap(map)}
         onUnmount={() => setMap(null)}
         options={{
@@ -226,7 +232,11 @@ const Map = ({ origin, destination, userLocation }) => {
           routes[selectedRoute]?.markers &&
           routes[selectedRoute]?.markers?.length > 0 &&
           routes[selectedRoute]?.markers?.map((marker, i) => (
-            <CustomMarker marker={marker} key={i} />
+            <CustomMarker
+              marker={marker}
+              key={i}
+              onClick={() => openDetails(marker.id)}
+            />
           ))}
       </GoogleMap>
       <Routes backgroundColor={backgroundColor}>

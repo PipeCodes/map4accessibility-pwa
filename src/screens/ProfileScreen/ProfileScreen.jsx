@@ -1,3 +1,4 @@
+import moment from "moment";
 import React, { useEffect, useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
@@ -308,6 +309,8 @@ const ProfileScreen = (props) => {
             type="date"
             value={formData.birthDate}
             name="birthDate"
+            min={moment().subtract(100, "years").format("YYYY-MM-DD")}
+            max={moment().subtract(16, "years").format('yyyy-MM-DD')}
             readOnly={!editActive}
             onChange={(e) => {
               setFormData((prevState) => ({

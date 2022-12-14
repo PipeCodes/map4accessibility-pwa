@@ -1,5 +1,6 @@
 import { generatePath } from 'react-router-dom';
 import axios, { Endpoints, getErrorMessage } from '../../services/api';
+import i18n from '../../i18n';
 import {
   GET_PLACES_RANKING_START,
   GET_PLACES_RANKING_SUCCESS,
@@ -21,7 +22,7 @@ export const getPlace = (id) => async (dispatch) => {
   const queryParams = {
     id,
   };
-  const url = generatePath(Endpoints.PLACES.concat('/:id'), queryParams);
+  const url = generatePath(Endpoints.PLACES.concat(':id'), queryParams);
 
   try {
     const response = await axios.get(url, config);
@@ -131,3 +132,50 @@ export const getPlacesRadiusMarkers =
       return Promise.reject(error?.response?.data?.message);
     }
   };
+
+export const postPlace = (name, type, city, location, country) => async () => {
+  const body = {
+    name,
+    place_type: type,
+    city,
+    latitude: location.lat,
+    longitude: location.lng,
+    country_code: country,
+  };
+
+  try {
+    const response = await axios.post(Endpoints.PLACES, body, config);
+
+    const statusCode = response.status;
+
+    if (statusCode === HTTP_STATUS.SUCCESS) {
+      return Promise.resolve(response?.data?.result.id);
+    }
+  } catch (error) {
+    return Promise.reject(getErrorMessage(error, i18n.t('something_wrong')));
+  }
+};
+
+export const postPlaceMedia = (media, id) => async () => {
+  const body = {
+    media,
+  };
+
+  const queryParams = {
+    id,
+  };
+
+  const url = generatePath(Endpoints.PLACES.concat(':id/media'), queryParams);
+
+  try {
+    const response = await axios.post(url, body, config);
+
+    const statusCode = response.status;
+
+    if (statusCode === HTTP_STATUS.SUCCESS_CREATED) {
+      return Promise.resolve(response?.data?.message);
+    }
+  } catch (error) {
+    return Promise.reject(getErrorMessage(error, i18n.t('something_wrong')));
+  }
+};

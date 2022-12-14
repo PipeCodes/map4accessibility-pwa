@@ -17,6 +17,7 @@
     "i18next": "^21.10.0",
     "i18next-browser-languagedetector": "^6.1.8",
     "jquery": "^3.6.1",
+    "moment": "^2.29.4",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-bootstrap": "^2.5.0",
@@ -52,6 +53,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "start-public": "HOST=0.0.0.0 react-scripts start",
     "build": "HTTPS=true PORT=443 react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

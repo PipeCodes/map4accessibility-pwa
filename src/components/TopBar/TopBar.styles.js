@@ -21,7 +21,7 @@ export const Title = styled.span`
 export const TopBarContainer = styled.div`
   position: relative;
   display: flex;
-  z-index: 51;
+  z-index: 56;
   width: 100%;
   min-height: 92px;
   align-items: center;

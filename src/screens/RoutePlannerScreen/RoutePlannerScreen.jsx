@@ -25,7 +25,6 @@ const libraries = ['places'];
 
 const RoutePlannerScreen = (props) => {
   const { history, routes } = props;
-
   const { t } = useTranslation();
 
   const originInputRef = useRef(null);
@@ -114,6 +113,7 @@ const RoutePlannerScreen = (props) => {
           origin={origin}
           destination={destination}
           userLocation={userLocation}
+          history={history}
         />
       </Container>
     </Page>

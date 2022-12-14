@@ -10,11 +10,13 @@ import ProfileScreen from '../screens/ProfileScreen/ProfileScreen';
 import RankingScreen from '../screens/RankingScreen/RankingScreen';
 import AccessibilityScreen from '../screens/AccessibilityScreen/AccessibilityScreen';
 import RoutePlannerScreen from '../screens/RoutePlannerScreen/RoutePlannerScreen';
+import MapScreen from '../screens/MapScreen/MapScreen';
 import FAQsScreen from '../screens/FAQsScreen/FAQsScreen';
 import TrackedRoute from './TrackedRoute';
 import ChangePasswordScreen from '../screens/ChangePasswordScreen/ChangePasswordScreen';
 import HomeScreen from '../screens/HomeScreen/HomeScreen';
 import RatePlaceScreen from '../screens/RatePlaceScreen/RatePlaceScreen';
+import AddPlaceScreen from '../screens/AddPlaceScreen/AddPlaceScreen';
 import PlaceDetailsScreen from '../screens/PlaceDetailsScreen/PlaceDetailsScreen';
 import InfoScreen from '../screens/InfoScreen/InfoScreen';
 import { isAuthenticated } from '../services/local';
@@ -73,6 +75,11 @@ const routes = {
     component: RatePlaceScreen,
     private: true,
   },
+  ADD_PLACE: {
+    path: '/add-place/',
+    component: AddPlaceScreen,
+    private: true,
+  },
   PLACE_DETAILS: {
     path: '/place-details/:id',
     component: PlaceDetailsScreen,
@@ -81,11 +88,11 @@ const routes = {
   ROUTE_PLANNER: {
     path: '/route-planner',
     component: RoutePlannerScreen,
-    private: false,
+    private: true,
   },
   MAP: {
-    path: '/route-planner',
-    component: RoutePlannerScreen, // Needs to change when we create a map screen
+    path: '/map',
+    component: MapScreen,
     private: true,
   },
   HOME: {

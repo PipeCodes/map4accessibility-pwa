@@ -135,7 +135,17 @@
   "accepted": "Accepted",
   "rejected": "Rejected",
   "pending": "Pending",
+  "add_place": "Add Place",
+  "name": "Name",
+  "type": "Type",
+  "groceries": "Groceries",
+  "attractions": "Attractions",
+  "danger": "Danger",
+  "click_to_mark": "Click to mark",
+  "create_error": "Write a name for the place",
   "view_all": "View All",
   "show_less": "Show Less",
-  "latest": "Latest"
+  "latest": "Latest",
+  "map": "Map",
+  "route_planner": "Route Planner"
 }

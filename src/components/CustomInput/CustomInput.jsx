@@ -10,6 +10,8 @@ const CustomInput = (props) => {
     onChange,
     value,
     name,
+    min,
+    max,
     onBlur,
     readOnly,
     fontSize,
@@ -23,6 +25,8 @@ const CustomInput = (props) => {
       font={font}
       type={type}
       placeholder={placeholder}
+      min={min}
+      max={max}
       onChange={onChange}
       onPaste={(e) => {
         e.preventDefault();
