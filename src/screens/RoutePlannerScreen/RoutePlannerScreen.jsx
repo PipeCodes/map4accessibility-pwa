@@ -25,7 +25,6 @@ const libraries = ['places'];
 
 const RoutePlannerScreen = (props) => {
   const { history, routes } = props;
-  console.log(props);
   const { t } = useTranslation();
 
   const originInputRef = useRef(null);

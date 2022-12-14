@@ -136,7 +136,6 @@ const RankingScreen = (props) => {
           />
         </FiltersWrapper>
         <RanksContainer>
-          {console.log(ranking)}
           {ranking && Object.keys(ranking).length
             ? ranking.map((item, id) => (
                 <RankingItem
