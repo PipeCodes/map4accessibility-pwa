@@ -56,6 +56,7 @@ const HomeScreen = (props) => {
             pending={2} // Placeholder
             comments={myEvaluations} // Placeholder
           />
+          {console.log(myEvaluations)}
           <LatestComments comments={myEvaluations} />
         </MyArea>
       </Container>

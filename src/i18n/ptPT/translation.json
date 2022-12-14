@@ -145,5 +145,7 @@
   "create_error": "Escreva um nome para o local.",
   "view_all": "Mostar Todos",
   "show_less": "Mostrar Menos",
-  "latest": "Recentes"
+  "latest": "Recentes",
+  "map": "Mapa",
+  "route_planner": "Planear Rota"
 }
