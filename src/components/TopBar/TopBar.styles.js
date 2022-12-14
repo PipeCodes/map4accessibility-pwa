@@ -80,6 +80,12 @@ export const AccessibilityButton = styled.button`
   align-items: center;
 `;
 
+export const MagnifierButton = styled.button`
+  display: flex;
+  all: unset;
+  margin: 8px 60px auto auto;
+`;
+
 export const CloseButton = styled.button`
   background: transparent;
   color: white;
