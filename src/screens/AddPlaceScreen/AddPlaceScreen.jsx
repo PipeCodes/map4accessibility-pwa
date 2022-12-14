@@ -95,6 +95,7 @@ const AddPlaceScreen = (props) => {
 
   useEffect(() => {
     if (isLoaded && coords) {
+      // Reference https://gist.github.com/AmirHossein/92a0597b5f723b19c648
       const latlng = new google.maps.LatLng(coords.lat, coords.lng);
       new google.maps.Geocoder().geocode(
         { latLng: latlng },
@@ -103,19 +104,20 @@ const AddPlaceScreen = (props) => {
             if (results[1]) {
               let city = null;
               let country = null;
-              let c;
-              let lc;
+              let counter;
+              let counterLength;
               let component;
               for (let r = 0, rl = results.length; r < rl; r += 1) {
                 const result = results[r];
 
                 if (!city && result.types[0] === 'locality') {
                   for (
-                    c = 0, lc = result.address_components.length;
-                    c < lc;
-                    c += 1
+                    counter = 0,
+                      counterLength = result.address_components.length;
+                    counter < counterLength;
+                    counter += 1
                   ) {
-                    component = result.address_components[c];
+                    component = result.address_components[counter];
 
                     if (component.types[0] === 'locality') {
                       city = component.long_name;
