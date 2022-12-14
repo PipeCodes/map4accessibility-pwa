@@ -198,7 +198,6 @@ const Map = ({ origin, destination, userLocation }) => {
         mapContainerStyle={containerStyle}
         center={userLocation || { lat: 38.0, lng: -9.0 }}
         zoom={8}
-        onClick={(e) => console.log(e.latLng.lat(), e.latLng.lng())}
         onLoad={(map) => setMap(map)}
         onUnmount={() => setMap(null)}
         options={{

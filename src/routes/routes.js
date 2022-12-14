@@ -15,6 +15,7 @@ import TrackedRoute from './TrackedRoute';
 import ChangePasswordScreen from '../screens/ChangePasswordScreen/ChangePasswordScreen';
 import HomeScreen from '../screens/HomeScreen/HomeScreen';
 import RatePlaceScreen from '../screens/RatePlaceScreen/RatePlaceScreen';
+import AddPlaceScreen from '../screens/AddPlaceScreen/AddPlaceScreen';
 import PlaceDetailsScreen from '../screens/PlaceDetailsScreen/PlaceDetailsScreen';
 import InfoScreen from '../screens/InfoScreen/InfoScreen';
 import { isAuthenticated } from '../services/local';
@@ -71,6 +72,11 @@ const routes = {
   PLACE_RATE: {
     path: '/rate-place/:id',
     component: RatePlaceScreen,
+    private: true,
+  },
+  ADD_PLACE: {
+    path: '/add-place/',
+    component: AddPlaceScreen,
     private: true,
   },
   PLACE_DETAILS: {
