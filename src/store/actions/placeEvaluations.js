@@ -20,7 +20,7 @@ export const getMyPlaceEvaluations = () => async (dispatch) => {
   dispatch({ type: GET_PLACE_EVALUATIONS_START });
   const queryParams = {
     page: 1,
-    size: 10,
+    size: 100,
   };
   const url = generatePath(
     Endpoints.MY_PLACE_EVALUTATIONS.concat('?page=:page&size=:size'),

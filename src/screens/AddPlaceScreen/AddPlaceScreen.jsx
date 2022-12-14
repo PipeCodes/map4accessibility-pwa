@@ -179,7 +179,7 @@ const AddPlaceScreen = (props) => {
     if (name === '' || name === null) {
       setError(t('create_error'));
     } else {
-      dispatch(postPlace(name, type, city, location, country))
+      dispatch(postPlace(name, type, city, coords, country))
         .then((result) => {
           if (img !== undefined) {
             CompressSendImage(img, result);

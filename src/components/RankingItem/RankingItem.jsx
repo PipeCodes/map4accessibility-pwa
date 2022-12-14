@@ -18,7 +18,7 @@ import {
 import placeImage from '../../assets/images/place.png';
 
 const RankingItem = (props) => {
-  const { item, ascDescActive, rank } = props;
+  const { item, ascDescActive, rank, onClick } = props;
   const fontSize = useSelector((state) => state.accessibility.fontSize);
   const font = useSelector((state) => state.accessibility.font);
   const backgroundColor = useSelector(
@@ -26,7 +26,10 @@ const RankingItem = (props) => {
   );
   const { t } = useTranslation();
   return (
-    <ItemContainer backgroundColor={backgroundColor}>
+    <ItemContainer
+      backgroundColor={backgroundColor}
+      onClick={() => onClick(item.id)}
+    >
       <Rank fontSize={fontSize} font={font}>
         {rank + 1}
       </Rank>

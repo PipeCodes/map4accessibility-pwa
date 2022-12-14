@@ -49,7 +49,7 @@ const LatestComments = (props) => {
     <Container>
       <Title>{t('latest')}</Title>
       {commentsList
-        ? commentsList.map((comment) => (
+        ? commentsList.reverse().map((comment) => (
             <Comment backgroundColor={backgroundColor} key={comment.id}>
               <Top>
                 {comment?.media_url ? (
@@ -58,18 +58,18 @@ const LatestComments = (props) => {
                   <Image src={placeImage} />
                 )}
                 <Name fontSize={fontSize} font={font}>
-                  No Name{/* Placeholder while there is no data from API  */}
+                  Anonymous{/* Placeholder while there is no data from API  */}
                 </Name>
                 <Status>
                   O{/* Placeholder while there is no data from API  */}
                 </Status>
               </Top>
               <Accessible backgroundColor={backgroundColor}>
-                <Icon src={Thumbs[comment?.thumb_direction ? 0 : 1]} />
+                <Icon src={Thumbs[comment?.thumb_direction ? 1 : 0]} />
                 <Label fontSize={fontSize} font={font}>
                   {comment?.thumb_direction
-                    ? t('not_accessible')
-                    : t('accessible')}
+                    ? t('accessible')
+                    : t('not_accessible')}
                 </Label>
               </Accessible>
               <Body fontSize={fontSize} font={font}>
