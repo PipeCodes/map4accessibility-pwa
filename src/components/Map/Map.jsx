@@ -149,7 +149,7 @@ const Map = ({ origin, destination, userLocation, history }) => {
       });
   };
 
-  const OpenDetails = useCallback(
+  const openDetails = useCallback(
     (id) => {
       history.push('/place-details/'.concat(id));
     },
@@ -235,7 +235,7 @@ const Map = ({ origin, destination, userLocation, history }) => {
             <CustomMarker
               marker={marker}
               key={i}
-              onClick={() => OpenDetails(marker.id)}
+              onClick={() => openDetails(marker.id)}
             />
           ))}
       </GoogleMap>

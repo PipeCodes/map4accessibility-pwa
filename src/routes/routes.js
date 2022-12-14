@@ -92,7 +92,7 @@ const routes = {
   },
   MAP: {
     path: '/map',
-    component: MapScreen, // Needs to change when we create a map screen
+    component: MapScreen,
     private: true,
   },
   HOME: {

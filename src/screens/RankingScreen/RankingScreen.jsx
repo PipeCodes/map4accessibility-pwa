@@ -69,7 +69,7 @@ const RankingScreen = (props) => {
     history.push(routes.ACCESSIBILITY.path);
   }, [history, routes]);
 
-  const OpenDetails = useCallback(
+  const openDetails = useCallback(
     (id) => {
       history.push('/place-details/'.concat(id));
     },
@@ -143,7 +143,7 @@ const RankingScreen = (props) => {
                   key={id}
                   rank={id}
                   item={item}
-                  onClick={(id) => OpenDetails(id)}
+                  onClick={(id) => openDetails(id)}
                 />
               ))
             : t('no_results')}
