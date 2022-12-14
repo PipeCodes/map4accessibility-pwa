@@ -145,5 +145,7 @@
   "create_error": "Write a name for the place",
   "view_all": "View All",
   "show_less": "Show Less",
-  "latest": "Latest"
+  "latest": "Latest",
+  "map": "Map",
+  "route_planner": "Route Planner"
 }

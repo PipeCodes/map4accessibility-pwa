@@ -69,6 +69,13 @@ const RankingScreen = (props) => {
     history.push(routes.ACCESSIBILITY.path);
   }, [history, routes]);
 
+  const openDetails = useCallback(
+    (id) => {
+      history.push('/place-details/'.concat(id));
+    },
+    [history, routes],
+  );
+
   const ascDescHandler = () => {
     setAscDescActive((prevState) => !prevState);
   };
@@ -136,6 +143,7 @@ const RankingScreen = (props) => {
                   key={id}
                   rank={id}
                   item={item}
+                  onClick={(id) => openDetails(id)}
                 />
               ))
             : t('no_results')}

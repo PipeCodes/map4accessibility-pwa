@@ -12,7 +12,7 @@ import {
   LikesAndDislikes,
 } from './CustomMarker.styles';
 
-const CustomMarker = ({ marker }) => {
+const CustomMarker = ({ marker, onClick }) => {
   const fontSize = useSelector((state) => state.accessibility.fontSize);
   const font = useSelector((state) => state.accessibility.font);
   const icon = useMemo(() => {
@@ -36,7 +36,7 @@ const CustomMarker = ({ marker }) => {
   };
 
   return (
-    <Marker icon={icon} position={coords}>
+    <Marker icon={icon} position={coords} onClick={() => onClick()}>
       <InfoBox
         options={{
           pixelOffset: new window.google.maps.Size(offSet.x, offSet.y),
