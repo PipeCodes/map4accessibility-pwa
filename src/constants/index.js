@@ -1,6 +1,9 @@
 import FlagPortugal from '../assets/icons/flags/portugal.svg';
 import FlagBelgium from '../assets/icons/flags/belgium.svg';
 import FlagGermany from '../assets/icons/flags/germany.svg';
+import MusicIcon from '../assets/icons/places/music-icon.svg';
+import CoffeIcon from '../assets/icons/places/coffee-icon.svg';
+import DangerIcon from '../assets/icons/places/danger-icon.svg';
 import FlagUnitedKingdom from '../assets/icons/flags/united-kingdom.svg';
 import FlagUnitedStates from '../assets/icons/flags/united-states.svg';
 import PlaceholderIcon from '../assets/icons/avatar_1.png';
@@ -103,6 +106,25 @@ export const countries = [
     id: 5,
     label: 'US',
     icon: FlagUnitedStates,
+  },
+];
+
+export const types = [
+  {
+    id: 1,
+    label: 'danger',
+    icon: DangerIcon,
+  },
+
+  {
+    id: 2,
+    label: 'attractions',
+    icon: MusicIcon,
+  },
+  {
+    id: 3,
+    label: 'groceries',
+    icon: CoffeIcon,
   },
 ];
 

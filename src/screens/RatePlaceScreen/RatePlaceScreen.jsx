@@ -121,6 +121,8 @@ const RatePlaceScreen = (props) => {
         .then((result) => {
           if (img !== undefined) {
             CompressSendImage(img, result);
+          } else {
+            history.push('/place-details/'.concat(params.id));
           }
         })
         .catch((err) => {
