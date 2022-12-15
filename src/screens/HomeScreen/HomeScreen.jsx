@@ -18,6 +18,7 @@ const HomeScreen = (props) => {
   const myEvaluations = useSelector(
     (state) => state.placeEvaluations.evaluations,
   );
+  const sums = useSelector((state) => state.placeEvaluations.sums);
   const fontSize = useSelector((state) => state.accessibility.fontSize);
   const font = useSelector((state) => state.accessibility.font);
   const backgroundColor = useSelector(
@@ -45,16 +46,16 @@ const HomeScreen = (props) => {
       />
       <Container>
         <Text fontSize={fontSize} font={font}>
-          {t('welcome')} {user.name} {user.surname}!
+          {t('welcome')} {user?.name} {user?.surname}!
         </Text>
         <MyArea backgroundColor={backgroundColor}>
           <MyCommentsStatus
-            positive={11} // Placeholder
-            negative={13} // Placeholder
-            accepted={21} // Placeholder
-            rejected={1} // Placeholder
-            pending={2} // Placeholder
-            comments={myEvaluations} // Placeholder
+            positive={sums?.positive}
+            negative={sums?.negative}
+            accepted={sums?.accepted}
+            rejected={sums?.rejected}
+            pending={sums?.pending}
+            comments={myEvaluations}
           />
           <LatestComments myComments comments={myEvaluations} />
         </MyArea>

@@ -1,10 +1,12 @@
 import {
   GET_PLACE_EVALUATIONS_START,
   GET_PLACE_EVALUATIONS_SUCCESS,
+  GET_PLACE_EVALUATIONS_SUMS,
 } from '../actions/types';
 
 const initialState = {
   evaluations: null,
+  sums: {},
   loading: false,
 };
 
@@ -20,6 +22,12 @@ const placeEvaluationsReducer = (state = initialState, action) => {
       return {
         ...state,
         evaluations: action.evaluations,
+        loading: false,
+      };
+    case GET_PLACE_EVALUATIONS_SUMS:
+      return {
+        ...state,
+        sums: action.sums,
         loading: false,
       };
 
