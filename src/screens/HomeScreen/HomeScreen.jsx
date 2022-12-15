@@ -56,7 +56,7 @@ const HomeScreen = (props) => {
             pending={2} // Placeholder
             comments={myEvaluations} // Placeholder
           />
-          <LatestComments comments={myEvaluations} />
+          <LatestComments myComments comments={myEvaluations} />
         </MyArea>
       </Container>
       <FooterMenu routes={routes} home />

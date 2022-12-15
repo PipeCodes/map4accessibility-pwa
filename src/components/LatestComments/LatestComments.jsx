@@ -4,6 +4,10 @@ import { useSelector } from 'react-redux';
 import placeImage from '../../assets/images/place.png';
 import buttonUp from '../../assets/icons/places/like.svg';
 import buttonDown from '../../assets/icons/places/dislike.svg';
+import Pending from '../../assets/icons/maps/pending.svg';
+import Rejected from '../../assets/icons/maps/rejected.svg';
+import Accepted from '../../assets/icons/maps/accepted.svg';
+import Avatar from '../../assets/images/avatarDefault.png';
 import {
   Container,
   Title,
@@ -22,7 +26,7 @@ import {
 const Thumbs = [buttonDown, buttonUp];
 
 const LatestComments = (props) => {
-  const { comments } = props;
+  const { comments, myComments } = props;
   const { t } = useTranslation();
   const fontSize = useSelector((state) => state.accessibility.fontSize);
   const font = useSelector((state) => state.accessibility.font);
@@ -45,24 +49,69 @@ const LatestComments = (props) => {
     }
   }, [viewAll, comments]);
 
+  const renderState = (param) => {
+    switch (param) {
+      case 'pending':
+        return <img src={Pending} alt="pending" />;
+      case 'accepted':
+        return <img src={Accepted} alt="accepted" />;
+      case 'rejected':
+        return <img src={Rejected} alt="rejected" />;
+      default:
+        return '';
+    }
+  };
+
   return (
     <Container>
       <Title>{t('latest')}</Title>
-      {commentsList
+      {myComments
+        ? commentsList
+          ? commentsList.map((comment) => (
+              <Comment backgroundColor={backgroundColor} key={comment.id}>
+                <Top>
+                  {comment?.place?.media_evaluations ? (
+                    <Image
+                      src={comment?.place?.media_evaluations[0]?.file_url}
+                    />
+                  ) : (
+                    <Image src={placeImage} />
+                  )}
+                  <Name fontSize={fontSize} font={font}>
+                    {comment?.place && comment?.place?.name}
+                  </Name>
+                  <Status>{renderState(comment?.status)}</Status>
+                </Top>
+                <Accessible backgroundColor={backgroundColor}>
+                  <Icon src={Thumbs[comment?.thumb_direction ? 1 : 0]} />
+                  <Label fontSize={fontSize} font={font}>
+                    {comment?.thumb_direction
+                      ? t('accessible')
+                      : t('not_accessible')}
+                  </Label>
+                </Accessible>
+                <Body fontSize={fontSize} font={font}>
+                  {comment.comment}
+                </Body>
+              </Comment>
+            ))
+          : t('no_results')
+        : commentsList
         ? commentsList.reverse().map((comment) => (
             <Comment backgroundColor={backgroundColor} key={comment.id}>
               <Top>
                 {comment?.media_url ? (
-                  <Image src={comment?.media_url[0]?.file_url} />
+                  <Image src={comment?.user?.avatar} />
                 ) : (
-                  <Image src={placeImage} />
+                  <Image src={Avatar} />
                 )}
                 <Name fontSize={fontSize} font={font}>
-                  Anonymous{/* Placeholder while there is no data from API  */}
+                  {comment?.user &&
+                    comment?.user?.name
+                      .concat(' ')
+                      .concat(comment?.user?.surname)}{' '}
+                  Anonymous {/* PLACEHOLDER, REMOVE WHEN NAME IS ADDED  */}
                 </Name>
-                <Status>
-                  O{/* Placeholder while there is no data from API  */}
-                </Status>
               </Top>
               <Accessible backgroundColor={backgroundColor}>
                 <Icon src={Thumbs[comment?.thumb_direction ? 1 : 0]} />
