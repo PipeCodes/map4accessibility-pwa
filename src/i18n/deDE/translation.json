@@ -93,6 +93,7 @@
   "string_firstName": "First Name is an invalid string",
   "string_surname": "Surname is an invalid string",
   "invalid_birthDate": "Date is invalid",
+  "invalid_is_between_birthDate": "The user must be younger than 100 years old AND must be older than 16 years old.",
   "email_validation": "Email Validation",
   "no_email": "Email not registered.",
   "email_validation_body": "Check your email for instructions on how to validate your account and start using the app.",
