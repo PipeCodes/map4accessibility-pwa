@@ -50,11 +50,11 @@ const HomeScreen = (props) => {
         </Text>
         <MyArea backgroundColor={backgroundColor}>
           <MyCommentsStatus
-            positive={sums?.positive}
-            negative={sums?.negative}
-            accepted={sums?.accepted}
-            rejected={sums?.rejected}
-            pending={sums?.pending}
+            positive={sums?.positive || 0}
+            negative={sums?.negative || 0}
+            accepted={sums?.accepted || 0}
+            rejected={sums?.rejected || 0}
+            pending={sums?.pending || 0}
             comments={myEvaluations}
           />
           <LatestComments myComments comments={myEvaluations} />
