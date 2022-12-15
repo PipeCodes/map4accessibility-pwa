@@ -180,20 +180,11 @@ const Map = ({ origin, destination, routes, userLocation, history }) => {
         origin === '' ||
         destination === null ||
         destination === ''
-      )
+      ) &&
+      (!routes ||
+        !(routes[0].origin === origin && routes[0].destination === destination))
     ) {
-      if (routes) {
-        if (
-          !(
-            routes[0]?.origin === origin &&
-            routes[0]?.destination === destination
-          )
-        ) {
-          setDirections(origin, destination);
-        }
-      } else {
-        setDirections(origin, destination);
-      }
+      setDirections(origin, destination);
     }
   }, [origin, destination]);
 
