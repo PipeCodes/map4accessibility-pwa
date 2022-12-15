@@ -93,7 +93,7 @@
   "string_firstName": "O campo nome tem texto inválido",
   "string_surname": "O campo apelido tem texto inválido",
   "invalid_birthDate": "Data inválida",
-  "invalid_is_between_birthDate": "The user must be younger than 100 years old AND must be older than 16 years old.",
+  "invalid_is_between_birthDate": "O utilizador deve ter menos de 100 anos e mais de 16 anos.",
   "no_email": "Email não registado.",
   "email_validation": "Validação de email",
   "email_validation_body": "Verifique o seu email para instruções de como validar a sua conta e começar a utilizar a aplicação.",
