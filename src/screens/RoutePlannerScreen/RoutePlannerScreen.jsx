@@ -28,6 +28,7 @@ const RoutePlannerScreen = (props) => {
   const { t } = useTranslation();
 
   const originInputRef = useRef(null);
+  const destinationInputRef = useRef(null);
 
   const backgroundColor = useSelector(
     (state) => state.accessibility.backgroundColor,
@@ -35,6 +36,7 @@ const RoutePlannerScreen = (props) => {
   const fontSize = useSelector((state) => state.accessibility.fontSize);
   const font = useSelector((state) => state.accessibility.font);
 
+  const routesMap = useSelector((state) => state.directions.routes);
   const [origin, setOrigin] = useState(null);
   const [userLocation, setUserLocation] = useState(null);
   const [destination, setDestination] = useState(null);
@@ -51,10 +53,13 @@ const RoutePlannerScreen = (props) => {
         (position) => {
           const latitude = position.coords.latitude;
           const longitude = position.coords.longitude;
-          setOrigin({ lat: latitude, lng: longitude });
+          if (origin !== null || origin !== '') {
+            setOrigin({ lat: latitude, lng: longitude });
+          }
+
           setUserLocation({ lat: latitude, lng: longitude });
 
-          if (originInputRef.current) {
+          if (originInputRef.current && (origin !== null || origin !== '')) {
             originInputRef.current.value = t('your_location');
           }
         },
@@ -64,6 +69,23 @@ const RoutePlannerScreen = (props) => {
       );
     }
   }, [isLoaded, t]);
+
+  useEffect(() => {
+    if (routesMap) {
+      setOrigin(routesMap[0].origin);
+      setDestination(routesMap[0].destination);
+    }
+  }, [routesMap]);
+
+  useEffect(() => {
+    if (originInputRef.current && destinationInputRef.current && routesMap) {
+      originInputRef.current.value = routesMap[0]?.origin;
+      if (typeof routesMap[0]?.origin !== 'string') {
+        originInputRef.current.value = t('your_location');
+      }
+      destinationInputRef.current.value = routesMap[0].destination;
+    }
+  }, [routesMap]);
 
   // Click handlers
   const openAccessibility = useCallback(() => {
@@ -95,6 +117,7 @@ const RoutePlannerScreen = (props) => {
               </Autocomplete>
               <Autocomplete>
                 <Input
+                  ref={destinationInputRef}
                   fontSize={fontSize}
                   font={font}
                   type="text"
@@ -114,6 +137,7 @@ const RoutePlannerScreen = (props) => {
           destination={destination}
           userLocation={userLocation}
           history={history}
+          routes={routesMap}
         />
       </Container>
     </Page>
