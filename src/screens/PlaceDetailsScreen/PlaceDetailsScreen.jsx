@@ -61,40 +61,6 @@ const PlaceDetailsScreen = (props) => {
     history.push(`/rate-place/${params?.id}`);
   }, [history, routes]);
 
-  /* Array placeholder while there is no data from API  */
-  const comments = [
-    {
-      id: 6,
-      thumb_direction: false,
-      comment: 'first comment',
-      questions_answers: null,
-      created_at: '2022-12-07T18:29:15.000000Z',
-      updated_at: '2022-12-07T18:29:15.000000Z',
-      deleted_at: null,
-      media_url: null,
-    },
-    {
-      id: 7,
-      thumb_direction: true,
-      comment: 'second comment',
-      questions_answers: null,
-      created_at: '2022-12-07T18:29:15.000000Z',
-      updated_at: '2022-12-07T18:29:15.000000Z',
-      deleted_at: null,
-      media_url: null,
-    },
-    {
-      id: 8,
-      thumb_direction: true,
-      comment: 'third comment',
-      questions_answers: null,
-      created_at: '2022-12-07T18:29:15.000000Z',
-      updated_at: '2022-12-07T18:29:15.000000Z',
-      deleted_at: null,
-      media_url: null,
-    },
-  ];
-
   return (
     <Page backgroundColor={backgroundColor}>
       <TopBar
@@ -174,17 +140,17 @@ const PlaceDetailsScreen = (props) => {
               </span>
             )}
           </PlaceInformation>
-          <div className="comments">
-            <button type="button" onClick={() => openComments()}>
-              <img src={Comment} alt="comment" />
-            </button>
-          </div>
         </div>
-        {comments && (
+        {place?.place_evaluations && (
           <Evaluations fontSize={fontSize} className="mt-3">
-            <LatestComments comments={comments} />
+            <LatestComments comments={place?.place_evaluations} />
           </Evaluations>
         )}
+        <div className="comments">
+          <button type="button" onClick={() => openComments()}>
+            <img src={Comment} alt="comment" />
+          </button>
+        </div>
       </Container>
     </Page>
   );
