@@ -54,6 +54,7 @@ module.exports = {
     'consistent-return': 'off',
     'no-alert': 'off',
     'no-undef': 'warn',
+    'prefer-regex-literals': 'off',
     'no-unused-expressions': [
       'error',
       {

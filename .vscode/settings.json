@@ -1,0 +1,12 @@
+{
+  "eslint.options": {
+    "overrideConfigFile": ".eslintrc.js"
+  },
+  "eslint.validate": ["javascript", "javascriptreact"],
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "eslint.lintTask.enable": true,
+  "editor.formatOnSave": true
+}
