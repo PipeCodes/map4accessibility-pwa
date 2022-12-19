@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { updateValue } from '../../helpers/utils';
 
 export const Routes = styled.div`

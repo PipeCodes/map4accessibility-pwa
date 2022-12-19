@@ -50,7 +50,7 @@ module.exports = {
     'react/forbid-prop-types': 'off',
     'prefer-promise-reject-errors': 'off',
     'no-debugger': 'off',
-    'no-unused-vars': 'warn',
+    'no-unused-vars': 'error',
     'consistent-return': 'off',
     'no-alert': 'off',
     'no-undef': 'warn',

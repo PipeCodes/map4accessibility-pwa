@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { updateFontSize, updateValue } from '../../helpers/utils';
 import { colors } from '../../constants/colors';
 
