@@ -1,5 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
-import { updateValue, setUnderline, setHighlight } from './helpers/utils';
+import { setUnderline, setHighlight } from './helpers/utils';
 import NotoSansRegular from './assets/fonts/NotoSans-Regular.ttf';
 import NotoSansBold from './assets/fonts/NotoSans-Bold.ttf';
 import EasyReadingPro from './assets/fonts/EasyReadingPRO.ttf';

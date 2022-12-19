@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { colors } from '../../constants/colors';
-import { updateFontSize, updateValue } from '../../helpers/utils';
+import { updateValue } from '../../helpers/utils';
 
 export const Page = styled.div`
   display: flex;

@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { colors } from '../../constants/colors';
 import { setLightsOff } from '../../helpers/utils';
 
 export const DarkOverlayContainer = styled.div`
