@@ -61,6 +61,18 @@ const PlaceDetailsScreen = (props) => {
     history.push(`/rate-place/${params?.id}`);
   }, [history, routes]);
 
+  const getMedia = (place) => {
+    const pictures = place?.media_evaluations;
+    const mainPicture = {
+      file_type: 'image',
+      file_url: place?.media,
+    };
+
+    if (mainPicture.file_url) pictures.unshift(mainPicture);
+
+    return pictures?.length ? pictures : photos;
+  };
+
   return (
     <Page backgroundColor={backgroundColor}>
       <TopBar
@@ -72,11 +84,7 @@ const PlaceDetailsScreen = (props) => {
         hasAccessibilityButton={openAccessibility}
         title={t('place_details')}
       />
-      <ImageSlider
-        photos={
-          place?.media_evaluations?.length ? place.media_evaluations : photos
-        }
-      />
+      <ImageSlider photos={getMedia(place)} />
       <Container>
         <div className="card">
           <div className="header-row">
