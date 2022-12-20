@@ -61,39 +61,17 @@ const PlaceDetailsScreen = (props) => {
     history.push(`/rate-place/${params?.id}`);
   }, [history, routes]);
 
-  /* Array placeholder while there is no data from API  */
-  const comments = [
-    {
-      id: 6,
-      thumb_direction: false,
-      comment: 'first comment',
-      questions_answers: null,
-      created_at: '2022-12-07T18:29:15.000000Z',
-      updated_at: '2022-12-07T18:29:15.000000Z',
-      deleted_at: null,
-      media_url: null,
-    },
-    {
-      id: 7,
-      thumb_direction: true,
-      comment: 'second comment',
-      questions_answers: null,
-      created_at: '2022-12-07T18:29:15.000000Z',
-      updated_at: '2022-12-07T18:29:15.000000Z',
-      deleted_at: null,
-      media_url: null,
-    },
-    {
-      id: 8,
-      thumb_direction: true,
-      comment: 'third comment',
-      questions_answers: null,
-      created_at: '2022-12-07T18:29:15.000000Z',
-      updated_at: '2022-12-07T18:29:15.000000Z',
-      deleted_at: null,
-      media_url: null,
-    },
-  ];
+  const getMedia = (place) => {
+    const pictures = place?.media_evaluations;
+    const mainPicture = {
+      file_type: 'image',
+      file_url: place?.media,
+    };
+
+    if (mainPicture.file_url) pictures.unshift(mainPicture);
+
+    return pictures?.length ? pictures : photos;
+  };
 
   return (
     <Page backgroundColor={backgroundColor}>
@@ -106,11 +84,7 @@ const PlaceDetailsScreen = (props) => {
         hasAccessibilityButton={openAccessibility}
         title={t('place_details')}
       />
-      <ImageSlider
-        photos={
-          place?.media_evaluations?.length ? place.media_evaluations : photos
-        }
-      />
+      <ImageSlider photos={getMedia(place)} />
       <Container>
         <div className="card">
           <div className="header-row">
@@ -174,17 +148,17 @@ const PlaceDetailsScreen = (props) => {
               </span>
             )}
           </PlaceInformation>
-          <div className="comments">
-            <button type="button" onClick={() => openComments()}>
-              <img src={Comment} alt="comment" />
-            </button>
-          </div>
         </div>
-        {comments && (
+        {place?.place_evaluations && (
           <Evaluations fontSize={fontSize} className="mt-3">
-            <LatestComments comments={comments} />
+            <LatestComments comments={place?.place_evaluations} />
           </Evaluations>
         )}
+        <div className="comments">
+          <button type="button" onClick={() => openComments()}>
+            <img src={Comment} alt="comment" />
+          </button>
+        </div>
       </Container>
     </Page>
   );

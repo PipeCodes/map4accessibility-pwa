@@ -56,18 +56,23 @@ export const Container = styled.div`
       justify-content: space-between;
       box-shadow: 0px 2px 2px #0000000a;
     }
-    .comments {
-      margin-left: auto;
-      background: ${colors.orange};
-      box-shadow: 0px 2px 2px #00000029;
-      border: 1px solid #d3d2da;
-      padding: 10px;
-      border-radius: 25px;
-      button {
-        all: unset;
-      }
+  }
+
+  .comments {
+    margin-left: auto;
+    background: ${colors.orange};
+    box-shadow: 0px 2px 2px #00000029;
+    border: 1px solid #d3d2da;
+    padding: 10px;
+    border-radius: 25px;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    button {
+      all: unset;
     }
   }
+
   .fullDiv {
     height: 100%;
     width: 100%;

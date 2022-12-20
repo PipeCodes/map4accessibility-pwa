@@ -5,8 +5,6 @@ import { PersistGate } from 'redux-persist/integration/react';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import reportWebVitals from './reportWebVitals';
 import { store, persistor } from './store';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import '@fortawesome/fontawesome-free/css/all.min.css';
 import App from './App';
 import './i18n';
 

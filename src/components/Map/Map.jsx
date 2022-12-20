@@ -19,13 +19,12 @@ const containerStyle = {
   position: 'relative',
 };
 
-const Map = ({ origin, destination, userLocation, history }) => {
+const Map = ({ origin, destination, routes, userLocation, history }) => {
   const [map, setMap] = useState(/** @type google.maps.Map */ (null));
   const backgroundColor = useSelector(
     (state) => state.accessibility.backgroundColor,
   );
   const directions = useSelector((state) => state.directions.directions);
-  const routes = useSelector((state) => state.directions.routes);
   const selectedRoute = useSelector((state) => state.directions.selectedRoute);
   const [generatingRoutes, setGeneratingRoutes] = useState(false);
 
@@ -181,7 +180,9 @@ const Map = ({ origin, destination, userLocation, history }) => {
         origin === '' ||
         destination === null ||
         destination === ''
-      )
+      ) &&
+      (!routes ||
+        !(routes[0].origin === origin && routes[0].destination === destination))
     ) {
       setDirections(origin, destination);
     }

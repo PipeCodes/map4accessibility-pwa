@@ -7,6 +7,7 @@ import i18n from '../../i18n';
 import {
   GET_PLACE_EVALUATIONS_SUCCESS,
   GET_PLACE_EVALUATIONS_START,
+  GET_PLACE_EVALUATIONS_SUMS,
 } from './types';
 
 const config = {
@@ -29,14 +30,25 @@ export const getMyPlaceEvaluations = () => async (dispatch) => {
 
   try {
     const response = await axios.get(url, config);
-
     const statusCode = response.status;
+    const sums = {
+      accepted: response?.data?.result?.total_accepted,
+      pending: response?.data?.result?.total_pending,
+      rejected: response?.data?.result?.total_rejected,
+      negative: response?.data?.result?.total_thumbs_down,
+      positive: response?.data?.result?.total_thumbs_up,
+    };
     if (statusCode === HTTP_STATUS.SUCCESS) {
       dispatch({
         type: GET_PLACE_EVALUATIONS_SUCCESS,
         evaluations: response.data?.result?.data ?? {},
       });
+      dispatch({
+        type: GET_PLACE_EVALUATIONS_SUMS,
+        sums: sums ?? {},
+      });
     }
+    return;
   } catch (error) {
     return Promise.reject(error?.response?.data?.message);
   }
