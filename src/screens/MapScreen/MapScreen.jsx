@@ -54,6 +54,22 @@ const MapScreen = (props) => {
     libraries,
   });
 
+  // Map Options
+  const mapOptions = {
+    zoomControl: false,
+    streetViewControl: false,
+    mapTypeControl: false,
+    fullscreenControl: false,
+    disableDefaultUI: true,
+    styles: [
+      {
+        featureType: 'poi',
+        elementType: 'labels',
+        stylers: [{ visibility: 'off' }],
+      },
+    ],
+  };
+
   // Cluster Options
   const options = {
     maxZoom: 15,
@@ -186,20 +202,7 @@ const MapScreen = (props) => {
                 setMap(map);
               }}
               onUnmount={() => setMap(null)}
-              options={{
-                zoomControl: false,
-                streetViewControl: false,
-                mapTypeControl: false,
-                fullscreenControl: false,
-                disableDefaultUI: true,
-                styles: [
-                  {
-                    featureType: 'poi',
-                    elementType: 'labels',
-                    stylers: [{ visibility: 'off' }],
-                  },
-                ],
-              }}
+              options={mapOptions}
             >
               <MarkerClusterer
                 options={options}
