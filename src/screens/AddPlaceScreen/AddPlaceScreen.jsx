@@ -15,6 +15,7 @@ import CustomSelect from '../../components/CustomSelect/CustomSelect';
 import ArrowRightIcon from '../../assets/icons/arrow-right.svg';
 import { colors } from '../../constants/colors';
 import { GOOGLE_MAPS_OPTIONS, types } from '../../constants';
+import { getCurrentLocation } from '../../services/geolocation';
 import {
   Page,
   Container,
@@ -75,16 +76,9 @@ const AddPlaceScreen = (props) => {
   useEffect(() => {
     if (isLoaded) {
       // Asks and sets user position (lat, long)
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const latitude = position.coords.latitude;
-          const longitude = position.coords.longitude;
-          setLocation({ lat: latitude, lng: longitude });
-        },
-        (error) => {
-          console.error(`Error Code = ${error.code} - ${error.message}`);
-        },
-      );
+      getCurrentLocation()
+        .then((position) => setLocation(position))
+        .catch((error) => alert(error));
     }
   }, [isLoaded, t]);
 

@@ -59,7 +59,8 @@ const GlobalStyles = createGlobalStyle`
     }
 
     .spinner-border {
-      color: ${colors.lightBlue};
+      color: ${colors.primaryColor} !important;
+      margin-top: 20px;
     }
   }
 `;

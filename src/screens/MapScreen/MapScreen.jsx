@@ -16,6 +16,7 @@ import LocationIcon from '../../assets/icons/maps/locate.svg';
 import AddIcon from '../../assets/icons/maps/add.svg';
 import ClusterImg from '../../assets/icons/maps/clusters/m1.svg';
 import DirectionsIcon from '../../assets/icons/maps/directions.svg';
+import { getCurrentLocation } from '../../services/geolocation';
 import {
   Page,
   Container,
@@ -75,17 +76,9 @@ const MapScreen = (props) => {
   useEffect(() => {
     if (isLoaded) {
       // Asks and sets user position (lat, long)
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const latitude = position.coords.latitude;
-          const longitude = position.coords.longitude;
-
-          setLocation({ lat: latitude, lng: longitude });
-        },
-        (error) => {
-          console.error(`Error Code = ${error.code} - ${error.message}`);
-        },
-      );
+      getCurrentLocation()
+        .then((position) => setLocation(position))
+        .catch((error) => alert(error));
     }
   }, [isLoaded, t]);
 
@@ -127,16 +120,9 @@ const MapScreen = (props) => {
   const setCenterMap = () => {
     if (isLoaded) {
       // Asks and sets user position (lat, long)
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const latitude = position.coords.latitude;
-          const longitude = position.coords.longitude;
-          setLocation({ lat: latitude, lng: longitude });
-        },
-        (error) => {
-          console.error(`Error Code = ${error.code} - ${error.message}`);
-        },
-      );
+      getCurrentLocation()
+        .then((position) => setLocation(position))
+        .catch((error) => alert(error));
     }
   };
 
