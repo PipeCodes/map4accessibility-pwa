@@ -14,7 +14,7 @@ import CustomInput from '../../components/CustomInput/CustomInput';
 import CustomSelect from '../../components/CustomSelect/CustomSelect';
 import ArrowRightIcon from '../../assets/icons/arrow-right.svg';
 import { colors } from '../../constants/colors';
-import { types } from '../../constants';
+import { GOOGLE_MAPS_OPTIONS, types } from '../../constants';
 import {
   Page,
   Container,
@@ -37,17 +37,12 @@ const containerStyle = {
   maxWidth: '820px',
   top: '0',
 };
-const libraries = ['places'];
+
 const AddPlaceScreen = (props) => {
   const { history, routes } = props;
 
-  // Google Maps
-  const [map, setMap] = useState(/** @type google.maps.Map */ (null));
+  const { isLoaded } = useJsApiLoader(GOOGLE_MAPS_OPTIONS);
 
-  const { isLoaded } = useJsApiLoader({
-    googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
-    libraries,
-  });
   const [location, setLocation] = useState(null);
   const [coords, setCoords] = useState(null);
 
@@ -298,8 +293,6 @@ const AddPlaceScreen = (props) => {
                 onClick={(e) => {
                   setCoords({ lat: e.latLng.lat(), lng: e.latLng.lng() });
                 }}
-                onLoad={(map) => setMap(map)}
-                onUnmount={() => setMap(null)}
                 options={{
                   zoomControl: false,
                   streetViewControl: false,

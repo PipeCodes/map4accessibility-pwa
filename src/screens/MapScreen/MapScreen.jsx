@@ -24,6 +24,7 @@ import {
   ButtonDirections,
   ButtonLocation,
 } from './MapScreen.styles';
+import { GOOGLE_MAPS_OPTIONS } from '../../constants';
 
 // Map styling
 const containerStyle = {
@@ -33,8 +34,6 @@ const containerStyle = {
   maxWidth: '820px',
   top: '0',
 };
-
-const libraries = ['places', 'geometry'];
 
 const MapScreen = (props) => {
   const { history, routes } = props;
@@ -49,10 +48,8 @@ const MapScreen = (props) => {
   const [center, setCenter] = useState(null);
   const [markers, setMarkers] = useState(null);
   const [location, setLocation] = useState(null);
-  const { isLoaded } = useJsApiLoader({
-    googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
-    libraries,
-  });
+
+  const { isLoaded } = useJsApiLoader(GOOGLE_MAPS_OPTIONS);
 
   // Map Options
   const mapOptions = {
@@ -201,7 +198,6 @@ const MapScreen = (props) => {
               onLoad={(map) => {
                 setMap(map);
               }}
-              onUnmount={() => setMap(null)}
               options={mapOptions}
             >
               <MarkerClusterer
