@@ -4,6 +4,7 @@ import i18n from '../../i18n';
 import {
   GET_PLACES_RANKING_START,
   GET_PLACES_RANKING_SUCCESS,
+  GET_PLACES_RANKING_ERROR,
   GET_PLACE_SUCCESS,
   GET_PLACE_START,
 } from './types';
@@ -141,7 +142,10 @@ export const getPlacesByLocation = (order, radius) => async (dispatch) => {
         .catch((error) => Promise.reject(error?.response?.data?.message));
     },
     (error) => {
-      console.error(`Error Code = ${error.code} - ${error.message}`);
+      dispatch({
+        type: GET_PLACES_RANKING_ERROR,
+      });
+      Promise.reject(error);
     },
   );
 };
