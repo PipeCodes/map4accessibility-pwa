@@ -104,6 +104,48 @@ export const getPlacesRadius =
     }
   };
 
+export const getPlacesByLocation = (order, radius) => async (dispatch) => {
+  dispatch({ type: GET_PLACES_RANKING_START });
+
+  navigator.geolocation.getCurrentPosition(
+    (position) => {
+      const latitude = position.coords.latitude;
+      const longitude = position.coords.longitude;
+      const queryParams = {
+        latitude,
+        longitude,
+        desc_order_by: order,
+        geo_query_radius: radius,
+        page: 1,
+        size: 10,
+      };
+      const url = generatePath(
+        Endpoints.PLACES_RADIUS.concat(
+          '?latitude=:latitude&longitude=:longitude&geo_query_radius=:geo_query_radius&desc_order_by=:desc_order_by&page=:page&size=:size',
+        ),
+        queryParams,
+      );
+
+      axios
+        .get(url, config)
+        .then((response) => {
+          const statusCode = response.status;
+
+          if (statusCode === HTTP_STATUS.SUCCESS) {
+            dispatch({
+              type: GET_PLACES_RANKING_SUCCESS,
+              ranking: response.data?.result.data ?? [],
+            });
+          }
+        })
+        .catch((error) => Promise.reject(error?.response?.data?.message));
+    },
+    (error) => {
+      console.error(`Error Code = ${error.code} - ${error.message}`);
+    },
+  );
+};
+
 export const getPlacesRadiusMarkers =
   (latitude, longitude, radius) => async (dispatch) => {
     dispatch({ type: GET_PLACES_RANKING_START });
