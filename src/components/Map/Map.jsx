@@ -204,7 +204,7 @@ const Map = ({ origin, destination, routes, userLocation, history }) => {
     >
       <GoogleMap
         mapContainerStyle={containerStyle}
-        center={userLocation || { lat: 38.0, lng: -9.0 }}
+        center={userLocation || { lat: 38.736946, lng: -9.142685 }}
         zoom={8}
         onLoad={(map) => setMap(map)}
         onUnmount={() => setMap(null)}

@@ -1,3 +1,10 @@
+/* eslint-disable func-names */
+/* eslint-disable prefer-rest-params */
+/* eslint-disable one-var */
+
+import DangerIcon from '../assets/icons/maps/red-alert-icon.svg';
+import DefaultIcon from '../assets/icons/maps/default.svg';
+
 export const updateFontSize = (fontSize, incrementor) => {
   let newFontSize = fontSize + incrementor;
   if (newFontSize > 80) {
@@ -41,4 +48,34 @@ export const setLightsOff = (defaultValue, lighsOffMode) => {
     return 'block';
   }
   return defaultValue;
+};
+
+export const debounce = (func, wait, immediate) => {
+  let timeout;
+  return function () {
+    const context = this,
+      args = arguments;
+    const later = () => {
+      timeout = null;
+      if (!immediate) func.apply(context, args);
+    };
+    const callNow = immediate && !timeout;
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+    if (callNow) func.apply(context, args);
+  };
+};
+
+export const markerIcon = (type) => {
+  if (type === 'danger') {
+    return DangerIcon;
+  }
+  return DefaultIcon;
+};
+
+export const offSet = (type) => {
+  if (type === 'danger') {
+    return { x: -70, y: -100 };
+  }
+  return { x: 30, y: -90 };
 };
