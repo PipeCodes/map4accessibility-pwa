@@ -293,11 +293,11 @@ const AddPlaceScreen = (props) => {
             >
               <GoogleMap
                 mapContainerStyle={containerStyle}
-                center={location || { lat: 38.0, lng: -9.0 }}
+                center={location || { lat: 38.736946, lng: -9.142685 }}
                 zoom={16}
-                onClick={(e) =>
-                  setCoords({ lat: e.latLng.lat(), lng: e.latLng.lng() })
-                }
+                onClick={(e) => {
+                  setCoords({ lat: e.latLng.lat(), lng: e.latLng.lng() });
+                }}
                 onLoad={(map) => setMap(map)}
                 onUnmount={() => setMap(null)}
                 options={{

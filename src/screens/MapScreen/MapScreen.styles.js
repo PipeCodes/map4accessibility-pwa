@@ -10,6 +10,12 @@ export const Page = styled.div`
   z-index: 54;
   background-color: ${(props) =>
     updateValue(colors.transparent, props.backgroundColor)};
+
+  .cluster {
+    div {
+      line-height: 35px !important;
+    }
+  }
 `;
 
 export const Container = styled.div`

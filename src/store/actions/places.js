@@ -108,8 +108,8 @@ export const getPlacesRadiusMarkers =
   (latitude, longitude, radius) => async (dispatch) => {
     dispatch({ type: GET_PLACES_RANKING_START });
     const queryParams = {
-      latitude,
-      longitude,
+      latitude: parseFloat(latitude),
+      longitude: parseFloat(longitude),
       geo_query_radius: radius,
       page: 1,
       size: 10,
