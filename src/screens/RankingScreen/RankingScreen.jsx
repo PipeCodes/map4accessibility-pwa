@@ -44,8 +44,8 @@ const RankingScreen = (props) => {
     const order = ascDescActive ? 'thumbs_down_count' : 'thumbs_up_count';
     const radius = 5000; // Default radius for location, needs to be discussed and set in another place
     if (sliderActive) {
-      dispatch(getPlacesByLocation(order, radius)).then((error) =>
-        alert(error.message),
+      dispatch(getPlacesByLocation(order, radius)).catch((error) =>
+        alert(error),
       );
     } else if (country) {
       dispatch(getPlacesCountry(country.label, order));

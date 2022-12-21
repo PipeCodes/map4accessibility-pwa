@@ -10,6 +10,7 @@ import {
 } from './types';
 import { HTTP_STATUS } from '../../constants';
 import { getAuthToken } from '../../services/local';
+import { getCurrentLocation } from '../../services/geolocation';
 
 const config = {
   headers: {
@@ -108,46 +109,38 @@ export const getPlacesRadius =
 export const getPlacesByLocation = (order, radius) => async (dispatch) => {
   dispatch({ type: GET_PLACES_RANKING_START });
 
-  navigator.geolocation.getCurrentPosition(
-    (position) => {
-      const latitude = position.coords.latitude;
-      const longitude = position.coords.longitude;
-      const queryParams = {
-        latitude,
-        longitude,
-        desc_order_by: order,
-        geo_query_radius: radius,
-        page: 1,
-        size: 10,
-      };
-      const url = generatePath(
-        Endpoints.PLACES_RADIUS.concat(
-          '?latitude=:latitude&longitude=:longitude&geo_query_radius=:geo_query_radius&desc_order_by=:desc_order_by&page=:page&size=:size',
-        ),
-        queryParams,
-      );
+  try {
+    const location = await getCurrentLocation();
 
-      axios
-        .get(url, config)
-        .then((response) => {
-          const statusCode = response.status;
+    const queryParams = {
+      latitude: location.lat,
+      longitude: location.lng,
+      desc_order_by: order,
+      geo_query_radius: radius,
+      page: 1,
+      size: 10,
+    };
+    const url = generatePath(
+      Endpoints.PLACES_RADIUS.concat(
+        '?latitude=:latitude&longitude=:longitude&geo_query_radius=:geo_query_radius&desc_order_by=:desc_order_by&page=:page&size=:size',
+      ),
+      queryParams,
+    );
 
-          if (statusCode === HTTP_STATUS.SUCCESS) {
-            dispatch({
-              type: GET_PLACES_RANKING_SUCCESS,
-              ranking: response.data?.result.data ?? [],
-            });
-          }
-        })
-        .catch((error) => Promise.reject(error?.response?.data?.message));
-    },
-    (error) => {
+    const response = await axios.get(url, config);
+
+    const statusCode = response.status;
+
+    if (statusCode === HTTP_STATUS.SUCCESS) {
       dispatch({
-        type: GET_PLACES_RANKING_ERROR,
+        type: GET_PLACES_RANKING_SUCCESS,
+        ranking: response.data?.result.data ?? [],
       });
-      Promise.reject(error);
-    },
-  );
+    }
+  } catch (error) {
+    dispatch({ type: GET_PLACES_RANKING_ERROR });
+    return Promise.reject(error?.response?.data?.message || error);
+  }
 };
 
 export const getPlacesRadiusMarkers =
