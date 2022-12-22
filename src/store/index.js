@@ -9,11 +9,13 @@ import placesRankingReducer from './reducers/placesRanking';
 import placeEvaluationsReducer from './reducers/placeEvaluations';
 import placeReducer from './reducers/place';
 import directionsReducer from './reducers/directions';
+import historyReducer from './reducers/history';
 
 export const rootReducer = combineReducers({
   questions: questionsReducer,
   auth: authReducer,
   accessibility: accessibilityReducer,
+  history: historyReducer,
   placesRanking: placesRankingReducer,
   placeEvaluations: placeEvaluationsReducer,
   place: placeReducer,
@@ -23,7 +25,7 @@ export const rootReducer = combineReducers({
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['accessibility', 'auth'],
+  whitelist: ['accessibility', 'auth', 'history'],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

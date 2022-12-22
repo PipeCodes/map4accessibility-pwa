@@ -97,7 +97,14 @@ export const Accessible = styled.div`
   align-self: start;
   font-size: ${(props) => updateFontSize(14, props.fontSize)};
   font-family: ${(props) => updateValue('EasyReadingPro', props.font)};
-  color: ${colors.green};
+
+  .accessible {
+    color: ${colors.green};
+  }
+  .not-accessible {
+    color: ${colors.red};
+  }
+
   text-align: right;
 
   .up {
