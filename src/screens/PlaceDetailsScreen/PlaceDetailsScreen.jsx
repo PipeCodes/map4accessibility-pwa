@@ -87,12 +87,11 @@ const PlaceDetailsScreen = (props) => {
     const sortedComments = place?.place_evaluations?.sort(
       (a, b) => moment(b.updated_at) - moment(a.updated_at),
     );
-    if (sortedComments) {
+    if (sortedComments?.length) {
       if (sortedComments[0].thumb_direction) {
         setIsAccessible(true);
         return t('accessible');
       }
-
       setIsAccessible(false);
       return t('not_accessible');
     }
