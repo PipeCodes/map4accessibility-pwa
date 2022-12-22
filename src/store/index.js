@@ -13,6 +13,7 @@ import placesRankingReducer from './reducers/placesRanking';
 import placeEvaluationsReducer from './reducers/placeEvaluations';
 import directionsReducer from './reducers/directions';
 import placeReducer from './reducers/place';
+import historyReducer from './reducers/history';
 
 export const rootReducer = combineReducers({
   onboarding: onboardingReducer,
@@ -21,6 +22,7 @@ export const rootReducer = combineReducers({
   auth: authReducer,
   policy: policyReducer,
   accessibility: accessibilityReducer,
+  history: historyReducer,
   placesRanking: placesRankingReducer,
   placeEvaluations: placeEvaluationsReducer,
   place: placeReducer,
@@ -30,7 +32,7 @@ export const rootReducer = combineReducers({
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['accessibility', 'auth'],
+  whitelist: ['accessibility', 'auth', 'history'],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
