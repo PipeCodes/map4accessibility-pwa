@@ -82,3 +82,8 @@ export const HTTP_STATUS = {
   NOT_FOUND: 404,
   CONFLICT: 409,
 };
+
+export const GOOGLE_MAPS_OPTIONS = {
+  googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
+  libraries: ['places', 'geometry'],
+};

@@ -20,8 +20,8 @@ import {
   Input,
   Inputs,
 } from './RoutePlannerScreen.styles';
-
-const libraries = ['places'];
+import { GOOGLE_MAPS_OPTIONS } from '../../constants';
+import { getCurrentLocation } from '../../services/geolocation';
 
 const RoutePlannerScreen = (props) => {
   const { history, routes } = props;
@@ -41,32 +41,22 @@ const RoutePlannerScreen = (props) => {
   const [userLocation, setUserLocation] = useState(null);
   const [destination, setDestination] = useState(null);
 
-  const { isLoaded } = useJsApiLoader({
-    googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
-    libraries,
-  });
+  const { isLoaded } = useJsApiLoader(GOOGLE_MAPS_OPTIONS);
 
   useEffect(() => {
     if (isLoaded) {
       // Asks and sets user position (lat, long)
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const latitude = position.coords.latitude;
-          const longitude = position.coords.longitude;
+      getCurrentLocation()
+        .then((position) => {
           if (origin !== null || origin !== '') {
-            setOrigin({ lat: latitude, lng: longitude });
+            setOrigin(position);
           }
-
-          setUserLocation({ lat: latitude, lng: longitude });
-
+          setUserLocation(position);
           if (originInputRef.current && (origin !== null || origin !== '')) {
             originInputRef.current.value = t('your_location');
           }
-        },
-        (error) => {
-          console.error(`Error Code = ${error.code} - ${error.message}`);
-        },
-      );
+        })
+        .catch((error) => alert(error));
     }
   }, [isLoaded, t]);
 

@@ -1,4 +1,5 @@
 import {
+  GET_PLACES_RANKING_ERROR,
   GET_PLACES_RANKING_START,
   GET_PLACES_RANKING_SUCCESS,
 } from '../actions/types';
@@ -20,6 +21,11 @@ const placesRankingReducer = (state = initialState, action) => {
       return {
         ...state,
         ranking: state.ranking.concat(action.ranking),
+        loading: false,
+      };
+    case GET_PLACES_RANKING_ERROR:
+      return {
+        ranking: [],
         loading: false,
       };
 

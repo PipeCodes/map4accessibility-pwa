@@ -42,7 +42,7 @@ const GlobalStyles = createGlobalStyle`
     background-color: ${colors.background};
 
     /*Removes infoBox from googlemaps closing image */
-    .infoBox {img {display: none;}}
+    .infoBox {width: auto !important;img {display: none;}}
 
     a {
       text-decoration: ${(props) => setUnderline('none', props.underline)};
@@ -59,7 +59,8 @@ const GlobalStyles = createGlobalStyle`
     }
 
     .spinner-border {
-      color: ${colors.lightBlue};
+      color: ${colors.primaryColor} !important;
+      margin-top: 20px;
     }
   }
 `;

@@ -50,7 +50,6 @@ const RegisterOptionsScreen = (props) => {
             data.id,
           ),
         ).catch((error) => {
-          debugger;
           alert(error);
         });
       }
@@ -86,7 +85,7 @@ const RegisterOptionsScreen = (props) => {
             appId={process.env.REACT_APP_FB_APP_ID || ''}
             onLoginStart={onLoginStart}
             onResolve={({ provider, data }) => {
-              console.log('TODO FACEBOOK REGISTER');
+              console.log('TODO FACEBOOK REGISTER', provider, data);
             }}
             onReject={(err) => {
               console.log(err);

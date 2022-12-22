@@ -4,11 +4,13 @@ import i18n from '../../i18n';
 import {
   GET_PLACES_RANKING_START,
   GET_PLACES_RANKING_SUCCESS,
+  GET_PLACES_RANKING_ERROR,
   GET_PLACE_SUCCESS,
   GET_PLACE_START,
 } from './types';
 import { HTTP_STATUS } from '../../constants';
 import { getAuthToken } from '../../services/local';
+import { getCurrentLocation } from '../../services/geolocation';
 
 const config = {
   headers: {
@@ -104,12 +106,49 @@ export const getPlacesRadius =
     }
   };
 
+export const getPlacesByLocation = (order, radius) => async (dispatch) => {
+  dispatch({ type: GET_PLACES_RANKING_START });
+
+  try {
+    const location = await getCurrentLocation();
+
+    const queryParams = {
+      latitude: location.lat,
+      longitude: location.lng,
+      desc_order_by: order,
+      geo_query_radius: radius,
+      page: 1,
+      size: 10,
+    };
+    const url = generatePath(
+      Endpoints.PLACES_RADIUS.concat(
+        '?latitude=:latitude&longitude=:longitude&geo_query_radius=:geo_query_radius&desc_order_by=:desc_order_by&page=:page&size=:size',
+      ),
+      queryParams,
+    );
+
+    const response = await axios.get(url, config);
+
+    const statusCode = response.status;
+
+    if (statusCode === HTTP_STATUS.SUCCESS) {
+      dispatch({
+        type: GET_PLACES_RANKING_SUCCESS,
+        ranking: response.data?.result.data ?? [],
+      });
+    }
+  } catch (error) {
+    dispatch({ type: GET_PLACES_RANKING_ERROR });
+    return Promise.reject(error?.response?.data?.message || error);
+  }
+};
+
 export const getPlacesRadiusMarkers =
   (latitude, longitude, radius) => async (dispatch) => {
     dispatch({ type: GET_PLACES_RANKING_START });
     const queryParams = {
-      latitude,
-      longitude,
+      latitude: parseFloat(latitude),
+      longitude: parseFloat(longitude),
       geo_query_radius: radius,
       page: 1,
       size: 10,

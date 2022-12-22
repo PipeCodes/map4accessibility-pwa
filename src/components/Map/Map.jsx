@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { GoogleMap, DirectionsRenderer } from '@react-google-maps/api';
-import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 import { Routes } from './Map.styles';
 import { getPlacesRadiusMarkers } from '../../store/actions/places';
@@ -20,7 +19,6 @@ const containerStyle = {
 };
 
 const Map = ({ origin, destination, routes, userLocation, history }) => {
-  const [map, setMap] = useState(/** @type google.maps.Map */ (null));
   const backgroundColor = useSelector(
     (state) => state.accessibility.backgroundColor,
   );
@@ -28,7 +26,6 @@ const Map = ({ origin, destination, routes, userLocation, history }) => {
   const selectedRoute = useSelector((state) => state.directions.selectedRoute);
   const [generatingRoutes, setGeneratingRoutes] = useState(false);
 
-  const { t } = useTranslation();
   const dispatch = useDispatch();
 
   const polylineOptions = useCallback(
@@ -204,10 +201,8 @@ const Map = ({ origin, destination, routes, userLocation, history }) => {
     >
       <GoogleMap
         mapContainerStyle={containerStyle}
-        center={userLocation || { lat: 38.0, lng: -9.0 }}
+        center={userLocation || { lat: 38.736946, lng: -9.142685 }}
         zoom={8}
-        onLoad={(map) => setMap(map)}
-        onUnmount={() => setMap(null)}
         options={{
           zoomControl: false,
           streetViewControl: false,
