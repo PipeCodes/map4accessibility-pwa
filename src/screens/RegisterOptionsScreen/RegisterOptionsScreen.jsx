@@ -15,29 +15,27 @@ import {
 } from './RegisterOptionsScreen.styles';
 import TopBar from '../../components/TopBar/TopBar';
 import ProfileIcon from '../../assets/icons/profile.svg';
-import FacebookIcon from '../../assets/icons/facebook.svg';
-import GoogleIcon from '../../assets/icons/google.svg';
+import FacebookIcon from '../../assets/icons/socials/facebook.svg';
+import GoogleIcon from '../../assets/icons/socials/google.svg';
 import LoginIcon from '../../assets/icons/login.svg';
 
 const RegisterOptionsScreen = (props) => {
   const { routes, history } = props;
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const fontSize = useSelector((state) => state.accessibility.fontSize);
+  const font = useSelector((state) => state.accessibility.font);
+  const backgroundColor = useSelector(
+    (state) => state.accessibility.backgroundColor,
+  );
 
   const onLoginStart = useCallback(() => {
-    alert('login start');
+    // Write Code for Login Start Here, this feature needs o be repaired (SOCIAL LOGINS)
   }, []);
 
   const openAccessibility = useCallback(() => {
     history.push(routes.ACCESSIBILITY.path);
   }, [history, routes]);
-
-  const backgroundColor = useSelector(
-    (state) => state.accessibility.backgroundColor,
-  );
-
-  const fontSize = useSelector((state) => state.accessibility.fontSize);
-  const font = useSelector((state) => state.accessibility.font);
 
   const registerClickHandlerGoogle = useCallback(
     (data) => {

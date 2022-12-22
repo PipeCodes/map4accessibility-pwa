@@ -50,9 +50,9 @@ export const Inputs = styled.div`
 
 export const Input = styled.input`
   background: white 0% 0% no-repeat padding-box;
-  border: 1px solid #d3d2da;
-  background: #ffffff 0% 0% no-repeat padding-box;
-  border: 1px solid #d3d2da;
+  border: 1px solid ${colors.lightGrey};
+  background: ${colors.white} 0% 0% no-repeat padding-box;
+  border: 1px solid ${colors.lightGrey};
   border-radius: 4px;
   opacity: 1;
   padding: 6px 10px;
@@ -86,8 +86,8 @@ export const LeftButton = styled.button`
 
 export const AccessibilityButton = styled.button`
   border-radius: 50%;
-  background: #34518d 0% 0% no-repeat padding-box;
-  box-shadow: 0px 2px 2px #00000029;
+  background: ${colors.primaryColor} 0% 0% no-repeat padding-box;
+  box-shadow: 0px 2px 2px ${colors.shadow};
   border: 1px solid ${colors.primaryColor};
   color: white;
   margin: 0;

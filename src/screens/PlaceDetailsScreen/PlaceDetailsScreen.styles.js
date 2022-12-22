@@ -44,8 +44,8 @@ export const Container = styled.div`
   .card {
     background: ${colors.white};
     width: 100%;
-    border: transparent;
-    box-shadow: 0px 2px 2px #0000000a;
+    border: ${colors.transparent};
+    box-shadow: 0px 2px 2px ${colors.shadow};
     border-radius: 4px;
     opacity: 1;
 
@@ -54,15 +54,15 @@ export const Container = styled.div`
       display: flex;
       flex-direction: row;
       justify-content: space-between;
-      box-shadow: 0px 2px 2px #0000000a;
+      box-shadow: 0px 2px 2px ${colors.shadow};
     }
   }
 
   .comments {
     margin-left: auto;
     background: ${colors.orange};
-    box-shadow: 0px 2px 2px #00000029;
-    border: 1px solid #d3d2da;
+    box-shadow: 0px 2px 2px ${colors.shadow};
+    border: 1px solid ${colors.lightGrey};
     padding: 10px;
     border-radius: 25px;
     position: fixed;

@@ -3,16 +3,16 @@ import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import CustomButton from '../../components/CustomButton/CustomButton';
 import { colors } from '../../constants/colors';
-import NoDisabilityIcon from '../../assets/icons/no-disability.svg';
-import MotorIcon from '../../assets/icons/motor-disability.svg';
-import VisualIcon from '../../assets/icons/visual-disability.svg';
-import HearingIcon from '../../assets/icons/hearing-disability.svg';
-import IntellectualIcon from '../../assets/icons/intellectual-disability.svg';
-import NoDisabilityActiveIcon from '../../assets/icons/no-disability-active.svg';
-import MotorActiveIcon from '../../assets/icons/motor-disability-active.svg';
-import VisualActiveIcon from '../../assets/icons/visual-disability-active.svg';
-import HearingActiveIcon from '../../assets/icons/hearing-disability-active.svg';
-import IntellectualActiveIcon from '../../assets/icons/intellectual-disability-active.svg';
+import NoDisabilityIcon from '../../assets/icons/disabilities/no-disability.svg';
+import MotorIcon from '../../assets/icons/disabilities/motor-disability.svg';
+import VisualIcon from '../../assets/icons/disabilities/visual-disability.svg';
+import HearingIcon from '../../assets/icons/disabilities/hearing-disability.svg';
+import IntellectualIcon from '../../assets/icons/disabilities/intellectual-disability.svg';
+import NoDisabilityActiveIcon from '../../assets/icons/disabilities/no-disability-active.svg';
+import MotorActiveIcon from '../../assets/icons/disabilities/motor-disability-active.svg';
+import VisualActiveIcon from '../../assets/icons/disabilities/visual-disability-active.svg';
+import HearingActiveIcon from '../../assets/icons/disabilities/hearing-disability-active.svg';
+import IntellectualActiveIcon from '../../assets/icons/disabilities/intellectual-disability-active.svg';
 import { Text } from './RegisterScreen.styles';
 
 const ExtraStep = (props) => {
@@ -25,7 +25,7 @@ const ExtraStep = (props) => {
     width: '100%',
     borderRadius: '25px',
     border: '1px solid #34518d',
-    color: 'white',
+    color: colors.white,
     boxShadow: 'none',
     marginTop: '30px',
     backgroundColor: colors.primaryColor,

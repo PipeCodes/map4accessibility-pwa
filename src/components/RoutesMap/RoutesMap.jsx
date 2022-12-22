@@ -1,14 +1,14 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { GoogleMap, DirectionsRenderer } from '@react-google-maps/api';
 import { useSelector, useDispatch } from 'react-redux';
-import { Routes } from './Map.styles';
+import { Routes } from './RoutesMap.styles';
 import { getPlacesRadiusMarkers } from '../../store/actions/places';
 import {
   changeRouteId,
   changeDirections,
 } from '../../store/actions/directions';
 import { colors } from '../../constants/colors';
-import MapRoute from '../MapRoute/MapRoute';
+import RouteOption from '../RouteOption/RouteOption';
 import CustomMarker from '../CustomMarker/CustomMarker';
 
 // Map styling
@@ -32,7 +32,7 @@ const Map = ({ origin, destination, routes, userLocation, history }) => {
     (index) => {
       if (index === selectedRoute) {
         return {
-          strokeColor: '#34518d',
+          strokeColor: colors.primaryColor,
           strokeOpacity: 1,
           strokeWeight: 6,
         };
@@ -239,7 +239,7 @@ const Map = ({ origin, destination, routes, userLocation, history }) => {
         {routes &&
           routes.length > 0 &&
           routes.map((route) => (
-            <MapRoute
+            <RouteOption
               route={route}
               setRoute={(id) => changeRoute(id)}
               keyProp={route.id}

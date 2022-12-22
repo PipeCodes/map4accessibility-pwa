@@ -19,6 +19,7 @@ const config = {
   },
 };
 
+// Gets Single Place by ID
 export const getPlace = (id) => async (dispatch) => {
   dispatch({ type: GET_PLACE_START });
   const queryParams = {
@@ -42,6 +43,7 @@ export const getPlace = (id) => async (dispatch) => {
   }
 };
 
+// Gets top 10 places By Country and Order
 export const getPlacesCountry = (country, order) => async (dispatch) => {
   dispatch({ type: GET_PLACES_RANKING_START });
   const queryParams = {
@@ -73,39 +75,7 @@ export const getPlacesCountry = (country, order) => async (dispatch) => {
   }
 };
 
-export const getPlacesRadius =
-  (latitude, longitude, order, radius) => async (dispatch) => {
-    dispatch({ type: GET_PLACES_RANKING_START });
-    const queryParams = {
-      latitude,
-      longitude,
-      desc_order_by: order,
-      geo_query_radius: radius,
-      page: 1,
-      size: 10,
-    };
-    const url = generatePath(
-      Endpoints.PLACES_RADIUS.concat(
-        '?latitude=:latitude&longitude=:longitude&geo_query_radius=:geo_query_radius&desc_order_by=:desc_order_by&page=:page&size=:size',
-      ),
-      queryParams,
-    );
-
-    try {
-      const response = await axios.get(url, config);
-      const statusCode = response.status;
-
-      if (statusCode === HTTP_STATUS.SUCCESS) {
-        dispatch({
-          type: GET_PLACES_RANKING_SUCCESS,
-          ranking: response.data?.result.data ?? [],
-        });
-      }
-    } catch (error) {
-      return Promise.reject(error?.response?.data?.message);
-    }
-  };
-
+// Gets Places By Current Location
 export const getPlacesByLocation = (order, radius) => async (dispatch) => {
   dispatch({ type: GET_PLACES_RANKING_START });
 
@@ -143,6 +113,7 @@ export const getPlacesByLocation = (order, radius) => async (dispatch) => {
   }
 };
 
+// Gets Markers Around Coordinates
 export const getPlacesRadiusMarkers =
   (latitude, longitude, radius) => async (dispatch) => {
     dispatch({ type: GET_PLACES_RANKING_START });
@@ -172,6 +143,7 @@ export const getPlacesRadiusMarkers =
     }
   };
 
+// Creates a new Place
 export const postPlace = (name, type, city, location, country) => async () => {
   const body = {
     name,
@@ -195,6 +167,7 @@ export const postPlace = (name, type, city, location, country) => async () => {
   }
 };
 
+// Adds the media to the new place
 export const postPlaceMedia = (media, id) => async () => {
   const body = {
     media,

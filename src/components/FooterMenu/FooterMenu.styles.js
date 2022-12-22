@@ -9,8 +9,8 @@ export const FooterBarContainter = styled.div`
   width: 100%;
   max-width: 820px;
   min-height: 72px;
-  background: #ffffff 0% 0% no-repeat padding-box;
-  box-shadow: 0px 2px 4px #00000005;
+  background: ${colors.white} 0% 0% no-repeat padding-box;
+  box-shadow: 0px 2px 4px ${colors.shadow};
   border-radius: 100% 100% 0 0;
   padding: 20px 20px;
   display: flex;

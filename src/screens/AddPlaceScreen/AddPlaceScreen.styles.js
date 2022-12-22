@@ -111,7 +111,7 @@ export const Title = styled.span`
 export const ButtonContainer = styled.div`
   background-color: ${colors.primaryColor};
   padding: 5px;
-  box-shadow: 0px 2px 2px #0000000a;
+  box-shadow: 0px 2px 2px ${colors.shadow};
   border-radius: 3px;
   margin-top: 20px;
   width: 100%;

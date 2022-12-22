@@ -55,7 +55,7 @@ export const SliderButon = styled.button`
   display: flex;
   flex-direction: row;
   border-radius: 20px;
-  color: white;
+  color: ${colors.white};
   align-items: center;
 
   img {
@@ -75,10 +75,10 @@ export const SliderButon = styled.button`
 
 export const AscDescButton = styled.button`
   border-radius: 50%;
-  background: transparent;
-  box-shadow: 0px 2px 2px #00000029;
+  background: ${colors.transparent};
+  box-shadow: 0px 2px 2px ${colors.shadow};
   border: 2px solid ${colors.primaryColor};
-  color: white;
+  color: ${colors.white};
   margin: 0;
   width: 32px;
   height: 32px;
@@ -94,7 +94,7 @@ export const AscDescButton = styled.button`
 `;
 
 export const RanksContainer = styled.div`
-  background-color: white;
+  background-color: ${colors.white};
   margin-top: 20px;
   width: 100%;
 `;

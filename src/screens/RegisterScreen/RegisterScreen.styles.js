@@ -33,7 +33,7 @@ export const Container = styled.div`
 export const Error = styled.div`
   font-size: ${(props) => updateFontSize(10, props.fontSize)};
   place-self: start;
-  color: orange;
+  color: ${colors.orange};
   margin-left: 10px;
 `;
 
@@ -41,7 +41,7 @@ export const Box = styled.div`
   width: 100%;
   height: auto;
   padding: 20px 0;
-  border-top: 1px solid #d3d2da;
+  border-top: 1px solid ${colors.lightGrey};
   display: flex;
   flex-direction: column;
   align-items: center;

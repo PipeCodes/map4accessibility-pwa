@@ -72,10 +72,3 @@ export const markerIcon = (type) => {
   }
   return DefaultIcon;
 };
-
-export const offSet = (type) => {
-  if (type === 'danger') {
-    return { x: -70, y: -100 };
-  }
-  return { x: 30, y: -90 };
-};

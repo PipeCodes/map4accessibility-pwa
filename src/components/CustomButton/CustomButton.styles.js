@@ -1,11 +1,12 @@
 import styled from 'styled-components';
+import { colors } from '../../constants/colors';
 import { updateFontSize, updateValue } from '../../helpers/utils';
 
 const ButtonStyle = styled.button`
   background-color: ${(props) => props.backgroundColor};
   box-shadow: ${(props) =>
     props.boxShadow ? props.boxShadow : '0px 2px 2px #00000029'};
-  color: ${(props) => (props.color ? props.color : '#ffffff')};
+  color: ${(props) => (props.color ? props.color : colors.white)};
   border: ${(props) => (props.border ? props.border : 0)};
   border-radius: ${(props) => (props.borderRadius ? props.borderRadius : 0)};
   margin: ${(props) => (props.margin ? props.margin : 'unset')};

@@ -14,16 +14,17 @@ const HomeScreen = (props) => {
   const { history, routes } = props;
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.auth.user);
-  const myEvaluations = useSelector(
-    (state) => state.placeEvaluations.evaluations,
-  );
-  const sums = useSelector((state) => state.placeEvaluations.sums);
   const fontSize = useSelector((state) => state.accessibility.fontSize);
   const font = useSelector((state) => state.accessibility.font);
   const backgroundColor = useSelector(
     (state) => state.accessibility.backgroundColor,
   );
+
+  const user = useSelector((state) => state.auth.user);
+  const myEvaluations = useSelector(
+    (state) => state.placeEvaluations.evaluations,
+  );
+  const sums = useSelector((state) => state.placeEvaluations.sums);
 
   // Gets user info on load
   useEffect(() => {

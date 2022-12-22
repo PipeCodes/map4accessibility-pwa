@@ -19,7 +19,7 @@ import {
   Icon,
   Number,
   Index,
-} from './MapRoute.styles';
+} from './RouteOption.styles';
 
 const MapRoute = ({ route, setRoute, active }) => {
   const { t } = useTranslation();
