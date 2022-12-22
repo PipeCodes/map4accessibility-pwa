@@ -1,7 +1,8 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback, useState, useMemo } from 'react';
 import { withRouter, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
+import moment from 'moment';
 import ThumbsUp from '../../assets/icons/maps/up.svg';
 import Pin from '../../assets/icons/places/details/pin.svg';
 import Phone from '../../assets/icons/places/details/phone.svg';
@@ -26,6 +27,7 @@ import ImageSlider from '../../components/ImageSlider/ImageSlider';
 import { getPlace } from '../../store/actions/places';
 import placeholder from '../../assets/images/photo-stock-1.png';
 import LatestComments from '../../components/LatestComments/LatestComments';
+import { storePlace } from '../../store/actions/history';
 
 const photos = [placeholder, placeholder, placeholder];
 
@@ -34,12 +36,16 @@ const PlaceDetailsScreen = (props) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
+  const [isAccessible, setIsAccessible] = useState('');
+
   // Accessibility settings with redux from the reducer
   const font = useSelector((state) => state.accessibility.font);
   const fontSize = useSelector((state) => state.accessibility.fontSize);
   const backgroundColor = useSelector(
     (state) => state.accessibility.backgroundColor,
   );
+
+  const visitedHistory = useSelector((state) => state.history.history);
 
   // Gets place from reducer
   const place = useSelector((state) => state.place.place);
@@ -50,6 +56,10 @@ const PlaceDetailsScreen = (props) => {
   // Gets Place from API to have the info
   useEffect(() => {
     dispatch(getPlace(params.id));
+  }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(storePlace(params.id, visitedHistory));
   }, [dispatch]);
 
   // Opens accessibility screen (button on the top-right of the page)
@@ -72,6 +82,21 @@ const PlaceDetailsScreen = (props) => {
 
     return pictures?.length ? pictures : photos;
   };
+
+  const getAccessibility = useMemo(() => {
+    const sortedComments = place?.place_evaluations?.sort(
+      (a, b) => moment(b.updated_at) - moment(a.updated_at),
+    );
+    if (sortedComments?.length) {
+      if (sortedComments[0].thumb_direction) {
+        setIsAccessible(true);
+        return t('accessible');
+      }
+      setIsAccessible(false);
+      return t('not_accessible');
+    }
+    return '';
+  }, [setIsAccessible, place]);
 
   return (
     <Page backgroundColor={backgroundColor}>
@@ -103,7 +128,9 @@ const PlaceDetailsScreen = (props) => {
               )}
             </TextWrapper>
             <Accessible fontSize={fontSize}>
-              <span>{t('accessible')}</span>
+              <span className={isAccessible ? 'accessible' : 'not-accessible'}>
+                {getAccessibility}
+              </span>
               <div>
                 <span className="up">
                   <img src={ThumbsUp} alt={t('positive')} />{' '}
