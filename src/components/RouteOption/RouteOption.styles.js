@@ -28,7 +28,7 @@ export const Index = styled.div`
   color: white;
   background: ${(props) =>
     props.active === true ? colors.primaryColor : colors.grey};
-  border: 1px solid #ffffff;
+  border: 1px solid ${colors.white};
   border-radius: 3px;
   text-align: center;
 `;

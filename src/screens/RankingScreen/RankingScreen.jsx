@@ -19,7 +19,7 @@ import TopBar from '../../components/TopBar/TopBar';
 import FooterMenu from '../../components/FooterMenu/FooterMenu';
 import RankingItem from '../../components/RankingItem/RankingItem';
 import CustomSelect from '../../components/CustomSelect/CustomSelect';
-import { countries } from '../../constants';
+import { countries } from '../../constants/countries';
 import {
   getPlacesCountry,
   getPlacesByLocation,
@@ -29,11 +29,11 @@ const RankingScreen = (props) => {
   const { history, routes } = props;
   const dispatch = useDispatch();
   const { t } = useTranslation();
+  const font = useSelector((state) => state.accessibility.font);
+  const fontSize = useSelector((state) => state.accessibility.fontSize);
   const backgroundColor = useSelector(
     (state) => state.accessibility.backgroundColor,
   );
-  const font = useSelector((state) => state.accessibility.font);
-  const fontSize = useSelector((state) => state.accessibility.fontSize);
   const [ascDescActive, setAscDescActive] = useState(false);
   const [sliderActive, setSliderActive] = useState(false);
   const [country, setCountry] = useState(countries[0]);

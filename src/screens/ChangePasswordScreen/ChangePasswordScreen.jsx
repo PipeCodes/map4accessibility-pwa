@@ -54,16 +54,16 @@ const ChangePasswordScreen = (props) => {
   const { history, routes } = props;
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const query = useQuery();
-
   const fontSize = useSelector((state) => state.accessibility.fontSize);
   const font = useSelector((state) => state.accessibility.font);
-  const [notReadySubmit, setNotReadySubmit] = useState(true);
-  const [formErrors, setFormErrors] = useState({});
-  const [formData, setFormData] = useState(initialValues(query.get('email')));
   const backgroundColor = useSelector(
     (state) => state.accessibility.backgroundColor,
   );
+
+  const query = useQuery();
+  const [notReadySubmit, setNotReadySubmit] = useState(true);
+  const [formErrors, setFormErrors] = useState({});
+  const [formData, setFormData] = useState(initialValues(query.get('email')));
 
   useEffect(() => {
     if (

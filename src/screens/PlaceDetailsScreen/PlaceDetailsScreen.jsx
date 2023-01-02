@@ -21,7 +21,7 @@ import {
   Accessible,
   Evaluations,
   PlaceInformation,
-} from './PlaceDetails.styles';
+} from './PlaceDetailsScreen.styles';
 import TopBar from '../../components/TopBar/TopBar';
 import ImageSlider from '../../components/ImageSlider/ImageSlider';
 import { getPlace } from '../../store/actions/places';

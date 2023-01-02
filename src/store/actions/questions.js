@@ -8,6 +8,7 @@ import { HTTP_STATUS } from '../../constants';
 
 import { getAuthToken } from '../../services/local';
 
+// Gets questions for Evaluations from the API
 export const getQuestions = () => async (dispatch) => {
   dispatch({ type: GET_QUESTIONS_START });
 

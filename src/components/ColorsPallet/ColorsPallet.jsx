@@ -1,5 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
+import { colors } from '../../constants/colors';
 import { setBackgroundColor } from '../../store/actions/accessibility';
 import { ColorsPalletContainer, Color } from './ColorsPallet.styles';
 
@@ -13,29 +14,29 @@ const ColorsPallet = () => {
         onClick={() => dispatch(setBackgroundColor('black'))}
       />
       <Color
-        color="grey"
-        onClick={() => dispatch(setBackgroundColor('grey'))}
+        color={colors.palleteWhite}
+        onClick={() => dispatch(setBackgroundColor(colors.palleteWhite))}
       />
       <Color
-        color="green"
-        onClick={() => dispatch(setBackgroundColor('green'))}
+        color={colors.green}
+        onClick={() => dispatch(setBackgroundColor(colors.palleteGreen))}
       />
       <Color
-        color="blue"
-        onClick={() => dispatch(setBackgroundColor('blue'))}
+        color={colors.palleteBlue}
+        onClick={() => dispatch(setBackgroundColor(colors.palleteBlue))}
       />
       <Color color="red" onClick={() => dispatch(setBackgroundColor('red'))} />
       <Color
-        color="orange"
-        onClick={() => dispatch(setBackgroundColor('orange'))}
+        color={colors.palleteOrange}
+        onClick={() => dispatch(setBackgroundColor(colors.palleteOrange))}
       />
       <Color
-        color="yellow"
-        onClick={() => dispatch(setBackgroundColor('yellow'))}
+        color={colors.palleteYellow}
+        onClick={() => dispatch(setBackgroundColor(colors.palleteYellow))}
       />
       <Color
-        color="purple"
-        onClick={() => dispatch(setBackgroundColor('purple'))}
+        color={colors.palletePurple}
+        onClick={() => dispatch(setBackgroundColor(colors.palletePurple))}
       />
     </ColorsPalletContainer>
   );

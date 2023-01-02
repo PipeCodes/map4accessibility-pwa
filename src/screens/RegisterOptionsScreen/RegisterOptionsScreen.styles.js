@@ -25,7 +25,7 @@ export const Box = styled.div`
   width: 100%;
   height: auto;
   padding: 30px 0;
-  border-top: 1px solid #d3d2da;
+  border-top: 1px solid ${colors.lightGrey};
   display: flex;
   flex-direction: column;
   align-items: center;

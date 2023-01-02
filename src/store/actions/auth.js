@@ -17,6 +17,7 @@ import {
 
 export const login = (email, password) => async (dispatch) => {
   dispatch({ type: AUTH_START });
+
   const body = {
     email: email?.trim(),
     password,
@@ -24,12 +25,10 @@ export const login = (email, password) => async (dispatch) => {
 
   try {
     const response = await axios.post(Endpoints.LOGIN, body);
-
     const statusCode = response.status;
 
     if (statusCode === HTTP_STATUS.SUCCESS) {
       saveAuthToken(response.data?.result?.authorization?.token);
-
       dispatch({
         type: AUTH_SUCCESS,
         user: response.data?.result?.user,
@@ -42,6 +41,12 @@ export const login = (email, password) => async (dispatch) => {
       error?.response?.data?.message ?? i18n.t('something_wrong'),
     );
   }
+};
+
+export const logout = () => (dispatch) => {
+  dispatch({ type: LOGOUT });
+  clearLocalStorage();
+  window.location.replace(`${process.env.REACT_APP_URL}/`);
 };
 
 export const signup =
@@ -111,6 +116,7 @@ export const checkEmail = (email) => async () => {
   const body = {
     email: email?.trim(),
   };
+
   try {
     const response = await axios.post(Endpoints.CHECK_EMAIL, body);
     const statusCode = response.status;
@@ -174,18 +180,6 @@ export const changePassword = (form, token) => async (dispatch) => {
   }
 };
 
-export const logout = () => (dispatch) => {
-  dispatch({ type: LOGOUT });
-
-  clearLocalStorage();
-
-  window.location.replace(`${process.env.REACT_APP_URL}/`);
-};
-
-// "Patch" Endpoint for User Profile (Updates user info)
-// Headers: AuthToken (Token for the current authentication)
-// Params: Users's info fields values to update
-// Result: Message of Success/Failure
 export const updateProfile =
   ({ firstName, surname, birthDate, email, avatar }) =>
   async (dispatch, getState) => {
@@ -238,10 +232,6 @@ export const updateProfile =
     }
   };
 
-// "Get" Endpoint for User Profile (Gets user info)
-// Headers: AuthToken (Token for the current authentication)
-// Params: No parameters needed
-// Result: User (User's info fields)
 export const getUser = () => async (dispatch) => {
   const config = {
     headers: {

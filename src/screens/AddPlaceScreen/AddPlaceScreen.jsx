@@ -14,7 +14,8 @@ import CustomInput from '../../components/CustomInput/CustomInput';
 import CustomSelect from '../../components/CustomSelect/CustomSelect';
 import ArrowRightIcon from '../../assets/icons/arrow-right.svg';
 import { colors } from '../../constants/colors';
-import { GOOGLE_MAPS_OPTIONS, types } from '../../constants';
+import { GOOGLE_MAPS_OPTIONS } from '../../constants';
+import { types } from '../../constants/placeTypes';
 import { getCurrentLocation } from '../../services/geolocation';
 import {
   Page,
@@ -41,12 +42,6 @@ const containerStyle = {
 
 const AddPlaceScreen = (props) => {
   const { history, routes } = props;
-
-  const { isLoaded } = useJsApiLoader(GOOGLE_MAPS_OPTIONS);
-
-  const [location, setLocation] = useState(null);
-  const [coords, setCoords] = useState(null);
-
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const font = useSelector((state) => state.accessibility.font);
@@ -54,6 +49,10 @@ const AddPlaceScreen = (props) => {
   const backgroundColor = useSelector(
     (state) => state.accessibility.backgroundColor,
   );
+
+  const { isLoaded } = useJsApiLoader(GOOGLE_MAPS_OPTIONS);
+  const [location, setLocation] = useState(null);
+  const [coords, setCoords] = useState(null);
 
   const filterTypes = useMemo(() => {
     const formatted = types.map((option) => ({
@@ -65,6 +64,7 @@ const AddPlaceScreen = (props) => {
     return [...formatted];
   }, [t]);
 
+  // Form Fields
   const inputRef = useRef(null);
   const [name, setName] = useState('');
   const [city, setCity] = useState('');
@@ -75,7 +75,6 @@ const AddPlaceScreen = (props) => {
 
   useEffect(() => {
     if (isLoaded) {
-      // Asks and sets user position (lat, long)
       getCurrentLocation()
         .then((position) => setLocation(position))
         .catch((error) => alert(error));

@@ -47,14 +47,17 @@ const RatePlaceScreen = (props) => {
   const { history, routes } = props;
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  const questions = useSelector((state) => state.questions.questions);
-  const place = useSelector((state) => state.place.place);
-  const [accessibility, setAccessibility] = useState(1);
   const font = useSelector((state) => state.accessibility.font);
   const fontSize = useSelector((state) => state.accessibility.fontSize);
   const backgroundColor = useSelector(
     (state) => state.accessibility.backgroundColor,
   );
+
+  const questions = useSelector((state) => state.questions.questions);
+  const place = useSelector((state) => state.place.place);
+
+  // Form Fields and Img input
+  const [accessibility, setAccessibility] = useState(1);
   const commentRef = useRef();
   const inputRef = useRef(null);
   const [answers, setAnswers] = useState({});

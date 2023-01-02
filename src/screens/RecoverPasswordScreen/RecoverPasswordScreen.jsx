@@ -26,11 +26,12 @@ const RecoverPasswordScreen = (props) => {
   const { history, routes } = props;
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const fontSize = useSelector((state) => state.accessibility.fontSize);
+  const font = useSelector((state) => state.accessibility.font);
   const backgroundColor = useSelector(
     (state) => state.accessibility.backgroundColor,
   );
-  const fontSize = useSelector((state) => state.accessibility.fontSize);
-  const font = useSelector((state) => state.accessibility.font);
+
   const [formData, setFormData] = useState(initialValues);
   const [formErrors, setFormErrors] = useState({});
   const [notReadySubmit, setNotReadySubmit] = useState(true);

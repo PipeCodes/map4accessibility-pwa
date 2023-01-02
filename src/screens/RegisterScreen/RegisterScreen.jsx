@@ -69,6 +69,7 @@ const RegisterScreen = (props) => {
   const backgroundColor = useSelector(
     (state) => state.accessibility.backgroundColor,
   );
+
   const [page, setPage] = useState(0);
   const [formData, setFormData] = useState(initialValues);
   const [formErrors, setFormErrors] = useState({});
@@ -97,6 +98,7 @@ const RegisterScreen = (props) => {
           errors.firstName = error;
         }
         break;
+
       case 'surname':
         delete errors.surname;
         error = validateSurname(values.surname);
@@ -104,6 +106,7 @@ const RegisterScreen = (props) => {
           errors.surname = error;
         }
         break;
+
       case 'birthDate':
         delete errors.birthDate;
         error = validateBirthDate(values.birthDate);
@@ -111,14 +114,15 @@ const RegisterScreen = (props) => {
           errors.birthDate = error;
         }
         break;
+
       case 'email':
         delete errors.email;
         error = validateEmail(values.email, duplicatedEmail);
         if (error !== null) {
           errors.email = error;
         }
-
         break;
+
       case 'password':
         delete errors.password;
         error = validatePassword(values.password, values.confirmPassword);
@@ -126,6 +130,7 @@ const RegisterScreen = (props) => {
           errors.password = error;
         }
         break;
+
       case 'confirmPassword':
         delete errors.confirmPassword;
         error = validateConfirmPassword(

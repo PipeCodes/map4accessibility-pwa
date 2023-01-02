@@ -3,7 +3,7 @@ import { colors } from '../../constants/colors';
 import { updateFontSize, updateValue } from '../../helpers/utils';
 
 const InputStyle = styled.input`
-  background-color: #ffffff;
+  background-color: ${colors.white};
   height: 40px;
   min-height: 40px;
   width: 100%;

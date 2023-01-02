@@ -8,7 +8,7 @@ import BackIcon from '../../assets/icons/back.svg';
 import LocationIcon from '../../assets/icons/maps/location.svg';
 import DestinationIcon from '../../assets/icons/maps/destination.svg';
 import ArrowsIcon from '../../assets/icons/arrows.svg';
-import Map from '../../components/Map/Map';
+import RoutesMap from '../../components/RoutesMap/RoutesMap';
 import {
   Page,
   Container,
@@ -26,15 +26,14 @@ import { getCurrentLocation } from '../../services/geolocation';
 const RoutePlannerScreen = (props) => {
   const { history, routes } = props;
   const { t } = useTranslation();
-
-  const originInputRef = useRef(null);
-  const destinationInputRef = useRef(null);
-
+  const fontSize = useSelector((state) => state.accessibility.fontSize);
+  const font = useSelector((state) => state.accessibility.font);
   const backgroundColor = useSelector(
     (state) => state.accessibility.backgroundColor,
   );
-  const fontSize = useSelector((state) => state.accessibility.fontSize);
-  const font = useSelector((state) => state.accessibility.font);
+
+  const originInputRef = useRef(null);
+  const destinationInputRef = useRef(null);
 
   const routesMap = useSelector((state) => state.directions.routes);
   const [origin, setOrigin] = useState(null);
@@ -122,7 +121,7 @@ const RoutePlannerScreen = (props) => {
         </AccessibilityButton>
       </TopContainer>
       <Container>
-        <Map
+        <RoutesMap
           origin={origin}
           destination={destination}
           userLocation={userLocation}

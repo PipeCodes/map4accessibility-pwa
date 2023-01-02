@@ -11,7 +11,6 @@ import RankingScreen from '../screens/RankingScreen/RankingScreen';
 import AccessibilityScreen from '../screens/AccessibilityScreen/AccessibilityScreen';
 import RoutePlannerScreen from '../screens/RoutePlannerScreen/RoutePlannerScreen';
 import MapScreen from '../screens/MapScreen/MapScreen';
-import FAQsScreen from '../screens/FAQsScreen/FAQsScreen';
 import TrackedRoute from './TrackedRoute';
 import ChangePasswordScreen from '../screens/ChangePasswordScreen/ChangePasswordScreen';
 import HomeScreen from '../screens/HomeScreen/HomeScreen';
@@ -108,11 +107,6 @@ const routes = {
   CHANGE_PASSWORD: {
     path: '/change-password',
     component: ChangePasswordScreen,
-    private: false,
-  },
-  FAQS: {
-    path: '/faqs',
-    component: FAQsScreen,
     private: false,
   },
 };

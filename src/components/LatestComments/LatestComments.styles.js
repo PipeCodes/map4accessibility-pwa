@@ -11,7 +11,8 @@ export const Comment = styled.div`
   display: flex;
   flex-direction: column;
   margin-bottom: 20px;
-  background-color: ${(props) => updateValue('#f4f6f9', props.backgroundColor)};
+  background-color: ${(props) =>
+    updateValue(colors.whiteSmoke, props.backgroundColor)};
 `;
 
 export const Title = styled.div`
@@ -56,8 +57,9 @@ export const Accessible = styled.div`
   width: 100%;
   padding: 5px 15px;
   align-items: center;
-  box-shadow: 0px 2px 2px #0000000a;
-  background-color: ${(props) => updateValue('#e0e5ee', props.backgroundColor)};
+  box-shadow: 0px 2px 2px ${colors.shadow};
+  background-color: ${(props) =>
+    updateValue(colors.mystic, props.backgroundColor)};
 `;
 
 export const Icon = styled.img`

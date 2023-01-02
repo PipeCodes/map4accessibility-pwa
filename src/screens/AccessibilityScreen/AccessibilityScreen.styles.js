@@ -60,7 +60,7 @@ export const Text = styled.span`
 export const EraserButton = styled.button`
   border-radius: 50%;
   background: white 0% 0% no-repeat padding-box;
-  box-shadow: 0px 2px 2px #00000029;
+  box-shadow: 0px 2px 2px ${colors.shadow};
   border: none;
   margin: 0;
   width: 32px;
