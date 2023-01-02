@@ -7,6 +7,7 @@ import {
   GET_PLACES_RANKING_ERROR,
   GET_PLACE_SUCCESS,
   GET_PLACE_START,
+  RESET_ROUTES,
 } from './types';
 import { HTTP_STATUS } from '../../constants';
 import { getAuthToken } from '../../services/local';
@@ -139,6 +140,7 @@ export const getPlacesRadiusMarkers =
         return response.data?.result.data ?? [];
       }
     } catch (error) {
+      dispatch({ type: RESET_ROUTES });
       return Promise.reject(error?.response?.data?.message);
     }
   };

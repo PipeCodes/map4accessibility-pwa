@@ -60,6 +60,7 @@ const RoutePlannerScreen = (props) => {
   }, [isLoaded, t]);
 
   useEffect(() => {
+    console.log(routesMap);
     if (routesMap) {
       setOrigin(routesMap[0].origin);
       setDestination(routesMap[0].destination);
