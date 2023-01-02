@@ -143,8 +143,8 @@ const Map = ({ origin, destination, routes, userLocation, history }) => {
               }
               i += 1;
             })
-            .catch((e) => {
-              alert(e);
+            .catch((err) => {
+              alert(err);
             });
         });
       });
