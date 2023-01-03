@@ -134,5 +134,6 @@
   "latest": "Latest",
   "map": "Map",
   "route_planner": "Route Planner",
-  "latest_evaluations": "Latest Evaluations"
+  "latest_evaluations": "Latest Evaluations",
+  "radius_error": "Unable to define route for same origin and destination location"
 }
