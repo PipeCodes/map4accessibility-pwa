@@ -15,6 +15,7 @@ export const GET_PLACE_EVALUATIONS_SUMS = 'GET_PLACE_EVALUATIONS_SUMS';
 
 export const SET_DIRECTIONS = 'SET_DIRECTIONS';
 export const SET_ROUTE = 'SET_ROUTE';
+export const RESET_ROUTES = 'RESET_ROUTES';
 
 export const AUTH_START = 'AUTH_START';
 export const AUTH_SUCCESS = 'AUTH_SUCCESS';
