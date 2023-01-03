@@ -140,8 +140,10 @@ export const getPlacesRadiusMarkers =
         return response.data?.result.data ?? [];
       }
     } catch (error) {
+      const errorMessage =
+        radius === 0 ? i18n.t('radius_error') : error?.response?.data?.message;
       dispatch({ type: RESET_ROUTES });
-      return Promise.reject(error?.response?.data?.message);
+      return Promise.reject(errorMessage);
     }
   };
 
