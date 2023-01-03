@@ -54,7 +54,10 @@ export const ButtonCreate = styled.button`
   border-radius: 50%;
   background: white 0% 0% no-repeat padding-box;
   box-shadow: 0px 2px 2px ${colors.shadow};
-  border: 1px solid ${colors.lightGrey};
+  border: ${(props) =>
+    props.add
+      ? '8px solid '.concat(colors.primaryColor)
+      : '1px solid '.concat(colors.lightGrey)};
   color: ${colors.primaryColor};
   margin: 0;
   width: 42px;
