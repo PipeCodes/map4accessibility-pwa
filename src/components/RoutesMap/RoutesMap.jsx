@@ -245,6 +245,7 @@ const Map = ({ origin, destination, routes, userLocation, history }) => {
               keyProp={route.id}
               key={route.id}
               active={selectedRoute === route.id}
+              history={history}
             />
           ))}
       </Routes>
