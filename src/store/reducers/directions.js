@@ -1,4 +1,4 @@
-import { SET_DIRECTIONS, SET_ROUTE } from '../actions/types';
+import { SET_DIRECTIONS, SET_ROUTE, RESET_ROUTES } from '../actions/types';
 
 const initialState = {
   directions: null,
@@ -20,6 +20,8 @@ const directionsReducer = (state = initialState, action) => {
         ...state,
         selectedRoute: action.id,
       };
+    case RESET_ROUTES:
+      return initialState;
     default:
       return state;
   }

@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { updateFontSize } from '../../helpers/utils';
+import { colors } from '../../constants/colors';
 
 const ButtonStyle = styled.button`
   background-color: ${(props) => props.backgroundColor};
@@ -7,7 +8,7 @@ const ButtonStyle = styled.button`
   margin-top: ${(props) => (props.marginTop ? props.marginTop : 0)};
   font-size: ${(props) => updateFontSize(20, props.fontSize)};
   width: ${(props) => (props.width ? props.width : '189px')};
-  box-shadow: '0px 2px 2px #00000029';
+  box-shadow: 0px 2px 2px ${colors.shadow};
   color: white;
   border: 0;
   height: 'auto';

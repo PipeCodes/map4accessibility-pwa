@@ -7,7 +7,6 @@ export const Page = styled.div`
   flex-direction: column;
   align-items: center;
   height: 100%;
-
   z-index: 54;
   background-color: ${(props) =>
     updateValue(colors.transparent, props.backgroundColor)};
@@ -49,5 +48,5 @@ export const Text = styled.span`
 export const MyArea = styled.div`
   width: 100%;
   background-color: ${(props) => updateValue('white', props.backgroundColor)};
-  box-shadow: 0px 2px 2px #0000000a;
+  box-shadow: 0px 2px 2px ${colors.shadow};
 `;

@@ -19,7 +19,6 @@ const CustomButton = (props) => {
       {...{ style }}
     >
       {icon && <img src={icon} alt={text} />}
-
       {text}
     </ButtonStyle>
   );

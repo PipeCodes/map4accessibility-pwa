@@ -19,7 +19,7 @@ export const Page = styled.div`
       li {
         button:before {
           opacity: 0.5;
-          color: white !important;
+          color: ${colors.white} !important;
           font-size: 8px !important;
         }
       }
@@ -99,7 +99,7 @@ export const ThumbsUp = styled.div`
     max-height: 50px;
   }
   span {
-    color: green;
+    color: ${colors.green};
     margin-top: 5px;
     font-size: ${(props) => updateFontSize(14, props.fontSize)};
     font-family: ${(props) => updateValue('EasyReadingPro', props.font)};
@@ -117,7 +117,7 @@ export const ThumbsDown = styled.div`
     max-height: 50px;
   }
   span {
-    color: red;
+    color: ${colors.red};
     margin-top: 5px;
     font-size: ${(props) => updateFontSize(14, props.fontSize)};
     font-family: ${(props) => updateValue('EasyReadingPro', props.font)};
@@ -157,7 +157,7 @@ export const Options = styled.div`
 export const Option = styled.div`
   border: 1px solid ${colors.primaryColor};
   border-radius: 4px;
-  box-shadow: 0px 2px 2px #0000000a;
+  box-shadow: 0px 2px 2px ${colors.shadow};
   width: 100%;
   padding: 6px 12px;
   margin-bottom: 10px;
@@ -174,14 +174,14 @@ export const AnswerLabel = styled.label`
 
 export const Comment = styled.textarea`
   border: none;
-  box-shadow: 0px 2px 2px #0000000a;
+  box-shadow: 0px 2px 2px ${colors.shadow};
   border-radius: 3px;
 `;
 
 export const ButtonContainer = styled.div`
   background-color: ${colors.primaryColor};
   padding: 5px;
-  box-shadow: 0px 2px 2px #0000000a;
+  box-shadow: 0px 2px 2px ${colors.shadow};
   border-radius: 3px;
   margin-top: 20px;
   width: 100%;
@@ -192,7 +192,7 @@ export const MediaLabel = styled.div`
   font-family: ${(props) => updateValue('EasyReadingPro', props.font)};
   margin-top: 10px;
   margin-bottom: 50px;
-  color: grey;
+  color: ${colors.grey};
   span {
     color: ${colors.primaryColor};
   }
@@ -202,7 +202,7 @@ export const Error = styled.div`
   font-size: ${(props) => updateFontSize(10, props.fontSize)};
   font-family: ${(props) => updateValue('EasyReadingPro', props.font)};
   place-self: start;
-  color: orange;
+  color: ${colors.orange};
   margin-left: 10px;
   margin-bottom: 10px;
 `;

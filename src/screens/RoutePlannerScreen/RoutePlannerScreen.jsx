@@ -8,7 +8,7 @@ import BackIcon from '../../assets/icons/back.svg';
 import LocationIcon from '../../assets/icons/maps/location.svg';
 import DestinationIcon from '../../assets/icons/maps/destination.svg';
 import ArrowsIcon from '../../assets/icons/arrows.svg';
-import Map from '../../components/Map/Map';
+import RoutesMap from '../../components/RoutesMap/RoutesMap';
 import {
   Page,
   Container,
@@ -20,53 +20,42 @@ import {
   Input,
   Inputs,
 } from './RoutePlannerScreen.styles';
-
-const libraries = ['places'];
+import { GOOGLE_MAPS_OPTIONS } from '../../constants';
+import { getCurrentLocation } from '../../services/geolocation';
 
 const RoutePlannerScreen = (props) => {
   const { history, routes } = props;
   const { t } = useTranslation();
-
-  const originInputRef = useRef(null);
-  const destinationInputRef = useRef(null);
-
+  const fontSize = useSelector((state) => state.accessibility.fontSize);
+  const font = useSelector((state) => state.accessibility.font);
   const backgroundColor = useSelector(
     (state) => state.accessibility.backgroundColor,
   );
-  const fontSize = useSelector((state) => state.accessibility.fontSize);
-  const font = useSelector((state) => state.accessibility.font);
+
+  const originInputRef = useRef(null);
+  const destinationInputRef = useRef(null);
 
   const routesMap = useSelector((state) => state.directions.routes);
   const [origin, setOrigin] = useState(null);
   const [userLocation, setUserLocation] = useState(null);
   const [destination, setDestination] = useState(null);
 
-  const { isLoaded } = useJsApiLoader({
-    googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
-    libraries,
-  });
+  const { isLoaded } = useJsApiLoader(GOOGLE_MAPS_OPTIONS);
 
   useEffect(() => {
     if (isLoaded) {
       // Asks and sets user position (lat, long)
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const latitude = position.coords.latitude;
-          const longitude = position.coords.longitude;
+      getCurrentLocation()
+        .then((position) => {
           if (origin !== null || origin !== '') {
-            setOrigin({ lat: latitude, lng: longitude });
+            setOrigin(position);
           }
-
-          setUserLocation({ lat: latitude, lng: longitude });
-
+          setUserLocation(position);
           if (originInputRef.current && (origin !== null || origin !== '')) {
             originInputRef.current.value = t('your_location');
           }
-        },
-        (error) => {
-          console.error(`Error Code = ${error.code} - ${error.message}`);
-        },
-      );
+        })
+        .catch((error) => alert(error));
     }
   }, [isLoaded, t]);
 
@@ -132,7 +121,7 @@ const RoutePlannerScreen = (props) => {
         </AccessibilityButton>
       </TopContainer>
       <Container>
-        <Map
+        <RoutesMap
           origin={origin}
           destination={destination}
           userLocation={userLocation}

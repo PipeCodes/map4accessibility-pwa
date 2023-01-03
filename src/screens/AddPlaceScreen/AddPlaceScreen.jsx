@@ -14,7 +14,9 @@ import CustomInput from '../../components/CustomInput/CustomInput';
 import CustomSelect from '../../components/CustomSelect/CustomSelect';
 import ArrowRightIcon from '../../assets/icons/arrow-right.svg';
 import { colors } from '../../constants/colors';
-import { types } from '../../constants';
+import { GOOGLE_MAPS_OPTIONS } from '../../constants';
+import { types } from '../../constants/placeTypes';
+import { getCurrentLocation } from '../../services/geolocation';
 import {
   Page,
   Container,
@@ -37,20 +39,9 @@ const containerStyle = {
   maxWidth: '820px',
   top: '0',
 };
-const libraries = ['places'];
+
 const AddPlaceScreen = (props) => {
   const { history, routes } = props;
-
-  // Google Maps
-  const [map, setMap] = useState(/** @type google.maps.Map */ (null));
-
-  const { isLoaded } = useJsApiLoader({
-    googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
-    libraries,
-  });
-  const [location, setLocation] = useState(null);
-  const [coords, setCoords] = useState(null);
-
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const font = useSelector((state) => state.accessibility.font);
@@ -58,6 +49,10 @@ const AddPlaceScreen = (props) => {
   const backgroundColor = useSelector(
     (state) => state.accessibility.backgroundColor,
   );
+
+  const { isLoaded } = useJsApiLoader(GOOGLE_MAPS_OPTIONS);
+  const [location, setLocation] = useState(null);
+  const [coords, setCoords] = useState(null);
 
   const filterTypes = useMemo(() => {
     const formatted = types.map((option) => ({
@@ -69,6 +64,7 @@ const AddPlaceScreen = (props) => {
     return [...formatted];
   }, [t]);
 
+  // Form Fields
   const inputRef = useRef(null);
   const [name, setName] = useState('');
   const [city, setCity] = useState('');
@@ -79,17 +75,9 @@ const AddPlaceScreen = (props) => {
 
   useEffect(() => {
     if (isLoaded) {
-      // Asks and sets user position (lat, long)
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const latitude = position.coords.latitude;
-          const longitude = position.coords.longitude;
-          setLocation({ lat: latitude, lng: longitude });
-        },
-        (error) => {
-          console.error(`Error Code = ${error.code} - ${error.message}`);
-        },
-      );
+      getCurrentLocation()
+        .then((position) => setLocation(position))
+        .catch((error) => alert(error));
     }
   }, [isLoaded, t]);
 
@@ -293,13 +281,11 @@ const AddPlaceScreen = (props) => {
             >
               <GoogleMap
                 mapContainerStyle={containerStyle}
-                center={location || { lat: 38.0, lng: -9.0 }}
+                center={location || { lat: 38.736946, lng: -9.142685 }}
                 zoom={16}
-                onClick={(e) =>
-                  setCoords({ lat: e.latLng.lat(), lng: e.latLng.lng() })
-                }
-                onLoad={(map) => setMap(map)}
-                onUnmount={() => setMap(null)}
+                onClick={(e) => {
+                  setCoords({ lat: e.latLng.lat(), lng: e.latLng.lng() });
+                }}
                 options={{
                   zoomControl: false,
                   streetViewControl: false,

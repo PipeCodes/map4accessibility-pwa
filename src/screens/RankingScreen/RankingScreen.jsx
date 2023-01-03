@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
+import Spinner from 'react-bootstrap/Spinner';
 import {
   Page,
   Container,
@@ -18,36 +19,33 @@ import TopBar from '../../components/TopBar/TopBar';
 import FooterMenu from '../../components/FooterMenu/FooterMenu';
 import RankingItem from '../../components/RankingItem/RankingItem';
 import CustomSelect from '../../components/CustomSelect/CustomSelect';
-import { countries } from '../../constants';
-import { getPlacesCountry, getPlacesRadius } from '../../store/actions/places';
+import { countries } from '../../constants/countries';
+import {
+  getPlacesCountry,
+  getPlacesByLocation,
+} from '../../store/actions/places';
 
 const RankingScreen = (props) => {
   const { history, routes } = props;
   const dispatch = useDispatch();
   const { t } = useTranslation();
+  const font = useSelector((state) => state.accessibility.font);
+  const fontSize = useSelector((state) => state.accessibility.fontSize);
   const backgroundColor = useSelector(
     (state) => state.accessibility.backgroundColor,
   );
-  const font = useSelector((state) => state.accessibility.font);
-  const fontSize = useSelector((state) => state.accessibility.fontSize);
   const [ascDescActive, setAscDescActive] = useState(false);
   const [sliderActive, setSliderActive] = useState(false);
   const [country, setCountry] = useState(countries[0]);
   const ranking = useSelector((state) => state.placesRanking.ranking);
+  const loading = useSelector((state) => state.placesRanking.loading);
 
   useEffect(() => {
     const order = ascDescActive ? 'thumbs_down_count' : 'thumbs_up_count';
     const radius = 5000; // Default radius for location, needs to be discussed and set in another place
     if (sliderActive) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const latitude = position.coords.latitude;
-          const longitude = position.coords.longitude;
-          dispatch(getPlacesRadius(latitude, longitude, order, radius));
-        },
-        (error) => {
-          console.error(`Error Code = ${error.code} - ${error.message}`);
-        },
+      dispatch(getPlacesByLocation(order, radius)).catch((error) =>
+        alert(error),
       );
     } else if (country) {
       dispatch(getPlacesCountry(country.label, order));
@@ -135,19 +133,23 @@ const RankingScreen = (props) => {
             onChange={(value) => setCountry(value)}
           />
         </FiltersWrapper>
-        <RanksContainer>
-          {ranking && Object.keys(ranking).length
-            ? ranking.map((item, id) => (
-                <RankingItem
-                  ascDescActive={ascDescActive}
-                  key={id}
-                  rank={id}
-                  item={item}
-                  onClick={(id) => openDetails(id)}
-                />
-              ))
-            : t('no_results')}
-        </RanksContainer>
+        {loading ? (
+          <Spinner animation="border" variant="dark" />
+        ) : (
+          <RanksContainer>
+            {ranking && Object.keys(ranking).length
+              ? ranking.map((item, id) => (
+                  <RankingItem
+                    ascDescActive={ascDescActive}
+                    key={id}
+                    rank={id}
+                    item={item}
+                    onClick={(id) => openDetails(id)}
+                  />
+                ))
+              : t('no_results')}
+          </RanksContainer>
+        )}
       </Container>
 
       <FooterMenu routes={routes} profile />

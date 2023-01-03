@@ -17,6 +17,7 @@ const config = {
   },
 };
 
+// Gets the user's place Evaluations
 export const getMyPlaceEvaluations = () => async (dispatch) => {
   dispatch({ type: GET_PLACE_EVALUATIONS_START });
   const queryParams = {
@@ -54,6 +55,7 @@ export const getMyPlaceEvaluations = () => async (dispatch) => {
   }
 };
 
+// Sends a new place evaluation to the API
 export const postPlaceEvaluation =
   (thumbDirection, comment, answers, latitude, longitude) => async () => {
     const body = {
@@ -81,6 +83,7 @@ export const postPlaceEvaluation =
     }
   };
 
+// Sends the media for the new place evaluation to the API
 export const postPlaceEvaluationMedia = (media, id) => async () => {
   const body = {
     media,

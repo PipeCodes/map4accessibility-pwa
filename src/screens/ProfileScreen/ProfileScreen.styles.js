@@ -7,7 +7,6 @@ export const Page = styled.div`
   flex-direction: column;
   align-items: center;
   height: ${(props) => (props.editActive === true ? '100%' : '100vh')};
-
   z-index: 54;
   background-color: ${(props) =>
     updateValue(colors.transparent, props.backgroundColor)};
@@ -46,7 +45,7 @@ export const FormWrapper = styled.div`
   input {
     border: none;
     border-radius: 4px;
-    box-shadow: 0px 2px 2px #0000000a;
+    box-shadow: 0px 2px 2px ${colors.shadow};
     padding: 5px;
     padding-left: 10px;
     color: ${colors.grey};
@@ -71,9 +70,9 @@ export const Link = styled.a`
 export const RankingButton = styled.button`
   border-radius: 50%;
   background: ${colors.primaryColor};
-  box-shadow: 0px 2px 2px #00000029;
+  box-shadow: 0px 2px 2px ${colors.shadow};
   border: none;
-  color: white;
+  color: ${colors.white};
   margin: 0;
   width: 32px;
   height: 32px;
@@ -105,10 +104,10 @@ export const Name = styled.span`
 
 export const EditButton = styled.button`
   border-radius: 50%;
-  background: transparent;
-  box-shadow: 0px 2px 2px #00000029;
+  background: ${colors.transparent};
+  box-shadow: 0px 2px 2px ${colors.shadow};
   border: 2px solid ${colors.primaryColor};
-  color: white;
+  color: ${colors.white};
   margin: 0;
   width: 32px;
   height: 32px;
@@ -133,6 +132,6 @@ export const Error = styled.div`
   font-size: ${(props) => updateFontSize(10, props.fontSize)};
   font-family: ${(props) => updateValue('NotoSans-Regular', props.font)};
   place-self: start;
-  color: orange;
+  color: ${colors.orange};
   margin-left: 10px;
 `;

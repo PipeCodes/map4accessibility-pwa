@@ -3,7 +3,7 @@ import { colors } from '../../constants/colors';
 import { updateFontSize, updateValue } from '../../helpers/utils';
 
 export const Title = styled.span`
-  color: white;
+  color: ${colors.white};
   font-size: ${(props) => updateFontSize(28, props.fontSize)};
   font-family: ${(props) => updateValue('EasyReadingPro', props.font)};
   display: flex;
@@ -36,13 +36,13 @@ export const TopBarContainer = styled.div`
     border-radius: unset;
   }
 
-  box-shadow: 0px 2px 4px #00000005;
+  box-shadow: 0px 2px 4px ${colors.shadow};
   border-radius: 0 0 100% 100%;
 `;
 
 export const LeftButton = styled.button`
-  color: white;
-  background-color: transparent;
+  color: ${colors.white};
+  background-color: ${colors.transparent};
   border: 0;
   margin: 0;
   top: 30px;
@@ -63,10 +63,10 @@ export const LeftButton = styled.button`
 
 export const AccessibilityButton = styled.button`
   border-radius: 50%;
-  background: #34518d 0% 0% no-repeat padding-box;
-  box-shadow: 0px 2px 2px #00000029;
+  background: ${colors.primaryColor} 0% 0% no-repeat padding-box;
+  box-shadow: 0px 2px 2px ${colors.shadow};
   border: 1px solid ${colors.primaryColor};
-  color: white;
+  color: ${colors.white};
   margin: 0;
   position: absolute;
   top: 30px;
@@ -87,8 +87,8 @@ export const MagnifierButton = styled.button`
 `;
 
 export const CloseButton = styled.button`
-  background: transparent;
-  color: white;
+  background: ${colors.transparent};
+  color: ${colors.white};
   margin: 0;
   position: absolute;
   top: 50%;

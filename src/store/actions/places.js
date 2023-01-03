@@ -4,11 +4,14 @@ import i18n from '../../i18n';
 import {
   GET_PLACES_RANKING_START,
   GET_PLACES_RANKING_SUCCESS,
+  GET_PLACES_RANKING_ERROR,
   GET_PLACE_SUCCESS,
   GET_PLACE_START,
+  RESET_ROUTES,
 } from './types';
 import { HTTP_STATUS } from '../../constants';
 import { getAuthToken } from '../../services/local';
+import { getCurrentLocation } from '../../services/geolocation';
 
 const config = {
   headers: {
@@ -17,6 +20,7 @@ const config = {
   },
 };
 
+// Gets Single Place by ID
 export const getPlace = (id) => async (dispatch) => {
   dispatch({ type: GET_PLACE_START });
   const queryParams = {
@@ -40,6 +44,7 @@ export const getPlace = (id) => async (dispatch) => {
   }
 };
 
+// Gets top 10 places By Country and Order
 export const getPlacesCountry = (country, order) => async (dispatch) => {
   dispatch({ type: GET_PLACES_RANKING_START });
   const queryParams = {
@@ -71,12 +76,16 @@ export const getPlacesCountry = (country, order) => async (dispatch) => {
   }
 };
 
-export const getPlacesRadius =
-  (latitude, longitude, order, radius) => async (dispatch) => {
-    dispatch({ type: GET_PLACES_RANKING_START });
+// Gets Places By Current Location
+export const getPlacesByLocation = (order, radius) => async (dispatch) => {
+  dispatch({ type: GET_PLACES_RANKING_START });
+
+  try {
+    const location = await getCurrentLocation();
+
     const queryParams = {
-      latitude,
-      longitude,
+      latitude: location.lat,
+      longitude: location.lng,
       desc_order_by: order,
       geo_query_radius: radius,
       page: 1,
@@ -89,27 +98,29 @@ export const getPlacesRadius =
       queryParams,
     );
 
-    try {
-      const response = await axios.get(url, config);
-      const statusCode = response.status;
+    const response = await axios.get(url, config);
 
-      if (statusCode === HTTP_STATUS.SUCCESS) {
-        dispatch({
-          type: GET_PLACES_RANKING_SUCCESS,
-          ranking: response.data?.result.data ?? [],
-        });
-      }
-    } catch (error) {
-      return Promise.reject(error?.response?.data?.message);
+    const statusCode = response.status;
+
+    if (statusCode === HTTP_STATUS.SUCCESS) {
+      dispatch({
+        type: GET_PLACES_RANKING_SUCCESS,
+        ranking: response.data?.result.data ?? [],
+      });
     }
-  };
+  } catch (error) {
+    dispatch({ type: GET_PLACES_RANKING_ERROR });
+    return Promise.reject(error?.response?.data?.message || error);
+  }
+};
 
+// Gets Markers Around Coordinates
 export const getPlacesRadiusMarkers =
   (latitude, longitude, radius) => async (dispatch) => {
     dispatch({ type: GET_PLACES_RANKING_START });
     const queryParams = {
-      latitude,
-      longitude,
+      latitude: parseFloat(latitude),
+      longitude: parseFloat(longitude),
       geo_query_radius: radius,
       page: 1,
       size: 10,
@@ -129,10 +140,14 @@ export const getPlacesRadiusMarkers =
         return response.data?.result.data ?? [];
       }
     } catch (error) {
-      return Promise.reject(error?.response?.data?.message);
+      const errorMessage =
+        radius === 0 ? i18n.t('radius_error') : error?.response?.data?.message;
+      dispatch({ type: RESET_ROUTES });
+      return Promise.reject(errorMessage);
     }
   };
 
+// Creates a new Place
 export const postPlace = (name, type, city, location, country) => async () => {
   const body = {
     name,
@@ -156,6 +171,7 @@ export const postPlace = (name, type, city, location, country) => async () => {
   }
 };
 
+// Adds the media to the new place
 export const postPlaceMedia = (media, id) => async () => {
   const body = {
     media,
