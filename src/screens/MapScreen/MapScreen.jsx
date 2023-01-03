@@ -88,7 +88,7 @@ const MapScreen = (props) => {
     if (coords) {
       history.push(routes.ADD_PLACE.path, coords);
     }
-  }, [coords]);
+  }, [coords, history]);
 
   // https://stackoverflow.com/questions/68638475/my-map-bounds-appears-to-be-calculating-a-radius-outside-of-my-visible-area
   const getRadius = () => {
