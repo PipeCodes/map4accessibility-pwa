@@ -170,7 +170,7 @@ const AddPlaceScreen = (props) => {
   return (
     <Page backgroundColor={backgroundColor}>
       <TopBar
-        backTarget={() => history.goBack}
+        backTarget={history.goBack}
         aligned
         page
         hasBackButton
