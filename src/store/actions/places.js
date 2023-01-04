@@ -13,18 +13,16 @@ import { HTTP_STATUS } from '../../constants';
 import { getAuthToken } from '../../services/local';
 import { getCurrentLocation } from '../../services/geolocation';
 
-const config = {
-  headers: {
-    Authorization: `Bearer ${getAuthToken()}`,
-    'Content-Type': 'multipart/form-data',
-  },
-};
-
 // Gets Single Place by ID
 export const getPlace = (id) => async (dispatch) => {
   dispatch({ type: GET_PLACE_START });
   const queryParams = {
     id,
+  };
+  const config = {
+    headers: {
+      Authorization: `Bearer ${getAuthToken()}`,
+    },
   };
   const url = generatePath(Endpoints.PLACES.concat(':id'), queryParams);
 
@@ -53,6 +51,11 @@ export const getPlacesCountry = (country, order) => async (dispatch) => {
     page: 1,
     size: 10,
   };
+  const config = {
+    headers: {
+      Authorization: `Bearer ${getAuthToken()}`,
+    },
+  };
   const url = generatePath(
     Endpoints.PLACES.concat(
       '?country_code=:country_code&desc_order_by=:desc_order_by&page=:page&size=:size',
@@ -79,7 +82,11 @@ export const getPlacesCountry = (country, order) => async (dispatch) => {
 // Gets Places By Current Location
 export const getPlacesByLocation = (order, radius) => async (dispatch) => {
   dispatch({ type: GET_PLACES_RANKING_START });
-
+  const config = {
+    headers: {
+      Authorization: `Bearer ${getAuthToken()}`,
+    },
+  };
   try {
     const location = await getCurrentLocation();
 
@@ -125,6 +132,11 @@ export const getPlacesRadiusMarkers =
       page: 1,
       size: 10,
     };
+    const config = {
+      headers: {
+        Authorization: `Bearer ${getAuthToken()}`,
+      },
+    };
     const url = generatePath(
       Endpoints.PLACES_RADIUS.concat(
         '?latitude=:latitude&longitude=:longitude&geo_query_radius=:geo_query_radius&page=:page&size=:size',
@@ -157,6 +169,11 @@ export const postPlace = (name, type, city, location, country) => async () => {
     longitude: location.lng,
     country_code: country,
   };
+  const config = {
+    headers: {
+      Authorization: `Bearer ${getAuthToken()}`,
+    },
+  };
 
   try {
     const response = await axios.post(Endpoints.PLACES, body, config);
@@ -179,6 +196,13 @@ export const postPlaceMedia = (media, id) => async () => {
 
   const queryParams = {
     id,
+  };
+
+  const config = {
+    headers: {
+      Authorization: `Bearer ${getAuthToken()}`,
+      'Content-Type': 'multipart/form-data',
+    },
   };
 
   const url = generatePath(Endpoints.PLACES.concat(':id/media'), queryParams);
