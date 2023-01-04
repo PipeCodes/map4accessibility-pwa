@@ -20,23 +20,18 @@ import {
   Number,
   Index,
 } from './RouteOption.styles';
+import { googleMapsLink } from '../../helpers/utils';
 
-const MapRoute = ({ route, setRoute, active }) => {
+const MapRoute = ({ route, setRoute, active, history }) => {
   const { t } = useTranslation();
   const fontSize = useSelector((state) => state.accessibility.fontSize);
   const font = useSelector((state) => state.accessibility.font);
-  const googleMaps =
-    typeof route.origin === 'string'
-      ? 'https://www.google.com/maps/dir/'
-          .concat(route.origin)
-          .concat('/')
-          .concat(route.destination)
-      : 'https://www.google.com/maps/dir/'
-          .concat(route.origin.lat)
-          .concat(',')
-          .concat(route.origin.lng)
-          .concat('/')
-          .concat(route.destination);
+  const googleMaps = googleMapsLink(route.origin, route.destination);
+
+  const openSteps = () => {
+    history.push('/route/'.concat(route.id));
+  };
+
   return (
     <RouteContainer onClick={() => setRoute(route.id)}>
       <ContainerName>
@@ -74,7 +69,7 @@ const MapRoute = ({ route, setRoute, active }) => {
           </Icon>
           {t('go_to_maps')}
         </GoToMaps>
-        <Steps fontSize={fontSize} font={font}>
+        <Steps onClick={openSteps} fontSize={fontSize} font={font}>
           <Icon>
             <img src={StepsIcon} alt="Steps" />
           </Icon>

@@ -72,3 +72,16 @@ export const markerIcon = (type) => {
   }
   return DefaultIcon;
 };
+
+export const googleMapsLink = (origin, destination) =>
+  typeof origin === 'string'
+    ? 'https://www.google.com/maps/dir/'
+        .concat(origin)
+        .concat('/')
+        .concat(destination)
+    : 'https://www.google.com/maps/dir/'
+        .concat(origin.lat)
+        .concat(',')
+        .concat(origin.lng)
+        .concat('/')
+        .concat(destination);
