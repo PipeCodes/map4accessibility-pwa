@@ -80,7 +80,10 @@ const MapScreen = (props) => {
       // Asks and sets user position (lat, long)
       getCurrentLocation()
         .then((position) => setLocation(position))
-        .catch((error) => alert(error));
+        .catch((error) => {
+          setLocation({ lat: 38.736946, lng: -9.142685 });
+          alert(error);
+        });
     }
   }, [isLoaded, t]);
 
@@ -180,8 +183,8 @@ const MapScreen = (props) => {
           >
             <GoogleMap
               mapContainerStyle={containerStyle}
-              center={location || { lat: 38.736946, lng: -9.142685 }}
-              zoom={location ? 14 : 10}
+              center={location}
+              zoom={14}
               onClick={(e) => {
                 if (add) {
                   setCoords({ lat: e.latLng.lat(), lng: e.latLng.lng() });
