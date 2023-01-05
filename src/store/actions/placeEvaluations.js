@@ -55,9 +55,10 @@ export const getMyPlaceEvaluations = () => async (dispatch) => {
 
 // Sends a new place evaluation to the API
 export const postPlaceEvaluation =
-  (thumbDirection, comment, answers, latitude, longitude) => async () => {
+  (thumbDirection, name, comment, answers, latitude, longitude) => async () => {
     const body = {
       thumb_direction: thumbDirection,
+      name,
       comment,
       question_answers: answers,
       latitude,
