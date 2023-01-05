@@ -59,8 +59,10 @@ const PlaceDetailsScreen = (props) => {
   }, [dispatch]);
 
   useEffect(() => {
-    dispatch(storePlace(params.id, visitedHistory));
-  }, [dispatch]);
+    if (place) {
+      dispatch(storePlace(place, visitedHistory));
+    }
+  }, [dispatch, place]);
 
   // Opens accessibility screen (button on the top-right of the page)
   const openAccessibility = useCallback(() => {

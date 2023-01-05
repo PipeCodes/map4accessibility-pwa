@@ -1,7 +1,7 @@
 import { UPSERT_VISITED_PLACES } from '../actions/types';
 
 const initialState = {
-  history: null,
+  history: [],
 };
 
 const historyReducer = (state = initialState, action) => {

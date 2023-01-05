@@ -1,26 +1,18 @@
 import moment from 'moment';
 import { UPSERT_VISITED_PLACES } from './types';
 
-const upsertPlace = (array, item) => {
-  const i = array.findIndex((_item) => _item.id === item.id);
-  if (i > -1) array[i] = item;
-  else array.push(item);
-  return array;
-};
-
-export const storePlace = (id, visitedHistory) => async (dispatch) => {
+export const storePlace = (place, visitedHistory) => async (dispatch) => {
   const visitedPlaceData = {
-    id: Number(id),
-    place: id,
+    id: Number(place.id),
+    place_name: place.name,
+    place_image: place?.media_evaluations[0] || '',
+    place_city: place.city,
     date: moment(new Date()).format(),
   };
-  let data;
-  if (visitedHistory) {
-    const storedVisitedPlaces = JSON.parse(visitedHistory);
-    const updatedPlaceData = upsertPlace(storedVisitedPlaces, visitedPlaceData);
-    data = JSON.stringify(updatedPlaceData);
-  } else {
-    data = JSON.stringify([visitedPlaceData]);
+
+  if (visitedHistory === undefined || visitedHistory === null) {
+    visitedHistory = [];
   }
-  dispatch({ type: UPSERT_VISITED_PLACES, history: data });
+  visitedHistory.push(visitedPlaceData);
+  dispatch({ type: UPSERT_VISITED_PLACES, history: visitedHistory });
 };
