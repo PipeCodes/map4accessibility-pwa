@@ -115,6 +115,7 @@ const RatePlaceScreen = (props) => {
       dispatch(
         postPlaceEvaluation(
           accessibility,
+          place.name,
           commentRef.current.value,
           answers,
           place.latitude,
