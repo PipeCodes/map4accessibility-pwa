@@ -20,3 +20,21 @@ export const types = [
     icon: CoffeIcon,
   },
 ];
+
+export const filterTypes = [
+  {
+    id: 1,
+    label: 'Restaurants',
+    icon: MusicIcon,
+  },
+  {
+    id: 2,
+    label: 'Takeout',
+    icon: MusicIcon,
+  },
+  {
+    id: 3,
+    label: 'Bars',
+    icon: MusicIcon,
+  },
+];

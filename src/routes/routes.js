@@ -19,6 +19,7 @@ import AddPlaceScreen from '../screens/AddPlaceScreen/AddPlaceScreen';
 import PlaceDetailsScreen from '../screens/PlaceDetailsScreen/PlaceDetailsScreen';
 import InfoScreen from '../screens/InfoScreen/InfoScreen';
 import { isAuthenticated } from '../services/local';
+import SearchScreen from '../screens/SearchScreen/SearchScreen';
 
 const history = createBrowserHistory({ forceRefresh: true });
 
@@ -107,6 +108,11 @@ const routes = {
   CHANGE_PASSWORD: {
     path: '/change-password',
     component: ChangePasswordScreen,
+    private: false,
+  },
+  SEARCH: {
+    path: '/search',
+    component: SearchScreen,
     private: false,
   },
 };

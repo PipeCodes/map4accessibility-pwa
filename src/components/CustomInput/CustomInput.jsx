@@ -16,6 +16,7 @@ const CustomInput = (props) => {
     readOnly,
     fontSize,
     font,
+    icon,
   } = props;
 
   return (
@@ -41,6 +42,7 @@ const CustomInput = (props) => {
       onBlur={onBlur}
       {...{ readOnly }}
       {...{ borderColor }}
+      icon={icon}
     />
   );
 };

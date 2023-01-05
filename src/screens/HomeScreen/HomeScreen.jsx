@@ -41,6 +41,8 @@ const HomeScreen = (props) => {
       <TopBar
         aligned
         page
+        magnifier
+        routes={routes}
         hasAccessibilityButton={openAccessibility}
         backgroundColor={backgroundColor}
         title={t('home')}

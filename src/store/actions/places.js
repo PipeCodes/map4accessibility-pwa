@@ -195,3 +195,34 @@ export const postPlaceMedia = (media, id) => async () => {
     return Promise.reject(getErrorMessage(error, i18n.t('something_wrong')));
   }
 };
+
+const concatPlacesRequest = (params) =>
+  Object.keys(params)
+    .map((key) => `?${key}=:${key}`)
+    .join('&');
+
+export const getPlaceByParams = (params) => async (dispatch) => {
+  const { name } = params;
+  dispatch({ type: GET_PLACE_START });
+  const queryParams = {
+    name,
+  };
+  const url = generatePath(
+    Endpoints.PLACES.concat(concatPlacesRequest(params)),
+    queryParams,
+  );
+  try {
+    const response = await axios.get(url, config);
+
+    const statusCode = response.status;
+
+    if (statusCode === HTTP_STATUS.SUCCESS) {
+      dispatch({
+        type: GET_PLACE_SUCCESS,
+        place: response.data?.result ?? {},
+      });
+    }
+  } catch (error) {
+    return Promise.reject(error?.response?.data?.message);
+  }
+};
