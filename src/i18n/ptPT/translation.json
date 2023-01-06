@@ -134,5 +134,6 @@
   "latest": "Recentes",
   "map": "Mapa",
   "route_planner": "Planear Rota",
-  "show_route": "Mostar Rota"
+  "show_route": "Mostar Rota",
+  "last_places_visited": "Últimos Locais Visitados"
 }
