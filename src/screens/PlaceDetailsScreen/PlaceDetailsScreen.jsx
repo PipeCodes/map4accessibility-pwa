@@ -62,7 +62,7 @@ const PlaceDetailsScreen = (props) => {
     if (place) {
       dispatch(storePlace(place, visitedHistory));
     }
-  }, [dispatch, place]);
+  }, [dispatch, place, visitedHistory]);
 
   // Opens accessibility screen (button on the top-right of the page)
   const openAccessibility = useCallback(() => {
