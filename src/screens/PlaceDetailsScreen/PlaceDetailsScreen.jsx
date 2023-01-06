@@ -21,10 +21,11 @@ import {
   Accessible,
   Evaluations,
   PlaceInformation,
+  Button,
 } from './PlaceDetailsScreen.styles';
 import TopBar from '../../components/TopBar/TopBar';
 import ImageSlider from '../../components/ImageSlider/ImageSlider';
-import { getPlace } from '../../store/actions/places';
+import { getPlace, deletePlace } from '../../store/actions/places';
 import placeholder from '../../assets/images/photo-stock-1.png';
 import LatestComments from '../../components/LatestComments/LatestComments';
 import { storePlace } from '../../store/actions/history';
@@ -41,6 +42,7 @@ const PlaceDetailsScreen = (props) => {
   // Accessibility settings with redux from the reducer
   const font = useSelector((state) => state.accessibility.font);
   const fontSize = useSelector((state) => state.accessibility.fontSize);
+  const user = useSelector((state) => state.auth.user);
   const backgroundColor = useSelector(
     (state) => state.accessibility.backgroundColor,
   );
@@ -63,6 +65,16 @@ const PlaceDetailsScreen = (props) => {
       dispatch(storePlace(place, visitedHistory));
     }
   }, [dispatch, place, visitedHistory]);
+
+  const markPlaceAsClosed = () => {
+    dispatch(deletePlace(user?.id, place.id))
+      .then(() => {
+        alert(t('request_sent_delete_place'));
+      })
+      .catch(() => {
+        alert(t('problem_request_delete_place'));
+      });
+  };
 
   // Opens accessibility screen (button on the top-right of the page)
   const openAccessibility = useCallback(() => {
@@ -177,6 +189,13 @@ const PlaceDetailsScreen = (props) => {
               </span>
             )}
           </PlaceInformation>
+          <Button
+            fontSize={fontSize}
+            font={font}
+            onClick={() => markPlaceAsClosed()}
+          >
+            {t('mark_as_closed')}
+          </Button>
         </div>
         {place?.place_evaluations && (
           <Evaluations fontSize={fontSize} className="mt-3">

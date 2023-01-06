@@ -135,5 +135,8 @@
   "map": "Mapa",
   "route_planner": "Planear Rota",
   "show_route": "Mostar Rota",
-  "last_places_visited": "Últimos Locais Visitados"
+  "last_places_visited": "Últimos Locais Visitados",
+  "request_sent_delete_place": "Pedido de remoção de local efectuado.",
+  "problem_request_delete_place": "Ocurreu um problema ao efectuar o pedido de remoção.",
+  "mark_as_closed": "Marcar este local como fechado"
 }
