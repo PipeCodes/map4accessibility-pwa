@@ -94,6 +94,15 @@ export const PlaceInformation = styled.div`
   color: ${colors.primaryTextColor};
 `;
 
+export const Button = styled.button`
+  color: ${colors.orange};
+  font-size: ${(props) => updateFontSize(14, props.fontSize)};
+  font-family: ${(props) => updateValue('NotoSans-Regular', props.font)};
+  margin-bottom: 10px;
+  background-color: ${colors.transparent};
+  border: none;
+`;
+
 export const Accessible = styled.div`
   margin-right: 15px;
   align-self: start;

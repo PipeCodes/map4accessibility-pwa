@@ -219,3 +219,28 @@ export const postPlaceMedia = (media, id) => async () => {
     return Promise.reject(getErrorMessage(error, i18n.t('something_wrong')));
   }
 };
+
+// Deletes Place
+export const deletePlace = (userId, placeId) => async () => {
+  const body = {
+    place_id: placeId,
+    app_user_id: userId,
+  };
+  const config = {
+    headers: {
+      Authorization: `Bearer ${getAuthToken()}`,
+    },
+  };
+
+  try {
+    const response = await axios.post(Endpoints.PLACES_DELETE, body, config);
+
+    const statusCode = response.status;
+
+    if (statusCode === HTTP_STATUS.SUCCESS) {
+      return Promise.resolve(response?.data?.result);
+    }
+  } catch (error) {
+    return Promise.reject(getErrorMessage(error, i18n.t('something_wrong')));
+  }
+};
