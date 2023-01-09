@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import pinIcon from '../../assets/icons/places/pin.svg';
+import { resetHistory } from '../../store/actions/history';
 import {
   Wrapper,
   Title,
@@ -18,16 +19,20 @@ import {
 
 const PlacesVisited = ({ history }) => {
   const { t } = useTranslation();
+  const dispatch = useDispatch();
   const fontSize = useSelector((state) => state.accessibility.fontSize);
   const font = useSelector((state) => state.accessibility.font);
   const backgroundColor = useSelector(
     (state) => state.accessibility.backgroundColor,
   );
   const [viewAll, setViewAll] = useState(false);
-  const places = useSelector((state) => state.history.history).reverse();
+  const places = useSelector((state) => state.history.history);
   const [placesList, setPlacesList] = useState([]);
 
   useEffect(() => {
+    if (typeof places === 'string') {
+      dispatch(resetHistory());
+    }
     if (viewAll) {
       setPlacesList(places);
     } else {
