@@ -16,7 +16,7 @@ export const storePlace = (place, visitedHistory) => async (dispatch) => {
   if (visitedHistory === undefined || visitedHistory === null) {
     visitedHistory = [];
   }
-  visitedHistory.push(visitedPlaceData);
+  visitedHistory.unshift(visitedPlaceData);
   dispatch({ type: UPSERT_VISITED_PLACES, history: visitedHistory });
 };
 

@@ -26,7 +26,7 @@ const PlacesVisited = ({ history }) => {
     (state) => state.accessibility.backgroundColor,
   );
   const [viewAll, setViewAll] = useState(false);
-  const places = useSelector((state) => state.history.history)?.reverse();
+  const places = useSelector((state) => state.history.history);
   const [placesList, setPlacesList] = useState([]);
 
   useEffect(() => {
