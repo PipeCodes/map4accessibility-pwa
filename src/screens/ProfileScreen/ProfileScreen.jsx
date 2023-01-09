@@ -287,7 +287,7 @@ const ProfileScreen = (props) => {
             type="email"
             value={formData.email}
             name="email"
-            readOnly={!editActive}
+            readOnly={editActive}
             onChange={(e) => {
               setFormData((prevState) => ({
                 ...prevState,
