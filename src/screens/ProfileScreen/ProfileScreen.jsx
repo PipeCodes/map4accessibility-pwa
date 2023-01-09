@@ -1,4 +1,4 @@
-import moment from "moment";
+import moment from 'moment';
 import React, { useEffect, useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
@@ -60,6 +60,8 @@ const setUser = (user) => {
 const termsConditions = `${process.env.REACT_APP_EXTERNAL_LINKS_BASE}/terms-conditions`;
 
 const privacyPolicy = `${process.env.REACT_APP_EXTERNAL_LINKS_BASE}/privacy-policy`;
+
+const faqs = `${process.env.REACT_APP_EXTERNAL_LINKS_BASE}/faqs`;
 
 const ProfileScreen = (props) => {
   const { history, routes } = props;
@@ -285,7 +287,7 @@ const ProfileScreen = (props) => {
             type="email"
             value={formData.email}
             name="email"
-            readOnly={!editActive}
+            readOnly
             onChange={(e) => {
               setFormData((prevState) => ({
                 ...prevState,
@@ -309,8 +311,8 @@ const ProfileScreen = (props) => {
             type="date"
             value={formData.birthDate}
             name="birthDate"
-            min={moment().subtract(100, "years").format("YYYY-MM-DD")}
-            max={moment().subtract(16, "years").format('yyyy-MM-DD')}
+            min={moment().subtract(100, 'years').format('YYYY-MM-DD')}
+            max={moment().subtract(16, 'years').format('yyyy-MM-DD')}
             readOnly={!editActive}
             onChange={(e) => {
               setFormData((prevState) => ({
@@ -379,6 +381,7 @@ const ProfileScreen = (props) => {
             backgroundColor={colors.transparent}
             text={t('faqs')}
             icon={QuestionsIcon}
+            onClick={() => window.open(faqs)}
           />
           <Link fontSize={fontSize} href={termsConditions} target="_blank">
             {t('terms_conditions')}

@@ -5,7 +5,7 @@ import React, {
   useRef,
   useMemo,
 } from 'react';
-import { useJsApiLoader, GoogleMap } from '@react-google-maps/api';
+import { useJsApiLoader } from '@react-google-maps/api';
 import Compressor from 'compressorjs';
 import { withRouter } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -16,7 +16,6 @@ import ArrowRightIcon from '../../assets/icons/arrow-right.svg';
 import { colors } from '../../constants/colors';
 import { GOOGLE_MAPS_OPTIONS } from '../../constants';
 import { types } from '../../constants/placeTypes';
-import { getCurrentLocation } from '../../services/geolocation';
 import {
   Page,
   Container,
@@ -31,19 +30,12 @@ import paperclipIcon from '../../assets/icons/paperclip.svg';
 import CustomButton from '../../components/CustomButton/CustomButton';
 import { postPlace, postPlaceMedia } from '../../store/actions/places';
 
-// Map styling
-const containerStyle = {
-  width: '100%',
-  height: '100%',
-  position: 'absolute',
-  maxWidth: '820px',
-  top: '0',
-};
-
 const AddPlaceScreen = (props) => {
-  const { history, routes } = props;
+  const { history, routes, location } = props;
+  const { state } = location;
   const dispatch = useDispatch();
   const { t } = useTranslation();
+
   const font = useSelector((state) => state.accessibility.font);
   const fontSize = useSelector((state) => state.accessibility.fontSize);
   const backgroundColor = useSelector(
@@ -51,8 +43,6 @@ const AddPlaceScreen = (props) => {
   );
 
   const { isLoaded } = useJsApiLoader(GOOGLE_MAPS_OPTIONS);
-  const [location, setLocation] = useState(null);
-  const [coords, setCoords] = useState(null);
 
   const filterTypes = useMemo(() => {
     const formatted = types.map((option) => ({
@@ -74,17 +64,9 @@ const AddPlaceScreen = (props) => {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    if (isLoaded) {
-      getCurrentLocation()
-        .then((position) => setLocation(position))
-        .catch((error) => alert(error));
-    }
-  }, [isLoaded, t]);
-
-  useEffect(() => {
-    if (isLoaded && coords) {
+    if (isLoaded && state) {
       // Reference https://gist.github.com/AmirHossein/92a0597b5f723b19c648
-      const latlng = new google.maps.LatLng(coords.lat, coords.lng);
+      const latlng = new google.maps.LatLng(state.lat, state.lng);
       new google.maps.Geocoder().geocode(
         { latLng: latlng },
         (results, status) => {
@@ -127,7 +109,7 @@ const AddPlaceScreen = (props) => {
         },
       );
     }
-  }, [coords, isLoaded]);
+  }, [state, isLoaded]);
 
   // Open file input on button click
   // Reference: https://bobbyhadz.com/blog/react-open-file-input-on-button-click
@@ -151,7 +133,7 @@ const AddPlaceScreen = (props) => {
       success(result) {
         dispatch(postPlaceMedia(result, id))
           .then(() => {
-            history.push(routes.MAP.path);
+            history.push('/rate-place/'.concat(id));
           })
           .catch((err) => {
             alert(err);
@@ -167,16 +149,16 @@ const AddPlaceScreen = (props) => {
     if (name === '' || name === null) {
       setError(t('create_error'));
     } else {
-      dispatch(postPlace(name, type, city, coords, country))
+      dispatch(postPlace(name, type, city, state, country))
         .then((result) => {
           if (img !== undefined) {
             CompressSendImage(img, result);
           } else {
-            history.push(routes.MAP.path);
+            history.push('/rate-place/'.concat(result));
           }
         })
         .catch((err) => {
-          console.log(err);
+          alert(err);
         });
     }
   };
@@ -188,115 +170,83 @@ const AddPlaceScreen = (props) => {
   return (
     <Page backgroundColor={backgroundColor}>
       <TopBar
-        backTarget={coords ? () => setCoords(null) : history.goBack}
+        backTarget={history.goBack}
         aligned
         page
         hasBackButton
         backgroundColor={backgroundColor}
         hasAccessibilityButton={openAccessibility}
-        title={coords ? t('add_place') : t('click_to_mark')}
+        title={t('add_place')}
       />
       <Container>
-        {coords ? (
-          <>
-            <Form className="questions">
-              <InputLabel fontSize={fontSize} font={font}>
-                {t('name')}
-                <span>*</span>
-              </InputLabel>
-              <CustomInput
-                fontSize={fontSize}
-                font={font}
-                style={{
-                  borderRadius: '4px',
-                  height: 'auto',
-                  minHeight: '31px',
-                }}
-                placeholder={t('name')}
-                name="name"
-                onChange={(e) => setName(e.target.value)}
-              />
-              <InputLabel fontSize={fontSize} font={font}>
-                {t('type')}
-                <span>*</span>
-              </InputLabel>
-              <CustomSelect
-                style={{ width: '100%', height: '31px' }}
-                defaultValue={filterTypes[0]}
-                options={filterTypes}
-                onChange={(value) => setType(value.value)}
-              />
-            </Form>
-            <ButtonContainer>
-              <CustomButton
-                style={{
-                  width: '100%',
-                  borderRadius: '3px',
-                  border: '1px dashed #ffffff',
-                }}
-                backgroundColor={colors.transparent}
-                text={img === undefined ? t('Upload media files') : img.name}
-                icon={paperclipIcon}
-                onClick={handleClick}
-              />
-            </ButtonContainer>
-            <input
-              style={{ display: 'none' }}
-              ref={inputRef}
-              type="file"
-              onChange={handleFileChange}
-              accept="image/png, image/jpg, image/jpeg, image/jpg, video/mp4, video/mp3, video/wav"
-            />
-            <MediaLabel fontSize={fontSize} font={font}>
-              {t('supported_formats')} <span>png</span>, <span>jpeg</span>,
-              <span>mp4</span>, <span>mp3</span> and <span>wav</span>.
-            </MediaLabel>
-            {error && (
-              <Error fontSize={fontSize} font={font}>
-                {error}
-              </Error>
-            )}
-            <CustomButton
-              style={{
-                marginBottom: 20,
-                width: '100%',
-                borderRadius: '25px',
-              }}
-              backgroundColor={colors.orange}
-              text={t('submit')}
-              icon={ArrowRightIcon}
-              onClick={() => onSubmit()}
-            />
-          </>
-        ) : (
-          isLoaded && (
-            <div
-              style={{
-                width: '100vw',
-                height: '100%',
-                display: 'flex',
-                flexDirection: 'column',
-                maxWidth: '820px',
-              }}
-            >
-              <GoogleMap
-                mapContainerStyle={containerStyle}
-                center={location || { lat: 38.736946, lng: -9.142685 }}
-                zoom={16}
-                onClick={(e) => {
-                  setCoords({ lat: e.latLng.lat(), lng: e.latLng.lng() });
-                }}
-                options={{
-                  zoomControl: false,
-                  streetViewControl: false,
-                  mapTypeControl: false,
-                  fullscreenControl: false,
-                  disableDefaultUI: true,
-                }}
-              />
-            </div>
-          )
+        <Form className="questions">
+          <InputLabel fontSize={fontSize} font={font}>
+            {t('name')}
+            <span>*</span>
+          </InputLabel>
+          <CustomInput
+            fontSize={fontSize}
+            font={font}
+            style={{
+              borderRadius: '4px',
+              height: 'auto',
+              minHeight: '31px',
+            }}
+            placeholder={t('name')}
+            name="name"
+            onChange={(e) => setName(e.target.value)}
+          />
+          <InputLabel fontSize={fontSize} font={font}>
+            {t('type')}
+            <span>*</span>
+          </InputLabel>
+          <CustomSelect
+            style={{ width: '100%', height: '31px' }}
+            defaultValue={filterTypes[0]}
+            options={filterTypes}
+            onChange={(value) => setType(value.value)}
+          />
+        </Form>
+        <ButtonContainer>
+          <CustomButton
+            style={{
+              width: '100%',
+              borderRadius: '3px',
+              border: '1px dashed #ffffff',
+            }}
+            backgroundColor={colors.transparent}
+            text={img === undefined ? t('Upload media files') : img.name}
+            icon={paperclipIcon}
+            onClick={handleClick}
+          />
+        </ButtonContainer>
+        <input
+          style={{ display: 'none' }}
+          ref={inputRef}
+          type="file"
+          onChange={handleFileChange}
+          accept="image/png, image/jpg, image/jpeg, image/jpg, video/mp4, video/mp3, video/wav"
+        />
+        <MediaLabel fontSize={fontSize} font={font}>
+          {t('supported_formats')} <span>png</span>, <span>jpeg</span>,
+          <span>mp4</span>, <span>mp3</span> and <span>wav</span>.
+        </MediaLabel>
+        {error && (
+          <Error fontSize={fontSize} font={font}>
+            {error}
+          </Error>
         )}
+        <CustomButton
+          style={{
+            marginBottom: 20,
+            width: '100%',
+            borderRadius: '25px',
+          }}
+          backgroundColor={colors.orange}
+          text={t('submit')}
+          icon={ArrowRightIcon}
+          onClick={() => onSubmit()}
+        />
       </Container>
     </Page>
   );

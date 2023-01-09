@@ -13,26 +13,21 @@ import { HTTP_STATUS } from '../../constants';
 import { getAuthToken } from '../../services/local';
 import { getCurrentLocation } from '../../services/geolocation';
 
-const config = {
-  headers: {
-    Authorization: `Bearer ${getAuthToken()}`,
-    'Content-Type': 'multipart/form-data',
-  },
-};
-
 // Gets Single Place by ID
 export const getPlace = (id) => async (dispatch) => {
   dispatch({ type: GET_PLACE_START });
   const queryParams = {
     id,
   };
+  const config = {
+    headers: {
+      Authorization: `Bearer ${getAuthToken()}`,
+    },
+  };
   const url = generatePath(Endpoints.PLACES.concat(':id'), queryParams);
-
   try {
     const response = await axios.get(url, config);
-
     const statusCode = response.status;
-
     if (statusCode === HTTP_STATUS.SUCCESS) {
       dispatch({
         type: GET_PLACE_SUCCESS,
@@ -53,18 +48,20 @@ export const getPlacesCountry = (country, order) => async (dispatch) => {
     page: 1,
     size: 10,
   };
+  const config = {
+    headers: {
+      Authorization: `Bearer ${getAuthToken()}`,
+    },
+  };
   const url = generatePath(
     Endpoints.PLACES.concat(
       '?country_code=:country_code&desc_order_by=:desc_order_by&page=:page&size=:size',
     ),
     queryParams,
   );
-
   try {
     const response = await axios.get(url, config);
-
     const statusCode = response.status;
-
     if (statusCode === HTTP_STATUS.SUCCESS) {
       dispatch({
         type: GET_PLACES_RANKING_SUCCESS,
@@ -79,10 +76,13 @@ export const getPlacesCountry = (country, order) => async (dispatch) => {
 // Gets Places By Current Location
 export const getPlacesByLocation = (order, radius) => async (dispatch) => {
   dispatch({ type: GET_PLACES_RANKING_START });
-
+  const config = {
+    headers: {
+      Authorization: `Bearer ${getAuthToken()}`,
+    },
+  };
   try {
     const location = await getCurrentLocation();
-
     const queryParams = {
       latitude: location.lat,
       longitude: location.lng,
@@ -97,11 +97,8 @@ export const getPlacesByLocation = (order, radius) => async (dispatch) => {
       ),
       queryParams,
     );
-
     const response = await axios.get(url, config);
-
     const statusCode = response.status;
-
     if (statusCode === HTTP_STATUS.SUCCESS) {
       dispatch({
         type: GET_PLACES_RANKING_SUCCESS,
@@ -125,17 +122,20 @@ export const getPlacesRadiusMarkers =
       page: 1,
       size: 10,
     };
+    const config = {
+      headers: {
+        Authorization: `Bearer ${getAuthToken()}`,
+      },
+    };
     const url = generatePath(
       Endpoints.PLACES_RADIUS.concat(
         '?latitude=:latitude&longitude=:longitude&geo_query_radius=:geo_query_radius&page=:page&size=:size',
       ),
       queryParams,
     );
-
     try {
       const response = await axios.get(url, config);
       const statusCode = response.status;
-
       if (statusCode === HTTP_STATUS.SUCCESS) {
         return response.data?.result.data ?? [];
       }
@@ -157,12 +157,14 @@ export const postPlace = (name, type, city, location, country) => async () => {
     longitude: location.lng,
     country_code: country,
   };
-
+  const config = {
+    headers: {
+      Authorization: `Bearer ${getAuthToken()}`,
+    },
+  };
   try {
     const response = await axios.post(Endpoints.PLACES, body, config);
-
     const statusCode = response.status;
-
     if (statusCode === HTTP_STATUS.SUCCESS) {
       return Promise.resolve(response?.data?.result.id);
     }
@@ -176,20 +178,43 @@ export const postPlaceMedia = (media, id) => async () => {
   const body = {
     media,
   };
-
   const queryParams = {
     id,
   };
-
+  const config = {
+    headers: {
+      Authorization: `Bearer ${getAuthToken()}`,
+      'Content-Type': 'multipart/form-data',
+    },
+  };
   const url = generatePath(Endpoints.PLACES.concat(':id/media'), queryParams);
-
   try {
     const response = await axios.post(url, body, config);
-
     const statusCode = response.status;
-
     if (statusCode === HTTP_STATUS.SUCCESS_CREATED) {
       return Promise.resolve(response?.data?.message);
+    }
+  } catch (error) {
+    return Promise.reject(getErrorMessage(error, i18n.t('something_wrong')));
+  }
+};
+
+// Deletes Place
+export const deletePlace = (userId, placeId) => async () => {
+  const body = {
+    place_id: placeId,
+    app_user_id: userId,
+  };
+  const config = {
+    headers: {
+      Authorization: `Bearer ${getAuthToken()}`,
+    },
+  };
+  try {
+    const response = await axios.post(Endpoints.PLACES_DELETE, body, config);
+    const statusCode = response.status;
+    if (statusCode === HTTP_STATUS.SUCCESS) {
+      return Promise.resolve(response?.data?.result);
     }
   } catch (error) {
     return Promise.reject(getErrorMessage(error, i18n.t('something_wrong')));
@@ -206,6 +231,11 @@ export const getPlaceByParams = (params) => async (dispatch) => {
   dispatch({ type: GET_PLACE_START });
   const queryParams = {
     name,
+  };
+  const config = {
+    headers: {
+      Authorization: `Bearer ${getAuthToken()}`,
+    },
   };
   const url = generatePath(
     Endpoints.PLACES.concat(concatPlacesRequest(params)),

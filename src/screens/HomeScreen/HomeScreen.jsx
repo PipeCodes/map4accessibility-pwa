@@ -9,6 +9,7 @@ import { getUser } from '../../store/actions/auth';
 import LatestComments from '../../components/LatestComments/LatestComments';
 import { getMyPlaceEvaluations } from '../../store/actions/placeEvaluations';
 import MyCommentsStatus from '../../components/MyCommentsStatus/MyCommentsStatus';
+import PlacesVisited from '../../components/PlacesVisited/PlacesVisited';
 
 const HomeScreen = (props) => {
   const { history, routes } = props;
@@ -52,6 +53,7 @@ const HomeScreen = (props) => {
           {t('welcome')} {user?.name} {user?.surname}!
         </Text>
         <MyArea backgroundColor={backgroundColor}>
+          <PlacesVisited history={history} />
           <MyCommentsStatus
             positive={sums?.positive || 0}
             negative={sums?.negative || 0}

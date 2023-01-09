@@ -137,5 +137,10 @@
   "latest_evaluations": "Latest Evaluations",
   "radius_error": "Unable to define route for same origin and destination location",
   "search": "Search",
-  "filters": "Filters"
+  "filters": "Filters",
+  "show_route": "Show Route",
+  "last_places_visited": "Last Places Visited",
+  "request_sent_delete_place": "Request to delete place sent.",
+  "problem_request_delete_place": "There was a problem requesting to delete place.",
+  "mark_as_closed": "Mark this place as closed"
 }

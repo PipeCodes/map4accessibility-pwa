@@ -17,6 +17,7 @@ import HomeScreen from '../screens/HomeScreen/HomeScreen';
 import RatePlaceScreen from '../screens/RatePlaceScreen/RatePlaceScreen';
 import AddPlaceScreen from '../screens/AddPlaceScreen/AddPlaceScreen';
 import PlaceDetailsScreen from '../screens/PlaceDetailsScreen/PlaceDetailsScreen';
+import SingleRouteScreen from '../screens/SingleRouteScreen/SingleRouteScreen';
 import InfoScreen from '../screens/InfoScreen/InfoScreen';
 import { isAuthenticated } from '../services/local';
 import SearchScreen from '../screens/SearchScreen/SearchScreen';
@@ -88,6 +89,11 @@ const routes = {
   ROUTE_PLANNER: {
     path: '/route-planner',
     component: RoutePlannerScreen,
+    private: true,
+  },
+  SINGLE_ROUTE: {
+    path: '/route/:id',
+    component: SingleRouteScreen,
     private: true,
   },
   MAP: {

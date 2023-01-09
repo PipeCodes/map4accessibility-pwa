@@ -49,6 +49,8 @@ const MapScreen = (props) => {
   const [center, setCenter] = useState(null);
   const [markers, setMarkers] = useState(null);
   const [location, setLocation] = useState(null);
+  const [coords, setCoords] = useState(null);
+  const [add, setAdd] = useState(null);
 
   const { isLoaded } = useJsApiLoader(GOOGLE_MAPS_OPTIONS);
 
@@ -78,9 +80,18 @@ const MapScreen = (props) => {
       // Asks and sets user position (lat, long)
       getCurrentLocation()
         .then((position) => setLocation(position))
-        .catch((error) => alert(error));
+        .catch((error) => {
+          setLocation({ lat: 38.736946, lng: -9.142685 });
+          alert(error);
+        });
     }
   }, [isLoaded, t]);
+
+  useEffect(() => {
+    if (coords) {
+      history.push(routes.ADD_PLACE.path, coords);
+    }
+  }, [coords, history]);
 
   // https://stackoverflow.com/questions/68638475/my-map-bounds-appears-to-be-calculating-a-radius-outside-of-my-visible-area
   const getRadius = () => {
@@ -109,9 +120,9 @@ const MapScreen = (props) => {
     history.push(routes.ACCESSIBILITY.path);
   }, [history, routes]);
 
-  const openAddPlace = useCallback(() => {
-    history.push(routes.ADD_PLACE.path);
-  }, [history, routes]);
+  const openAddPlace = () => {
+    setAdd((prev) => !prev);
+  };
 
   const openRoutes = useCallback(() => {
     history.push(routes.ROUTE_PLANNER.path);
@@ -157,7 +168,7 @@ const MapScreen = (props) => {
         page
         backgroundColor={backgroundColor}
         hasAccessibilityButton={openAccessibility}
-        title={t('map')}
+        title={add ? t('click_to_mark') : t('map')}
       />
       <Container>
         {isLoaded && (
@@ -172,8 +183,13 @@ const MapScreen = (props) => {
           >
             <GoogleMap
               mapContainerStyle={containerStyle}
-              center={location || { lat: 38.736946, lng: -9.142685 }}
-              zoom={location ? 14 : 10}
+              center={location}
+              zoom={14}
+              onClick={(e) => {
+                if (add) {
+                  setCoords({ lat: e.latLng.lat(), lng: e.latLng.lng() });
+                }
+              }}
               onCenterChanged={() => {
                 if (!map) {
                   return;
@@ -214,7 +230,7 @@ const MapScreen = (props) => {
         )}
       </Container>
       <ButtonsContainer>
-        <ButtonCreate type="button" onClick={() => openAddPlace()}>
+        <ButtonCreate type="button" add={add} onClick={() => openAddPlace()}>
           <img src={AddIcon} alt={t('add_place')} />
         </ButtonCreate>
         <ButtonDirections type="button" onClick={() => openRoutes()}>

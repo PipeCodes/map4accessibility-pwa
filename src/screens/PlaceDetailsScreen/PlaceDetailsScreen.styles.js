@@ -40,6 +40,7 @@ export const Container = styled.div`
   width: 100%;
   padding-bottom: 92px;
   margin-top: 30px;
+  position: relative;
 
   .card {
     background: ${colors.white};
@@ -65,9 +66,10 @@ export const Container = styled.div`
     border: 1px solid ${colors.lightGrey};
     padding: 10px;
     border-radius: 25px;
-    position: fixed;
+    position: sticky;
     bottom: 20px;
     right: 20px;
+
     button {
       all: unset;
     }
@@ -90,6 +92,15 @@ export const PlaceInformation = styled.div`
   display: flex;
   flex-direction: column;
   color: ${colors.primaryTextColor};
+`;
+
+export const Button = styled.button`
+  color: ${colors.orange};
+  font-size: ${(props) => updateFontSize(14, props.fontSize)};
+  font-family: ${(props) => updateValue('NotoSans-Regular', props.font)};
+  margin-bottom: 10px;
+  background-color: ${colors.transparent};
+  border: none;
 `;
 
 export const Accessible = styled.div`

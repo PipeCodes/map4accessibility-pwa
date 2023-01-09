@@ -10,13 +10,6 @@ import {
   GET_PLACE_EVALUATIONS_SUMS,
 } from './types';
 
-const config = {
-  headers: {
-    Authorization: `Bearer ${getAuthToken()}`,
-    'Content-Type': 'multipart/form-data',
-  },
-};
-
 // Gets the user's place Evaluations
 export const getMyPlaceEvaluations = () => async (dispatch) => {
   dispatch({ type: GET_PLACE_EVALUATIONS_START });
@@ -28,6 +21,11 @@ export const getMyPlaceEvaluations = () => async (dispatch) => {
     Endpoints.MY_PLACE_EVALUTATIONS.concat('?page=:page&size=:size'),
     queryParams,
   );
+  const config = {
+    headers: {
+      Authorization: `Bearer ${getAuthToken()}`,
+    },
+  };
 
   try {
     const response = await axios.get(url, config);
@@ -57,13 +55,19 @@ export const getMyPlaceEvaluations = () => async (dispatch) => {
 
 // Sends a new place evaluation to the API
 export const postPlaceEvaluation =
-  (thumbDirection, comment, answers, latitude, longitude) => async () => {
+  (thumbDirection, name, comment, answers, latitude, longitude) => async () => {
     const body = {
       thumb_direction: thumbDirection,
+      name,
       comment,
       question_answers: answers,
       latitude,
       longitude,
+    };
+    const config = {
+      headers: {
+        Authorization: `Bearer ${getAuthToken()}`,
+      },
     };
 
     try {
@@ -91,6 +95,12 @@ export const postPlaceEvaluationMedia = (media, id) => async () => {
 
   const queryParams = {
     id,
+  };
+  const config = {
+    headers: {
+      Authorization: `Bearer ${getAuthToken()}`,
+      'Content-Type': 'multipart/form-data',
+    },
   };
 
   const url = generatePath(
