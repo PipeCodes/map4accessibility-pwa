@@ -24,7 +24,7 @@ export const getPlace = (id) => async (dispatch) => {
       Authorization: `Bearer ${getAuthToken()}`,
     },
   };
-  const url = generatePath(Endpoints.PLACES.concat(':id'), queryParams);
+  const url = generatePath(Endpoints.PLACES.concat('/:id'), queryParams);
   try {
     const response = await axios.get(url, config);
     const statusCode = response.status;

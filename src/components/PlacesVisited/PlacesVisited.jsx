@@ -24,7 +24,7 @@ const PlacesVisited = ({ history }) => {
     (state) => state.accessibility.backgroundColor,
   );
   const [viewAll, setViewAll] = useState(false);
-  const places = useSelector((state) => state.history.history).reverse();
+  const places = useSelector((state) => state.history.history);
   const [placesList, setPlacesList] = useState([]);
 
   useEffect(() => {
@@ -48,8 +48,8 @@ const PlacesVisited = ({ history }) => {
       </TopWrapper>
       <>
         {places && placesList?.length !== 0 ? (
-          placesList.map((place) => (
-            <Place>
+          placesList?.map((place, key) => (
+            <Place key={key}>
               <Image src={place?.place_image?.file_url} />
               <TextWrapper>
                 <Name fontSize={fontSize} font={font}>
