@@ -143,6 +143,18 @@ const RatePlaceScreen = (props) => {
     setAccessibility(0);
   };
 
+  const getMedia = (place) => {
+    const pictures = place?.media_evaluations;
+    const mainPicture = {
+      file_type: 'image',
+      file_url: place?.media,
+    };
+
+    if (mainPicture.file_url) pictures.unshift(mainPicture);
+
+    return pictures?.length ? pictures : photos;
+  };
+
   const openAccessibility = useCallback(() => {
     history.push(routes.ACCESSIBILITY.path);
   }, [history, routes]);
@@ -157,11 +169,7 @@ const RatePlaceScreen = (props) => {
         hasAccessibilityButton={openAccessibility}
         title={t('comment')}
       />
-      <ImageSlider
-        photos={
-          place?.media_evaluations?.length ? place.media_evaluations : photos
-        }
-      />
+      <ImageSlider photos={getMedia(place)} />
       <Container>
         <TextWrapper>
           <Name fontSize={fontSize} font={font}>
