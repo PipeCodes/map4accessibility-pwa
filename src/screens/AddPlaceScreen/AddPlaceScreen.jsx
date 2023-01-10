@@ -155,7 +155,7 @@ const AddPlaceScreen = (props) => {
           if (img !== undefined) {
             CompressSendImage(img, result);
           } else {
-            history.push('/rate-place/'.concat(result));
+            history.push('/rate-place/'.concat(result), { newPlace: true });
           }
         })
         .catch((err) => {
