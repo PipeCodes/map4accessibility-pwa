@@ -141,13 +141,13 @@ const AddPlaceScreen = (props) => {
           });
       },
       error(err) {
-        alert(err.message);
+        alert(err);
       },
     });
   };
 
   const onSubmit = () => {
-    if (name === '' || name === null) {
+    if (name === '' || name === null || name.length < 3) {
       setError(t('create_error'));
     } else {
       dispatch(postPlace(name, type, city, state, country, img))

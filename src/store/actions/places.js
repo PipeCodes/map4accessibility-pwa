@@ -200,7 +200,12 @@ export const postPlace =
       }
     } catch (error) {
       dispatch({ type: POST_PLACE_ERROR });
-      return Promise.reject(getErrorMessage(error, i18n.t('something_wrong')));
+      if (error?.response?.status === HTTP_STATUS.CONFLICT) {
+        return Promise.reject(i18n.t('place_conflict'));
+      }
+      return Promise.reject(
+        getErrorMessage(error?.message, i18n.t('something_wrong')),
+      );
     }
   };
 
