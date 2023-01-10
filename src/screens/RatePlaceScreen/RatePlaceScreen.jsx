@@ -129,7 +129,10 @@ const RatePlaceScreen = (props) => {
           if (img !== undefined) {
             CompressSendImage(img, result);
           } else {
-            history.push('/place-details/'.concat(params.id));
+            history.push('/place-details/'.concat(params.id), {
+              newPlace: history?.location?.state?.newPlace,
+              ratePlace: true,
+            });
           }
         })
         .catch((err) => {
