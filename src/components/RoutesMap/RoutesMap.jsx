@@ -10,6 +10,7 @@ import {
 import { colors } from '../../constants/colors';
 import RouteOption from '../RouteOption/RouteOption';
 import CustomMarker from '../CustomMarker/CustomMarker';
+import PlacesVisited from '../PlacesVisited/PlacesVisited';
 
 // Map styling
 const containerStyle = {
@@ -191,7 +192,7 @@ const Map = ({ origin, destination, routes, userLocation, history }) => {
   }, [origin, destination]);
 
   if (!destination) {
-    return <>ADD LOCALSTORAGE LIST HERE</>;
+    return <PlacesVisited history={history} />;
   }
 
   return (

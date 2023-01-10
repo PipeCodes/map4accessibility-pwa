@@ -2,7 +2,13 @@ import {
   AUTH_START,
   AUTH_SUCCESS,
   AUTH_ERROR,
+  CREATE_USER_START,
+  CREATE_USER_SUCCESS,
+  CREATE_USER_ERROR,
   GET_USER_SUCCESS,
+  UPDATE_USER_START,
+  UPDATE_USER_SUCCESS,
+  UPDATE_USER_ERROR,
   LOGOUT,
 } from '../actions/types';
 
@@ -34,6 +40,37 @@ const authReducer = (state = initialState, action) => {
       return {
         ...state,
         user: action.user,
+        loading: false,
+      };
+    case CREATE_USER_START:
+      return {
+        ...state,
+        loading: true,
+      };
+    case CREATE_USER_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+      };
+    case CREATE_USER_ERROR:
+      return {
+        ...state,
+        loading: false,
+      };
+    case UPDATE_USER_START:
+      return {
+        ...state,
+        loading: true,
+      };
+    case UPDATE_USER_SUCCESS:
+      return {
+        ...state,
+        user: action.user,
+        loading: false,
+      };
+    case UPDATE_USER_ERROR:
+      return {
+        ...state,
         loading: false,
       };
     case LOGOUT:

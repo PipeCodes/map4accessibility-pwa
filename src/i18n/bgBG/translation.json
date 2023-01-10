@@ -128,7 +128,7 @@
   "attractions": "Attractions",
   "danger": "Danger",
   "click_to_mark": "Click to mark",
-  "create_error": "Write a name for the place",
+  "create_error": "Write a name for the place with at least 3 characters.",
   "view_all": "View All",
   "show_less": "Show Less",
   "latest": "Latest",
