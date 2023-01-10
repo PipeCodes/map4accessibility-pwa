@@ -26,7 +26,7 @@ import {
   Title,
   MediaLabel,
   Error,
-} from './RatePlace.styles';
+} from './RatePlaceScreen.styles';
 import TopBar from '../../components/TopBar/TopBar';
 import ImageSlider from '../../components/ImageSlider/ImageSlider';
 import buttonUp from '../../assets/icons/places/like.svg';
@@ -52,6 +52,7 @@ const RatePlaceScreen = (props) => {
   const backgroundColor = useSelector(
     (state) => state.accessibility.backgroundColor,
   );
+  const loading = useSelector((state) => state.placeEvaluations.loading);
 
   const questions = useSelector((state) => state.questions.questions);
   const place = useSelector((state) => state.place.place);
@@ -120,6 +121,7 @@ const RatePlaceScreen = (props) => {
           answers,
           place.latitude,
           place.longitude,
+          img,
         ),
       )
         .then((result) => {
@@ -277,10 +279,12 @@ const RatePlaceScreen = (props) => {
             width: '100%',
             borderRadius: '25px',
           }}
-          backgroundColor={colors.orange}
           text={t('submit')}
           icon={ArrowRightIcon}
           onClick={() => onSubmit()}
+          backgroundColor={loading ? colors.grey : colors.orange}
+          loading={loading}
+          disabled={loading}
         />
       </Container>
     </Page>
