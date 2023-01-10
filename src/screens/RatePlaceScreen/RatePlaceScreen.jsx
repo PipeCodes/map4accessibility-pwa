@@ -262,11 +262,12 @@ const RatePlaceScreen = (props) => {
           ref={inputRef}
           type="file"
           onChange={handleFileChange}
-          accept="image/png, image/jpg, image/jpeg, image/jpg, video/mp4, video/mp3, video/wav"
+          accept="image/png, image/jpg, image/jpeg, image/jpg,  image/webp, video/mp4, video/mp3, video/wav"
         />
         <MediaLabel fontSize={fontSize} font={font}>
-          {t('supported_formats')} <span>png</span>, <span>jpeg</span>,
-          <span>mp4</span>, <span>mp3</span> and <span>wav</span>.
+          {t('supported_formats')} <span>png</span>, <span>jpg</span>,{' '}
+          <span>jpeg</span>, <span>webp</span>, <span>mp4</span>,{' '}
+          <span>mp3</span> and <span>wav</span>.
         </MediaLabel>
         {error && (
           <Error fontSize={fontSize} font={font}>
