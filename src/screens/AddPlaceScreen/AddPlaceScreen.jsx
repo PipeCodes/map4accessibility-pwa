@@ -14,7 +14,7 @@ import CustomInput from '../../components/CustomInput/CustomInput';
 import CustomSelect from '../../components/CustomSelect/CustomSelect';
 import ArrowRightIcon from '../../assets/icons/arrow-right.svg';
 import { colors } from '../../constants/colors';
-import { GOOGLE_MAPS_OPTIONS } from '../../constants';
+import { GOOGLE_MAPS_OPTIONS, IMAGE_TYPES } from '../../constants';
 import { types } from '../../constants/placeTypes';
 import {
   Page,
@@ -41,6 +41,7 @@ const AddPlaceScreen = (props) => {
   const backgroundColor = useSelector(
     (state) => state.accessibility.backgroundColor,
   );
+  const loading = useSelector((state) => state.place.loading);
 
   const { isLoaded } = useJsApiLoader(GOOGLE_MAPS_OPTIONS);
 
@@ -149,7 +150,7 @@ const AddPlaceScreen = (props) => {
     if (name === '' || name === null) {
       setError(t('create_error'));
     } else {
-      dispatch(postPlace(name, type, city, state, country))
+      dispatch(postPlace(name, type, city, state, country, img))
         .then((result) => {
           if (img !== undefined) {
             CompressSendImage(img, result);
@@ -225,11 +226,12 @@ const AddPlaceScreen = (props) => {
           ref={inputRef}
           type="file"
           onChange={handleFileChange}
-          accept="image/png, image/jpg, image/jpeg, image/jpg, video/mp4, video/mp3, video/wav"
+          accept={IMAGE_TYPES}
         />
         <MediaLabel fontSize={fontSize} font={font}>
-          {t('supported_formats')} <span>png</span>, <span>jpeg</span>,
-          <span>mp4</span>, <span>mp3</span> and <span>wav</span>.
+          {t('supported_formats')} <span>png</span>, <span>jpg</span>,{' '}
+          <span>jpeg</span>, <span>webp</span>, <span>mp4</span>,{' '}
+          <span>mp3</span> and <span>wav</span>.
         </MediaLabel>
         {error && (
           <Error fontSize={fontSize} font={font}>
@@ -242,10 +244,12 @@ const AddPlaceScreen = (props) => {
             width: '100%',
             borderRadius: '25px',
           }}
-          backgroundColor={colors.orange}
           text={t('submit')}
           icon={ArrowRightIcon}
           onClick={() => onSubmit()}
+          backgroundColor={loading ? colors.grey : colors.orange}
+          loading={loading}
+          disabled={loading}
         />
       </Container>
     </Page>

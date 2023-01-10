@@ -5,6 +5,12 @@ import {
   AUTH_ERROR,
   GET_USER_SUCCESS,
   LOGOUT,
+  UPDATE_USER_SUCCESS,
+  UPDATE_USER_START,
+  UPDATE_USER_ERROR,
+  CREATE_USER_START,
+  CREATE_USER_SUCCESS,
+  CREATE_USER_ERROR,
 } from './types';
 import { HTTP_STATUS } from '../../constants';
 import i18n from '../../i18n';
@@ -52,7 +58,7 @@ export const logout = () => (dispatch) => {
 export const signup =
   (name, surname, birthdate, email, password, termsAccepted, disabilities) =>
   async (dispatch) => {
-    dispatch({ type: AUTH_START });
+    dispatch({ type: CREATE_USER_START });
 
     const body = {
       name,
@@ -70,10 +76,11 @@ export const signup =
       const statusCode = response.status;
 
       if (statusCode === HTTP_STATUS.SUCCESS_CREATED) {
+        dispatch({ type: CREATE_USER_SUCCESS });
         return Promise.resolve(response?.data?.message);
       }
     } catch (error) {
-      dispatch({ type: AUTH_ERROR });
+      dispatch({ type: CREATE_USER_ERROR });
 
       return Promise.reject(getErrorMessage(error, i18n.t('something_wrong')));
     }
@@ -183,6 +190,9 @@ export const changePassword = (form, token) => async (dispatch) => {
 export const updateProfile =
   ({ firstName, surname, birthDate, email, avatar }) =>
   async (dispatch, getState) => {
+    dispatch({
+      type: UPDATE_USER_START,
+    });
     const body = new FormData();
     body.append('name', firstName);
     body.append('surname', surname);
@@ -213,7 +223,7 @@ export const updateProfile =
         };
 
         dispatch({
-          type: GET_USER_SUCCESS,
+          type: UPDATE_USER_SUCCESS,
           user: updatedUser,
         });
 
@@ -227,6 +237,7 @@ export const updateProfile =
       ) {
         dispatch(logout());
       } else {
+        dispatch({ type: UPDATE_USER_ERROR });
         return Promise.reject(getErrorMessage(error, 'something_wrong'));
       }
     }
