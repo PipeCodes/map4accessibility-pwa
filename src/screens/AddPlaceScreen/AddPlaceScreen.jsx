@@ -14,7 +14,7 @@ import CustomInput from '../../components/CustomInput/CustomInput';
 import CustomSelect from '../../components/CustomSelect/CustomSelect';
 import ArrowRightIcon from '../../assets/icons/arrow-right.svg';
 import { colors } from '../../constants/colors';
-import { GOOGLE_MAPS_OPTIONS } from '../../constants';
+import { GOOGLE_MAPS_OPTIONS, IMAGE_TYPES } from '../../constants';
 import { types } from '../../constants/placeTypes';
 import {
   Page,
@@ -226,7 +226,7 @@ const AddPlaceScreen = (props) => {
           ref={inputRef}
           type="file"
           onChange={handleFileChange}
-          accept="image/png, image/jpg, image/jpeg, image/webp, video/mp4, video/mp3, video/wav"
+          accept={IMAGE_TYPES}
         />
         <MediaLabel fontSize={fontSize} font={font}>
           {t('supported_formats')} <span>png</span>, <span>jpg</span>,{' '}

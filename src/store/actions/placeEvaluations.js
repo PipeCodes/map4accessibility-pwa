@@ -122,7 +122,7 @@ export const postPlaceEvaluationMedia = (media, id) => async (dispatch) => {
 
     const statusCode = response.status;
 
-    if (statusCode === HTTP_STATUS.SUCCESS_CREATED) {
+    if (statusCode === HTTP_STATUS.SUCCESS) {
       dispatch({ type: POST_PLACE_EVALUATIONS_SUCCESS });
       return Promise.resolve(response?.data?.message);
     }

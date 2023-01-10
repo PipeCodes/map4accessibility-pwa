@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import ArrowRightIcon from '../../assets/icons/arrow-right.svg';
 import { colors } from '../../constants/colors';
+import { IMAGE_TYPES } from '../../constants';
 import {
   Page,
   Container,
@@ -262,7 +263,7 @@ const RatePlaceScreen = (props) => {
           ref={inputRef}
           type="file"
           onChange={handleFileChange}
-          accept="image/png, image/jpg, image/jpeg, image/jpg,  image/webp, video/mp4, video/mp3, video/wav"
+          accept={IMAGE_TYPES}
         />
         <MediaLabel fontSize={fontSize} font={font}>
           {t('supported_formats')} <span>png</span>, <span>jpg</span>,{' '}
