@@ -138,5 +138,6 @@
   "last_places_visited": "Últimos Locais Visitados",
   "request_sent_delete_place": "Pedido de remoção de local efectuado.",
   "problem_request_delete_place": "Ocurreu um problema ao efectuar o pedido de remoção.",
-  "mark_as_closed": "Marcar este local como fechado"
+  "mark_as_closed": "Marcar este local como fechado",
+  "place_conflict": "Local já existente, volte para o mapa para ver."
 }

@@ -14,7 +14,7 @@ import CustomInput from '../../components/CustomInput/CustomInput';
 import CustomSelect from '../../components/CustomSelect/CustomSelect';
 import ArrowRightIcon from '../../assets/icons/arrow-right.svg';
 import { colors } from '../../constants/colors';
-import { GOOGLE_MAPS_OPTIONS } from '../../constants';
+import { GOOGLE_MAPS_OPTIONS, HTTP_STATUS } from '../../constants';
 import { types } from '../../constants/placeTypes';
 import {
   Page,
@@ -158,7 +158,11 @@ const AddPlaceScreen = (props) => {
           }
         })
         .catch((err) => {
-          alert(err);
+          if (err?.status === HTTP_STATUS.CONFLICT) {
+            alert(t('place_conflict'));
+            return;
+          }
+          alert(err?.data?.message);
         });
     }
   };

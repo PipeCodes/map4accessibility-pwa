@@ -184,7 +184,7 @@ export const postPlace = (name, type, city, location, country) => async () => {
       return Promise.resolve(response?.data?.result.id);
     }
   } catch (error) {
-    return Promise.reject(getErrorMessage(error, i18n.t('something_wrong')));
+    return Promise.reject(error?.response);
   }
 };
 

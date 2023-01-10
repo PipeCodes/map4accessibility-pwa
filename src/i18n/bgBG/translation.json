@@ -140,5 +140,6 @@
   "last_places_visited": "Last Places Visited",
   "request_sent_delete_place": "Request to delete place sent.",
   "problem_request_delete_place": "There was a problem requesting to delete place.",
-  "mark_as_closed": "Mark this place as closed"
+  "mark_as_closed": "Mark this place as closed",
+  "place_conflict": "Place already exists, please go back to the map."
 }
