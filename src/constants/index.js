@@ -15,6 +15,10 @@ export const REGEX_PASSWORD =
   /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d!@#$%^&*^~+=`|\\[\](){}:;'<>ç,.?/"_-]{8,}$/;
 export const REGEX_DATE = /^[0-9]{1,4}[-,/][0-9]{1,2}[-,/][0-9]{1,4}$/;
 
+// IMAGE TYPES
+export const IMAGE_TYPES =
+  'image/png, image/jpg, image/jpeg, image/jpg,  image/webp, video/mp4, video/mp3, video/wav';
+
 // HTTP STATUS
 export const HTTP_STATUS = {
   UNHAUTORIZED: 401,

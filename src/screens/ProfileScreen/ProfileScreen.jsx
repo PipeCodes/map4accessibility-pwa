@@ -1,4 +1,4 @@
-import moment from "moment";
+import moment from 'moment';
 import React, { useEffect, useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
@@ -61,6 +61,8 @@ const termsConditions = `${process.env.REACT_APP_EXTERNAL_LINKS_BASE}/terms-cond
 
 const privacyPolicy = `${process.env.REACT_APP_EXTERNAL_LINKS_BASE}/privacy-policy`;
 
+const faqs = `${process.env.REACT_APP_EXTERNAL_LINKS_BASE}/faqs`;
+
 const ProfileScreen = (props) => {
   const { history, routes } = props;
   const dispatch = useDispatch();
@@ -70,6 +72,7 @@ const ProfileScreen = (props) => {
   const backgroundColor = useSelector(
     (state) => state.accessibility.backgroundColor,
   );
+  const loading = useSelector((state) => state.auth.loading);
   const user = useSelector((state) => state.auth.user);
   const [formData, setFormData] = useState(initialValues);
   const [formErrors, setFormErrors] = useState({});
@@ -285,7 +288,7 @@ const ProfileScreen = (props) => {
             type="email"
             value={formData.email}
             name="email"
-            readOnly={!editActive}
+            readOnly
             onChange={(e) => {
               setFormData((prevState) => ({
                 ...prevState,
@@ -309,8 +312,8 @@ const ProfileScreen = (props) => {
             type="date"
             value={formData.birthDate}
             name="birthDate"
-            min={moment().subtract(100, "years").format("YYYY-MM-DD")}
-            max={moment().subtract(16, "years").format('yyyy-MM-DD')}
+            min={moment().subtract(100, 'years').format('YYYY-MM-DD')}
+            max={moment().subtract(16, 'years').format('yyyy-MM-DD')}
             readOnly={!editActive}
             onChange={(e) => {
               setFormData((prevState) => ({
@@ -333,10 +336,12 @@ const ProfileScreen = (props) => {
                 margin: 'auto',
                 marginTop: '10px',
               }}
-              backgroundColor={colors.primaryColor}
               text={t('confirm')}
               onClick={() => updateProfileHandler()}
               icon={EditActiveIcon}
+              backgroundColor={loading ? colors.grey : colors.primaryColor}
+              loading={loading}
+              disabled={loading}
             />
           )}
         </FormWrapper>
@@ -379,6 +384,7 @@ const ProfileScreen = (props) => {
             backgroundColor={colors.transparent}
             text={t('faqs')}
             icon={QuestionsIcon}
+            onClick={() => window.open(faqs)}
           />
           <Link fontSize={fontSize} href={termsConditions} target="_blank">
             {t('terms_conditions')}

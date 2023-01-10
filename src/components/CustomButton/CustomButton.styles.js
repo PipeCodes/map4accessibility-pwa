@@ -23,6 +23,14 @@ const ButtonStyle = styled.button`
   align-items: center;
   justify-content: center;
 
+  .spinner-border {
+    color: ${colors.primaryColor} !important;
+    margin: 0;
+    margin-right: 10px;
+    height: 20px;
+    width: 20px;
+  }
+
   img {
     margin-right: 10px;
   }

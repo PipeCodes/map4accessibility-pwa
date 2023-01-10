@@ -24,9 +24,10 @@ const LoginScreen = (props) => {
   const backgroundColor = useSelector(
     (state) => state.accessibility.backgroundColor,
   );
+  const loading = useSelector((state) => state.auth.loading);
+  const user = useSelector((state) => state.auth.user);
   const [formData, setFormData] = useState(initialValues);
   const [formErrors, setFormErrors] = useState({});
-  const user = useSelector((state) => state.auth.user);
 
   useEffect(() => {
     if (user && history) {
@@ -94,10 +95,12 @@ const LoginScreen = (props) => {
             width: '100%',
             borderRadius: '25px',
           }}
-          backgroundColor={colors.orange}
           text={t('login')}
           icon={OpenAccountLogin}
           onClick={() => validateFormErrorsClickHandler(formErrors)}
+          backgroundColor={loading ? colors.grey : colors.orange}
+          loading={loading}
+          disabled={loading}
         />
 
         <Box>

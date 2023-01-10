@@ -8,6 +8,9 @@ import {
   GET_PLACE_EVALUATIONS_SUCCESS,
   GET_PLACE_EVALUATIONS_START,
   GET_PLACE_EVALUATIONS_SUMS,
+  POST_PLACE_EVALUATIONS_SUCCESS,
+  POST_PLACE_EVALUATIONS_START,
+  POST_PLACE_EVALUATIONS_ERROR,
 } from './types';
 
 // Gets the user's place Evaluations
@@ -55,7 +58,9 @@ export const getMyPlaceEvaluations = () => async (dispatch) => {
 
 // Sends a new place evaluation to the API
 export const postPlaceEvaluation =
-  (thumbDirection, name, comment, answers, latitude, longitude) => async () => {
+  (thumbDirection, name, comment, answers, latitude, longitude, media) =>
+  async (dispatch) => {
+    dispatch({ type: POST_PLACE_EVALUATIONS_START });
     const body = {
       thumb_direction: thumbDirection,
       name,
@@ -80,15 +85,19 @@ export const postPlaceEvaluation =
       const statusCode = response.status;
 
       if (statusCode === HTTP_STATUS.SUCCESS) {
+        if (!media) {
+          dispatch({ type: POST_PLACE_EVALUATIONS_SUCCESS });
+        }
         return Promise.resolve(response?.data?.result.id);
       }
     } catch (error) {
+      dispatch({ type: POST_PLACE_EVALUATIONS_ERROR });
       return Promise.reject(getErrorMessage(error, i18n.t('something_wrong')));
     }
   };
 
 // Sends the media for the new place evaluation to the API
-export const postPlaceEvaluationMedia = (media, id) => async () => {
+export const postPlaceEvaluationMedia = (media, id) => async (dispatch) => {
   const body = {
     media,
   };
@@ -113,10 +122,12 @@ export const postPlaceEvaluationMedia = (media, id) => async () => {
 
     const statusCode = response.status;
 
-    if (statusCode === HTTP_STATUS.SUCCESS_CREATED) {
+    if (statusCode === HTTP_STATUS.SUCCESS) {
+      dispatch({ type: POST_PLACE_EVALUATIONS_SUCCESS });
       return Promise.resolve(response?.data?.message);
     }
   } catch (error) {
+    dispatch({ type: POST_PLACE_EVALUATIONS_ERROR });
     return Promise.reject(getErrorMessage(error, i18n.t('something_wrong')));
   }
 };

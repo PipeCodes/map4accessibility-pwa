@@ -101,16 +101,15 @@ const LatestComments = (props) => {
             <Comment backgroundColor={backgroundColor} key={comment.id}>
               <Top>
                 {comment?.media_url ? (
-                  <Image src={comment?.user?.avatar} />
+                  <Image src={comment?.app_user?.avatar} />
                 ) : (
                   <Image src={Avatar} />
                 )}
                 <Name fontSize={fontSize} font={font}>
-                  {comment?.user &&
-                    comment?.user?.name
+                  {comment?.app_user &&
+                    comment?.app_user?.name
                       .concat(' ')
-                      .concat(comment?.user?.surname)}{' '}
-                  Anonymous {/* PLACEHOLDER, REMOVE WHEN NAME IS ADDED  */}
+                      .concat(comment?.app_user?.surname)}
                 </Name>
               </Top>
               <Accessible backgroundColor={backgroundColor}>

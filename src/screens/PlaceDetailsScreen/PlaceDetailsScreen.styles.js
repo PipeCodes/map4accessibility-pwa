@@ -69,6 +69,7 @@ export const Container = styled.div`
     position: sticky;
     bottom: 20px;
     right: 20px;
+    cursor: pointer;
 
     button {
       all: unset;
@@ -92,6 +93,15 @@ export const PlaceInformation = styled.div`
   display: flex;
   flex-direction: column;
   color: ${colors.primaryTextColor};
+`;
+
+export const Button = styled.button`
+  color: ${colors.orange};
+  font-size: ${(props) => updateFontSize(14, props.fontSize)};
+  font-family: ${(props) => updateValue('NotoSans-Regular', props.font)};
+  margin-bottom: 10px;
+  background-color: ${colors.transparent};
+  border: none;
 `;
 
 export const Accessible = styled.div`

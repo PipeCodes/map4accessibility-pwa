@@ -1,4 +1,11 @@
-import { GET_PLACE_START, GET_PLACE_SUCCESS } from '../actions/types';
+import {
+  GET_PLACE_START,
+  GET_PLACE_SUCCESS,
+  GET_PLACE_ERROR,
+  POST_PLACE_START,
+  POST_PLACE_SUCCESS,
+  POST_PLACE_ERROR,
+} from '../actions/types';
 
 const initialState = {
   place: null,
@@ -17,6 +24,26 @@ const placeReducer = (state = initialState, action) => {
       return {
         ...state,
         place: action.place,
+        loading: false,
+      };
+    case GET_PLACE_ERROR:
+      return {
+        ...state,
+        loading: false,
+      };
+    case POST_PLACE_START:
+      return {
+        ...state,
+        loading: true,
+      };
+    case POST_PLACE_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+      };
+    case POST_PLACE_ERROR:
+      return {
+        ...state,
         loading: false,
       };
 
