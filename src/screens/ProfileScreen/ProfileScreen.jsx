@@ -72,6 +72,7 @@ const ProfileScreen = (props) => {
   const backgroundColor = useSelector(
     (state) => state.accessibility.backgroundColor,
   );
+  const loading = useSelector((state) => state.auth.loading);
   const user = useSelector((state) => state.auth.user);
   const [formData, setFormData] = useState(initialValues);
   const [formErrors, setFormErrors] = useState({});
@@ -335,10 +336,12 @@ const ProfileScreen = (props) => {
                 margin: 'auto',
                 marginTop: '10px',
               }}
-              backgroundColor={colors.primaryColor}
               text={t('confirm')}
               onClick={() => updateProfileHandler()}
               icon={EditActiveIcon}
+              backgroundColor={loading ? colors.grey : colors.primaryColor}
+              loading={loading}
+              disabled={loading}
             />
           )}
         </FormWrapper>

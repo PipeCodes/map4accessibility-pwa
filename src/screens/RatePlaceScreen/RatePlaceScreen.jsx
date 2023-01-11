@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import ArrowRightIcon from '../../assets/icons/arrow-right.svg';
 import { colors } from '../../constants/colors';
+import { IMAGE_TYPES } from '../../constants';
 import {
   Page,
   Container,
@@ -26,7 +27,7 @@ import {
   Title,
   MediaLabel,
   Error,
-} from './RatePlace.styles';
+} from './RatePlaceScreen.styles';
 import TopBar from '../../components/TopBar/TopBar';
 import ImageSlider from '../../components/ImageSlider/ImageSlider';
 import buttonUp from '../../assets/icons/places/like.svg';
@@ -52,6 +53,7 @@ const RatePlaceScreen = (props) => {
   const backgroundColor = useSelector(
     (state) => state.accessibility.backgroundColor,
   );
+  const loading = useSelector((state) => state.placeEvaluations.loading);
 
   const questions = useSelector((state) => state.questions.questions);
   const place = useSelector((state) => state.place.place);
@@ -120,13 +122,17 @@ const RatePlaceScreen = (props) => {
           answers,
           place.latitude,
           place.longitude,
+          img,
         ),
       )
         .then((result) => {
           if (img !== undefined) {
             CompressSendImage(img, result);
           } else {
-            history.push('/place-details/'.concat(params.id));
+            history.push('/place-details/'.concat(params.id), {
+              newPlace: history?.location?.state?.newPlace,
+              ratePlace: true,
+            });
           }
         })
         .catch((err) => {
@@ -143,6 +149,18 @@ const RatePlaceScreen = (props) => {
     setAccessibility(0);
   };
 
+  const getMedia = (place) => {
+    const pictures = place?.media_evaluations;
+    const mainPicture = {
+      file_type: 'image',
+      file_url: place?.media,
+    };
+
+    if (mainPicture.file_url) pictures.unshift(mainPicture);
+
+    return pictures?.length ? pictures : photos;
+  };
+
   const openAccessibility = useCallback(() => {
     history.push(routes.ACCESSIBILITY.path);
   }, [history, routes]);
@@ -157,11 +175,7 @@ const RatePlaceScreen = (props) => {
         hasAccessibilityButton={openAccessibility}
         title={t('comment')}
       />
-      <ImageSlider
-        photos={
-          place?.media_evaluations?.length ? place.media_evaluations : photos
-        }
-      />
+      <ImageSlider photos={getMedia(place)} />
       <Container>
         <TextWrapper>
           <Name fontSize={fontSize} font={font}>
@@ -260,11 +274,12 @@ const RatePlaceScreen = (props) => {
           ref={inputRef}
           type="file"
           onChange={handleFileChange}
-          accept="image/png, image/jpg, image/jpeg, image/jpg, video/mp4, video/mp3, video/wav"
+          accept={IMAGE_TYPES}
         />
         <MediaLabel fontSize={fontSize} font={font}>
-          {t('supported_formats')} <span>png</span>, <span>jpeg</span>,
-          <span>mp4</span>, <span>mp3</span> and <span>wav</span>.
+          {t('supported_formats')} <span>png</span>, <span>jpg</span>,{' '}
+          <span>jpeg</span>, <span>webp</span>, <span>mp4</span>,{' '}
+          <span>mp3</span> and <span>wav</span>.
         </MediaLabel>
         {error && (
           <Error fontSize={fontSize} font={font}>
@@ -277,10 +292,12 @@ const RatePlaceScreen = (props) => {
             width: '100%',
             borderRadius: '25px',
           }}
-          backgroundColor={colors.orange}
           text={t('submit')}
           icon={ArrowRightIcon}
           onClick={() => onSubmit()}
+          backgroundColor={loading ? colors.grey : colors.orange}
+          loading={loading}
+          disabled={loading}
         />
       </Container>
     </Page>

@@ -5,6 +5,7 @@ import { updateFontSize, updateValue } from '../../helpers/utils';
 export const Wrapper = styled.div`
   padding: 20px 15px;
   background-color: ${(props) => updateValue('white', props.backgroundColor)};
+  width: 100%;
 `;
 
 export const TopWrapper = styled.div`

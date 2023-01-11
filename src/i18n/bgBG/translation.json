@@ -128,7 +128,7 @@
   "attractions": "Attractions",
   "danger": "Danger",
   "click_to_mark": "Click to mark",
-  "create_error": "Write a name for the place",
+  "create_error": "Write a name for the place with at least 3 characters.",
   "view_all": "View All",
   "show_less": "Show Less",
   "latest": "Latest",
@@ -142,5 +142,6 @@
   "last_places_visited": "Last Places Visited",
   "request_sent_delete_place": "Request to delete place sent.",
   "problem_request_delete_place": "There was a problem requesting to delete place.",
-  "mark_as_closed": "Mark this place as closed"
+  "mark_as_closed": "Mark this place as closed",
+  "place_conflict": "Place already exists, please go back to the map."
 }

@@ -69,6 +69,7 @@ const RegisterScreen = (props) => {
   const backgroundColor = useSelector(
     (state) => state.accessibility.backgroundColor,
   );
+  const loading = useSelector((state) => state.auth.loading);
 
   const [page, setPage] = useState(0);
   const [formData, setFormData] = useState(initialValues);
@@ -225,19 +226,37 @@ const RegisterScreen = (props) => {
           validate={validate}
           setNotReadySubmit={setNotReadySubmit}
         />
-        <CustomButton
-          style={{
-            marginTop: 30,
-            marginBottom: 20,
-            width: '100%',
-            borderRadius: '25px',
-          }}
-          disabled={notReadySubmit}
-          backgroundColor={notReadySubmit ? colors.grey : colors.orange}
-          text={page === 0 ? t('next') : t('create_account')}
-          icon={page === 0 ? ArrowRight : ProfileIcon}
-          onClick={() => nextClickHandler(page)}
-        />
+
+        {page === 0 ? (
+          <CustomButton
+            style={{
+              marginTop: 30,
+              marginBottom: 20,
+              width: '100%',
+              borderRadius: '25px',
+            }}
+            disabled={notReadySubmit}
+            backgroundColor={notReadySubmit ? colors.grey : colors.orange}
+            text={t('next')}
+            icon={ArrowRight}
+            onClick={() => nextClickHandler(page)}
+          />
+        ) : (
+          <CustomButton
+            style={{
+              marginTop: 30,
+              marginBottom: 20,
+              width: '100%',
+              borderRadius: '25px',
+            }}
+            text={t('create_account')}
+            icon={ProfileIcon}
+            onClick={() => nextClickHandler(page)}
+            backgroundColor={loading ? colors.grey : colors.orange}
+            disabled={loading}
+            loading={loading}
+          />
+        )}
 
         {page === 0 && (
           <Box>

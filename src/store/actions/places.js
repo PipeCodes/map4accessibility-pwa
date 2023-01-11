@@ -5,8 +5,12 @@ import {
   GET_PLACES_RANKING_START,
   GET_PLACES_RANKING_SUCCESS,
   GET_PLACES_RANKING_ERROR,
-  GET_PLACE_SUCCESS,
   GET_PLACE_START,
+  GET_PLACE_SUCCESS,
+  GET_PLACE_ERROR,
+  POST_PLACE_START,
+  POST_PLACE_SUCCESS,
+  POST_PLACE_ERROR,
   RESET_ROUTES,
 } from './types';
 import { HTTP_STATUS } from '../../constants';
@@ -35,6 +39,7 @@ export const getPlace = (id) => async (dispatch) => {
       });
     }
   } catch (error) {
+    dispatch({ type: GET_PLACE_ERROR });
     return Promise.reject(error?.response?.data?.message);
   }
 };
@@ -69,6 +74,9 @@ export const getPlacesCountry = (country, order) => async (dispatch) => {
       });
     }
   } catch (error) {
+    dispatch({
+      type: GET_PLACES_RANKING_ERROR,
+    });
     return Promise.reject(error?.response?.data?.message);
   }
 };
@@ -148,33 +156,49 @@ export const getPlacesRadiusMarkers =
   };
 
 // Creates a new Place
-export const postPlace = (name, type, city, location, country) => async () => {
-  const body = {
-    name,
-    place_type: type,
-    city,
-    latitude: location.lat,
-    longitude: location.lng,
-    country_code: country,
-  };
-  const config = {
-    headers: {
-      Authorization: `Bearer ${getAuthToken()}`,
-    },
-  };
-  try {
-    const response = await axios.post(Endpoints.PLACES, body, config);
-    const statusCode = response.status;
-    if (statusCode === HTTP_STATUS.SUCCESS) {
-      return Promise.resolve(response?.data?.result.id);
+export const postPlace =
+  (name, type, city, location, country, media) => async (dispatch) => {
+    dispatch({ type: POST_PLACE_START });
+    const body = {
+      name,
+      place_type: type,
+      city,
+      latitude: location.lat,
+      longitude: location.lng,
+      country_code: country,
+    };
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${getAuthToken()}`,
+      },
+    };
+
+    try {
+      const response = await axios.post(Endpoints.PLACES, body, config);
+
+      const statusCode = response.status;
+
+      if (statusCode === HTTP_STATUS.SUCCESS) {
+        if (!media) {
+          dispatch({ type: POST_PLACE_SUCCESS });
+        }
+
+        return Promise.resolve(response?.data?.result.id);
+      }
+    } catch (error) {
+      dispatch({ type: POST_PLACE_ERROR });
+      if (error?.response?.status === HTTP_STATUS.CONFLICT) {
+        return Promise.reject(i18n.t('place_conflict'));
+      }
+      return Promise.reject(
+        getErrorMessage(error?.message, i18n.t('something_wrong')),
+      );
     }
-  } catch (error) {
-    return Promise.reject(getErrorMessage(error, i18n.t('something_wrong')));
-  }
-};
+  };
 
 // Adds the media to the new place
-export const postPlaceMedia = (media, id) => async () => {
+export const postPlaceMedia = (media, id) => async (dispatch) => {
   const body = {
     media,
   };
@@ -192,9 +216,11 @@ export const postPlaceMedia = (media, id) => async () => {
     const response = await axios.post(url, body, config);
     const statusCode = response.status;
     if (statusCode === HTTP_STATUS.SUCCESS_CREATED) {
+      dispatch({ type: POST_PLACE_SUCCESS });
       return Promise.resolve(response?.data?.message);
     }
   } catch (error) {
+    dispatch({ type: POST_PLACE_ERROR });
     return Promise.reject(getErrorMessage(error, i18n.t('something_wrong')));
   }
 };

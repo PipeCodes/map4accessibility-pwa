@@ -69,6 +69,7 @@ export const Container = styled.div`
     position: sticky;
     bottom: 20px;
     right: 20px;
+    cursor: pointer;
 
     button {
       all: unset;

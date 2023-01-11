@@ -66,6 +66,16 @@ const PlaceDetailsScreen = (props) => {
     }
   }, [dispatch, place, visitedHistory]);
 
+  const backClickHandler = () => {
+    if (history?.location?.state?.newPlace) {
+      history.replace(routes.MAP.path);
+    } else if (history?.location?.state?.ratePlace) {
+      history.go(-3);
+    } else {
+      history.goBack();
+    }
+  };
+
   const markPlaceAsClosed = () => {
     dispatch(deletePlace(user?.id, place.id))
       .then(() => {
@@ -118,6 +128,7 @@ const PlaceDetailsScreen = (props) => {
         aligned
         page
         hasBackButton
+        backTarget={() => backClickHandler()}
         backgroundColor={backgroundColor}
         magnifier
         hasAccessibilityButton={openAccessibility}

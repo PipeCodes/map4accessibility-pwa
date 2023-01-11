@@ -128,7 +128,7 @@
   "attractions": "Entretenimento",
   "danger": "Obstáculo",
   "click_to_mark": "Clique para marcar",
-  "create_error": "Escreva um nome para o local.",
+  "create_error": "Escreva um nome para o local com pelo menos três caracteres.",
   "view_all": "Mostar Todos",
   "show_less": "Mostrar Menos",
   "latest": "Recentes",
@@ -140,5 +140,6 @@
   "last_places_visited": "Últimos Locais Visitados",
   "request_sent_delete_place": "Pedido de remoção de local efectuado.",
   "problem_request_delete_place": "Ocurreu um problema ao efectuar o pedido de remoção.",
-  "mark_as_closed": "Marcar este local como fechado"
+  "mark_as_closed": "Marcar este local como fechado",
+  "place_conflict": "Local já existente, volte para o mapa para ver."
 }

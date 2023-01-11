@@ -47,12 +47,12 @@ const RoutePlannerScreen = (props) => {
       // Asks and sets user position (lat, long)
       getCurrentLocation()
         .then((position) => {
-          if (origin !== null || origin !== '') {
+          if ((origin !== null || origin !== '') && !routesMap) {
             setOrigin(position);
-          }
-          setUserLocation(position);
-          if (originInputRef.current && (origin !== null || origin !== '')) {
-            originInputRef.current.value = t('your_location');
+            setUserLocation(position);
+            if (originInputRef.current) {
+              originInputRef.current.value = t('your_location');
+            }
           }
         })
         .catch((error) => alert(error));
@@ -63,18 +63,15 @@ const RoutePlannerScreen = (props) => {
     if (routesMap) {
       setOrigin(routesMap[0].origin);
       setDestination(routesMap[0].destination);
-    }
-  }, [routesMap]);
-
-  useEffect(() => {
-    if (originInputRef.current && destinationInputRef.current && routesMap) {
-      originInputRef.current.value = routesMap[0]?.origin;
-      if (typeof routesMap[0]?.origin !== 'string') {
-        originInputRef.current.value = t('your_location');
+      if (originInputRef?.current && destinationInputRef?.current && isLoaded) {
+        originInputRef.current.value = routesMap[0]?.origin;
+        if (typeof routesMap[0]?.origin !== 'string') {
+          originInputRef.current.value = t('your_location');
+        }
+        destinationInputRef.current.value = routesMap[0].destination;
       }
-      destinationInputRef.current.value = routesMap[0].destination;
     }
-  }, [routesMap]);
+  }, [routesMap, originInputRef, destinationInputRef, isLoaded, t]);
 
   // Click handlers
   const openAccessibility = useCallback(() => {
