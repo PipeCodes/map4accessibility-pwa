@@ -92,6 +92,7 @@ export const Container = styled.div`
   width: 100%;
   padding: 15px;
   border-top: 1px solid ${colors.lightGrey};
+  padding-bottom: 80px;
 `;
 
 export const Start = styled.div`
@@ -109,11 +110,13 @@ export const CTA = styled.div`
     updateValue(colors.background, props.backgroundColor)};
   display: flex;
   width: 100%;
+  max-width: 820px;
   padding: 15px;
   justify-content: space-between;
   gap: 20px;
-  margin-bottom: 21px;
   box-shadow: 0px -2px 6px #00000014;
+  bottom: 0;
+  position: fixed;
 `;
 
 export const GoToMaps = styled.a`
