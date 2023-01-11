@@ -18,6 +18,7 @@ import AccessibilityIcon from '../../assets/icons/accessibility.svg';
 import Magnifier from '../../assets/icons/places/magnifier.svg';
 import CustomInput from '../../components/CustomInput/CustomInput';
 import { filterTypes } from '../../constants/placeTypes';
+import PlacesList from '../../components/PlacesList/PlacesList';
 
 const SearchScreen = (props) => {
   const { backTarget, history, routes } = props;
@@ -26,6 +27,7 @@ const SearchScreen = (props) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
+  const places = useSelector((state) => state?.place?.place?.data);
   const fontSize = useSelector((state) => state.accessibility.fontSize);
   const font = useSelector((state) => state.accessibility.font);
 
@@ -68,21 +70,25 @@ const SearchScreen = (props) => {
         </AccessibilityButton>
       </SearchHeader>
       <Container backgroundColor={backgroundColor}>
-        <SearchFilters>
-          <Text fontSize={fontSize} font={font}>
-            {t('filters')}
-          </Text>
-          <FiltersContainer fontSize={fontSize} font={font}>
-            {filterTypes?.map((filter, index) => (
-              <div key={index} className="filter">
-                <button type="button">
-                  <img src={filter?.icon} alt={`icon-${filter?.label}`} />
-                  {filter?.label}
-                </button>
-              </div>
-            ))}
-          </FiltersContainer>
-        </SearchFilters>
+        {places ? (
+          <PlacesList places={places} />
+        ) : (
+          <SearchFilters>
+            <Text fontSize={fontSize} font={font}>
+              {t('filters')}
+            </Text>
+            <FiltersContainer fontSize={fontSize} font={font}>
+              {filterTypes?.map((filter, index) => (
+                <div key={index} className="filter">
+                  <button type="button">
+                    <img src={filter?.icon} alt={`icon-${filter?.label}`} />
+                    {filter?.label}
+                  </button>
+                </div>
+              ))}
+            </FiltersContainer>
+          </SearchFilters>
+        )}
       </Container>
     </Page>
   );
