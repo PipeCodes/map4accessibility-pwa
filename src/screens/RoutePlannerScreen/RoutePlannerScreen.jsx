@@ -47,12 +47,12 @@ const RoutePlannerScreen = (props) => {
       // Asks and sets user position (lat, long)
       getCurrentLocation()
         .then((position) => {
-          if (origin !== null || origin !== '') {
+          if ((origin !== null || origin !== '') && !routesMap) {
             setOrigin(position);
-          }
-          setUserLocation(position);
-          if (originInputRef.current && (origin !== null || origin !== '')) {
-            originInputRef.current.value = t('your_location');
+            setUserLocation(position);
+            if (originInputRef.current) {
+              originInputRef.current.value = t('your_location');
+            }
           }
         })
         .catch((error) => alert(error));
@@ -71,7 +71,7 @@ const RoutePlannerScreen = (props) => {
         destinationInputRef.current.value = routesMap[0].destination;
       }
     }
-  }, [routesMap, originInputRef, destinationInputRef, isLoaded]);
+  }, [routesMap, originInputRef, destinationInputRef, isLoaded, t]);
 
   // Click handlers
   const openAccessibility = useCallback(() => {
