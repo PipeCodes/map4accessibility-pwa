@@ -16,6 +16,7 @@ import { getPlaceByParams, resetPlaceState } from '../../store/actions/places';
 import BackIcon from '../../assets/icons/back.svg';
 import AccessibilityIcon from '../../assets/icons/accessibility.svg';
 import Magnifier from '../../assets/icons/places/magnifier.svg';
+import FilterIcon from '../../assets/icons/filters/filter.svg';
 import CustomInput from '../../components/CustomInput/CustomInput';
 import { filterTypes } from '../../constants/placeTypes';
 import PlacesList from '../../components/PlacesList/PlacesList';
@@ -41,16 +42,23 @@ const SearchScreen = (props) => {
   }, []);
 
   useEffect(() => {
+    setLocation(null);
     setSearchData(places);
   }, [places]);
 
   const handleBackButton = useCallback(() => {
     if (location) {
       setLocation(null);
+    } else if (searchData) {
+      setSearchData(null);
     } else {
       return history.goBack();
     }
-  }, [location]);
+  }, [location, searchData]);
+
+  const handleClickFilter = useCallback((value) => {
+    dispatch(getPlaceByParams({ placeType: value }));
+  }, []);
 
   const openAccessibility = useCallback(() => {
     history.push(routes.ACCESSIBILITY.path);
@@ -99,12 +107,15 @@ const SearchScreen = (props) => {
         ) : (
           <SearchFilters>
             <Text fontSize={fontSize} font={font}>
-              {t('filters')}
+              <img src={FilterIcon} alt="filter-icon" /> {t('filters')}
             </Text>
             <FiltersContainer fontSize={fontSize} font={font}>
               {filterTypes?.map((filter, index) => (
                 <div key={index} className="filter">
-                  <button type="button">
+                  <button
+                    type="button"
+                    onClick={() => handleClickFilter(filter?.placeType)}
+                  >
                     <img src={filter?.icon} alt={`icon-${filter?.label}`} />
                     {filter?.label}
                   </button>

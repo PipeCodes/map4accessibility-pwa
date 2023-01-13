@@ -17,6 +17,7 @@ import {
 import { HTTP_STATUS } from '../../constants';
 import { getAuthToken } from '../../services/local';
 import { getCurrentLocation } from '../../services/geolocation';
+import { camelToSnakeCase } from '../../helpers/utils';
 
 // Gets Single Place by ID
 export const getPlace = (id) => async (dispatch) => {
@@ -254,15 +255,16 @@ export const deletePlace = (userId, placeId) => async () => {
 
 const concatPlacesRequest = (params) =>
   Object.keys(params)
-    .map((key) => `?${key}=:${key}`)
+    .map((key) => `?${camelToSnakeCase(key)}=:${camelToSnakeCase(key)}`)
     .join('&');
 
 export const getPlaceByParams = (params) => async (dispatch) => {
-  const { name } = params;
+  const { name, placeType } = params;
   dispatch({ type: GET_PLACE_START });
-  const queryParams = {
-    name,
-  };
+  const queryParams = {};
+  if (name) Object.assign(queryParams, { name });
+  if (placeType) Object.assign(queryParams, { place_type: placeType });
+
   const config = {
     headers: {
       Authorization: `Bearer ${getAuthToken()}`,
@@ -272,6 +274,7 @@ export const getPlaceByParams = (params) => async (dispatch) => {
     Endpoints.PLACES.concat(concatPlacesRequest(params)),
     queryParams,
   );
+
   try {
     const response = await axios.get(url, config);
 
