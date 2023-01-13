@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { withRouter } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
@@ -12,7 +12,7 @@ import {
   SearchFilters,
   FiltersContainer,
 } from './SearchScreen.styles';
-import { getPlaceByParams } from '../../store/actions/places';
+import { getPlaceByParams, resetPlaceState } from '../../store/actions/places';
 import BackIcon from '../../assets/icons/back.svg';
 import AccessibilityIcon from '../../assets/icons/accessibility.svg';
 import Magnifier from '../../assets/icons/places/magnifier.svg';
@@ -21,8 +21,10 @@ import { filterTypes } from '../../constants/placeTypes';
 import PlacesList from '../../components/PlacesList/PlacesList';
 
 const SearchScreen = (props) => {
-  const { backTarget, history, routes } = props;
+  const { history, routes } = props;
   const [searchText, setSearchText] = useState('');
+  const [location, setLocation] = useState(null);
+  const [searchData, setSearchData] = useState(null);
 
   const { t } = useTranslation();
   const dispatch = useDispatch();
@@ -34,6 +36,21 @@ const SearchScreen = (props) => {
   const backgroundColor = useSelector(
     (state) => state.accessibility.backgroundColor,
   );
+  useEffect(() => {
+    dispatch(resetPlaceState());
+  }, []);
+
+  useEffect(() => {
+    setSearchData(places);
+  }, [places]);
+
+  const handleBackButton = useCallback(() => {
+    if (location) {
+      setLocation(null);
+    } else {
+      return history.goBack();
+    }
+  }, [location]);
 
   const openAccessibility = useCallback(() => {
     history.push(routes.ACCESSIBILITY.path);
@@ -43,13 +60,15 @@ const SearchScreen = (props) => {
     setSearchText(value);
     if (value?.length >= 4) {
       dispatch(getPlaceByParams({ name: value }));
+    } else {
+      setSearchData(null);
     }
   };
 
   return (
     <Page>
       <SearchHeader>
-        <LeftButton type="button" onClick={backTarget || history.goBack}>
+        <LeftButton type="button" onClick={() => handleBackButton()}>
           <img src={BackIcon} alt="back" />
         </LeftButton>
         <CustomInput
@@ -70,8 +89,13 @@ const SearchScreen = (props) => {
         </AccessibilityButton>
       </SearchHeader>
       <Container backgroundColor={backgroundColor}>
-        {places ? (
-          <PlacesList places={places} />
+        {searchData ? (
+          <PlacesList
+            places={searchData}
+            history={history}
+            location={location}
+            setLocation={setLocation}
+          />
         ) : (
           <SearchFilters>
             <Text fontSize={fontSize} font={font}>

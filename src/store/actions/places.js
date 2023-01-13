@@ -12,6 +12,7 @@ import {
   POST_PLACE_SUCCESS,
   POST_PLACE_ERROR,
   RESET_ROUTES,
+  RESET_PLACE_STATE,
 } from './types';
 import { HTTP_STATUS } from '../../constants';
 import { getAuthToken } from '../../services/local';
@@ -154,6 +155,10 @@ export const getPlacesRadiusMarkers =
       return Promise.reject(errorMessage);
     }
   };
+
+export const resetPlaceState = () => (dispatch) => {
+  dispatch({ type: RESET_PLACE_STATE });
+};
 
 // Creates a new Place
 export const postPlace =

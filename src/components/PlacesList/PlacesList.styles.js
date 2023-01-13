@@ -3,12 +3,12 @@ import { colors } from '../../constants/colors';
 import { updateFontSize, updateValue } from '../../helpers/utils';
 
 export const Wrapper = styled.div`
-  padding: 20px 15px;
   background-color: ${(props) => updateValue('white', props.backgroundColor)};
   width: 100%;
 `;
 
 export const TopWrapper = styled.div`
+  padding: 0 15px;
   display: flex;
   justify-content: space-between;
   border-bottom: 1px solid ${colors.lightGrey};
@@ -19,6 +19,10 @@ export const Title = styled.div`
   margin-bottom: 13px;
   font-size: ${(props) => updateFontSize(20, props.fontSize)};
   font-family: ${(props) => updateValue('EasyReadingPro', props.font)};
+`;
+
+export const PlacesContainer = styled.div`
+  padding: 0 15px;
 `;
 
 export const Place = styled.div`
@@ -61,6 +65,7 @@ export const NoResults = styled.div`
   font-size: ${(props) => updateFontSize(14, props.fontSize)};
   font-family: ${(props) => updateValue('EasyReadingPro', props.font)};
   margin-top: 15px;
+  margin-bottom: 15px;
 `;
 
 export const Button = styled.div`
