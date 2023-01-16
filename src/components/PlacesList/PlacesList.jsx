@@ -127,13 +127,17 @@ const PlacesList = ({
         ),
       )
         .then((list) => {
-          setMarkers(list?.filter((e) => e.place_type === filterType));
+          if (filterType) {
+            setMarkers(list?.filter((e) => e.place_type === filterType));
+          } else {
+            setMarkers(list);
+          }
         })
         .catch((err) => {
           console.error(err);
         });
     }
-  }, [location]);
+  }, [locationReal]);
 
   // Open Page Details
   const openDetails = useCallback(
