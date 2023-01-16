@@ -26,6 +26,7 @@ import CustomMarker from '../CustomMarker/CustomMarker';
 import ClusterImg from '../../assets/icons/maps/clusters/m1.svg';
 import { GOOGLE_MAPS_OPTIONS } from '../../constants';
 import { getPlacesRadiusMarkers } from '../../store/actions/places';
+import FooterMenu from '../FooterMenu/FooterMenu';
 
 // Map styling
 const containerStyle = {
@@ -55,7 +56,7 @@ const options = {
   maxZoom: 15,
 };
 
-const PlacesList = ({ places, history, location, setLocation }) => {
+const PlacesList = ({ places, history, location, setLocation, routes }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const fontSize = useSelector((state) => state.accessibility.fontSize);
@@ -137,39 +138,42 @@ const PlacesList = ({ places, history, location, setLocation }) => {
   return (
     <Wrapper backgroundColor={backgroundColor}>
       {location && isLoaded ? (
-        <GoogleMap
-          mapContainerStyle={containerStyle}
-          center={location}
-          zoom={14}
-          onLoad={(map) => {
-            setMap(map);
-          }}
-          options={mapOptions}
-        >
-          <MarkerClusterer
-            options={options}
-            averageCenter
-            styles={[
-              {
-                url: ClusterImg,
-                height: 50,
-                lineHeight: 35,
-                width: 50,
-              },
-            ]}
+        <>
+          <GoogleMap
+            mapContainerStyle={containerStyle}
+            center={location}
+            zoom={14}
+            onLoad={(map) => {
+              setMap(map);
+            }}
+            options={mapOptions}
           >
-            {(clusterer) =>
-              markers?.map((marker) => (
-                <CustomMarker
-                  marker={marker}
-                  key={marker.id}
-                  clusterer={clusterer}
-                  onClick={() => openDetails(marker.id)}
-                />
-              ))
-            }
-          </MarkerClusterer>
-        </GoogleMap>
+            <MarkerClusterer
+              options={options}
+              averageCenter
+              styles={[
+                {
+                  url: ClusterImg,
+                  height: 50,
+                  lineHeight: 35,
+                  width: 50,
+                },
+              ]}
+            >
+              {(clusterer) =>
+                markers?.map((marker) => (
+                  <CustomMarker
+                    marker={marker}
+                    key={marker.id}
+                    clusterer={clusterer}
+                    onClick={() => openDetails(marker.id)}
+                  />
+                ))
+              }
+            </MarkerClusterer>
+          </GoogleMap>
+          <FooterMenu routes={routes} map />
+        </>
       ) : (
         <>
           <TopWrapper>
