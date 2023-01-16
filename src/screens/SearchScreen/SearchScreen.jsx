@@ -20,13 +20,14 @@ import FilterIcon from '../../assets/icons/filters/filter.svg';
 import CustomInput from '../../components/CustomInput/CustomInput';
 import { filterTypes } from '../../constants/placeTypes';
 import PlacesList from '../../components/PlacesList/PlacesList';
+import { getCurrentLocation } from '../../services/geolocation';
 
-const SearchScreen = (props) => {
-  const { history, routes } = props;
+const SearchScreen = ({ history, routes }) => {
   const [searchText, setSearchText] = useState('');
   const [location, setLocation] = useState(null);
+  const [locationReal, setLocationReal] = useState(null);
+  const [filterType, setFilterType] = useState(null);
   const [searchData, setSearchData] = useState(null);
-
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
@@ -56,9 +57,18 @@ const SearchScreen = (props) => {
     }
   }, [location, searchData]);
 
-  const handleClickFilter = useCallback((value) => {
-    dispatch(getPlaceByParams({ placeType: value }));
-  }, []);
+  const handleClickFilter = useCallback(() => {
+    getCurrentLocation()
+      .then((position) => {
+        setLocation(position);
+        setLocationReal({ lat: position?.lat, lng: position?.lng });
+      })
+      .catch((error) => {
+        setLocation({ lat: 38.736946, lng: -9.142685 });
+        setLocationReal({ lat: 38.736946, lng: -9.142685 });
+        alert(error);
+      });
+  }, [setLocation, getCurrentLocation, setLocationReal]);
 
   const openAccessibility = useCallback(() => {
     history.push(routes.ACCESSIBILITY.path);
@@ -97,12 +107,16 @@ const SearchScreen = (props) => {
         </AccessibilityButton>
       </SearchHeader>
       <Container backgroundColor={backgroundColor}>
-        {searchData ? (
+        {searchData || location ? (
           <PlacesList
             places={searchData}
             history={history}
+            routes={routes}
             location={location}
             setLocation={setLocation}
+            locationReal={locationReal}
+            setLocationReal={setLocationReal}
+            filterType={filterType}
           />
         ) : (
           <SearchFilters>
@@ -114,9 +128,15 @@ const SearchScreen = (props) => {
                 <div key={index} className="filter">
                   <button
                     type="button"
-                    onClick={() => handleClickFilter(filter?.placeType)}
+                    onClick={() => {
+                      handleClickFilter();
+                      setFilterType(filter?.placeType);
+                    }}
                   >
-                    <img src={filter?.icon} alt={`icon-${filter?.label}`} />
+                    <img
+                      src={filter?.icon}
+                      alt={`icon/Applications/Visual Studio Code.app/Contents/Resources/app/out/vs/code/electron-sandbox/workbench/workbench.html-${filter?.label}`}
+                    />
                     {filter?.label}
                   </button>
                 </div>

@@ -56,7 +56,16 @@ const options = {
   maxZoom: 15,
 };
 
-const PlacesList = ({ places, history, location, setLocation, routes }) => {
+const PlacesList = ({
+  places,
+  history,
+  location,
+  setLocation,
+  locationReal,
+  setLocationReal,
+  filterType,
+  routes,
+}) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const fontSize = useSelector((state) => state.accessibility.fontSize);
@@ -65,7 +74,6 @@ const PlacesList = ({ places, history, location, setLocation, routes }) => {
   // Google Maps
   const [map, setMap] = useState(/** @type google.maps.Map */ (null));
   const [markers, setMarkers] = useState(null);
-  const [locationReal, setLocationReal] = useState(null);
 
   const backgroundColor = useSelector(
     (state) => state.accessibility.backgroundColor,
@@ -115,11 +123,11 @@ const PlacesList = ({ places, history, location, setLocation, routes }) => {
         getPlacesRadiusMarkers(
           locationReal.lat,
           locationReal.lng,
-          getRadius() || 1000,
+          getRadius() || 3000,
         ),
       )
         .then((list) => {
-          setMarkers(list);
+          setMarkers(list?.filter((e) => e.place_type === filterType));
         })
         .catch((err) => {
           console.error(err);
