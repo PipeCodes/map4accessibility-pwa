@@ -55,9 +55,14 @@ const PlaceDetailsScreen = (props) => {
   // Gets params from URL using ReactRouter
   const params = useParams();
 
+  const noPlace = () => {
+    alert(t('no_place'));
+    dispatch(history.goBack());
+  };
+
   // Gets Place from API to have the info
   useEffect(() => {
-    dispatch(getPlace(params.id));
+    dispatch(getPlace(params.id)).catch(() => noPlace());
   }, [dispatch]);
 
   useEffect(() => {

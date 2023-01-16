@@ -82,9 +82,14 @@ const RatePlaceScreen = (props) => {
     setImg(fileObj);
   };
 
+  const noPlace = () => {
+    alert(t('no_place'));
+    dispatch(history.goBack());
+  };
+
   useEffect(() => {
     dispatch(getQuestions());
-    dispatch(getPlace(params.id));
+    dispatch(getPlace(params.id)).catch(() => noPlace());
   }, [dispatch, params.id]);
 
   const CompressSendImage = (image, id) => {
