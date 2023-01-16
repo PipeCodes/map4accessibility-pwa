@@ -119,7 +119,7 @@ const routes = {
   SEARCH: {
     path: '/search',
     component: SearchScreen,
-    private: false,
+    private: true,
   },
 };
 

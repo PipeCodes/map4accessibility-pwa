@@ -68,7 +68,7 @@ const SearchScreen = ({ history, routes }) => {
         setLocationReal({ lat: 38.736946, lng: -9.142685 });
         alert(error);
       });
-  }, [setLocation, getCurrentLocation, setLocationReal]);
+  }, [getCurrentLocation]);
 
   const openAccessibility = useCallback(() => {
     history.push(routes.ACCESSIBILITY.path);
