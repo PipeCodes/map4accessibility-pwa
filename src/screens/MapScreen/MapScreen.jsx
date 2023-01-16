@@ -48,9 +48,11 @@ const MapScreen = (props) => {
   const [map, setMap] = useState(/** @type google.maps.Map */ (null));
   const [center, setCenter] = useState(null);
   const [markers, setMarkers] = useState(null);
+  const [appMarkers, setAppMarkers] = useState(null);
   const [location, setLocation] = useState(null);
   const [coords, setCoords] = useState(null);
   const [add, setAdd] = useState(null);
+  const [googlePlaces, setGooglePlaces] = useState(null);
 
   const { isLoaded } = useJsApiLoader(GOOGLE_MAPS_OPTIONS);
 
@@ -137,19 +139,74 @@ const MapScreen = (props) => {
     }
   };
 
+  const googlePlacesList = (center, radius, map, keyword) => {
+    const request = keyword
+      ? {
+          location: new google.maps.LatLng(center.lat, center.lng),
+          radius,
+          keyword,
+        }
+      : {
+          location: new google.maps.LatLng(center.lat, center.lng),
+          radius,
+        };
+
+    const service = new google.maps.places.PlacesService(map);
+
+    service.nearbySearch(request, (results, status) => {
+      if (status === 'OK') {
+        setGooglePlaces(results);
+      } else {
+        setGooglePlaces([]);
+      }
+    });
+  };
+
   useEffect(() => {
     if (center) {
+      googlePlacesList(center, getRadius(), map);
       dispatch(
         getPlacesRadiusMarkers(center.lat, center.lng, getRadius() || 1000),
       )
         .then((list) => {
-          setMarkers(list);
+          setAppMarkers(list);
         })
         .catch((err) => {
           console.error(err);
         });
     }
   }, [center]);
+
+  const formatGooglePalces = (places) => {
+    const markers = [];
+    places.forEach((place) => {
+      markers.push({
+        name: place.name,
+        latitude: place.geometry.location.lat(),
+        longitude: place.geometry.location.lng(),
+        thumbs_up_count: 0,
+        thumbs_down_count: 0,
+      });
+    });
+    console.log('markers', markers);
+    return markers;
+  };
+
+  useEffect(() => {
+    if (appMarkers && googlePlaces) {
+      console.log('AppMarkers', appMarkers);
+      console.log('GoogleMarkers', googlePlaces);
+      console.log(map.zoom);
+      console.log(map.center.lat(), map.center.lng());
+      if (map.zoom >= 16) {
+        setMarkers(appMarkers.concat(formatGooglePalces(googlePlaces)));
+      } else {
+        setMarkers(appMarkers);
+      }
+    }
+  }, [googlePlaces, appMarkers]);
+
+  // https://stackoverflow.com/questions/22844560/check-if-object-value-exists-within-a-javascript-array-of-objects-and-if-not-add
 
   const debounceSetCenter = useCallback(
     debounce((value) => {
@@ -203,6 +260,7 @@ const MapScreen = (props) => {
               options={mapOptions}
             >
               <MarkerClusterer
+                autoPan={false}
                 options={options}
                 averageCenter
                 styles={[

@@ -31,6 +31,7 @@ const CustomMarker = ({ marker, onClick, clusterer }) => {
 
   return (
     <Marker
+      autoPan={false}
       key={marker.id}
       icon={icon}
       position={coords}
@@ -47,6 +48,7 @@ const CustomMarker = ({ marker, onClick, clusterer }) => {
           }}
           position={coords}
           anchor={markerLocal}
+          disableAutoPan
         >
           <div>
             <Title font={font} fontSize={fontSize}>
