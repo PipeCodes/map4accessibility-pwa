@@ -196,6 +196,7 @@ const AddPlaceScreen = (props) => {
             placeholder={t('name')}
             name="name"
             onChange={(e) => setName(e.target.value)}
+            maxLength="50"
           />
           <InputLabel fontSize={fontSize} font={font}>
             {t('type')}

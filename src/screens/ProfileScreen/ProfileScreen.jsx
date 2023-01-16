@@ -229,6 +229,7 @@ const ProfileScreen = (props) => {
                     firstName: e.target.value,
                   }));
                 }}
+                maxLength="25"
               />
               {formErrors.firstName && (
                 <Error fontSize={fontSize} font={font}>
@@ -251,6 +252,7 @@ const ProfileScreen = (props) => {
                     surname: e.target.value,
                   }));
                 }}
+                maxLength="25"
               />
               {formErrors.surname && (
                 <Error fontSize={fontSize} font={font}>
