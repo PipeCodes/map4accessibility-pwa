@@ -12,10 +12,12 @@ import {
   POST_PLACE_SUCCESS,
   POST_PLACE_ERROR,
   RESET_ROUTES,
+  RESET_PLACE_STATE,
 } from './types';
 import { HTTP_STATUS } from '../../constants';
 import { getAuthToken } from '../../services/local';
 import { getCurrentLocation } from '../../services/geolocation';
+import { camelToSnakeCase } from '../../helpers/utils';
 
 // Gets Single Place by ID
 export const getPlace = (id) => async (dispatch) => {
@@ -28,13 +30,10 @@ export const getPlace = (id) => async (dispatch) => {
       Authorization: `Bearer ${getAuthToken()}`,
     },
   };
-  const url = generatePath(Endpoints.PLACES.concat(':id'), queryParams);
-
+  const url = generatePath(Endpoints.PLACES.concat('/:id'), queryParams);
   try {
     const response = await axios.get(url, config);
-
     const statusCode = response.status;
-
     if (statusCode === HTTP_STATUS.SUCCESS) {
       dispatch({
         type: GET_PLACE_SUCCESS,
@@ -67,12 +66,9 @@ export const getPlacesCountry = (country, order) => async (dispatch) => {
     ),
     queryParams,
   );
-
   try {
     const response = await axios.get(url, config);
-
     const statusCode = response.status;
-
     if (statusCode === HTTP_STATUS.SUCCESS) {
       dispatch({
         type: GET_PLACES_RANKING_SUCCESS,
@@ -97,7 +93,6 @@ export const getPlacesByLocation = (order, radius) => async (dispatch) => {
   };
   try {
     const location = await getCurrentLocation();
-
     const queryParams = {
       latitude: location.lat,
       longitude: location.lng,
@@ -112,11 +107,8 @@ export const getPlacesByLocation = (order, radius) => async (dispatch) => {
       ),
       queryParams,
     );
-
     const response = await axios.get(url, config);
-
     const statusCode = response.status;
-
     if (statusCode === HTTP_STATUS.SUCCESS) {
       dispatch({
         type: GET_PLACES_RANKING_SUCCESS,
@@ -151,11 +143,9 @@ export const getPlacesRadiusMarkers =
       ),
       queryParams,
     );
-
     try {
       const response = await axios.get(url, config);
       const statusCode = response.status;
-
       if (statusCode === HTTP_STATUS.SUCCESS) {
         return response.data?.result.data ?? [];
       }
@@ -166,6 +156,10 @@ export const getPlacesRadiusMarkers =
       return Promise.reject(errorMessage);
     }
   };
+
+export const resetPlaceState = () => (dispatch) => {
+  dispatch({ type: RESET_PLACE_STATE });
+};
 
 // Creates a new Place
 export const postPlace =
@@ -214,25 +208,19 @@ export const postPlaceMedia = (media, id) => async (dispatch) => {
   const body = {
     media,
   };
-
   const queryParams = {
     id,
   };
-
   const config = {
     headers: {
       Authorization: `Bearer ${getAuthToken()}`,
       'Content-Type': 'multipart/form-data',
     },
   };
-
   const url = generatePath(Endpoints.PLACES.concat(':id/media'), queryParams);
-
   try {
     const response = await axios.post(url, body, config);
-
     const statusCode = response.status;
-
     if (statusCode === HTTP_STATUS.SUCCESS_CREATED) {
       dispatch({ type: POST_PLACE_SUCCESS });
       return Promise.resolve(response?.data?.message);
@@ -254,16 +242,51 @@ export const deletePlace = (userId, placeId) => async () => {
       Authorization: `Bearer ${getAuthToken()}`,
     },
   };
-
   try {
     const response = await axios.post(Endpoints.PLACES_DELETE, body, config);
-
     const statusCode = response.status;
-
     if (statusCode === HTTP_STATUS.SUCCESS) {
       return Promise.resolve(response?.data?.result);
     }
   } catch (error) {
     return Promise.reject(getErrorMessage(error, i18n.t('something_wrong')));
+  }
+};
+
+const concatPlacesRequest = (params) =>
+  Object.keys(params)
+    .map((key) => `?${camelToSnakeCase(key)}=:${camelToSnakeCase(key)}`)
+    .join('&');
+
+export const getPlaceByParams = (params) => async (dispatch) => {
+  const { name, placeType } = params;
+  dispatch({ type: GET_PLACE_START });
+  const queryParams = {};
+  if (name) Object.assign(queryParams, { name });
+  if (placeType) Object.assign(queryParams, { place_type: placeType });
+
+  const config = {
+    headers: {
+      Authorization: `Bearer ${getAuthToken()}`,
+    },
+  };
+  const url = generatePath(
+    Endpoints.PLACES.concat(concatPlacesRequest(params)),
+    queryParams,
+  );
+
+  try {
+    const response = await axios.get(url, config);
+
+    const statusCode = response.status;
+
+    if (statusCode === HTTP_STATUS.SUCCESS) {
+      dispatch({
+        type: GET_PLACE_SUCCESS,
+        place: response.data?.result ?? {},
+      });
+    }
+  } catch (error) {
+    return Promise.reject(error?.response?.data?.message);
   }
 };

@@ -166,6 +166,8 @@ const MapScreen = (props) => {
       <TopBar
         aligned
         page
+        magnifier
+        routes={routes}
         backgroundColor={backgroundColor}
         hasAccessibilityButton={openAccessibility}
         title={add ? t('click_to_mark') : t('map')}
