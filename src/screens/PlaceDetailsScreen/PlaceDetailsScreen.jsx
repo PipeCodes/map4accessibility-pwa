@@ -51,7 +51,6 @@ const PlaceDetailsScreen = (props) => {
 
   // Gets place from reducer
   const place = useSelector((state) => state.place.place);
-  console.log(place);
 
   // Gets params from URL using ReactRouter
   const params = useParams();
