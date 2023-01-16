@@ -135,12 +135,15 @@
   "map": "Map",
   "route_planner": "Route Planner",
   "latest_evaluations": "Latest Evaluations",
-  "show_route": "Show Route",
   "radius_error": "Unable to define route for same origin and destination location",
+  "search": "Search",
+  "filters": "Filters",
+  "show_route": "Show Route",
   "last_places_visited": "Last Places Visited",
   "request_sent_delete_place": "Request to delete place sent.",
   "problem_request_delete_place": "There was a problem requesting to delete place.",
   "mark_as_closed": "Mark this place as closed",
   "marked_as_closed": "You already marked this place as closed.",
-  "place_conflict": "Place already exists, please go back to the map."
+  "place_conflict": "Place already exists, please go back to the map.",
+  "results": "Results"
 }
