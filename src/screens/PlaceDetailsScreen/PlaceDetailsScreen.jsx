@@ -80,6 +80,7 @@ const PlaceDetailsScreen = (props) => {
     dispatch(deletePlace(user?.id, place.id))
       .then(() => {
         alert(t('request_sent_delete_place'));
+        dispatch(getPlace(params.id));
       })
       .catch(() => {
         alert(t('problem_request_delete_place'));
@@ -200,13 +201,21 @@ const PlaceDetailsScreen = (props) => {
               </span>
             )}
           </PlaceInformation>
-          <Button
-            fontSize={fontSize}
-            font={font}
-            onClick={() => markPlaceAsClosed()}
-          >
-            {t('mark_as_closed')}
-          </Button>
+          {place?.place_deletion?.find(
+            (request) => request.app_user_id === user.id,
+          ) ? (
+            <Button fontSize={fontSize} font={font} className="closed">
+              {t('marked_as_closed')}
+            </Button>
+          ) : (
+            <Button
+              fontSize={fontSize}
+              font={font}
+              onClick={() => markPlaceAsClosed()}
+            >
+              {t('mark_as_closed')}
+            </Button>
+          )}
         </div>
         {place?.place_evaluations && (
           <Evaluations fontSize={fontSize} className="mt-3">
