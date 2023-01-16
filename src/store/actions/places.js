@@ -39,6 +39,7 @@ export const getPlace = (id) => async (dispatch) => {
         type: GET_PLACE_SUCCESS,
         place: response.data?.result ?? {},
       });
+      return response.data?.result;
     }
   } catch (error) {
     dispatch({ type: GET_PLACE_ERROR });
