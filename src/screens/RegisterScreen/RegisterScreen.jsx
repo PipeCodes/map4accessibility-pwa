@@ -205,7 +205,7 @@ const RegisterScreen = (props) => {
           alert(error);
         });
     }
-  }, [dispatch, formData]);
+  }, [dispatch, formData, history, social, routes]);
 
   const openAccessibility = useCallback(() => {
     history.push(routes.ACCESSIBILITY.path);
