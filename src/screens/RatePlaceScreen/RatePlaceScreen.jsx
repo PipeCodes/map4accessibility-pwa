@@ -89,8 +89,8 @@ const RatePlaceScreen = (props) => {
 
   useEffect(() => {
     dispatch(getQuestions());
-    dispatch(getPlace(params.id)).catch(() => noPlace());
-  }, [dispatch, params.id]);
+    dispatch(getPlace(params?.id)).catch(() => noPlace());
+  }, [dispatch, params?.id]);
 
   const CompressSendImage = (image, id) => {
     // eslint-disable-next-line no-new
@@ -114,8 +114,8 @@ const RatePlaceScreen = (props) => {
   const onSubmit = () => {
     if (
       Object.keys(answers).length !== Object.keys(questions).length ||
-      commentRef.current.value === null ||
-      commentRef.current.value.length < 6
+      commentRef?.current?.value === null ||
+      commentRef?.current?.value?.length < 6
     ) {
       setError(t('rate_error'));
     } else {
@@ -161,7 +161,7 @@ const RatePlaceScreen = (props) => {
       file_url: place?.media,
     };
 
-    if (mainPicture.file_url) pictures.unshift(mainPicture);
+    if (mainPicture?.file_url) pictures.unshift(mainPicture);
 
     return pictures?.length ? pictures : photos;
   };
@@ -231,29 +231,29 @@ const RatePlaceScreen = (props) => {
             questions.map((item, index) => (
               <Question key={index}>
                 <Title fontSize={fontSize} font={font}>
-                  {index + 1}. {item.title}
+                  {index + 1}. {item?.title}
                 </Title>
                 <Options>
-                  {item.answers &&
-                    item.answers.map((answer) => (
-                      <Option key={answer.id}>
+                  {item?.answers &&
+                    item?.answers.map((answer) => (
+                      <Option key={answer?.id}>
                         <input
                           type="radio"
-                          name={item.id}
-                          id={answer.id}
+                          name={item?.id}
+                          id={answer?.id}
                           onChange={() => {
                             setAnswers((prevState) => ({
                               ...prevState,
-                              [item.id]: answer.id,
+                              [item?.id]: answer?.id,
                             }));
                           }}
                         />
                         <AnswerLabel
                           fontSize={fontSize}
                           font={font}
-                          for={answer.id}
+                          for={answer?.id}
                         >
-                          {answer.body}
+                          {answer?.body}
                         </AnswerLabel>
                       </Option>
                     ))}
@@ -269,7 +269,7 @@ const RatePlaceScreen = (props) => {
               border: '1px dashed #ffffff',
             }}
             backgroundColor={colors.transparent}
-            text={img === undefined ? t('Upload media files') : img.name}
+            text={img === undefined ? t('Upload media files') : img?.name}
             icon={paperclipIcon}
             onClick={handleClick}
           />
