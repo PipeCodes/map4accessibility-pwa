@@ -86,23 +86,73 @@ export const signup =
     }
   };
 
-export const signupProviderGoogle =
-  (email, name, surname, id) => async (dispatch) => {
+export const signupProvider =
+  (
+    name,
+    surname,
+    birthdate,
+    email,
+    termsAccepted,
+    disabilities,
+    id,
+    provider,
+  ) =>
+  async (dispatch) => {
     dispatch({ type: AUTH_START });
 
+    let authProviders;
+
+    if (provider === 'google') {
+      authProviders = {
+        google: id,
+      };
+    }
+
+    if (provider === 'facebook') {
+      authProviders = {
+        facebook: id,
+      };
+    }
+
     const body = {
-      email,
       name,
       surname,
-      birthdate: '2022-10-20',
-      terms_accepted: true,
-      auth_providers: {
-        gmail: id,
-      },
+      birthdate,
+      email: email?.trim().toLowerCase(),
+      terms_accepted: termsAccepted,
+      disabilities,
+      auth_providers: authProviders,
     };
 
     try {
       const response = await axios.post(Endpoints.SIGNUP, body);
+      const statusCode = response.status;
+      if (statusCode === HTTP_STATUS.SUCCESS_CREATED) {
+        saveAuthToken(response.data?.result?.authorization?.token);
+        dispatch({
+          type: AUTH_SUCCESS,
+          user: response.data?.result?.user,
+        });
+      }
+    } catch (error) {
+      dispatch({ type: AUTH_ERROR });
+
+      return Promise.reject(getErrorMessage(error, i18n.t('something_wrong')));
+    }
+  };
+
+export const loginByProvider =
+  (email, provider, authCode) => async (dispatch) => {
+    dispatch({ type: AUTH_START });
+
+    const body = {
+      email: email?.trim(),
+      auth_type: provider,
+      auth_code: authCode,
+    };
+
+    try {
+      const response = await axios.post(Endpoints.LOGIN_BY_PROVIDER, body);
       const statusCode = response.status;
 
       if (statusCode === HTTP_STATUS.SUCCESS) {
@@ -115,7 +165,9 @@ export const signupProviderGoogle =
     } catch (error) {
       dispatch({ type: AUTH_ERROR });
 
-      return Promise.reject(getErrorMessage(error, i18n.t('something_wrong')));
+      return Promise.reject(
+        error?.response?.data?.message ?? i18n.t('something_wrong'),
+      );
     }
   };
 

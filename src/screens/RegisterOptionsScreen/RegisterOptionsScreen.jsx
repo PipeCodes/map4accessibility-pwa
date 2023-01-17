@@ -1,9 +1,8 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { LoginSocialGoogle, LoginSocialFacebook } from 'reactjs-social-login';
-import { signupProviderGoogle } from '../../store/actions/auth';
 import CustomButton from '../../components/CustomButton/CustomButton';
 import { colors } from '../../constants/colors';
 import {
@@ -18,6 +17,7 @@ import ProfileIcon from '../../assets/icons/profile.svg';
 import FacebookIcon from '../../assets/icons/socials/facebook.svg';
 import GoogleIcon from '../../assets/icons/socials/google.svg';
 import LoginIcon from '../../assets/icons/login.svg';
+import { loginByProvider } from '../../store/actions/auth';
 
 const RegisterOptionsScreen = (props) => {
   const { routes, history } = props;
@@ -28,32 +28,47 @@ const RegisterOptionsScreen = (props) => {
   const backgroundColor = useSelector(
     (state) => state.accessibility.backgroundColor,
   );
+  const user = useSelector((state) => state.auth.user);
 
-  const onLoginStart = useCallback(() => {
-    // Write Code for Login Start Here, this feature needs o be repaired (SOCIAL LOGINS)
-  }, []);
+  useEffect(() => {
+    if (user && history) {
+      history.replace(routes.LOGIN.path);
+    }
+  }, [user, history]);
 
   const openAccessibility = useCallback(() => {
     history.push(routes.ACCESSIBILITY.path);
   }, [history, routes]);
 
-  const registerClickHandlerGoogle = useCallback(
-    (data) => {
-      if (data !== undefined && data !== null) {
-        dispatch(
-          signupProviderGoogle(
-            data.email,
-            data.given_name,
-            data.family_name,
-            data.id,
-          ),
-        ).catch((error) => {
-          alert(error);
-        });
-      }
-    },
-    [dispatch],
-  );
+  const registerClickHandler = useCallback((provider, data) => {
+    if (data === undefined && data === null) {
+      return;
+    }
+
+    if (provider === 'google') {
+      history.push(routes.REGISTER.path, {
+        social: {
+          provider,
+          email: data?.email,
+          name: data?.given_name,
+          surname: data?.family_name,
+          id: data?.sub,
+        },
+      });
+    }
+
+    if (provider === 'facebook') {
+      history.push(routes.REGISTER.path, {
+        social: {
+          provider,
+          email: data?.email,
+          name: data?.first_name,
+          surname: data?.last_name,
+          id: data?.id,
+        },
+      });
+    }
+  });
 
   return (
     <Page backgroundColor={backgroundColor}>
@@ -81,9 +96,13 @@ const RegisterOptionsScreen = (props) => {
         <Box>
           <LoginSocialFacebook
             appId={process.env.REACT_APP_FB_APP_ID || ''}
-            onLoginStart={onLoginStart}
+            fieldsProfile="id,first_name,last_name,middle_name,name,name_format,picture,short_name,email"
             onResolve={({ provider, data }) => {
-              console.log('TODO FACEBOOK REGISTER', provider, data);
+              dispatch(loginByProvider(data?.email, provider, data?.id)).catch(
+                () => {
+                  registerClickHandler(provider, data);
+                },
+              );
             }}
             onReject={(err) => {
               console.log(err);
@@ -103,10 +122,13 @@ const RegisterOptionsScreen = (props) => {
 
           <LoginSocialGoogle
             client_id={process.env.REACT_APP_GG_APP_ID || ''}
-            onLoginStart={onLoginStart}
-            scope="https://www.googleapis.com/auth/userinfo.email"
-            onResolve={({ data }) => {
-              registerClickHandlerGoogle(data);
+            scope="openid profile email"
+            onResolve={({ provider, data }) => {
+              dispatch(loginByProvider(data?.email, provider, data?.sub)).catch(
+                () => {
+                  registerClickHandler(provider, data);
+                },
+              );
             }}
             onReject={(err) => {
               console.log(err);
