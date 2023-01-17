@@ -231,7 +231,7 @@ const RatePlaceScreen = (props) => {
             questions.map((item, index) => (
               <Question key={index}>
                 <Title fontSize={fontSize} font={font}>
-                  {index + 1}. {item.id}
+                  {index + 1}. {item.title}
                 </Title>
                 <Options>
                   {item.answers &&
