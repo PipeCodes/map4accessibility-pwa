@@ -109,8 +109,7 @@ const PlaceDetailsScreen = (props) => {
       file_url: place?.media,
     };
     if (mainPicture?.file_url) pictures.push(mainPicture);
-    if (place?.media_evaluations)
-      place?.media_evaluations.map((pic) => pictures.push(pic));
+    place?.media_evaluations?.map((pic) => pictures.push(pic));
     return pictures?.length ? pictures : photos;
   };
 
