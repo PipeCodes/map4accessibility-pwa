@@ -22,6 +22,7 @@ import {
   Evaluations,
   PlaceInformation,
   Button,
+  ButtonComments,
 } from './PlaceDetailsScreen.styles';
 import TopBar from '../../components/TopBar/TopBar';
 import ImageSlider from '../../components/ImageSlider/ImageSlider';
@@ -102,14 +103,14 @@ const PlaceDetailsScreen = (props) => {
   }, [history, routes]);
 
   const getMedia = (place) => {
-    const pictures = place?.media_evaluations;
+    const pictures = [];
     const mainPicture = {
       file_type: 'image',
       file_url: place?.media,
     };
-
-    if (mainPicture.file_url) pictures.unshift(mainPicture);
-
+    if (mainPicture?.file_url) pictures.push(mainPicture);
+    if (place?.media_evaluations)
+      place?.media_evaluations.map((pic) => pictures.push(pic));
     return pictures?.length ? pictures : photos;
   };
 
@@ -227,11 +228,11 @@ const PlaceDetailsScreen = (props) => {
             <LatestComments comments={place?.place_evaluations} />
           </Evaluations>
         )}
-        <div className="comments">
-          <button type="button" onClick={() => openComments()}>
+        <ButtonComments onClick={() => openComments()}>
+          <button type="button">
             <img src={Comment} alt="comment" />
           </button>
-        </div>
+        </ButtonComments>
       </Container>
     </Page>
   );
