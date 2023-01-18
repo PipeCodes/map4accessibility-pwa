@@ -218,7 +218,7 @@ export const postPlaceMedia = (media, id) => async (dispatch) => {
       'Content-Type': 'multipart/form-data',
     },
   };
-  const url = generatePath(Endpoints.PLACES.concat(':id/media'), queryParams);
+  const url = generatePath(Endpoints.PLACES.concat('/:id/media'), queryParams);
   try {
     const response = await axios.post(url, body, config);
     const statusCode = response.status;
