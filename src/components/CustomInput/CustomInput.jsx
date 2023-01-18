@@ -7,6 +7,7 @@ const CustomInput = (props) => {
     borderColor,
     style,
     type = 'text',
+    maxLength,
     onChange,
     value,
     name,
@@ -16,6 +17,7 @@ const CustomInput = (props) => {
     readOnly,
     fontSize,
     font,
+    icon,
   } = props;
 
   return (
@@ -36,11 +38,13 @@ const CustomInput = (props) => {
         e.preventDefault();
         return false;
       }}
+      maxLength={maxLength}
       value={value}
       name={name}
       onBlur={onBlur}
       {...{ readOnly }}
       {...{ borderColor }}
+      icon={icon}
     />
   );
 };

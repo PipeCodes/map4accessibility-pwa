@@ -102,6 +102,9 @@ export const Button = styled.button`
   margin-bottom: 10px;
   background-color: ${colors.transparent};
   border: none;
+  &.closed {
+    cursor: default;
+  }
 `;
 
 export const Accessible = styled.div`

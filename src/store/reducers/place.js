@@ -5,6 +5,7 @@ import {
   POST_PLACE_START,
   POST_PLACE_SUCCESS,
   POST_PLACE_ERROR,
+  RESET_PLACE_STATE,
 } from '../actions/types';
 
 const initialState = {
@@ -46,6 +47,8 @@ const placeReducer = (state = initialState, action) => {
         ...state,
         loading: false,
       };
+    case RESET_PLACE_STATE:
+      return initialState;
 
     default:
       return state;

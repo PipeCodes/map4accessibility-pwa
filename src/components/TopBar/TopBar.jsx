@@ -32,10 +32,15 @@ const TopBar = (props) => {
     aligned,
     page,
     magnifier,
+    routes,
   } = props;
 
   const fontSize = useSelector((state) => state.accessibility.fontSize);
   const font = useSelector((state) => state.accessibility.font);
+
+  const searchClickHandler = () => {
+    history.push(routes.SEARCH.path);
+  };
 
   return (
     <TopBarContainer
@@ -62,7 +67,7 @@ const TopBar = (props) => {
       )}
 
       {magnifier && (
-        <MagnifierButton type="button">
+        <MagnifierButton type="button" onClick={() => searchClickHandler()}>
           <img src={Magnifier} alt="Magnifier" />
         </MagnifierButton>
       )}

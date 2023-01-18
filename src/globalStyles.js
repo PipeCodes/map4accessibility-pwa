@@ -40,7 +40,7 @@ const GlobalStyles = createGlobalStyle`
     height: 100%;
     margin: 0px auto;
     background-color: ${colors.background};
-
+    word-wrap: break-word;
     /*Removes infoBox from googlemaps closing image */
     .infoBox {width: auto !important;img {display: none;}}
 
