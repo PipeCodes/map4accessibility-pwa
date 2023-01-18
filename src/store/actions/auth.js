@@ -12,7 +12,7 @@ import {
   CREATE_USER_SUCCESS,
   CREATE_USER_ERROR,
 } from './types';
-import { HTTP_STATUS, PROVIDER_FB, PROVIDER_GG } from '../../constants';
+import { HTTP_STATUS, PROVIDERS } from '../../constants';
 import i18n from '../../i18n';
 
 import {
@@ -102,13 +102,13 @@ export const signupProvider =
 
     let authProviders;
 
-    if (provider === PROVIDER_GG) {
+    if (provider === PROVIDERS.GOOGLE) {
       authProviders = {
         google: id,
       };
     }
 
-    if (provider === PROVIDER_FB) {
+    if (provider === PROVIDERS.FACEBOOK) {
       authProviders = {
         facebook: id,
       };
