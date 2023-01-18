@@ -85,3 +85,6 @@ export const googleMapsLink = (origin, destination) =>
         .concat(origin.lng)
         .concat('/')
         .concat(destination);
+
+export const camelToSnakeCase = (str) =>
+  str.replace(/[A-Z]/g, (letter) => `_${letter.toLowerCase()}`);

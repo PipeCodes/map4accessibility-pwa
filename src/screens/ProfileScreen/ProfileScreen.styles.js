@@ -79,6 +79,12 @@ export const RankingButton = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 7px 10px;
+
+  img {
+    height: 25px;
+    width: 25px;
+  }
 `;
 
 export const StackContainer = styled.div`
@@ -100,6 +106,7 @@ export const Name = styled.span`
   font-family: ${(props) => updateValue('EasyReadingPro', props.font)};
   color: ${colors.primaryTextColor};
   margin-top: 5px;
+  text-align: center;
 `;
 
 export const EditButton = styled.button`

@@ -100,8 +100,12 @@ const LatestComments = (props) => {
         ? commentsList.reverse().map((comment) => (
             <Comment backgroundColor={backgroundColor} key={comment.id}>
               <Top>
-                {comment?.media_url ? (
-                  <Image src={comment?.app_user?.avatar} />
+                {comment?.app_user?.avatar ? (
+                  <Image
+                    src={process.env.REACT_APP_EXTERNAL_LINKS_BASE.concat(
+                      `/${comment?.app_user?.avatar}`,
+                    )}
+                  />
                 ) : (
                   <Image src={Avatar} />
                 )}

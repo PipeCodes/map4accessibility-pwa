@@ -10,11 +10,12 @@ const InputStyle = styled.input`
   font-size: ${(props) => updateFontSize(14, props.fontSize)};
   font-family: ${(props) => updateValue('EasyReadingPro', props.font)};
   padding-left: 15px;
-  padding-right: 15px;
+  padding-right: ${(props) => (props.icon ? '40px' : '15px')};
   color: ${colors.grey};
   border: 1px solid ${colors.lightGrey};
   border-radius: 21px;
-
+  background: url(${(props) => (props.icon ? props.icon : 'unset')}) no-repeat
+    95%;
   &::placeholder {
     /* Chrome, Firefox, Opera, Safari 10.1+ */
     color: ${colors.grey};

@@ -116,6 +116,7 @@ const SignUpInfo = (props) => {
             firstName: e.target.value,
           }));
         }}
+        maxLength="25"
       />
       {formErrors.firstName && (
         <Error fontSize={fontSize}>{t(formErrors.firstName)}</Error>
@@ -138,6 +139,7 @@ const SignUpInfo = (props) => {
             surname: e.target.value,
           }));
         }}
+        maxLength="25"
       />
       {formErrors.surname && (
         <Error fontSize={fontSize}>{t(formErrors.surname)}</Error>
@@ -155,8 +157,8 @@ const SignUpInfo = (props) => {
         type="date"
         value={formData.birthDate}
         name="birthDate"
-        min={moment().subtract(100, "years").format("YYYY-MM-DD")}
-        max={moment().subtract(16, "years").format('yyyy-MM-DD')}
+        min={moment().subtract(100, 'years').format('YYYY-MM-DD')}
+        max={moment().subtract(16, 'years').format('yyyy-MM-DD')}
         onBlur={(e) => focusHandler(e.target.name)}
         onChange={(e) => {
           setFormData((prevState) => ({
