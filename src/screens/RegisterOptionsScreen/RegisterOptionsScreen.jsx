@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { LoginSocialGoogle, LoginSocialFacebook } from 'reactjs-social-login';
 import CustomButton from '../../components/CustomButton/CustomButton';
 import { colors } from '../../constants/colors';
+import { PROVIDERS } from '../../constants';
 import {
   Page,
   Container,
@@ -45,7 +46,7 @@ const RegisterOptionsScreen = (props) => {
       return;
     }
 
-    if (provider === 'google') {
+    if (provider === PROVIDERS.GOOGLE) {
       history.push(routes.REGISTER.path, {
         social: {
           provider,
@@ -57,7 +58,7 @@ const RegisterOptionsScreen = (props) => {
       });
     }
 
-    if (provider === 'facebook') {
+    if (provider === PROVIDERS.FACEBOOK) {
       history.push(routes.REGISTER.path, {
         social: {
           provider,
