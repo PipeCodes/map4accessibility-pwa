@@ -59,23 +59,6 @@ export const Container = styled.div`
     }
   }
 
-  .comments {
-    margin-left: auto;
-    background: ${colors.orange};
-    box-shadow: 0px 2px 2px ${colors.shadow};
-    border: 1px solid ${colors.lightGrey};
-    padding: 10px;
-    border-radius: 25px;
-    position: sticky;
-    bottom: 20px;
-    right: 20px;
-    cursor: pointer;
-
-    button {
-      all: unset;
-    }
-  }
-
   .fullDiv {
     height: 100%;
     width: 100%;
@@ -83,6 +66,23 @@ export const Container = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+  }
+`;
+
+export const ButtonComments = styled.div`
+  margin-left: auto;
+  background: ${colors.orange};
+  box-shadow: 0px 2px 2px ${colors.shadow};
+  border: 1px solid ${colors.lightGrey};
+  padding: 10px;
+  border-radius: 25px;
+  position: sticky;
+  bottom: 20px;
+  right: 20px;
+  cursor: pointer;
+
+  button {
+    all: unset;
   }
 `;
 

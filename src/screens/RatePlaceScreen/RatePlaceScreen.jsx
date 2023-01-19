@@ -99,7 +99,10 @@ const RatePlaceScreen = (props) => {
       success(result) {
         dispatch(postPlaceEvaluationMedia(result, id))
           .then(() => {
-            history.push('/place-details/'.concat(params.id));
+            history.push('/place-details/'.concat(params.id), {
+              newPlace: history?.location?.state?.newPlace,
+              ratePlace: true,
+            });
           })
           .catch((err) => {
             alert(err);
@@ -155,14 +158,13 @@ const RatePlaceScreen = (props) => {
   };
 
   const getMedia = (place) => {
-    const pictures = place?.media_evaluations;
+    const pictures = [];
     const mainPicture = {
       file_type: 'image',
       file_url: place?.media,
     };
-
-    if (mainPicture?.file_url) pictures.unshift(mainPicture);
-
+    if (mainPicture?.file_url) pictures.push(mainPicture);
+    place?.media_evaluations?.map((pic) => pictures.push(pic));
     return pictures?.length ? pictures : photos;
   };
 
