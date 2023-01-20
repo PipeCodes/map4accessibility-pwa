@@ -179,6 +179,7 @@ const PlacesList = ({
                     key={marker.id}
                     clusterer={clusterer}
                     onClick={() => openDetails(marker.id)}
+                    info
                   />
                 ))
               }

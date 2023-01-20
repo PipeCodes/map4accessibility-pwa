@@ -238,6 +238,7 @@ const Map = ({ origin, destination, routes, userLocation, history }) => {
               marker={marker}
               key={i}
               onClick={() => openDetails(marker.id)}
+              info
             />
           ))}
       </GoogleMap>

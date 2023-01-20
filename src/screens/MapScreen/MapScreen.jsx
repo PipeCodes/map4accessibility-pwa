@@ -8,10 +8,11 @@ import {
   MarkerClusterer,
 } from '@react-google-maps/api';
 import { debounce } from '../../helpers/utils';
-import { getPlacesRadiusMarkers } from '../../store/actions/places';
+import { getPlacesRadiusMarkers, getPlace } from '../../store/actions/places';
 import TopBar from '../../components/TopBar/TopBar';
 import FooterMenu from '../../components/FooterMenu/FooterMenu';
 import CustomMarker from '../../components/CustomMarker/CustomMarker';
+import PlacePopUp from '../../components/PlacePopUp/PlacePopUp';
 import LocationIcon from '../../assets/icons/maps/locate.svg';
 import AddIcon from '../../assets/icons/maps/add.svg';
 import ClusterImg from '../../assets/icons/maps/clusters/m1.svg';
@@ -44,6 +45,12 @@ const MapScreen = (props) => {
     (state) => state.accessibility.backgroundColor,
   );
 
+  // Gets place from reducer
+  const place = useSelector((state) => state.place.place);
+
+  // Place pop-up
+  const [popUp, setPopUp] = useState(false);
+
   // Google Maps
   const [map, setMap] = useState(/** @type google.maps.Map */ (null));
   const [center, setCenter] = useState(null);
@@ -65,7 +72,8 @@ const MapScreen = (props) => {
       {
         featureType: 'poi',
         elementType: 'labels',
-        stylers: [{ visibility: 'off' }],
+        // stylers: [{ visibility: 'off' }],
+        // https://developers.google.com/maps/documentation/javascript/examples/event-poi
       },
     ],
   };
@@ -75,6 +83,7 @@ const MapScreen = (props) => {
     maxZoom: 15,
   };
 
+  // Gets Position and sets Location
   useEffect(() => {
     if (isLoaded) {
       // Asks and sets user position (lat, long)
@@ -87,6 +96,7 @@ const MapScreen = (props) => {
     }
   }, [isLoaded, t]);
 
+  // If coords are selected opens Add Place Screen
   useEffect(() => {
     if (coords) {
       history.push(routes.ADD_PLACE.path, coords);
@@ -106,14 +116,6 @@ const MapScreen = (props) => {
 
     return Number(radius.toFixed(0));
   };
-
-  // Open Page Details
-  const openDetails = useCallback(
-    (id) => {
-      history.push('/place-details/'.concat(id));
-    },
-    [history],
-  );
 
   // Buttons onClicks
   const openAccessibility = useCallback(() => {
@@ -137,6 +139,24 @@ const MapScreen = (props) => {
     }
   };
 
+  // Debounce when moves on map
+  const debounceSetCenter = useCallback(
+    debounce((value) => {
+      if (center && center.lat === value.lat && center.lng === value.lng) {
+        return;
+      }
+      setCenter(value);
+    }, 1000),
+    [center],
+  );
+
+  // Opens and closes places
+  const openPlaceInfo = (id) => {
+    dispatch(getPlace(id));
+    setPopUp(true);
+  };
+
+  // Gets all Markers
   useEffect(() => {
     if (center) {
       dispatch(
@@ -151,20 +171,14 @@ const MapScreen = (props) => {
     }
   }, [center]);
 
-  // https://stackoverflow.com/questions/22844560/check-if-object-value-exists-within-a-javascript-array-of-objects-and-if-not-add
-
-  const debounceSetCenter = useCallback(
-    debounce((value) => {
-      if (center && center.lat === value.lat && center.lng === value.lng) {
-        return;
-      }
-      setCenter(value);
-    }, 1000),
-    [center],
-  );
-
   return (
     <Page backgroundColor={backgroundColor}>
+      <PlacePopUp
+        history={history}
+        display={popUp}
+        place={place}
+        setPopUp={setPopUp}
+      />
       <TopBar
         aligned
         page
@@ -190,6 +204,15 @@ const MapScreen = (props) => {
               center={location}
               zoom={14}
               onClick={(e) => {
+                if (e.placeId) {
+                  const service = new google.maps.places.PlacesService(map);
+                  service.getDetails({ placeId: e.placeId }, (place) => {
+                    if (place) {
+                      console.log(place);
+                    }
+                  });
+                  e.stop();
+                }
                 if (add) {
                   setCoords({ lat: e.latLng.lat(), lng: e.latLng.lng() });
                 }
@@ -207,6 +230,7 @@ const MapScreen = (props) => {
               options={mapOptions}
             >
               <MarkerClusterer
+                onClick={(result) => console.log(result)}
                 autoPan={false}
                 options={options}
                 averageCenter
@@ -225,7 +249,7 @@ const MapScreen = (props) => {
                       marker={marker}
                       key={marker.id}
                       clusterer={clusterer}
-                      onClick={() => openDetails(marker.id)}
+                      onClick={() => openPlaceInfo(marker.id)}
                     />
                   ))
                 }

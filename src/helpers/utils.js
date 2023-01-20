@@ -2,8 +2,8 @@
 /* eslint-disable prefer-rest-params */
 /* eslint-disable one-var */
 
-import DangerIcon from '../assets/icons/maps/red-alert-icon.svg';
-import DefaultIcon from '../assets/icons/maps/default.svg';
+import DangerIcon from '../assets/icons/maps/markers/red-alert-icon.svg';
+import DefaultIcon from '../assets/icons/maps/markers/default.svg';
 
 export const updateFontSize = (fontSize, incrementor) => {
   let newFontSize = fontSize + incrementor;

@@ -11,7 +11,7 @@ import {
   LikesAndDislikes,
 } from './CustomMarker.styles';
 
-const CustomMarker = ({ marker, onClick, clusterer }) => {
+const CustomMarker = ({ marker, onClick, clusterer, info }) => {
   const fontSize = useSelector((state) => state.accessibility.fontSize);
   const font = useSelector((state) => state.accessibility.font);
   const icon = useMemo(() => markerIcon(marker?.place_type), [marker]);
@@ -41,7 +41,7 @@ const CustomMarker = ({ marker, onClick, clusterer }) => {
         setMarkerLocal(e);
       }}
     >
-      {markerLocal?.map !== null && (
+      {markerLocal?.map !== null && info && (
         <InfoBox
           options={{
             pixelOffset: new window.google.maps.Size(offSet.x, offSet.y),

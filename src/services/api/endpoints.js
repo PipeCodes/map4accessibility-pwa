@@ -11,3 +11,5 @@ export const PLACES = '/places';
 export const PLACES_DELETE = '/places/delete';
 export const PLACES_RADIUS = '/places/radius';
 export const QUESTIONS = '/place-rate-settings';
+export const GOOGLE_PLACE =
+  'https://maps.googleapis.com/maps/api/place/details/json?place_id=';
