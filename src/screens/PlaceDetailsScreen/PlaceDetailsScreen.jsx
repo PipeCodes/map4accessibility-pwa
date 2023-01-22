@@ -83,14 +83,17 @@ const PlaceDetailsScreen = (props) => {
   };
 
   const markPlaceAsClosed = () => {
-    dispatch(deletePlace(user?.id, place.id))
-      .then(() => {
-        alert(t('request_sent_delete_place'));
-        dispatch(getPlace(params.id));
-      })
-      .catch(() => {
-        alert(t('problem_request_delete_place'));
-      });
+    const confirmPopUp = confirm(t('are_you_sure'));
+    if (confirmPopUp) {
+      dispatch(deletePlace(user?.id, place.id))
+        .then(() => {
+          alert(t('request_sent_delete_place'));
+          dispatch(getPlace(params.id));
+        })
+        .catch(() => {
+          alert(t('problem_request_delete_place'));
+        });
+    }
   };
 
   // Opens accessibility screen (button on the top-right of the page)
