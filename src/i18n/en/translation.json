@@ -146,5 +146,6 @@
   "marked_as_closed": "You already marked this place as closed.",
   "place_conflict": "Place already exists, please go back to the map.",
   "results": "Results",
-  "no_place": "Place doesn't exist anymore."
+  "no_place": "Place doesn't exist anymore.",
+  "are_you_sure": "A request is going to be sent! Are you sure?"
 }

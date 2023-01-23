@@ -67,8 +67,10 @@ const PlaceDetailsScreen = (props) => {
   }, [dispatch]);
 
   useEffect(() => {
-    if (place) {
-      dispatch(storePlace(place, visitedHistory));
+    if (place && visitedHistory) {
+      if (visitedHistory[0].id !== place.id) {
+        dispatch(storePlace(place, visitedHistory));
+      }
     }
   }, [dispatch, place, visitedHistory]);
 
@@ -83,14 +85,17 @@ const PlaceDetailsScreen = (props) => {
   };
 
   const markPlaceAsClosed = () => {
-    dispatch(deletePlace(user?.id, place.id))
-      .then(() => {
-        alert(t('request_sent_delete_place'));
-        dispatch(getPlace(params.id));
-      })
-      .catch(() => {
-        alert(t('problem_request_delete_place'));
-      });
+    const confirmPopUp = confirm(t('are_you_sure'));
+    if (confirmPopUp) {
+      dispatch(deletePlace(user?.id, place.id))
+        .then(() => {
+          alert(t('request_sent_delete_place'));
+          dispatch(getPlace(params.id));
+        })
+        .catch(() => {
+          alert(t('problem_request_delete_place'));
+        });
+    }
   };
 
   // Opens accessibility screen (button on the top-right of the page)

@@ -29,6 +29,7 @@ const SignUpInfo = (props) => {
     setFormErrors,
     validate,
     setNotReadySubmit,
+    social,
   } = props;
   const { t } = useTranslation();
   const fontSize = useSelector((state) => state.accessibility.fontSize);
@@ -74,6 +75,34 @@ const SignUpInfo = (props) => {
   };
 
   useEffect(() => {
+    setFormData((prev) => ({
+      ...prev,
+      provider: social?.provider,
+      firstName: social?.name,
+      surname: social?.surname,
+      birthdate: social?.birthDate,
+      email: social?.email,
+      avatar: social?.avatar,
+    }));
+  }, [social]);
+
+  useEffect(() => {
+    if (social) {
+      if (
+        (validatePolicy(formData.termsAccepted) ||
+          validateFirstName(formData.firstName) ||
+          validateSurname(formData.surname) ||
+          validateBirthDate(formData.birthDate) ||
+          validateEmail(formData.email, false)) === null &&
+        Object.keys(formErrors).length === 0
+      ) {
+        setNotReadySubmit(false);
+        return;
+      }
+      setNotReadySubmit(true);
+      return;
+    }
+
     if (
       (validatePolicy(formData.termsAccepted) ||
         validateFirstName(formData.firstName) ||
@@ -196,54 +225,59 @@ const SignUpInfo = (props) => {
       {formErrors.email && (
         <Error fontSize={fontSize}>{t(formErrors.email)}</Error>
       )}
-      <InputLabel fontSize={fontSize} font={font}>
-        {t('password')}
-        <span>*</span>
-      </InputLabel>
-      <CustomInput
-        fontSize={fontSize}
-        font={font}
-        style={{}}
-        placeholder={t('password_placeholder')}
-        type="password"
-        value={formData.password}
-        name="password"
-        onBlur={(e) => focusHandler(e.target.name)}
-        onChange={(e) => {
-          setFormData((prevState) => ({
-            ...prevState,
-            password: e.target.value,
-          }));
-          checkPasswords(e.target.name, e.target.value);
-        }}
-      />
-      {formErrors.password && (
-        <Error fontSize={fontSize}>{t(formErrors.password)}</Error>
+      {!social && (
+        <>
+          <InputLabel fontSize={fontSize} font={font}>
+            {t('password')}
+            <span>*</span>
+          </InputLabel>
+          <CustomInput
+            fontSize={fontSize}
+            font={font}
+            style={{}}
+            placeholder={t('password_placeholder')}
+            type="password"
+            value={formData.password}
+            name="password"
+            onBlur={(e) => focusHandler(e.target.name)}
+            onChange={(e) => {
+              setFormData((prevState) => ({
+                ...prevState,
+                password: e.target.value,
+              }));
+              checkPasswords(e.target.name, e.target.value);
+            }}
+          />
+          {formErrors.password && (
+            <Error fontSize={fontSize}>{t(formErrors.password)}</Error>
+          )}
+          <InputLabel fontSize={fontSize} font={font}>
+            {t('confirm_password')}
+            <span>*</span>
+          </InputLabel>
+          <CustomInput
+            fontSize={fontSize}
+            font={font}
+            style={{}}
+            placeholder={t('confirm_password_placeholder')}
+            type="password"
+            name="confirmPassword"
+            onBlur={(e) => focusHandler(e.target.name)}
+            value={formData.confirmPassword}
+            onChange={(e) => {
+              setFormData((prevState) => ({
+                ...prevState,
+                confirmPassword: e.target.value,
+              }));
+              checkPasswords(e.target.name, e.target.value);
+            }}
+          />
+          {formErrors.confirmPassword && (
+            <Error fontSize={fontSize}>{t(formErrors.confirmPassword)}</Error>
+          )}
+        </>
       )}
-      <InputLabel fontSize={fontSize} font={font}>
-        {t('confirm_password')}
-        <span>*</span>
-      </InputLabel>
-      <CustomInput
-        fontSize={fontSize}
-        font={font}
-        style={{}}
-        placeholder={t('confirm_password_placeholder')}
-        type="password"
-        name="confirmPassword"
-        onBlur={(e) => focusHandler(e.target.name)}
-        value={formData.confirmPassword}
-        onChange={(e) => {
-          setFormData((prevState) => ({
-            ...prevState,
-            confirmPassword: e.target.value,
-          }));
-          checkPasswords(e.target.name, e.target.value);
-        }}
-      />
-      {formErrors.confirmPassword && (
-        <Error fontSize={fontSize}>{t(formErrors.confirmPassword)}</Error>
-      )}
+
       <CheckboxWrapper fontSize={fontSize} font={font}>
         <input
           type="checkbox"

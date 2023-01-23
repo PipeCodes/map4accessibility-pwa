@@ -2,7 +2,7 @@ import React, { useState, useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { signup } from '../../store/actions/auth';
+import { signup, signupProvider } from '../../store/actions/auth';
 import { Page, Container, Box, TextSecondary } from './RegisterScreen.styles';
 import CustomButton from '../../components/CustomButton/CustomButton';
 import LoginIcon from '../../assets/icons/login.svg';
@@ -29,6 +29,7 @@ const PageDisplay = ({
   setFormErrors,
   validate,
   setNotReadySubmit,
+  social,
 }) => {
   if (page === 0) {
     return (
@@ -39,6 +40,7 @@ const PageDisplay = ({
         setFormErrors={setFormErrors}
         validate={validate}
         setNotReadySubmit={setNotReadySubmit}
+        social={social}
       />
     );
   }
@@ -52,6 +54,7 @@ const initialValues = {
   email: '',
   password: '',
   confirmPassword: '',
+  provider: '',
   termsAccepted: false,
   noDisability: false,
   motorDisability: false,
@@ -61,7 +64,8 @@ const initialValues = {
 };
 
 const RegisterScreen = (props) => {
-  const { history, routes } = props;
+  const { history, routes, location } = props;
+  const social = location?.state?.social;
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const fontSize = useSelector((state) => state.accessibility.fontSize);
@@ -163,25 +167,45 @@ const RegisterScreen = (props) => {
     } else if (formData.intellectualDisability) {
       disabilities.push('intellectual');
     }
-
-    dispatch(
-      signup(
-        formData.firstName,
-        formData.surname,
-        formData.birthDate,
-        formData.email,
-        formData.password,
-        formData.termsAccepted,
-        disabilities,
-      ),
-    )
-      .then(() => {
-        history.push(routes.EMAIL_VALIDATION.path);
-      })
-      .catch((error) => {
-        alert(error);
-      });
-  }, [dispatch, formData]);
+    if (social) {
+      dispatch(
+        signupProvider(
+          formData.firstName,
+          formData.surname,
+          formData.birthDate,
+          formData.email,
+          formData.termsAccepted,
+          disabilities,
+          social.id,
+          social.provider,
+        ),
+      )
+        .then(() => {
+          history.push(routes.REGISTER_OPTIONS.path);
+        })
+        .catch((error) => {
+          alert(error);
+        });
+    } else {
+      dispatch(
+        signup(
+          formData.firstName,
+          formData.surname,
+          formData.birthDate,
+          formData.email,
+          formData.password,
+          formData.termsAccepted,
+          disabilities,
+        ),
+      )
+        .then(() => {
+          history.push(routes.EMAIL_VALIDATION.path);
+        })
+        .catch((error) => {
+          alert(error);
+        });
+    }
+  }, [dispatch, formData, history, social, routes]);
 
   const openAccessibility = useCallback(() => {
     history.push(routes.ACCESSIBILITY.path);
@@ -225,6 +249,7 @@ const RegisterScreen = (props) => {
           setFormErrors={setFormErrors}
           validate={validate}
           setNotReadySubmit={setNotReadySubmit}
+          social={social}
         />
 
         {page === 0 ? (

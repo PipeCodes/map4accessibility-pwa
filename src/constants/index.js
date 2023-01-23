@@ -6,8 +6,10 @@ export const SUCCESS = 'success';
 export const ERROR = 'error';
 
 // SOCIAL LOGIN PROVIDERS
-export const PROVIDER_FB = 'facebook';
-export const PROVIDER_GG = 'google';
+export const PROVIDERS = {
+  FACEBOOK: 'facebook',
+  GOOGLE: 'google',
+};
 
 // REGEX
 export const REGEX_EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
