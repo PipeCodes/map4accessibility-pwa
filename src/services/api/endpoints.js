@@ -1,4 +1,5 @@
 export const LOGIN = '/auth/login';
+export const LOGIN_BY_PROVIDER = '/auth/login-by-provider';
 export const SIGNUP = '/auth/register';
 export const CHECK_EMAIL = '/auth/check-email';
 export const RECOVER_PASSWORD = '/auth/password-recover';
