@@ -9,7 +9,7 @@ export const storePlace = (place, visitedHistory) => async (dispatch) => {
   const visitedPlaceData = {
     id: Number(place.id),
     place_name: place.name,
-    place_image: place?.media || place?.media_evaluations[0] || '',
+    place_image: place?.media || place?.media_evaluations[0],
     place_city: place.city,
     date: moment(new Date()).format(),
   };

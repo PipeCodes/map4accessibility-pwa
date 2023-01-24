@@ -55,6 +55,7 @@ const PlacesVisited = ({ history }) => {
         {places && placesList?.length !== 0 ? (
           placesList?.map((place, key) => (
             <Place key={key}>
+              {console.log(place)}
               {place?.place_image?.file_url ? (
                 <Image src={place?.place_image?.file_url} />
               ) : (
