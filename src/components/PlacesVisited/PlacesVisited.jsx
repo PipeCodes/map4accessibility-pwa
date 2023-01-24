@@ -55,7 +55,12 @@ const PlacesVisited = ({ history }) => {
         {places && placesList?.length !== 0 ? (
           placesList?.map((place, key) => (
             <Place key={key}>
-              <Image src={place?.place_image?.file_url} />
+              {place?.place_image?.file_url ? (
+                <Image src={place?.place_image?.file_url} />
+              ) : (
+                <Image src={place?.place_image} />
+              )}
+
               <TextWrapper>
                 <Name fontSize={fontSize} font={font}>
                   {place?.place_name}
