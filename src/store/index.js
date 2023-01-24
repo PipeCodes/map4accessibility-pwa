@@ -10,6 +10,7 @@ import placeEvaluationsReducer from './reducers/placeEvaluations';
 import placeReducer from './reducers/place';
 import directionsReducer from './reducers/directions';
 import historyReducer from './reducers/history';
+import searchReducer from './reducers/search';
 
 export const rootReducer = combineReducers({
   questions: questionsReducer,
@@ -20,6 +21,7 @@ export const rootReducer = combineReducers({
   placeEvaluations: placeEvaluationsReducer,
   place: placeReducer,
   directions: directionsReducer,
+  search: searchReducer,
 });
 
 const persistConfig = {

@@ -5,10 +5,11 @@ export const storePlace = (place, visitedHistory) => async (dispatch) => {
   if (typeof visitedHistory === 'string') {
     dispatch({ type: RESET_VISITED_PLACES });
   }
+
   const visitedPlaceData = {
     id: Number(place.id),
     place_name: place.name,
-    place_image: place?.media_evaluations[0] || '',
+    place_image: place?.media || place?.media_evaluations[0],
     place_city: place.city,
     date: moment(new Date()).format(),
   };
