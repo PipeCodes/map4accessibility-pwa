@@ -263,10 +263,12 @@ export const getPlaceByParams = (params) => async (dispatch) => {
   const { name, placeType } = params;
   dispatch({ type: GET_PLACE_START });
   const queryParams = {};
+
   if (name) Object.assign(queryParams, { name });
   if (placeType) Object.assign(queryParams, { place_type: placeType });
   if (name && placeType)
     Object.assign(queryParams, { name, place_type: placeType });
+
   const config = {
     headers: {
       Authorization: `Bearer ${getAuthToken()}`,

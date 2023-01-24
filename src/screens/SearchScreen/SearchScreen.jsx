@@ -16,6 +16,7 @@ import FilterIcon from '../../assets/icons/filters/filter.svg';
 import { types } from '../../constants/placeTypes';
 import PlacesList from '../../components/PlacesList/PlacesList';
 import SearchBar from '../../components/SearchBar/SearchBar';
+import { setText, setType } from '../../store/actions/search';
 
 const SearchScreen = ({ history, routes }) => {
   const { t } = useTranslation();
@@ -28,39 +29,39 @@ const SearchScreen = ({ history, routes }) => {
   );
 
   const places = useSelector((state) => state?.place?.place?.data);
-
-  const [searchText, setSearchText] = useState('');
-  const [filterType, setFilterType] = useState(null);
+  const searchText = useSelector((state) => state?.search?.text);
+  const filterType = useSelector((state) => state?.search?.placeType);
   const [searchData, setSearchData] = useState(null);
 
   useEffect(() => {
     dispatch(resetPlaceState());
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     setSearchData(places);
   }, [places]);
 
   const handleSearch = (value) => {
-    setSearchText(value);
-    if (value?.length >= 4) {
-      if (filterType) {
-        dispatch(getPlaceByParams({ name: value, placeType: filterType }));
+    dispatch(setText(value));
+  };
+
+  const setFilterType = (value) => {
+    dispatch(setType(value));
+  };
+
+  useEffect(() => {
+    if (searchText?.length >= 4 || filterType) {
+      if (searchText?.length >= 4 && !filterType) {
+        dispatch(getPlaceByParams({ name: searchText }));
+      } else if (searchText < 4 && filterType) {
+        dispatch(getPlaceByParams({ placeType: filterType }));
       } else {
-        dispatch(getPlaceByParams({ name: value }));
+        dispatch(getPlaceByParams({ name: searchText, placeType: filterType }));
       }
     } else {
       setSearchData(null);
     }
-  };
-
-  useEffect(() => {
-    if (!searchText) {
-      dispatch(getPlaceByParams({ placeType: filterType }));
-    } else {
-      dispatch(getPlaceByParams({ name: searchText, placeType: filterType }));
-    }
-  }, [filterType]);
+  }, [filterType, searchText, dispatch]);
 
   return (
     <Page>
