@@ -68,7 +68,7 @@ const PlaceDetailsScreen = (props) => {
 
   useEffect(() => {
     if (place && visitedHistory) {
-      if (visitedHistory[0].id !== place.id) {
+      if (visitedHistory[0]?.id !== place?.id) {
         dispatch(storePlace(place, visitedHistory));
       }
     }
