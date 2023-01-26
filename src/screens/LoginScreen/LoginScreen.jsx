@@ -103,7 +103,7 @@ const LoginScreen = (props) => {
           loading={loading}
           disabled={loading}
         />
-        <SocialLogin />
+        <SocialLogin history={history} routes={routes} />
         <Box>
           <CustomButton
             style={{

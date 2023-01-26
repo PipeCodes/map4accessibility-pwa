@@ -60,7 +60,7 @@ const RegisterOptionsScreen = (props) => {
           icon={ProfileIcon}
         />
         <Box>
-          <SocialLogin />
+          <SocialLogin history={history} routes={routes} />
         </Box>
         <Box>
           <TextSecondary fontSize={fontSize} font={font}>
