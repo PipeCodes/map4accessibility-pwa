@@ -15,7 +15,7 @@ import {
   Icon,
   Number,
 } from './RankingItem.styles';
-import placeImage from '../../assets/images/place.png';
+import { getFirstImage } from '../../helpers/utils';
 
 const RankingItem = (props) => {
   const { item, ascDescActive, rank, onClick } = props;
@@ -25,6 +25,8 @@ const RankingItem = (props) => {
     (state) => state.accessibility.backgroundColor,
   );
   const { t } = useTranslation();
+  const image = getFirstImage(item);
+
   return (
     <ItemContainer
       backgroundColor={backgroundColor}
@@ -33,10 +35,10 @@ const RankingItem = (props) => {
       <Rank fontSize={fontSize} font={font}>
         {rank + 1}
       </Rank>
-      {item.media_evaluations[0] ? (
-        <Image src={item.media_evaluations[0].file_url} />
+      {image?.file_url ? (
+        <Image src={image?.file_url} />
       ) : (
-        <Image src={placeImage} />
+        <Image src={image} />
       )}
       <TextWrapper>
         <Name fontSize={fontSize} font={font}>
