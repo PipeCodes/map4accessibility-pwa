@@ -56,6 +56,7 @@ module.exports = {
     'no-alert': 'off',
     'no-undef': 'warn',
     'prefer-regex-literals': 'off',
+    'jsx-a11y/media-has-caption': 'off',
     'no-unused-expressions': [
       'error',
       {

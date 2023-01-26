@@ -14,7 +14,7 @@ import CustomInput from '../../components/CustomInput/CustomInput';
 import CustomSelect from '../../components/CustomSelect/CustomSelect';
 import ArrowRightIcon from '../../assets/icons/arrow-right.svg';
 import { colors } from '../../constants/colors';
-import { GOOGLE_MAPS_OPTIONS, IMAGE_TYPES } from '../../constants';
+import { GOOGLE_MAPS_OPTIONS, MEDIA_TYPES, IMAGE_TYPES } from '../../constants';
 import { types } from '../../constants/placeTypes';
 import {
   Page,
@@ -61,7 +61,7 @@ const AddPlaceScreen = (props) => {
   const [city, setCity] = useState('');
   const [country, setCoutry] = useState('');
   const [type, setType] = useState(filterTypes[0].value);
-  const [img, setImg] = useState();
+  const [file, setFile] = useState();
   const [error, setError] = useState('');
 
   useEffect(() => {
@@ -124,7 +124,7 @@ const AddPlaceScreen = (props) => {
       return;
     }
     event.target.value = null;
-    setImg(fileObj);
+    setFile(fileObj);
   };
 
   const CompressSendImage = (image, id) => {
@@ -146,14 +146,28 @@ const AddPlaceScreen = (props) => {
     });
   };
 
+  const SendFile = (file, id) => {
+    dispatch(postPlaceMedia(file, id))
+      .then(() => {
+        history.push('/rate-place/'.concat(id));
+      })
+      .catch((err) => {
+        alert(err);
+      });
+  };
+
   const onSubmit = () => {
     if (name === '' || name === null || name.length < 3) {
       setError(t('create_error'));
     } else {
-      dispatch(postPlace(name, type, city, state, country, img))
+      dispatch(postPlace(name, type, city, state, country, file))
         .then((result) => {
-          if (img !== undefined) {
-            CompressSendImage(img, result);
+          if (file !== undefined) {
+            if (IMAGE_TYPES.includes(file?.type)) {
+              CompressSendImage(file, result);
+            } else {
+              SendFile(file, result);
+            }
           } else {
             history.push('/rate-place/'.concat(result), { newPlace: true });
           }
@@ -217,7 +231,7 @@ const AddPlaceScreen = (props) => {
               border: '1px dashed #ffffff',
             }}
             backgroundColor={colors.transparent}
-            text={img === undefined ? t('Upload media files') : img.name}
+            text={file === undefined ? t('Upload media files') : file.name}
             icon={paperclipIcon}
             onClick={handleClick}
           />
@@ -227,7 +241,7 @@ const AddPlaceScreen = (props) => {
           ref={inputRef}
           type="file"
           onChange={handleFileChange}
-          accept={IMAGE_TYPES}
+          accept={MEDIA_TYPES}
         />
         <MediaLabel fontSize={fontSize} font={font}>
           {t('supported_formats')} <span>png</span>, <span>jpg</span>,{' '}

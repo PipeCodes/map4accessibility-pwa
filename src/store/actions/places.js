@@ -14,7 +14,7 @@ import {
   RESET_ROUTES,
   RESET_PLACE_STATE,
 } from './types';
-import { HTTP_STATUS } from '../../constants';
+import { HTTP_STATUS, IMAGE_TYPES } from '../../constants';
 import { getAuthToken } from '../../services/local';
 import { getCurrentLocation } from '../../services/geolocation';
 import { camelToSnakeCase } from '../../helpers/utils';
@@ -212,12 +212,20 @@ export const postPlaceMedia = (media, id) => async (dispatch) => {
   const queryParams = {
     id,
   };
-  const config = {
-    headers: {
-      Authorization: `Bearer ${getAuthToken()}`,
-      'Content-Type': 'multipart/form-data',
-    },
-  };
+  const config = IMAGE_TYPES.includes(media?.type)
+    ? {
+        headers: {
+          Authorization: `Bearer ${getAuthToken()}`,
+          'Content-Type': 'multipart/form-data',
+          'Content-Encoding': 'gzip',
+        },
+      }
+    : {
+        headers: {
+          Authorization: `Bearer ${getAuthToken()}`,
+          'Content-Type': 'multipart/form-data',
+        },
+      };
   const url = generatePath(Endpoints.PLACES.concat('/:id/media'), queryParams);
   try {
     const response = await axios.post(url, body, config);
