@@ -36,9 +36,7 @@ const ImageSlider = ({ photos }) => {
             </Media>
           );
         }
-        return (
-          <Img key={index} src={media.file_url ? media.file_url : media} />
-        );
+        return <Img key={index} src={media?.file_url ?? media} />;
       })}
     </Slider>
   );
