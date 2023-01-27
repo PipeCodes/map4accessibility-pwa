@@ -29,6 +29,8 @@ export const TopBarContainer = styled.div`
   background-color: ${(props) => updateValue('white', props.backgroundColor)};
   padding: 10px 15px;
   height: auto;
+  top: 0;
+  position: sticky;
 
   &.accessibility {
     background: unset;

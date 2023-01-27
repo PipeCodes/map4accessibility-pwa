@@ -48,6 +48,11 @@ export const Media = styled.div`
   max-width: 400px;
   object-fit: cover;
 
+  &.audio {
+    max-width: 100%;
+    width: 100%;
+  }
+
   .image {
     height: auto;
     left: 0;
@@ -66,6 +71,7 @@ export const Media = styled.div`
 `;
 
 export const Box = styled.div`
+  flex-wrap: wrap;
   &.image {
     display: flex;
     flex-direction: row;

@@ -109,7 +109,7 @@ const LatestComments = (props) => {
                   </Accessible>
                   <Box className={mediaType?.split('/', 1)}>
                     {comment.media_url && (
-                      <Media>
+                      <Media className={mediaType.split('/', 1)}>
                         {!IMAGE_TYPES.includes(mediaType) ? (
                           <video controls className={mediaType.split('/', 1)}>
                             <source src={comment?.media_url} type={mediaType} />
@@ -174,7 +174,7 @@ const LatestComments = (props) => {
                 </Accessible>
                 <Box className={mediaType?.split('/', 1)}>
                   {comment.media_url && (
-                    <Media>
+                    <Media className={mediaType?.split('/', 1)}>
                       {!IMAGE_TYPES.includes(mediaType) ? (
                         <video controls className={mediaType.split('/', 1)}>
                           <source src={comment?.media_url} type={mediaType} />
