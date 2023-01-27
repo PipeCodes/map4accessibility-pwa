@@ -45,17 +45,39 @@ export const Img = styled.img`
 `;
 
 export const Media = styled.div`
-  max-height: 450px;
-  width: 100%;
+  max-width: 400px;
   object-fit: cover;
+
+  .image {
+    height: auto;
+    left: 0;
+    margin-right: auto;
+  }
 
   .audio {
     height: 60px;
     width: 100%;
   }
   .video {
-    width: inherit;
-    height: inherit;
+    height: auto;
+    width: 400px;
+    margin: auto;
+  }
+`;
+
+export const Box = styled.div`
+  &.image {
+    display: flex;
+    flex-direction: row;
+  }
+
+  &.audio {
+    display: flex;
+    flex-direction: column;
+  }
+  &.video {
+    display: flex;
+    flex-direction: row;
   }
 `;
 
@@ -97,6 +119,7 @@ export const Label = styled.div`
 export const Body = styled.div`
   width: 100%;
   padding: 10px 15px;
+  word-break: break-all;
   color: ${colors.grey};
   font-size: ${(props) => updateFontSize(14, props.fontSize)};
   font-family: ${(props) => updateValue('EasyReadingPro', props.font)};

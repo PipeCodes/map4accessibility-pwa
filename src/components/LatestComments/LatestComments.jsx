@@ -23,6 +23,7 @@ import {
   ShowAll,
   Media,
   Img,
+  Box,
 } from './LatestComments.styles';
 import { IMAGE_TYPES } from '../../constants';
 
@@ -106,21 +107,26 @@ const LatestComments = (props) => {
                         : t('not_accessible')}
                     </Label>
                   </Accessible>
-                  {comment.media_url && (
-                    <Media>
-                      {!IMAGE_TYPES.includes(mediaType) ? (
-                        <video controls className={mediaType.split('/', 1)}>
-                          <source src={comment?.media_url} type={mediaType} />
-                        </video>
-                      ) : (
-                        <Img src={comment?.media_url} />
-                      )}
-                    </Media>
-                  )}
+                  <Box className={mediaType?.split('/', 1)}>
+                    {comment.media_url && (
+                      <Media>
+                        {!IMAGE_TYPES.includes(mediaType) ? (
+                          <video controls className={mediaType.split('/', 1)}>
+                            <source src={comment?.media_url} type={mediaType} />
+                          </video>
+                        ) : (
+                          <Img
+                            src={comment?.media_url}
+                            className={mediaType.split('/', 1)}
+                          />
+                        )}
+                      </Media>
+                    )}
 
-                  <Body fontSize={fontSize} font={font}>
-                    {comment.comment}
-                  </Body>
+                    <Body fontSize={fontSize} font={font}>
+                      {comment.comment}
+                    </Body>
+                  </Box>
                 </Comment>
               );
             })
@@ -166,20 +172,25 @@ const LatestComments = (props) => {
                       : t('not_accessible')}
                   </Label>
                 </Accessible>
-                {comment.media_url && (
-                  <Media>
-                    {!IMAGE_TYPES.includes(mediaType) ? (
-                      <video controls className={mediaType.split('/', 1)}>
-                        <source src={comment?.media_url} type={mediaType} />
-                      </video>
-                    ) : (
-                      <Img src={comment?.media_url} />
-                    )}
-                  </Media>
-                )}
-                <Body fontSize={fontSize} font={font}>
-                  {comment.comment}
-                </Body>
+                <Box className={mediaType?.split('/', 1)}>
+                  {comment.media_url && (
+                    <Media>
+                      {!IMAGE_TYPES.includes(mediaType) ? (
+                        <video controls className={mediaType.split('/', 1)}>
+                          <source src={comment?.media_url} type={mediaType} />
+                        </video>
+                      ) : (
+                        <Img
+                          src={comment?.media_url}
+                          className={mediaType.split('/', 1)}
+                        />
+                      )}
+                    </Media>
+                  )}
+                  <Body fontSize={fontSize} font={font}>
+                    {comment.comment}
+                  </Body>
+                </Box>
               </Comment>
             );
           })
