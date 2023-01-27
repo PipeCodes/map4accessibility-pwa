@@ -1,14 +1,17 @@
 import moment from 'moment';
 import { UPSERT_VISITED_PLACES, RESET_VISITED_PLACES } from './types';
+import { getFirstImage } from '../../helpers/utils';
 
 export const storePlace = (place, visitedHistory) => async (dispatch) => {
   if (typeof visitedHistory === 'string') {
     dispatch({ type: RESET_VISITED_PLACES });
   }
+  const image = getFirstImage(place);
+
   const visitedPlaceData = {
     id: Number(place.id),
     place_name: place.name,
-    place_image: place?.media_evaluations[0] || '',
+    place_image: image,
     place_city: place.city,
     date: moment(new Date()).format(),
   };

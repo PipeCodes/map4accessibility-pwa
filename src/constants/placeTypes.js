@@ -7,39 +7,51 @@ import CoffeeIcon from '../assets/icons/filters/coffee.svg';
 export const types = [
   {
     id: 1,
-    label: 'danger',
+    label: 'Danger',
+    placeType: 'danger',
     icon: DangerIcon,
   },
-
   {
     id: 2,
-    label: 'attractions',
-    icon: MusicIcon,
-  },
-  {
-    id: 3,
-    label: 'groceries',
-    icon: CoffeIcon,
-  },
-];
-
-export const filterTypes = [
-  {
-    id: 1,
     label: 'Restaurants',
     placeType: 'restaurant',
     icon: GlassIcon,
   },
   {
-    id: 2,
-    label: 'Takeout',
-    placeType: 'danger',
+    id: 3,
+    label: 'Transportation',
+    placeType: 'transportation',
     icon: CoffeeIcon,
   },
   {
-    id: 3,
-    label: 'Bars',
-    placeType: 'danger',
+    id: 4,
+    label: 'Accommodation',
+    placeType: 'accomodation',
     icon: GlassIcon,
+  },
+
+  {
+    id: 5,
+    label: 'Attractions',
+    placeType: 'Attractions',
+    icon: MusicIcon,
+  },
+  {
+    id: 6,
+    label: 'Hospitals',
+    placeType: 'hospitals',
+    icon: CoffeIcon,
+  },
+  {
+    id: 6,
+    label: 'Public Serv.',
+    placeType: 'public',
+    icon: CoffeIcon,
+  },
+  {
+    id: 8,
+    label: 'Parking',
+    placeType: 'parking',
+    icon: CoffeIcon,
   },
 ];

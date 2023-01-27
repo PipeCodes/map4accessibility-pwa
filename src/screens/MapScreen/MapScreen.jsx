@@ -12,6 +12,7 @@ import { getPlacesRadiusMarkers } from '../../store/actions/places';
 import TopBar from '../../components/TopBar/TopBar';
 import FooterMenu from '../../components/FooterMenu/FooterMenu';
 import CustomMarker from '../../components/CustomMarker/CustomMarker';
+import SearchBar from '../../components/SearchBar/SearchBar';
 import LocationIcon from '../../assets/icons/maps/locate.svg';
 import AddIcon from '../../assets/icons/maps/add.svg';
 import ClusterImg from '../../assets/icons/maps/clusters/m1.svg';
@@ -79,7 +80,13 @@ const MapScreen = (props) => {
     if (isLoaded) {
       // Asks and sets user position (lat, long)
       getCurrentLocation()
-        .then((position) => setLocation(position))
+        .then((position) => {
+          if (history?.location?.state?.search?.location) {
+            setLocation(history?.location?.state?.search?.location);
+          } else {
+            setLocation(position);
+          }
+        })
         .catch((error) => {
           setLocation({ lat: 38.736946, lng: -9.142685 });
           alert(error);
@@ -161,17 +168,29 @@ const MapScreen = (props) => {
     [center],
   );
 
+  const handleSearch = (value) => {
+    history.push(routes.SEARCH.path, { search: value });
+  };
+
   return (
     <Page backgroundColor={backgroundColor}>
-      <TopBar
-        aligned
-        page
-        magnifier
-        routes={routes}
-        backgroundColor={backgroundColor}
-        hasAccessibilityButton={openAccessibility}
-        title={add ? t('click_to_mark') : t('map')}
-      />
+      {history.location?.state?.search ? (
+        <SearchBar
+          handleSearch={handleSearch}
+          history={history}
+          searchText={history?.location?.state?.search?.text}
+        />
+      ) : (
+        <TopBar
+          aligned
+          page
+          magnifier
+          routes={routes}
+          backgroundColor={backgroundColor}
+          hasAccessibilityButton={openAccessibility}
+          title={add ? t('click_to_mark') : t('map')}
+        />
+      )}
       <Container>
         {isLoaded && (
           <div
@@ -186,7 +205,7 @@ const MapScreen = (props) => {
             <GoogleMap
               mapContainerStyle={containerStyle}
               center={location}
-              zoom={14}
+              zoom={history.location?.state?.search?.text ? 16 : 14}
               onClick={(e) => {
                 if (add) {
                   setCoords({ lat: e.latLng.lat(), lng: e.latLng.lng() });

@@ -39,6 +39,26 @@ export const Image = styled.img`
   background-color: ${colors.grey};
 `;
 
+export const Img = styled.img`
+  max-height: 450px;
+  width: 100%;
+`;
+
+export const Media = styled.div`
+  max-height: 450px;
+  width: 100%;
+  object-fit: cover;
+
+  .audio {
+    height: 60px;
+    width: 100%;
+  }
+  .video {
+    width: inherit;
+    height: inherit;
+  }
+`;
+
 export const Name = styled.div`
   margin-left: 10px;
   margin-right: auto;

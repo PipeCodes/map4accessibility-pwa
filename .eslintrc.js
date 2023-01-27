@@ -2,7 +2,7 @@ module.exports = {
   env: {
     es6: true,
   },
-  extends: ['airbnb', 'prettier'],
+  extends: ['airbnb', 'prettier', 'plugin:react-hooks/recommended'],
   globals: {
     Atomics: 'readonly',
     SharedArrayBuffer: 'readonly',
@@ -47,6 +47,7 @@ module.exports = {
     'no-continue': 'off',
     'prefer-destructuring': 'off',
     'import/no-extraneous-dependencies': 'off',
+    'react-hooks/exhaustive-deps': 'warn',
     'react/forbid-prop-types': 'off',
     'prefer-promise-reject-errors': 'off',
     'no-debugger': 'off',
@@ -55,6 +56,7 @@ module.exports = {
     'no-alert': 'off',
     'no-undef': 'warn',
     'prefer-regex-literals': 'off',
+    'jsx-a11y/media-has-caption': 'off',
     'no-unused-expressions': [
       'error',
       {

@@ -10,6 +10,7 @@ import OpenAccountLogin from '../../assets/icons/open-account-login.svg';
 import TopBar from '../../components/TopBar/TopBar';
 import LoginInfo from './LoginInfo';
 import { REGEX_PASSWORD, REGEX_EMAIL } from '../../constants';
+import SocialLogin from '../../components/SocialLogin/SocialLogin';
 
 const LoginScreen = (props) => {
   const initialValues = {
@@ -33,7 +34,7 @@ const LoginScreen = (props) => {
     if (user && history) {
       history.replace(routes.HOME.path);
     }
-  }, [user, history]);
+  }, [user, history, routes.HOME.path]);
 
   // Validates the fields
   const validate = (values) => {
@@ -102,7 +103,7 @@ const LoginScreen = (props) => {
           loading={loading}
           disabled={loading}
         />
-
+        <SocialLogin history={history} routes={routes} />
         <Box>
           <CustomButton
             style={{

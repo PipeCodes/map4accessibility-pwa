@@ -27,11 +27,9 @@ import {
 import TopBar from '../../components/TopBar/TopBar';
 import ImageSlider from '../../components/ImageSlider/ImageSlider';
 import { getPlace, deletePlace } from '../../store/actions/places';
-import placeholder from '../../assets/images/photo-stock-1.png';
 import LatestComments from '../../components/LatestComments/LatestComments';
 import { storePlace } from '../../store/actions/history';
-
-const photos = [placeholder, placeholder, placeholder];
+import { getMedia } from '../../helpers/utils';
 
 const PlaceDetailsScreen = (props) => {
   const { history, routes } = props;
@@ -107,17 +105,6 @@ const PlaceDetailsScreen = (props) => {
     history.push(`/rate-place/${params?.id}`);
   }, [history, routes]);
 
-  const getMedia = (place) => {
-    const pictures = [];
-    const mainPicture = {
-      file_type: 'image',
-      file_url: place?.media,
-    };
-    if (mainPicture?.file_url) pictures.push(mainPicture);
-    place?.media_evaluations?.map((pic) => pictures.push(pic));
-    return pictures?.length ? pictures : photos;
-  };
-
   const getAccessibility = useMemo(() => {
     const sortedComments = place?.place_evaluations?.sort(
       (a, b) => moment(b.updated_at) - moment(a.updated_at),
@@ -131,7 +118,7 @@ const PlaceDetailsScreen = (props) => {
       return t('not_accessible');
     }
     return '';
-  }, [setIsAccessible, place]);
+  }, [setIsAccessible, place, t]);
 
   return (
     <Page backgroundColor={backgroundColor}>
@@ -145,7 +132,7 @@ const PlaceDetailsScreen = (props) => {
         hasAccessibilityButton={openAccessibility}
         title={t('place_details')}
       />
-      <ImageSlider photos={getMedia(place)} />
+      {place && <ImageSlider photos={getMedia(place)} />}
       <Container>
         <div className="card">
           <div className="header-row">

@@ -5,7 +5,8 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import ArrowRightIcon from '../../assets/icons/arrow-right.svg';
 import { colors } from '../../constants/colors';
-import { IMAGE_TYPES } from '../../constants';
+import { MEDIA_TYPES, IMAGE_TYPES } from '../../constants';
+import { getMedia } from '../../helpers/utils';
 import {
   Page,
   Container,
@@ -40,9 +41,6 @@ import {
   postPlaceEvaluation,
   postPlaceEvaluationMedia,
 } from '../../store/actions/placeEvaluations';
-import placeholder from '../../assets/images/photo-stock-1.png';
-
-const photos = [placeholder, placeholder, placeholder];
 
 const RatePlaceScreen = (props) => {
   const { history, routes } = props;
@@ -64,7 +62,7 @@ const RatePlaceScreen = (props) => {
   const inputRef = useRef(null);
   const [answers, setAnswers] = useState({});
   const params = useParams();
-  const [img, setImg] = useState();
+  const [file, setFile] = useState();
   const [error, setError] = useState('');
 
   // Open file input on button click
@@ -79,18 +77,16 @@ const RatePlaceScreen = (props) => {
       return;
     }
     event.target.value = null;
-    setImg(fileObj);
-  };
-
-  const noPlace = () => {
-    alert(t('no_place'));
-    dispatch(history.goBack());
+    setFile(fileObj);
   };
 
   useEffect(() => {
     dispatch(getQuestions());
-    dispatch(getPlace(params?.id)).catch(() => noPlace());
-  }, [dispatch, params?.id]);
+    dispatch(getPlace(params?.id)).catch(() => {
+      alert(t('no_place'));
+      dispatch(history.goBack());
+    });
+  }, [dispatch, params?.id, history, t]);
 
   const CompressSendImage = (image, id) => {
     // eslint-disable-next-line no-new
@@ -113,6 +109,18 @@ const RatePlaceScreen = (props) => {
       },
     });
   };
+  const SendFile = (file, id) => {
+    dispatch(postPlaceEvaluationMedia(file, id))
+      .then(() => {
+        history.push('/place-details/'.concat(params.id), {
+          newPlace: history?.location?.state?.newPlace,
+          ratePlace: true,
+        });
+      })
+      .catch((err) => {
+        alert(err);
+      });
+  };
 
   const onSubmit = () => {
     if (
@@ -130,12 +138,16 @@ const RatePlaceScreen = (props) => {
           answers,
           place.latitude,
           place.longitude,
-          img,
+          file,
         ),
       )
         .then((result) => {
-          if (img !== undefined) {
-            CompressSendImage(img, result);
+          if (file !== undefined) {
+            if (IMAGE_TYPES.includes(file?.type)) {
+              CompressSendImage(file, result);
+            } else {
+              SendFile(file, result);
+            }
           } else {
             history.push('/place-details/'.concat(params.id), {
               newPlace: history?.location?.state?.newPlace,
@@ -157,20 +169,19 @@ const RatePlaceScreen = (props) => {
     setAccessibility(0);
   };
 
-  const getMedia = (place) => {
-    const pictures = [];
-    const mainPicture = {
-      file_type: 'image',
-      file_url: place?.media,
-    };
-    if (mainPicture?.file_url) pictures.push(mainPicture);
-    place?.media_evaluations?.map((pic) => pictures.push(pic));
-    return pictures?.length ? pictures : photos;
-  };
-
   const openAccessibility = useCallback(() => {
     history.push(routes.ACCESSIBILITY.path);
   }, [history, routes]);
+
+  const backClickHandler = () => {
+    if (history?.location?.state?.newPlace) {
+      history.replace(routes.MAP.path);
+    } else if (history?.location?.state?.ratePlace) {
+      history.go(-2);
+    } else {
+      history.goBack();
+    }
+  };
 
   return (
     <Page backgroundColor={backgroundColor}>
@@ -178,6 +189,7 @@ const RatePlaceScreen = (props) => {
         aligned
         page
         hasBackButton
+        backTarget={() => backClickHandler()}
         backgroundColor={backgroundColor}
         hasAccessibilityButton={openAccessibility}
         title={t('comment')}
@@ -271,7 +283,7 @@ const RatePlaceScreen = (props) => {
               border: '1px dashed #ffffff',
             }}
             backgroundColor={colors.transparent}
-            text={img === undefined ? t('Upload media files') : img?.name}
+            text={file === undefined ? t('Upload media files') : file?.name}
             icon={paperclipIcon}
             onClick={handleClick}
           />
@@ -281,7 +293,7 @@ const RatePlaceScreen = (props) => {
           ref={inputRef}
           type="file"
           onChange={handleFileChange}
-          accept={IMAGE_TYPES}
+          accept={MEDIA_TYPES}
         />
         <MediaLabel fontSize={fontSize} font={font}>
           {t('supported_formats')} <span>png</span>, <span>jpg</span>,{' '}
