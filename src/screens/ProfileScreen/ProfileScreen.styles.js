@@ -41,7 +41,8 @@ export const TopWrapper = styled.div`
 
 export const FormWrapper = styled.div`
   width: 100%;
-
+  display: flex;
+  flex-direction: column;
   input {
     border: none;
     border-radius: 4px;

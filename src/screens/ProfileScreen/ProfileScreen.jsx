@@ -309,9 +309,9 @@ const ProfileScreen = (props) => {
           <CustomInput
             fontSize={fontSize}
             font={font}
-            style={{}}
+            style={{ minWidth: 'intrinsic' }}
             placeholder={t('birth_date_placeholder')}
-            type="date"
+            type={editActive ? 'date' : 'text'}
             value={formData.birthDate}
             name="birthDate"
             min={moment().subtract(100, 'years').format('YYYY-MM-DD')}
