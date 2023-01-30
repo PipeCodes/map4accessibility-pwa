@@ -49,12 +49,6 @@ export const Rating = styled.div`
   display: flex;
 `;
 
-export const Image = styled.img`
-  height: 35px;
-  border-radius: 50%;
-  backgroundcolor: ${colors.grey};
-`;
-
 export const Icon = styled.div`
   margin-right: 5px;
   align-self: flex-start;

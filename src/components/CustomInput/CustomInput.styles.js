@@ -14,8 +14,6 @@ const InputStyle = styled.input`
   color: ${colors.grey};
   border: 1px solid ${colors.lightGrey};
   border-radius: 21px;
-  background: url(${(props) => (props.icon ? props.icon : 'unset')}) no-repeat
-    95%;
   &::placeholder {
     /* Chrome, Firefox, Opera, Safari 10.1+ */
     color: ${colors.grey};
