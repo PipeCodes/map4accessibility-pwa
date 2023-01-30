@@ -35,6 +35,7 @@ const SignUpInfo = (props) => {
   const fontSize = useSelector((state) => state.accessibility.fontSize);
   const font = useSelector((state) => state.accessibility.font);
   const dispatch = useDispatch();
+  const privacyPolicy = `${process.env.REACT_APP_EXTERNAL_LINKS_BASE}/privacy-policy`;
 
   const checkPasswords = (name, value) => {
     const form = { ...formData, [name]: value };
@@ -290,7 +291,7 @@ const SignUpInfo = (props) => {
           onClick={() => setPrivacyPolicyChecked()}
           dangerouslySetInnerHTML={{
             __html: t('privacy_policy_message', {
-              link: 'https://google.com',
+              link: privacyPolicy,
               privacy_policy: t('privacy_policy'),
             }),
           }}
