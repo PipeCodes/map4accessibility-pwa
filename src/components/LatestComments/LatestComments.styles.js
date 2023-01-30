@@ -40,22 +40,52 @@ export const Image = styled.img`
 `;
 
 export const Img = styled.img`
-  max-height: 450px;
+  max-height: 200px;
   width: 100%;
 `;
 
 export const Media = styled.div`
-  max-height: 450px;
-  width: 100%;
+  max-width: 400px;
   object-fit: cover;
+
+  &.audio {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .image {
+    height: auto;
+    left: 0;
+    margin-right: auto;
+    padding-top: 2px;
+  }
 
   .audio {
     height: 60px;
     width: 100%;
   }
   .video {
-    width: inherit;
-    height: inherit;
+    max-width: 100%;
+    width: 400px;
+    padding-top: 2px;
+  }
+`;
+
+export const Box = styled.div`
+  &.image {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  &.audio {
+    display: flex;
+    flex-direction: column;
+  }
+  &.video {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
   }
 `;
 
@@ -95,9 +125,11 @@ export const Label = styled.div`
 `;
 
 export const Body = styled.div`
-  width: 100%;
   padding: 10px 15px;
+  word-break: break-all;
   color: ${colors.grey};
+  flex: 1;
+  min-width: 150px;
   font-size: ${(props) => updateFontSize(14, props.fontSize)};
   font-family: ${(props) => updateValue('EasyReadingPro', props.font)};
 `;

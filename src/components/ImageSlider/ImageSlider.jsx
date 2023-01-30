@@ -24,7 +24,14 @@ const ImageSlider = ({ photos }) => {
       {photos?.map((media, index) => {
         if (media?.file_url) {
           const type = media?.file_url?.split('.').pop();
-          fileType = media?.file_type.concat('/').concat(type);
+
+          if (type === 'mp3' || type === 'wav') {
+            fileType = 'audio'.concat('/').concat(type);
+          } else if (type === 'mp4') {
+            fileType = 'video'.concat('/').concat(type);
+          } else {
+            fileType = 'image'.concat('/').concat(type);
+          }
         }
         if (fileType === undefined) {
           return <Img key={index} src={media} />;
