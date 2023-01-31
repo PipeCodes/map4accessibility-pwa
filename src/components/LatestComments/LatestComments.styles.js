@@ -136,7 +136,7 @@ export const Body = styled.div`
 
 export const ShowAll = styled.button`
   font-size: ${(props) => updateFontSize(14, props.fontSize)};
-  font-family: ${(props) => updateValue('EasyReadingPro', props.font)};
+  font-family: ${(props) => updateValue('NotoSans-Regular', props.font)};
   border: none;
   background: transparent;
   padding-bottom: 15px;

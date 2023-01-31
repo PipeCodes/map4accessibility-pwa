@@ -87,6 +87,7 @@ export const AscDescButton = styled.button`
   align-items: center;
   position: absolute;
   align-self: flex-start;
+  padding: 0;
 
   img {
     width: 20px;

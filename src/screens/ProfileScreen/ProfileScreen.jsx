@@ -388,10 +388,20 @@ const ProfileScreen = (props) => {
             icon={QuestionsIcon}
             onClick={() => window.open(faqs)}
           />
-          <Link fontSize={fontSize} href={termsConditions} target="_blank">
+          <Link
+            fontSize={fontSize}
+            font={font}
+            href={termsConditions}
+            target="_blank"
+          >
             {t('terms_conditions')}
           </Link>
-          <Link fontSize={fontSize} href={privacyPolicy} target="_blank">
+          <Link
+            fontSize={fontSize}
+            font={font}
+            href={privacyPolicy}
+            target="_blank"
+          >
             {t('privacy_policy')}
           </Link>
         </BottomWrapper>
