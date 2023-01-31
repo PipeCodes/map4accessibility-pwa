@@ -182,7 +182,7 @@ const SignUpInfo = (props) => {
       <CustomInput
         fontSize={fontSize}
         font={font}
-        style={{}}
+        style={{ minWidth: 'intrinsic' }}
         placeholder={t('birth_date_placeholder')}
         type="date"
         value={formData.birthDate}
