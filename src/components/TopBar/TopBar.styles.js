@@ -29,6 +29,8 @@ export const TopBarContainer = styled.div`
   background-color: ${(props) => updateValue('white', props.backgroundColor)};
   padding: 10px 15px;
   height: auto;
+  top: 0;
+  position: sticky;
 
   &.accessibility {
     background: unset;
@@ -62,7 +64,7 @@ export const LeftButton = styled.button`
 `;
 
 export const AccessibilityButton = styled.button`
-  border-radius: 50%;
+  border-radius: 100%;
   background: ${colors.primaryColor} 0% 0% no-repeat padding-box;
   box-shadow: 0px 2px 2px ${colors.shadow};
   border: 1px solid ${colors.primaryColor};

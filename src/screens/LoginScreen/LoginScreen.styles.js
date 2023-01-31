@@ -28,6 +28,9 @@ export const Container = styled.div`
     flex-direction: column;
     align-items: center;
   }
+  div {
+    width: 100%;
+  }
 `;
 
 export const Error = styled.div`

@@ -85,7 +85,7 @@ export const LeftButton = styled.button`
 `;
 
 export const AccessibilityButton = styled.button`
-  border-radius: 50%;
+  border-radius: 100%;
   background: ${colors.primaryColor} 0% 0% no-repeat padding-box;
   box-shadow: 0px 2px 2px ${colors.shadow};
   border: 1px solid ${colors.primaryColor};
@@ -105,4 +105,8 @@ export const Icons = styled.div`
   gap: 8px;
   padding: 5px;
   margin-right: 10px;
+  img {
+    height: 16px;
+    width: 16px;
+  }
 `;

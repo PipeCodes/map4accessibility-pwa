@@ -6,8 +6,10 @@ export const SUCCESS = 'success';
 export const ERROR = 'error';
 
 // SOCIAL LOGIN PROVIDERS
-export const PROVIDER_FB = 'facebook';
-export const PROVIDER_GG = 'google';
+export const PROVIDERS = {
+  FACEBOOK: 'facebook',
+  GOOGLE: 'google',
+};
 
 // REGEX
 export const REGEX_EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
@@ -15,9 +17,16 @@ export const REGEX_PASSWORD =
   /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d!@#$%^&*^~+=`|\\[\](){}:;'<>ç,.?/"_-]{8,}$/;
 export const REGEX_DATE = /^[0-9]{1,4}[-,/][0-9]{1,2}[-,/][0-9]{1,4}$/;
 
-// IMAGE TYPES
-export const IMAGE_TYPES =
-  'image/png, image/jpg, image/jpeg, image/jpg,  image/webp, video/mp4, video/mp3, video/wav';
+// MEDIA TYPES
+export const MEDIA_TYPES =
+  'image/png, image/jpg, image/jpeg, image/jpg,  image/webp, video/mp4, audio/mp3, audio/wav';
+
+export const IMAGE_TYPES = [
+  'image/png',
+  'image/jpg',
+  'image/jpeg',
+  'image/webp',
+];
 
 // HTTP STATUS
 export const HTTP_STATUS = {

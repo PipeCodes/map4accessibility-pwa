@@ -74,7 +74,7 @@ export const SliderButon = styled.button`
 `;
 
 export const AscDescButton = styled.button`
-  border-radius: 50%;
+  border-radius: 100%;
   background: ${colors.transparent};
   box-shadow: 0px 2px 2px ${colors.shadow};
   border: 2px solid ${colors.primaryColor};
@@ -87,6 +87,12 @@ export const AscDescButton = styled.button`
   align-items: center;
   position: absolute;
   align-self: flex-start;
+  padding: 0;
+
+  img {
+    width: 20px;
+    height: 20px;
+  }
 
   &.active {
     background: ${colors.primaryColor};

@@ -140,11 +140,11 @@ export const BackToRoutes = styled.button`
   display: flex;
   align-items: center;
   font-size: ${(props) => updateFontSize(14, props.fontSize)};
-  font-family: ${(props) => updateValue('EasyReadingPro', props.font)};
+  font-family: ${(props) => updateValue('NotoSans-Regular', props.font)};
 `;
 
 export const AccessibilityButton = styled.button`
-  border-radius: 50%;
+  border-radius: 100%;
   background: ${colors.primaryColor} 0% 0% no-repeat padding-box;
   box-shadow: 0px 2px 2px ${colors.shadow};
   border: 1px solid ${colors.primaryColor};

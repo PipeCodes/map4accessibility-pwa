@@ -35,8 +35,58 @@ export const Top = styled.div`
 export const Image = styled.img`
   height: 35px;
   width: 35px;
-  border-radius: 50%;
+  border-radius: 100%;
   background-color: ${colors.grey};
+`;
+
+export const Img = styled.img`
+  max-height: 200px;
+  width: 100%;
+`;
+
+export const Media = styled.div`
+  max-width: 400px;
+  object-fit: cover;
+
+  &.audio {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .image {
+    height: auto;
+    left: 0;
+    margin-right: auto;
+    padding-top: 2px;
+  }
+
+  .audio {
+    height: 60px;
+    width: 100%;
+  }
+  .video {
+    max-width: 100%;
+    width: 400px;
+    padding-top: 2px;
+  }
+`;
+
+export const Box = styled.div`
+  &.image {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  &.audio {
+    display: flex;
+    flex-direction: column;
+  }
+  &.video {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
 `;
 
 export const Name = styled.div`
@@ -75,16 +125,18 @@ export const Label = styled.div`
 `;
 
 export const Body = styled.div`
-  width: 100%;
   padding: 10px 15px;
+  word-break: break-all;
   color: ${colors.grey};
+  flex: 1;
+  min-width: 150px;
   font-size: ${(props) => updateFontSize(14, props.fontSize)};
   font-family: ${(props) => updateValue('EasyReadingPro', props.font)};
 `;
 
 export const ShowAll = styled.button`
   font-size: ${(props) => updateFontSize(14, props.fontSize)};
-  font-family: ${(props) => updateValue('EasyReadingPro', props.font)};
+  font-family: ${(props) => updateValue('NotoSans-Regular', props.font)};
   border: none;
   background: transparent;
   padding-bottom: 15px;

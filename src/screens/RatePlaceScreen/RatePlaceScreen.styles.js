@@ -15,7 +15,7 @@ export const Page = styled.div`
     width: 100%;
 
     .slick-dots {
-      bottom: 0;
+      bottom: 10px;
       li {
         button:before {
           opacity: 0.5;

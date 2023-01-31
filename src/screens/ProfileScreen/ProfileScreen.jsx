@@ -309,9 +309,9 @@ const ProfileScreen = (props) => {
           <CustomInput
             fontSize={fontSize}
             font={font}
-            style={{}}
+            style={{ minWidth: 'intrinsic' }}
             placeholder={t('birth_date_placeholder')}
-            type="date"
+            type={editActive ? 'date' : 'text'}
             value={formData.birthDate}
             name="birthDate"
             min={moment().subtract(100, 'years').format('YYYY-MM-DD')}
@@ -388,10 +388,20 @@ const ProfileScreen = (props) => {
             icon={QuestionsIcon}
             onClick={() => window.open(faqs)}
           />
-          <Link fontSize={fontSize} href={termsConditions} target="_blank">
+          <Link
+            fontSize={fontSize}
+            font={font}
+            href={termsConditions}
+            target="_blank"
+          >
             {t('terms_conditions')}
           </Link>
-          <Link fontSize={fontSize} href={privacyPolicy} target="_blank">
+          <Link
+            fontSize={fontSize}
+            font={font}
+            href={privacyPolicy}
+            target="_blank"
+          >
             {t('privacy_policy')}
           </Link>
         </BottomWrapper>

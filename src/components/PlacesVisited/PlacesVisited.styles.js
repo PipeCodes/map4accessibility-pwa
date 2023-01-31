@@ -33,7 +33,7 @@ export const Place = styled.div`
 export const Image = styled.img`
   height: 50px;
   width: 50px;
-  border-radius: 50%;
+  border-radius: 100%;
   background-color: ${colors.grey};
 `;
 
@@ -64,7 +64,7 @@ export const NoResults = styled.div`
 `;
 
 export const Button = styled.div`
-  border-radius: 50%;
+  border-radius: 100%;
   background: ${colors.primaryColor} 0% 0% no-repeat padding-box;
   box-shadow: 0px 2px 2px ${colors.shadow};
   border: 1px solid ${colors.primaryColor};
@@ -79,7 +79,7 @@ export const Button = styled.div`
 
 export const ShowAll = styled.button`
   font-size: ${(props) => updateFontSize(14, props.fontSize)};
-  font-family: ${(props) => updateValue('EasyReadingPro', props.font)};
+  font-family: ${(props) => updateValue('NotoSans-Regular', props.font)};
   border: none;
   background: transparent;
   padding-top: 15px;

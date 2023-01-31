@@ -11,6 +11,7 @@ import { colors } from '../../constants/colors';
 import RouteOption from '../RouteOption/RouteOption';
 import CustomMarker from '../CustomMarker/CustomMarker';
 import PlacesVisited from '../PlacesVisited/PlacesVisited';
+import MapZoom from '../MapZoom/MapZoom';
 
 // Map styling
 const containerStyle = {
@@ -26,6 +27,7 @@ const Map = ({ origin, destination, routes, userLocation, history }) => {
   const directions = useSelector((state) => state.directions.directions);
   const selectedRoute = useSelector((state) => state.directions.selectedRoute);
   const [generatingRoutes, setGeneratingRoutes] = useState(false);
+  const [map, setMap] = useState(/** @type google.maps.Map */ (null));
 
   const dispatch = useDispatch();
 
@@ -216,6 +218,9 @@ const Map = ({ origin, destination, routes, userLocation, history }) => {
           fullscreenControl: false,
           disableDefaultUI: true,
         }}
+        onLoad={(map) => {
+          setMap(map);
+        }}
       >
         {!generatingRoutes &&
           routes?.length > 0 &&
@@ -242,6 +247,14 @@ const Map = ({ origin, destination, routes, userLocation, history }) => {
             />
           ))}
       </GoogleMap>
+      <MapZoom
+        zoomIn={() => {
+          map.setZoom(map.getZoom() + 1);
+        }}
+        zoomOut={() => {
+          map.setZoom(map.getZoom() - 1);
+        }}
+      />
       <Routes backgroundColor={backgroundColor}>
         {routes &&
           routes.length > 0 &&

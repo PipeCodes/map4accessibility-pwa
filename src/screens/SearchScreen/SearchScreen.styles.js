@@ -10,34 +10,6 @@ export const Page = styled.div`
   z-index: 54;
   background-color: ${(props) =>
     updateValue(colors.transparent, props.backgroundColor)};
-
-  .slick-slider {
-    width: 100%;
-
-    .slick-dots {
-      bottom: 0;
-      li {
-        button:before {
-          opacity: 0.5;
-          color: white !important;
-          font-size: 8px !important;
-        }
-      }
-
-      .slick-active button:before {
-        opacity: 1;
-      }
-    }
-  }
-`;
-
-export const SearchHeader = styled.div`
-  margin-top: 30px;
-  padding: 0px 15px;
-  display: flex;
-  justify-content: center;
-  flex-direction: row;
-  width: 100%;
 `;
 
 export const Container = styled.div`
@@ -64,25 +36,6 @@ export const Text = styled.span`
   }
 `;
 
-export const LeftButton = styled.button`
-  color: ${colors.white};
-  background-color: ${colors.transparent};
-  border: 0;
-  margin: 0;
-  top: 30px;
-  left: 15px;
-  width: 35px;
-  height: 35px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  img {
-    height: 100%;
-    width: auto;
-  }
-`;
-
 export const InputLabel = styled.span`
   font-size: ${(props) => updateFontSize(20, props.fontSize)};
   font-family: ${(props) => updateValue('EasyReadingPro', props.font)};
@@ -91,49 +44,40 @@ export const InputLabel = styled.span`
   margin-top: 10px;
 `;
 
-export const AccessibilityButton = styled.button`
-  border-radius: 50%;
-  background: ${colors.primaryColor} 0% 0% no-repeat padding-box;
-  box-shadow: 0px 2px 2px ${colors.shadow};
-  border: 1px solid ${colors.primaryColor};
-  color: ${colors.white};
-  margin: 0;
-  position: absolute;
-  top: 30px;
-  right: 15px;
-  width: 42px;
-  height: 42px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
 export const SearchFilters = styled.div`
   padding: 20px 15px;
   background: ${colors.white};
   width: 100%;
+  margin-top: 30px;
 `;
 
 export const FiltersContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
-  .filter {
-    flex-grow: 1;
-    flex-basis: 50%;
-    margin-top: 10px;
-    font-size: ${(props) => updateFontSize(16, props.fontSize)};
-    font-family: ${(props) => updateValue('EasyReadingPro', props.font)};
-    button {
-      color: ${colors.primaryTextColor};
-      all: unset;
-      border: 1px solid #d3d2da;
-      border-radius: 18px;
-      height: 35px;
-      width: 150px;
-      img {
-        padding-left: 12px;
-        padding-right: 6px;
-      }
+`;
+
+export const Filter = styled.div`
+  flex-grow: 1;
+  flex-basis: 25%;
+  margin-top: 10px;
+  font-size: ${(props) => updateFontSize(16, props.fontSize)};
+  font-family: ${(props) => updateValue('EasyReadingPro', props.font)};
+  button {
+    color: ${colors.primaryTextColor};
+    all: unset;
+    border: 1px solid #d3d2da;
+    border-radius: 18px;
+    height: 35px;
+    width: 150px;
+
+    &.active {
+      border: 1px solid ${colors.primaryTextColor};
+      background: ${colors.background};
+    }
+
+    img {
+      padding-left: 12px;
+      padding-right: 6px;
     }
   }
 `;

@@ -1,13 +1,13 @@
 import { useTranslation } from 'react-i18next';
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import placeImage from '../../assets/images/place.png';
 import buttonUp from '../../assets/icons/places/like.svg';
 import buttonDown from '../../assets/icons/places/dislike.svg';
 import Pending from '../../assets/icons/maps/pending.svg';
 import Rejected from '../../assets/icons/maps/rejected.svg';
 import Accepted from '../../assets/icons/maps/accepted.svg';
 import Avatar from '../../assets/images/avatarDefault.png';
+import { getFirstImage } from '../../helpers/utils';
 import {
   Container,
   Title,
@@ -21,7 +21,11 @@ import {
   Status,
   Name,
   ShowAll,
+  Media,
+  Img,
+  Box,
 } from './LatestComments.styles';
+import { IMAGE_TYPES } from '../../constants';
 
 const Thumbs = [buttonDown, buttonUp];
 
@@ -67,20 +71,98 @@ const LatestComments = (props) => {
       <Title>{t('latest')}</Title>
       {myComments
         ? commentsList
-          ? commentsList.map((comment) => (
+          ? commentsList.map((comment) => {
+              const image = getFirstImage(comment?.place);
+              let mediaType;
+              if (comment?.media_url) {
+                const type = comment?.media_url?.split('.').pop();
+
+                if (type === 'mp3' || type === 'wav') {
+                  mediaType = 'audio'.concat('/').concat(type);
+                } else if (type === 'mp4') {
+                  mediaType = 'video'.concat('/').concat(type);
+                } else {
+                  mediaType = 'image'.concat('/').concat(type);
+                }
+              }
+
+              return (
+                <Comment backgroundColor={backgroundColor} key={comment.id}>
+                  <Top>
+                    {image?.file_url ? (
+                      <Image src={image?.file_url} />
+                    ) : (
+                      <Image src={image} />
+                    )}
+                    <Name fontSize={fontSize} font={font}>
+                      {comment?.place && comment?.place?.name}
+                    </Name>
+                    <Status>{renderState(comment?.status)}</Status>
+                  </Top>
+                  <Accessible backgroundColor={backgroundColor}>
+                    <Icon src={Thumbs[comment?.thumb_direction ? 1 : 0]} />
+                    <Label fontSize={fontSize} font={font}>
+                      {comment?.thumb_direction
+                        ? t('accessible')
+                        : t('not_accessible')}
+                    </Label>
+                  </Accessible>
+                  <Box className={mediaType?.split('/', 1)}>
+                    {comment.media_url && (
+                      <Media className={mediaType.split('/', 1)}>
+                        {!IMAGE_TYPES.includes(mediaType) ? (
+                          <video controls className={mediaType.split('/', 1)}>
+                            <source src={comment?.media_url} type={mediaType} />
+                          </video>
+                        ) : (
+                          <Img
+                            src={comment?.media_url}
+                            className={mediaType.split('/', 1)}
+                          />
+                        )}
+                      </Media>
+                    )}
+
+                    <Body fontSize={fontSize} font={font}>
+                      {comment.comment}
+                    </Body>
+                  </Box>
+                </Comment>
+              );
+            })
+          : t('no_results')
+        : commentsList
+        ? commentsList.map((comment) => {
+            let mediaType;
+            if (comment?.media_url) {
+              const type = comment?.media_url?.split('.').pop();
+
+              if (type === 'mp3' || type === 'wav') {
+                mediaType = 'audio'.concat('/').concat(type);
+              } else if (type === 'mp4') {
+                mediaType = 'video'.concat('/').concat(type);
+              } else {
+                mediaType = 'image'.concat('/').concat(type);
+              }
+            }
+            return (
               <Comment backgroundColor={backgroundColor} key={comment.id}>
                 <Top>
-                  {comment?.place?.media_evaluations ? (
+                  {comment?.app_user?.avatar ? (
                     <Image
-                      src={comment?.place?.media_evaluations[0]?.file_url}
+                      src={process.env.REACT_APP_EXTERNAL_LINKS_BASE.concat(
+                        `/${comment?.app_user?.avatar}`,
+                      )}
                     />
                   ) : (
-                    <Image src={placeImage} />
+                    <Image src={Avatar} />
                   )}
                   <Name fontSize={fontSize} font={font}>
-                    {comment?.place && comment?.place?.name}
+                    {comment?.app_user &&
+                      comment?.app_user?.name
+                        .concat(' ')
+                        .concat(comment?.app_user?.surname)}
                   </Name>
-                  <Status>{renderState(comment?.status)}</Status>
                 </Top>
                 <Accessible backgroundColor={backgroundColor}>
                   <Icon src={Thumbs[comment?.thumb_direction ? 1 : 0]} />
@@ -90,45 +172,28 @@ const LatestComments = (props) => {
                       : t('not_accessible')}
                   </Label>
                 </Accessible>
-                <Body fontSize={fontSize} font={font}>
-                  {comment.comment}
-                </Body>
+                <Box className={mediaType?.split('/', 1)}>
+                  {comment.media_url && (
+                    <Media className={mediaType?.split('/', 1)}>
+                      {!IMAGE_TYPES.includes(mediaType) ? (
+                        <video controls className={mediaType.split('/', 1)}>
+                          <source src={comment?.media_url} type={mediaType} />
+                        </video>
+                      ) : (
+                        <Img
+                          src={comment?.media_url}
+                          className={mediaType.split('/', 1)}
+                        />
+                      )}
+                    </Media>
+                  )}
+                  <Body fontSize={fontSize} font={font}>
+                    {comment.comment}
+                  </Body>
+                </Box>
               </Comment>
-            ))
-          : t('no_results')
-        : commentsList
-        ? commentsList.reverse().map((comment) => (
-            <Comment backgroundColor={backgroundColor} key={comment.id}>
-              <Top>
-                {comment?.app_user?.avatar ? (
-                  <Image
-                    src={process.env.REACT_APP_EXTERNAL_LINKS_BASE.concat(
-                      `/${comment?.app_user?.avatar}`,
-                    )}
-                  />
-                ) : (
-                  <Image src={Avatar} />
-                )}
-                <Name fontSize={fontSize} font={font}>
-                  {comment?.app_user &&
-                    comment?.app_user?.name
-                      .concat(' ')
-                      .concat(comment?.app_user?.surname)}
-                </Name>
-              </Top>
-              <Accessible backgroundColor={backgroundColor}>
-                <Icon src={Thumbs[comment?.thumb_direction ? 1 : 0]} />
-                <Label fontSize={fontSize} font={font}>
-                  {comment?.thumb_direction
-                    ? t('accessible')
-                    : t('not_accessible')}
-                </Label>
-              </Accessible>
-              <Body fontSize={fontSize} font={font}>
-                {comment.comment}
-              </Body>
-            </Comment>
-          ))
+            );
+          })
         : t('no_results')}
       <ShowAll
         fontSize={fontSize}

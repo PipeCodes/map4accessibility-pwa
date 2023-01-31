@@ -13,6 +13,7 @@ import TopBar from '../../components/TopBar/TopBar';
 import FooterMenu from '../../components/FooterMenu/FooterMenu';
 import CustomMarker from '../../components/CustomMarker/CustomMarker';
 import PlacePopUp from '../../components/PlacePopUp/PlacePopUp';
+import SearchBar from '../../components/SearchBar/SearchBar';
 import LocationIcon from '../../assets/icons/maps/locate.svg';
 import AddIcon from '../../assets/icons/maps/add.svg';
 import ClusterImg from '../../assets/icons/maps/clusters/m1.svg';
@@ -27,6 +28,7 @@ import {
   ButtonLocation,
 } from './MapScreen.styles';
 import { GOOGLE_MAPS_OPTIONS } from '../../constants';
+import MapZoom from '../../components/MapZoom/MapZoom';
 
 // Map styling
 const containerStyle = {
@@ -72,7 +74,7 @@ const MapScreen = (props) => {
       {
         featureType: 'poi',
         elementType: 'labels',
-        // stylers: [{ visibility: 'off' }],
+        stylers: [{ visibility: 'off' }],
         // https://developers.google.com/maps/documentation/javascript/examples/event-poi
       },
     ],
@@ -88,13 +90,19 @@ const MapScreen = (props) => {
     if (isLoaded) {
       // Asks and sets user position (lat, long)
       getCurrentLocation()
-        .then((position) => setLocation(position))
+        .then((position) => {
+          if (history?.location?.state?.search?.location) {
+            setLocation(history?.location?.state?.search?.location);
+          } else {
+            setLocation(position);
+          }
+        })
         .catch((error) => {
           setLocation({ lat: 38.736946, lng: -9.142685 });
           alert(error);
         });
     }
-  }, [isLoaded, t]);
+  }, [isLoaded, history?.location?.state?.search?.location, t]);
 
   // If coords are selected opens Add Place Screen
   useEffect(() => {
@@ -171,6 +179,10 @@ const MapScreen = (props) => {
     }
   }, [center]);
 
+  const handleSearch = (value) => {
+    history.push(routes.SEARCH.path, { search: value });
+  };
+
   return (
     <Page backgroundColor={backgroundColor}>
       <PlacePopUp
@@ -179,15 +191,23 @@ const MapScreen = (props) => {
         place={place}
         setPopUp={setPopUp}
       />
-      <TopBar
-        aligned
-        page
-        magnifier
-        routes={routes}
-        backgroundColor={backgroundColor}
-        hasAccessibilityButton={openAccessibility}
-        title={add ? t('click_to_mark') : t('map')}
-      />
+      {history.location?.state?.search ? (
+        <SearchBar
+          handleSearch={handleSearch}
+          history={history}
+          searchText={history?.location?.state?.search?.text}
+        />
+      ) : (
+        <TopBar
+          aligned
+          page
+          magnifier
+          routes={routes}
+          backgroundColor={backgroundColor}
+          hasAccessibilityButton={openAccessibility}
+          title={add ? t('click_to_mark') : t('map')}
+        />
+      )}
       <Container>
         {isLoaded && (
           <div
@@ -202,7 +222,7 @@ const MapScreen = (props) => {
             <GoogleMap
               mapContainerStyle={containerStyle}
               center={location}
-              zoom={14}
+              zoom={history.location?.state?.search?.text ? 16 : 14}
               onClick={(e) => {
                 if (e.placeId) {
                   const service = new google.maps.places.PlacesService(map);
@@ -258,6 +278,14 @@ const MapScreen = (props) => {
           </div>
         )}
       </Container>
+      <MapZoom
+        zoomIn={() => {
+          map.setZoom(map.getZoom() + 1);
+        }}
+        zoomOut={() => {
+          map.setZoom(map.getZoom() - 1);
+        }}
+      />
       <ButtonsContainer>
         <ButtonCreate type="button" add={add} onClick={() => openAddPlace()}>
           <img src={AddIcon} alt={t('add_place')} />

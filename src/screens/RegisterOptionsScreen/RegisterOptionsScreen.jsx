@@ -1,9 +1,7 @@
-import React, { useCallback } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useCallback, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { LoginSocialGoogle, LoginSocialFacebook } from 'reactjs-social-login';
-import { signupProviderGoogle } from '../../store/actions/auth';
 import CustomButton from '../../components/CustomButton/CustomButton';
 import { colors } from '../../constants/colors';
 import {
@@ -15,45 +13,28 @@ import {
 } from './RegisterOptionsScreen.styles';
 import TopBar from '../../components/TopBar/TopBar';
 import ProfileIcon from '../../assets/icons/profile.svg';
-import FacebookIcon from '../../assets/icons/socials/facebook.svg';
-import GoogleIcon from '../../assets/icons/socials/google.svg';
 import LoginIcon from '../../assets/icons/login.svg';
+import SocialLogin from '../../components/SocialLogin/SocialLogin';
 
 const RegisterOptionsScreen = (props) => {
   const { routes, history } = props;
   const { t } = useTranslation();
-  const dispatch = useDispatch();
   const fontSize = useSelector((state) => state.accessibility.fontSize);
   const font = useSelector((state) => state.accessibility.font);
   const backgroundColor = useSelector(
     (state) => state.accessibility.backgroundColor,
   );
+  const user = useSelector((state) => state.auth.user);
 
-  const onLoginStart = useCallback(() => {
-    // Write Code for Login Start Here, this feature needs o be repaired (SOCIAL LOGINS)
-  }, []);
+  useEffect(() => {
+    if (user && history) {
+      history.replace(routes.LOGIN.path);
+    }
+  }, [user, history, routes.LOGIN.path]);
 
   const openAccessibility = useCallback(() => {
     history.push(routes.ACCESSIBILITY.path);
   }, [history, routes]);
-
-  const registerClickHandlerGoogle = useCallback(
-    (data) => {
-      if (data !== undefined && data !== null) {
-        dispatch(
-          signupProviderGoogle(
-            data.email,
-            data.given_name,
-            data.family_name,
-            data.id,
-          ),
-        ).catch((error) => {
-          alert(error);
-        });
-      }
-    },
-    [dispatch],
-  );
 
   return (
     <Page backgroundColor={backgroundColor}>
@@ -79,49 +60,7 @@ const RegisterOptionsScreen = (props) => {
           icon={ProfileIcon}
         />
         <Box>
-          <LoginSocialFacebook
-            appId={process.env.REACT_APP_FB_APP_ID || ''}
-            onLoginStart={onLoginStart}
-            onResolve={({ provider, data }) => {
-              console.log('TODO FACEBOOK REGISTER', provider, data);
-            }}
-            onReject={(err) => {
-              console.log(err);
-            }}
-          >
-            <CustomButton
-              style={{
-                marginBottom: 20,
-                width: '100%',
-                borderRadius: '25px',
-              }}
-              backgroundColor={colors.facebook_blue}
-              text={t('sign_in_facebook')}
-              icon={FacebookIcon}
-            />
-          </LoginSocialFacebook>
-
-          <LoginSocialGoogle
-            client_id={process.env.REACT_APP_GG_APP_ID || ''}
-            onLoginStart={onLoginStart}
-            scope="https://www.googleapis.com/auth/userinfo.email"
-            onResolve={({ data }) => {
-              registerClickHandlerGoogle(data);
-            }}
-            onReject={(err) => {
-              console.log(err);
-            }}
-          >
-            <CustomButton
-              style={{
-                width: '100%',
-                borderRadius: '25px',
-              }}
-              backgroundColor={colors.google_red}
-              text={t('sign_in_google')}
-              icon={GoogleIcon}
-            />
-          </LoginSocialGoogle>
+          <SocialLogin history={history} routes={routes} />
         </Box>
         <Box>
           <TextSecondary fontSize={fontSize} font={font}>

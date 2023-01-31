@@ -4,7 +4,9 @@
 
 import DangerIcon from '../assets/icons/maps/markers/red-alert-icon.svg';
 import DefaultIcon from '../assets/icons/maps/markers/default.svg';
+import placeholder from '../assets/images/photo-stock-1.png';
 
+const photos = [placeholder, placeholder, placeholder];
 export const updateFontSize = (fontSize, incrementor) => {
   let newFontSize = fontSize + incrementor;
   if (newFontSize > 80) {
@@ -88,3 +90,53 @@ export const googleMapsLink = (origin, destination) =>
 
 export const camelToSnakeCase = (str) =>
   str.replace(/[A-Z]/g, (letter) => `_${letter.toLowerCase()}`);
+
+export const getMedia = (place) => {
+  const pictures = [];
+  let mediaType;
+
+  const type = place?.media?.split('.').pop();
+  if (type === 'mp3' || type === 'wav') {
+    mediaType = 'audio';
+  } else if (type === 'mp4') {
+    mediaType = 'video';
+  } else {
+    mediaType = 'image';
+  }
+
+  const mainPicture = {
+    file_type: mediaType,
+    file_url: place?.media,
+  };
+
+  if (mainPicture?.file_url) pictures.push(mainPicture);
+  place?.media_evaluations?.map((pic) => pictures.push(pic));
+  return pictures?.length ? pictures : photos;
+};
+
+export const getFirstImage = (place) => {
+  let mediaType;
+  const type = place?.media?.split('.').pop();
+
+  if (type === 'mp3' || type === 'wav') {
+    mediaType = 'audio';
+  } else if (type === 'mp4') {
+    mediaType = 'video';
+  } else {
+    mediaType = 'image';
+  }
+
+  if (mediaType === 'image' && type) {
+    return place?.media;
+  }
+
+  const image = place?.media_evaluations?.find(
+    (media) => media?.file_type === 'image',
+  );
+
+  if (image) {
+    return image;
+  }
+
+  return placeholder;
+};

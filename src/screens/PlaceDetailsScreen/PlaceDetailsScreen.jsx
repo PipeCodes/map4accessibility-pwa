@@ -22,15 +22,14 @@ import {
   Evaluations,
   PlaceInformation,
   Button,
+  ButtonComments,
 } from './PlaceDetailsScreen.styles';
 import TopBar from '../../components/TopBar/TopBar';
 import ImageSlider from '../../components/ImageSlider/ImageSlider';
 import { getPlace, deletePlace } from '../../store/actions/places';
-import placeholder from '../../assets/images/photo-stock-1.png';
 import LatestComments from '../../components/LatestComments/LatestComments';
 import { storePlace } from '../../store/actions/history';
-
-const photos = [placeholder, placeholder, placeholder];
+import { getMedia } from '../../helpers/utils';
 
 const PlaceDetailsScreen = (props) => {
   const { history, routes } = props;
@@ -66,8 +65,10 @@ const PlaceDetailsScreen = (props) => {
   }, [dispatch]);
 
   useEffect(() => {
-    if (place) {
-      dispatch(storePlace(place, visitedHistory));
+    if (place && visitedHistory) {
+      if (visitedHistory[0]?.id !== place?.id) {
+        dispatch(storePlace(place, visitedHistory));
+      }
     }
   }, [dispatch, place, visitedHistory]);
 
@@ -82,14 +83,17 @@ const PlaceDetailsScreen = (props) => {
   };
 
   const markPlaceAsClosed = () => {
-    dispatch(deletePlace(user?.id, place.id))
-      .then(() => {
-        alert(t('request_sent_delete_place'));
-        dispatch(getPlace(params.id));
-      })
-      .catch(() => {
-        alert(t('problem_request_delete_place'));
-      });
+    const confirmPopUp = confirm(t('are_you_sure'));
+    if (confirmPopUp) {
+      dispatch(deletePlace(user?.id, place.id))
+        .then(() => {
+          alert(t('request_sent_delete_place'));
+          dispatch(getPlace(params.id));
+        })
+        .catch(() => {
+          alert(t('problem_request_delete_place'));
+        });
+    }
   };
 
   // Opens accessibility screen (button on the top-right of the page)
@@ -100,18 +104,6 @@ const PlaceDetailsScreen = (props) => {
   const openComments = useCallback(() => {
     history.push(`/rate-place/${params?.id}`);
   }, [history, routes]);
-
-  const getMedia = (place) => {
-    const pictures = place?.media_evaluations;
-    const mainPicture = {
-      file_type: 'image',
-      file_url: place?.media,
-    };
-
-    if (mainPicture.file_url) pictures.unshift(mainPicture);
-
-    return pictures?.length ? pictures : photos;
-  };
 
   const getAccessibility = useMemo(() => {
     const sortedComments = place?.place_evaluations?.sort(
@@ -126,7 +118,7 @@ const PlaceDetailsScreen = (props) => {
       return t('not_accessible');
     }
     return '';
-  }, [setIsAccessible, place]);
+  }, [setIsAccessible, place, t]);
 
   return (
     <Page backgroundColor={backgroundColor}>
@@ -140,7 +132,7 @@ const PlaceDetailsScreen = (props) => {
         hasAccessibilityButton={openAccessibility}
         title={t('place_details')}
       />
-      <ImageSlider photos={getMedia(place)} />
+      {place && <ImageSlider photos={getMedia(place)} />}
       <Container>
         <div className="card">
           <div className="header-row">
@@ -227,11 +219,11 @@ const PlaceDetailsScreen = (props) => {
             <LatestComments comments={place?.place_evaluations} />
           </Evaluations>
         )}
-        <div className="comments">
-          <button type="button" onClick={() => openComments()}>
+        <ButtonComments onClick={() => openComments()}>
+          <button type="button">
             <img src={Comment} alt="comment" />
           </button>
-        </div>
+        </ButtonComments>
       </Container>
     </Page>
   );

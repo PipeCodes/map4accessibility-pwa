@@ -49,12 +49,6 @@ export const Rating = styled.div`
   display: flex;
 `;
 
-export const Image = styled.img`
-  height: 35px;
-  border-radius: 50%;
-  backgroundcolor: ${colors.grey};
-`;
-
 export const Icon = styled.div`
   margin-right: 5px;
   align-self: flex-start;
@@ -81,7 +75,7 @@ export const GoToMaps = styled.a`
   display: flex;
   align-items: center;
   font-size: ${(props) => updateFontSize(14, props.fontSize)};
-  font-family: ${(props) => updateValue('EasyReadingPro', props.font)};
+  font-family: ${(props) => updateValue('NotoSans-Regular', props.font)};
 `;
 export const Steps = styled.button`
   background-color: white;
@@ -91,5 +85,5 @@ export const Steps = styled.button`
   display: flex;
   align-items: center;
   font-size: ${(props) => updateFontSize(14, props.fontSize)};
-  font-family: ${(props) => updateValue('EasyReadingPro', props.font)};
+  font-family: ${(props) => updateValue('NotoSans-Regular', props.font)};
 `;
