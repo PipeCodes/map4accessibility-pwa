@@ -27,6 +27,7 @@ import {
   ButtonLocation,
 } from './MapScreen.styles';
 import { GOOGLE_MAPS_OPTIONS } from '../../constants';
+import MapZoom from '../../components/MapZoom/MapZoom';
 
 // Map styling
 const containerStyle = {
@@ -92,7 +93,7 @@ const MapScreen = (props) => {
           alert(error);
         });
     }
-  }, [isLoaded, t]);
+  }, [isLoaded, history?.location?.state?.search?.location, t]);
 
   useEffect(() => {
     if (coords) {
@@ -250,6 +251,14 @@ const MapScreen = (props) => {
           </div>
         )}
       </Container>
+      <MapZoom
+        zoomIn={() => {
+          map.setZoom(map.getZoom() + 1);
+        }}
+        zoomOut={() => {
+          map.setZoom(map.getZoom() - 1);
+        }}
+      />
       <ButtonsContainer>
         <ButtonCreate type="button" add={add} onClick={() => openAddPlace()}>
           <img src={AddIcon} alt={t('add_place')} />
