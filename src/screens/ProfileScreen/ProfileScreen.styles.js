@@ -41,7 +41,8 @@ export const TopWrapper = styled.div`
 
 export const FormWrapper = styled.div`
   width: 100%;
-
+  display: flex;
+  flex-direction: column;
   input {
     border: none;
     border-radius: 4px;
@@ -68,7 +69,7 @@ export const Link = styled.a`
 `;
 
 export const RankingButton = styled.button`
-  border-radius: 50%;
+  border-radius: 100%;
   background: ${colors.primaryColor};
   box-shadow: 0px 2px 2px ${colors.shadow};
   border: none;
@@ -97,7 +98,7 @@ export const Avatar = styled.img`
   width: 80px;
   height: 80px;
   object-fit: cover;
-  border-radius: 50%;
+  border-radius: 100%;
   border: 3px solid ${colors.primaryColor};
 `;
 
@@ -110,7 +111,7 @@ export const Name = styled.span`
 `;
 
 export const EditButton = styled.button`
-  border-radius: 50%;
+  border-radius: 100%;
   background: ${colors.transparent};
   box-shadow: 0px 2px 2px ${colors.shadow};
   border: 2px solid ${colors.primaryColor};

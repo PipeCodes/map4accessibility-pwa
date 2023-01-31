@@ -35,7 +35,7 @@ export const Top = styled.div`
 export const Image = styled.img`
   height: 35px;
   width: 35px;
-  border-radius: 50%;
+  border-radius: 100%;
   background-color: ${colors.grey};
 `;
 
