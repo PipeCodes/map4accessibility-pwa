@@ -65,6 +65,7 @@ export const ButtonCreate = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 0;
 `;
 
 export const ButtonDirections = styled.button`

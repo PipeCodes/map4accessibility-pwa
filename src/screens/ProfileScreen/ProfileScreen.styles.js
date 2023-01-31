@@ -47,6 +47,8 @@ export const FormWrapper = styled.div`
     border: none;
     border-radius: 4px;
     box-shadow: 0px 2px 2px ${colors.shadow};
+    -webkit-appearance: none;
+    -webkit-box-shadow: 0px 2px 2px ${colors.shadow};
     padding: 5px;
     padding-left: 10px;
     color: ${colors.grey};
@@ -80,7 +82,7 @@ export const RankingButton = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 7px 10px;
+  padding: 0;
 
   img {
     height: 25px;
@@ -122,6 +124,7 @@ export const EditButton = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 0;
 
   &.active {
     background: ${colors.primaryColor};

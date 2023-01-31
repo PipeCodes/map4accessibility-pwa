@@ -105,4 +105,8 @@ export const Icons = styled.div`
   gap: 8px;
   padding: 5px;
   margin-right: 10px;
+  img {
+    height: 16px;
+    width: 16px;
+  }
 `;

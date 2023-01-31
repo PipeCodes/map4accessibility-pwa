@@ -4,10 +4,6 @@ import { useSelector } from 'react-redux';
 import ButtonStyle from './SocialButton.styles';
 
 class SocialButton extends React.Component {
-  static handleSocialLogin = (user) => {
-    console.log(user);
-  };
-
   static handleSocialLoginFailure = (err) => {
     console.error(err);
   };
@@ -24,6 +20,7 @@ class SocialButton extends React.Component {
       ...otherProps
     } = this.props;
     const fontSize = useSelector((state) => state.accessibility.fontSize);
+    const font = useSelector((state) => state.accessibility.font);
 
     return (
       <ButtonStyle
@@ -33,6 +30,7 @@ class SocialButton extends React.Component {
         onLoginFailure={SocialButton.handleSocialLoginFailure}
         onClick={triggerLogin}
         fontSize={fontSize}
+        font={font}
         {...{ backgroundColor }}
         {...{ style }}
         {...otherProps}
@@ -44,5 +42,4 @@ class SocialButton extends React.Component {
   }
 }
 
-// export default SocialLogin(SocialButton);
 export default SocialButton;
