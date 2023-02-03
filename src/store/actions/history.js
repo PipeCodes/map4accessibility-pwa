@@ -14,6 +14,7 @@ export const storePlace = (place, visitedHistory) => async (dispatch) => {
     place_image: image,
     place_city: place.city,
     date: moment(new Date()).format(),
+    google_place_id: place.google_place_id,
   };
 
   if (visitedHistory === undefined || visitedHistory === null) {

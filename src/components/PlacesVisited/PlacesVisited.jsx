@@ -38,7 +38,7 @@ const PlacesVisited = ({ history }) => {
     } else {
       setPlacesList(places?.slice(0, 5));
     }
-  }, [viewAll, places]);
+  }, [viewAll, places, dispatch]);
 
   const viewAllHandler = () => {
     setViewAll((prevState) => !prevState);
@@ -71,7 +71,14 @@ const PlacesVisited = ({ history }) => {
               </TextWrapper>
               <Button
                 type="button"
-                onClick={() => history.push('/place-details/'.concat(place.id))}
+                onClick={() =>
+                  history.push(
+                    '/place-details/'
+                      .concat(place?.id)
+                      .concat('/')
+                      .concat(place?.google_place_id),
+                  )
+                }
               >
                 <img src={pinIcon} alt={place.id} />
               </Button>

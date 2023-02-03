@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import moment from 'moment';
@@ -55,15 +55,17 @@ const PlacePopUpComponent = (props) => {
       return t('not_accessible');
     }
     return '';
-  }, [setIsAccessible, place]);
+  }, [setIsAccessible, place, t]);
 
   // Open Page Details
-  const openDetails = useCallback(
-    (id) => {
-      history.push('/place-details/'.concat(id));
-    },
-    [history],
-  );
+  const openDetails = () => {
+    history.push(
+      '/place-details/'
+        .concat(place?.id)
+        .concat('/')
+        .concat(place?.google_place_id),
+    );
+  };
 
   // Gets Place Media
   const getMedia = (place) => {
@@ -149,9 +151,11 @@ const PlacePopUpComponent = (props) => {
                 )}
                 {place?.schedule && (
                   <span>
-                    <img src={Clock} alt={t('schedule')} /> {place?.schedule}
+                    <img src={Clock} alt={t('schedule')} />
                   </span>
                 )}
+                {place?.schedule &&
+                  place?.schedule?.map((line) => <span>{line}</span>)}
               </PlaceInformation>
 
               <CustomButton
@@ -165,7 +169,7 @@ const PlacePopUpComponent = (props) => {
                 }}
                 backgroundColor={colors.transparent}
                 text={t('view_more')}
-                onClick={() => openDetails(place.id)}
+                onClick={() => openDetails()}
                 buttonicon
                 icon={ArrowRight}
               />

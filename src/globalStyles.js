@@ -28,6 +28,10 @@ const GlobalStyles = createGlobalStyle`
     src: url(${EasyReadingProBold}) format('truetype');
   }
 
+html {
+  height: 100%;
+}
+
   #root {
     height: 100%;
   }

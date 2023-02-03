@@ -62,6 +62,7 @@ export const Filter = styled.div`
   margin-top: 10px;
   font-size: ${(props) => updateFontSize(16, props.fontSize)};
   font-family: ${(props) => updateValue('EasyReadingPro', props.font)};
+
   button {
     color: ${colors.primaryTextColor};
     all: unset;
@@ -69,6 +70,11 @@ export const Filter = styled.div`
     border-radius: 18px;
     height: 35px;
     width: 150px;
+    display: flex;
+    align-items: center;
+    width: -webkit-fill-available;
+    margin-right: 8px;
+    padding: 0 12px;
 
     &.active {
       border: 1px solid ${colors.primaryTextColor};
@@ -76,7 +82,6 @@ export const Filter = styled.div`
     }
 
     img {
-      padding-left: 12px;
       padding-right: 6px;
     }
   }

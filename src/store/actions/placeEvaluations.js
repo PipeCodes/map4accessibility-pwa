@@ -58,16 +58,32 @@ export const getMyPlaceEvaluations = () => async (dispatch) => {
 
 // Sends a new place evaluation to the API
 export const postPlaceEvaluation =
-  (thumbDirection, name, comment, answers, latitude, longitude, media) =>
+  (
+    thumbDirection,
+    name,
+    comment,
+    answers,
+    latitude,
+    longitude,
+    media,
+    city,
+    countryCode,
+    placeType,
+    googlePlaceId,
+  ) =>
   async (dispatch) => {
     dispatch({ type: POST_PLACE_EVALUATIONS_START });
     const body = {
       thumb_direction: thumbDirection,
       name,
       comment,
-      question_answers: answers,
+      questions_answers: answers,
       latitude,
       longitude,
+      google_place_id: googlePlaceId,
+      city,
+      country_code: countryCode,
+      place_type: placeType,
     };
     const config = {
       headers: {

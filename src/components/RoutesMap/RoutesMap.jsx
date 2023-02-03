@@ -20,17 +20,24 @@ const containerStyle = {
   position: 'relative',
 };
 
-const Map = ({ origin, destination, routes, userLocation, history }) => {
+const Map = (props) => {
+  const { origin, destination, routes, userLocation, history, openPlaceInfo } =
+    props;
+  const dispatch = useDispatch();
+
+  // Accessibility
   const backgroundColor = useSelector(
     (state) => state.accessibility.backgroundColor,
   );
+
+  // Saved directions
   const directions = useSelector((state) => state.directions.directions);
   const selectedRoute = useSelector((state) => state.directions.selectedRoute);
   const [generatingRoutes, setGeneratingRoutes] = useState(false);
+
+  // Map and route colours options
   const [map, setMap] = useState(/** @type google.maps.Map */ (null));
-
-  const dispatch = useDispatch();
-
+  const directionsService = new google.maps.DirectionsService(); // Direction Service
   const polylineOptions = useCallback(
     (index) => {
       if (index === selectedRoute) {
@@ -49,12 +56,18 @@ const Map = ({ origin, destination, routes, userLocation, history }) => {
     [selectedRoute],
   );
 
+  // Click Handlers
+  // Change Route
+  const changeRoute = (id) => {
+    if (id !== selectedRoute) {
+      setGeneratingRoutes(true);
+    }
+    dispatch(changeRouteId(id));
+  };
+
   // Using Dirtections Service gets directions for current origin and destination
-  const setDirections = (originRoute, destinationRoute) => {
+  const setDirections = useCallback((originRoute, destinationRoute) => {
     setGeneratingRoutes(true);
-
-    const directionsService = new google.maps.DirectionsService(); // Direction Service
-
     directionsService
       .route({
         origin: originRoute,
@@ -69,9 +82,6 @@ const Map = ({ origin, destination, routes, userLocation, history }) => {
 
         // Iterates each route from the results that Directions Service returned
         results.routes.forEach((route, routeId) => {
-          // Requests markers from API using the center coords of
-          // the current overview Path and a radius thats half the distance
-
           // Radius to make a circumference around the route to find markers
           const radius = Math.round(route.legs[0].distance.value / 2);
 
@@ -86,9 +96,9 @@ const Map = ({ origin, destination, routes, userLocation, history }) => {
             route.overview_path[
               Math.round(route.overview_path.length / 2)
             ]?.lng();
-
           // Uses previous data "radius", "latitude" and longitude to find markers around route
           dispatch(
+            // Requests markers from API using the center coords of the current overview Path and a radius thats half the distance
             getPlacesRadiusMarkers(latitude, longitude, Math.round(radius)),
           )
             .then((markersList) => {
@@ -111,18 +121,28 @@ const Map = ({ origin, destination, routes, userLocation, history }) => {
 
               // Iterates Markers
               markersList.forEach((marker) => {
-                // Checks if the marker is 15m around each point of the route
+                // Checks if the marker is 2m around each point of the route
                 const check = isLocationOnEdge(
                   new google.maps.LatLng(marker.latitude, marker.longitude),
                   routePoly,
-                  0.0015,
+                  0.0002,
                 );
                 // If the marker is near the route it is added to the array,
                 // and likes/dislikes are counted
                 if (check) {
                   markersLocal.push(marker);
-                  likes += marker.thumbs_up_count;
-                  dislikes += marker.thumbs_down_count;
+                  if (
+                    marker.thumbs_up_count !== null &&
+                    marker.thumbs_up_count !== undefined
+                  ) {
+                    likes += marker.thumbs_up_count;
+                  }
+                  if (
+                    marker.thumbs_down_count !== null &&
+                    marker.thumbs_up_count !== undefined
+                  ) {
+                    dislikes += marker.thumbs_down_count;
+                  }
                 }
               });
 
@@ -151,29 +171,16 @@ const Map = ({ origin, destination, routes, userLocation, history }) => {
             });
         });
       });
-  };
+  });
 
-  const openDetails = useCallback(
-    (id) => {
-      history.push('/place-details/'.concat(id));
-    },
-    [history],
-  );
-
-  const changeRoute = (id) => {
-    if (id !== selectedRoute) {
-      setGeneratingRoutes(true);
-    }
-
-    dispatch(changeRouteId(id));
-  };
-
+  // If there are loaded routes sets Generating routes to false
   useEffect(() => {
     if (routes) {
       setGeneratingRoutes(false);
     }
   }, [routes]);
 
+  // If Route Changes sets Generate Route to false
   useEffect(() => {
     setGeneratingRoutes(false);
   }, [selectedRoute]);
@@ -191,7 +198,7 @@ const Map = ({ origin, destination, routes, userLocation, history }) => {
     ) {
       setDirections(origin, destination);
     }
-  }, [origin, destination]);
+  }, [origin, destination, routes, setDirections]);
 
   if (!destination) {
     return <PlacesVisited history={history} />;
@@ -217,6 +224,13 @@ const Map = ({ origin, destination, routes, userLocation, history }) => {
           mapTypeControl: false,
           fullscreenControl: false,
           disableDefaultUI: true,
+          styles: [
+            {
+              featureType: 'poi',
+              elementType: 'labels',
+              stylers: [{ visibility: 'off' }],
+            },
+          ],
         }}
         onLoad={(map) => {
           setMap(map);
@@ -242,7 +256,7 @@ const Map = ({ origin, destination, routes, userLocation, history }) => {
             <CustomMarker
               marker={marker}
               key={i}
-              onClick={() => openDetails(marker.id)}
+              onClick={() => openPlaceInfo(marker)}
               info
             />
           ))}

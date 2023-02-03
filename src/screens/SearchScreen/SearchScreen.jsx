@@ -81,7 +81,7 @@ const SearchScreen = ({ history, routes }) => {
           <FiltersContainer fontSize={fontSize} font={font}>
             {types?.map((filter, index) =>
               filter?.placeType === filterType ? (
-                <Filter key={index}>
+                <Filter fontSize={fontSize} font={font} key={index}>
                   <button
                     className="active"
                     type="button"

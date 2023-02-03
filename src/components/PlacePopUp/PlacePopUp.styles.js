@@ -15,12 +15,11 @@ export const PopUp = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: auto;
+  height: fit-content;
   padding: 0;
   position: relative;
   z-index: 59;
   border-radius: 4px;
-  height: 80%;
   top: 100px;
   width: 95%;
   max-width: 730px;

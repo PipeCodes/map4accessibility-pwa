@@ -8,7 +8,12 @@ import {
   MarkerClusterer,
 } from '@react-google-maps/api';
 import { debounce } from '../../helpers/utils';
-import { getPlacesRadiusMarkers, getPlace } from '../../store/actions/places';
+import {
+  getPlacesRadiusMarkers,
+  getPlace,
+  getGooglePlace,
+  getMorePlaceInfo,
+} from '../../store/actions/places';
 import TopBar from '../../components/TopBar/TopBar';
 import FooterMenu from '../../components/FooterMenu/FooterMenu';
 import CustomMarker from '../../components/CustomMarker/CustomMarker';
@@ -39,6 +44,20 @@ const containerStyle = {
   top: '0',
 };
 
+// https://stackoverflow.com/questions/68638475/my-map-bounds-appears-to-be-calculating-a-radius-outside-of-my-visible-area
+const getRadius = (map) => {
+  const bounds = map?.getBounds();
+  if (!bounds) return null;
+
+  // computeDistanceBetween returns meters
+  const radius = window.google.maps.geometry.spherical.computeDistanceBetween(
+    bounds.getCenter(),
+    bounds.getSouthWest(),
+  );
+
+  return Number(radius.toFixed(0));
+};
+
 const MapScreen = (props) => {
   const { history, routes } = props;
   const { t } = useTranslation();
@@ -60,6 +79,7 @@ const MapScreen = (props) => {
   const [location, setLocation] = useState(null);
   const [coords, setCoords] = useState(null);
   const [add, setAdd] = useState(null);
+  const [radius, setRadius] = useState(null);
 
   const { isLoaded } = useJsApiLoader(GOOGLE_MAPS_OPTIONS);
 
@@ -109,21 +129,7 @@ const MapScreen = (props) => {
     if (coords) {
       history.push(routes.ADD_PLACE.path, coords);
     }
-  }, [coords, history]);
-
-  // https://stackoverflow.com/questions/68638475/my-map-bounds-appears-to-be-calculating-a-radius-outside-of-my-visible-area
-  const getRadius = () => {
-    const bounds = map?.getBounds();
-    if (!bounds) return null;
-
-    // computeDistanceBetween returns meters
-    const radius = window.google.maps.geometry.spherical.computeDistanceBetween(
-      bounds.getCenter(),
-      bounds.getSouthWest(),
-    );
-
-    return Number(radius.toFixed(0));
-  };
+  }, [coords, history, routes.ADD_PLACE.path]);
 
   // Buttons onClicks
   const openAccessibility = useCallback(() => {
@@ -149,27 +155,38 @@ const MapScreen = (props) => {
 
   // Debounce when moves on map
   const debounceSetCenter = useCallback(
-    debounce((value) => {
-      if (center && center.lat === value.lat && center.lng === value.lng) {
+    debounce((value, radius) => {
+      if (
+        center &&
+        center.lat === value.lat &&
+        center.lng === value.lng &&
+        radius !== getRadius(map)
+      ) {
         return;
       }
+      setRadius(getRadius(map));
       setCenter(value);
-    }, 1000),
-    [center],
+    }, 400),
+    [center, map, radius],
   );
 
   // Opens and closes places
-  const openPlaceInfo = (id) => {
-    dispatch(getPlace(id));
+  const openPlaceInfo = (marker) => {
+    if (marker?.google_place_id) {
+      dispatch(getGooglePlace(marker?.google_place_id));
+      if (marker?.id) {
+        dispatch(getMorePlaceInfo(marker?.id));
+      }
+    } else {
+      dispatch(getPlace(marker?.id));
+    }
     setPopUp(true);
   };
 
   // Gets all Markers
   useEffect(() => {
-    if (center) {
-      dispatch(
-        getPlacesRadiusMarkers(center.lat, center.lng, getRadius() || 1000),
-      )
+    if (center && radius) {
+      dispatch(getPlacesRadiusMarkers(center.lat, center.lng, radius))
         .then((list) => {
           setMarkers(list);
         })
@@ -177,7 +194,7 @@ const MapScreen = (props) => {
           console.error(err);
         });
     }
-  }, [center]);
+  }, [center, dispatch, radius]);
 
   const handleSearch = (value) => {
     history.push(routes.SEARCH.path, { search: value });
@@ -224,15 +241,6 @@ const MapScreen = (props) => {
               center={location}
               zoom={history.location?.state?.search?.text ? 16 : 14}
               onClick={(e) => {
-                if (e.placeId) {
-                  const service = new google.maps.places.PlacesService(map);
-                  service.getDetails({ placeId: e.placeId }, (place) => {
-                    if (place) {
-                      console.log(place);
-                    }
-                  });
-                  e.stop();
-                }
                 if (add) {
                   setCoords({ lat: e.latLng.lat(), lng: e.latLng.lng() });
                 }
@@ -242,7 +250,7 @@ const MapScreen = (props) => {
                   return;
                 }
                 const center = map.getCenter().toJSON();
-                debounceSetCenter(center);
+                debounceSetCenter(center, radius);
               }}
               onLoad={(map) => {
                 setMap(map);
@@ -250,7 +258,6 @@ const MapScreen = (props) => {
               options={mapOptions}
             >
               <MarkerClusterer
-                onClick={(result) => console.log(result)}
                 autoPan={false}
                 options={options}
                 averageCenter
@@ -267,9 +274,9 @@ const MapScreen = (props) => {
                   markers?.map((marker) => (
                     <CustomMarker
                       marker={marker}
-                      key={marker.id}
+                      key={marker.id || marker.google_place_id}
                       clusterer={clusterer}
-                      onClick={() => openPlaceInfo(marker.id)}
+                      onClick={() => openPlaceInfo(marker)}
                     />
                   ))
                 }

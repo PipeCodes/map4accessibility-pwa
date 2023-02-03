@@ -36,6 +36,9 @@ const ImageSlider = ({ photos }) => {
         if (fileType === undefined) {
           return <Img key={index} src={media} />;
         }
+        if (media?.type === 'google') {
+          return <Img key={index} src={media?.file_url ?? media} />;
+        }
         if (!IMAGE_TYPES.includes(fileType)) {
           return (
             <Media controls className={fileType.split('/', 1)}>
