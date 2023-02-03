@@ -212,6 +212,7 @@ const Map = (props) => {
         display: 'flex',
         flexDirection: 'column',
         maxWidth: '820px',
+        position: 'relative',
       }}
     >
       <GoogleMap
