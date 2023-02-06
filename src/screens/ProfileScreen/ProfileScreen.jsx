@@ -92,7 +92,7 @@ const ProfileScreen = (props) => {
     }
   }, [user]);
 
-  const CompressSendImage = useCallback(
+  const compressSendImage = useCallback(
     (image) => {
       // eslint-disable-next-line no-new
       new Compressor(image, {
@@ -179,10 +179,10 @@ const ProfileScreen = (props) => {
             alert(error);
           });
       } else {
-        CompressSendImage(formData?.avatar);
+        compressSendImage(formData?.avatar);
       }
     }
-  }, [dispatch, formData, confirmEdit, CompressSendImage]);
+  }, [dispatch, formData, confirmEdit, compressSendImage]);
 
   const rankingHandler = () => {
     history.push(routes.RANKING.path);
