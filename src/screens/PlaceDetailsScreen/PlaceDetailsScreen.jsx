@@ -35,7 +35,7 @@ import {
 } from '../../store/actions/places';
 import LatestComments from '../../components/LatestComments/LatestComments';
 import { storePlace } from '../../store/actions/history';
-import { getMedia } from '../../helpers/utils';
+import { getMedia, isDefined } from '../../helpers/utils';
 import { GOOGLE_MAPS_OPTIONS } from '../../constants';
 
 const PlaceDetailsScreen = (props) => {
@@ -69,11 +69,7 @@ const PlaceDetailsScreen = (props) => {
         params?.google_place_id !== 'undefined'
       ) {
         dispatch(getGooglePlace(params?.google_place_id));
-        if (
-          params?.id !== 'null' &&
-          params?.id !== 'NaN' &&
-          params?.id !== 'undefined'
-        ) {
+        if (isDefined(params?.id)) {
           dispatch(getMorePlaceInfo(params?.id));
         }
       } else {
@@ -146,7 +142,7 @@ const PlaceDetailsScreen = (props) => {
       return t('not_accessible');
     }
     return '';
-  }, [setIsAccessible, place, t]);
+  }, [place, t]);
 
   return (
     <Page backgroundColor={backgroundColor}>

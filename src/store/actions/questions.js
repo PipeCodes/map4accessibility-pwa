@@ -25,7 +25,6 @@ export const getQuestions = () => async (dispatch) => {
     const statusCode = response.status;
 
     if (statusCode === HTTP_STATUS.SUCCESS) {
-      console.log(response.data?.result.questions);
       dispatch({
         type: GET_QUESTIONS_SUCCESS,
         data: response.data?.result.questions,

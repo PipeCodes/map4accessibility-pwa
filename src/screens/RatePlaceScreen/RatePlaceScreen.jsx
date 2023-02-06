@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import ArrowRightIcon from '../../assets/icons/arrow-right.svg';
 import { colors } from '../../constants/colors';
 import { MEDIA_TYPES, IMAGE_TYPES, GOOGLE_MAPS_OPTIONS } from '../../constants';
-import { getMedia } from '../../helpers/utils';
+import { getMedia, isDefined } from '../../helpers/utils';
 import {
   Page,
   Container,
@@ -94,11 +94,7 @@ const RatePlaceScreen = (props) => {
         params?.google_place_id !== 'undefined'
       ) {
         dispatch(getGooglePlace(params?.google_place_id));
-        if (
-          params?.id !== 'null' &&
-          params?.id !== 'NaN' &&
-          params?.id !== 'undefined'
-        ) {
+        if (isDefined(params?.id)) {
           dispatch(getMorePlaceInfo(params?.id));
         }
       } else {

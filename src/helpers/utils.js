@@ -265,6 +265,9 @@ export const getFirstImage = (place) => {
   return placeholder;
 };
 
+export const isDefined = (item) =>
+  item !== 'null' && item !== 'NaN' && item !== 'undefined';
+
 // ///////////////////////////
 //        Others Utils      //
 // ///////////////////////////

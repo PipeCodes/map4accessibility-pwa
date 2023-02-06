@@ -75,7 +75,6 @@ const RoutePlannerScreen = (props) => {
   // If saved Route Loads data into fields
   useEffect(() => {
     if (routesMap) {
-      // console.log(routesMap);
       setOrigin(routesMap[0].origin);
       setDestination(routesMap[0].destination);
       if (originInputRef?.current && destinationInputRef?.current && isLoaded) {

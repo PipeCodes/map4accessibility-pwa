@@ -55,7 +55,7 @@ const PlacePopUpComponent = (props) => {
       return t('not_accessible');
     }
     return '';
-  }, [setIsAccessible, place, t]);
+  }, [place, t]);
 
   // Open Page Details
   const openDetails = () => {

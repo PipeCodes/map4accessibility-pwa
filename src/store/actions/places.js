@@ -15,7 +15,7 @@ import {
   RESET_PLACE_STATE,
   GET_MORE_PLACE_INFO,
 } from './types';
-import { HTTP_STATUS, IMAGE_TYPES } from '../../constants';
+import { HTTP_STATUS, IMAGE_TYPES, PROVIDERS } from '../../constants';
 import { getAuthToken } from '../../services/local';
 import { getCurrentLocation } from '../../services/geolocation';
 import {
@@ -99,7 +99,7 @@ export const getGooglePlace = (id) => async (dispatch) => {
         photosArray.push({
           file_type: 'image',
           file_url: photo.getUrl(),
-          type: 'google',
+          type: PROVIDERS.GOOGLE,
         });
       });
 

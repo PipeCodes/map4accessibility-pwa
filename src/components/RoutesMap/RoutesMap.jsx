@@ -66,112 +66,115 @@ const Map = (props) => {
   };
 
   // Using Dirtections Service gets directions for current origin and destination
-  const setDirections = useCallback((originRoute, destinationRoute) => {
-    setGeneratingRoutes(true);
-    directionsService
-      .route({
-        origin: originRoute,
-        destination: destinationRoute,
-        travelMode: google.maps.TravelMode.WALKING,
-        provideRouteAlternatives: true,
-      })
-      .then((results) => {
-        let i = 1; // Counter to stop when all results were iterated
-        const verifiedRatings = []; // Array for Verified Ratings
-        const verifiedMarkers = []; // Arrau for Verified Markers
+  const setDirections = useCallback(
+    (originRoute, destinationRoute) => {
+      setGeneratingRoutes(true);
+      directionsService
+        .route({
+          origin: originRoute,
+          destination: destinationRoute,
+          travelMode: google.maps.TravelMode.WALKING,
+          provideRouteAlternatives: true,
+        })
+        .then((results) => {
+          let i = 1; // Counter to stop when all results were iterated
+          const verifiedRatings = []; // Array for Verified Ratings
+          const verifiedMarkers = []; // Arrau for Verified Markers
 
-        // Iterates each route from the results that Directions Service returned
-        results.routes.forEach((route, routeId) => {
-          // Radius to make a circumference around the route to find markers
-          const radius = Math.round(route.legs[0].distance.value / 2);
+          // Iterates each route from the results that Directions Service returned
+          results.routes.forEach((route, routeId) => {
+            // Radius to make a circumference around the route to find markers
+            const radius = Math.round(route.legs[0].distance.value / 2);
 
-          // Latitude point of the center of the route
-          const latitude =
-            route.overview_path[
-              Math.round(route.overview_path.length / 2)
-            ]?.lat();
+            // Latitude point of the center of the route
+            const latitude =
+              route.overview_path[
+                Math.round(route.overview_path.length / 2)
+              ]?.lat();
 
-          // Longitude point of the center of the path
-          const longitude =
-            route.overview_path[
-              Math.round(route.overview_path.length / 2)
-            ]?.lng();
-          // Uses previous data "radius", "latitude" and longitude to find markers around route
-          dispatch(
-            // Requests markers from API using the center coords of the current overview Path and a radius thats half the distance
-            getPlacesRadiusMarkers(latitude, longitude, Math.round(radius)),
-          )
-            .then((markersList) => {
-              // References for checking if point is inside the tolerance area near the route (currently 15m)
-              // https://googlemaps.github.io/android-maps-utils/javadoc/com/google/maps/android/PolyUtil.html#isLocationOnEdge-LatLng-java.util.List-boolean-double-
-              // https://developers.google.com/maps/documentation/javascript/reference#poly
-              // https://stackoverflow.com/questions/47860177/google-maps-js-api-b-get-is-not-a-function-errorislocationonedge
+            // Longitude point of the center of the path
+            const longitude =
+              route.overview_path[
+                Math.round(route.overview_path.length / 2)
+              ]?.lng();
+            // Uses previous data "radius", "latitude" and longitude to find markers around route
+            dispatch(
+              // Requests markers from API using the center coords of the current overview Path and a radius thats half the distance
+              getPlacesRadiusMarkers(latitude, longitude, Math.round(radius)),
+            )
+              .then((markersList) => {
+                // References for checking if point is inside the tolerance area near the route (currently 15m)
+                // https://googlemaps.github.io/android-maps-utils/javadoc/com/google/maps/android/PolyUtil.html#isLocationOnEdge-LatLng-java.util.List-boolean-double-
+                // https://developers.google.com/maps/documentation/javascript/reference#poly
+                // https://stackoverflow.com/questions/47860177/google-maps-js-api-b-get-is-not-a-function-errorislocationonedge
 
-              // Sets up route polyline and isLocationOnEdge function
-              const isLocationOnEdge =
-                google.maps.geometry.poly.isLocationOnEdge;
-              const routePoly = new google.maps.Polyline({
-                path: route.overview_path,
-              });
+                // Sets up route polyline and isLocationOnEdge function
+                const isLocationOnEdge =
+                  google.maps.geometry.poly.isLocationOnEdge;
+                const routePoly = new google.maps.Polyline({
+                  path: route.overview_path,
+                });
 
-              // Local Variables to sum verified results
-              let likes = 0;
-              let dislikes = 0;
-              const markersLocal = [];
+                // Local Variables to sum verified results
+                let likes = 0;
+                let dislikes = 0;
+                const markersLocal = [];
 
-              // Iterates Markers
-              markersList.forEach((marker) => {
-                // Checks if the marker is 2m around each point of the route
-                const check = isLocationOnEdge(
-                  new google.maps.LatLng(marker.latitude, marker.longitude),
-                  routePoly,
-                  0.0002,
-                );
-                // If the marker is near the route it is added to the array,
-                // and likes/dislikes are counted
-                if (check) {
-                  markersLocal.push(marker);
-                  if (
-                    marker.thumbs_up_count !== null &&
-                    marker.thumbs_up_count !== undefined
-                  ) {
-                    likes += marker.thumbs_up_count;
+                // Iterates Markers
+                markersList.forEach((marker) => {
+                  // Checks if the marker is 2m around each point of the route
+                  const check = isLocationOnEdge(
+                    new google.maps.LatLng(marker.latitude, marker.longitude),
+                    routePoly,
+                    0.0002,
+                  );
+                  // If the marker is near the route it is added to the array,
+                  // and likes/dislikes are counted
+                  if (check) {
+                    markersLocal.push(marker);
+                    if (
+                      marker.thumbs_up_count !== null &&
+                      marker.thumbs_up_count !== undefined
+                    ) {
+                      likes += marker.thumbs_up_count;
+                    }
+                    if (
+                      marker.thumbs_down_count !== null &&
+                      marker.thumbs_up_count !== undefined
+                    ) {
+                      dislikes += marker.thumbs_down_count;
+                    }
                   }
-                  if (
-                    marker.thumbs_down_count !== null &&
-                    marker.thumbs_up_count !== undefined
-                  ) {
-                    dislikes += marker.thumbs_down_count;
-                  }
+                });
+
+                // Once all markers all markers for a route are checked the objects
+                // are pushed to the correpondent arrays
+                verifiedRatings[routeId] = { likes, dislikes };
+                verifiedMarkers[routeId] = markersLocal;
+
+                // If it has iterated all results the directions are saved with redux
+                if (results.routes.length === i) {
+                  dispatch(
+                    changeDirections(
+                      results,
+                      verifiedRatings,
+                      verifiedMarkers,
+                      originRoute,
+                      destinationRoute,
+                    ),
+                  );
+                  return;
                 }
+                i += 1;
+              })
+              .catch((err) => {
+                alert(err);
               });
-
-              // Once all markers all markers for a route are checked the objects
-              // are pushed to the correpondent arrays
-              verifiedRatings[routeId] = { likes, dislikes };
-              verifiedMarkers[routeId] = markersLocal;
-
-              // If it has iterated all results the directions are saved with redux
-              if (results.routes.length === i) {
-                dispatch(
-                  changeDirections(
-                    results,
-                    verifiedRatings,
-                    verifiedMarkers,
-                    originRoute,
-                    destinationRoute,
-                  ),
-                );
-                return;
-              }
-              i += 1;
-            })
-            .catch((err) => {
-              alert(err);
-            });
+          });
         });
-      });
-  });
+    },
+    [directionsService, dispatch],
+  );
 
   // If there are loaded routes sets Generating routes to false
   useEffect(() => {
