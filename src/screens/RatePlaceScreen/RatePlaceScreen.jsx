@@ -2,11 +2,12 @@ import React, { useEffect, useState, useCallback, useRef } from 'react';
 import Compressor from 'compressorjs';
 import { withRouter, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { useJsApiLoader } from '@react-google-maps/api';
 import { useDispatch, useSelector } from 'react-redux';
 import ArrowRightIcon from '../../assets/icons/arrow-right.svg';
 import { colors } from '../../constants/colors';
-import { MEDIA_TYPES, IMAGE_TYPES } from '../../constants';
-import { getMedia } from '../../helpers/utils';
+import { MEDIA_TYPES, IMAGE_TYPES, GOOGLE_MAPS_OPTIONS } from '../../constants';
+import { getMedia, isDefined } from '../../helpers/utils';
 import {
   Page,
   Container,
@@ -36,7 +37,11 @@ import buttonDown from '../../assets/icons/places/dislike.svg';
 import paperclipIcon from '../../assets/icons/paperclip.svg';
 import CustomButton from '../../components/CustomButton/CustomButton';
 import { getQuestions } from '../../store/actions/questions';
-import { getPlace } from '../../store/actions/places';
+import {
+  getPlace,
+  getGooglePlace,
+  getMorePlaceInfo,
+} from '../../store/actions/places';
 import {
   postPlaceEvaluation,
   postPlaceEvaluationMedia,
@@ -52,7 +57,7 @@ const RatePlaceScreen = (props) => {
     (state) => state.accessibility.backgroundColor,
   );
   const loading = useSelector((state) => state.placeEvaluations.loading);
-
+  const { isLoaded } = useJsApiLoader(GOOGLE_MAPS_OPTIONS);
   const questions = useSelector((state) => state.questions.questions);
   const place = useSelector((state) => state.place.place);
 
@@ -81,12 +86,21 @@ const RatePlaceScreen = (props) => {
   };
 
   useEffect(() => {
-    dispatch(getQuestions());
-    dispatch(getPlace(params?.id)).catch(() => {
-      alert(t('no_place'));
-      dispatch(history.goBack());
-    });
-  }, [dispatch, params?.id, history, t]);
+    if (isLoaded) {
+      dispatch(getQuestions());
+      if (isDefined(params?.google_place_id)) {
+        dispatch(getGooglePlace(params?.google_place_id));
+        if (isDefined(params?.id)) {
+          dispatch(getMorePlaceInfo(params?.id));
+        }
+      } else {
+        dispatch(getPlace(params?.id)).catch(() => {
+          alert(t('no_place'));
+          dispatch(history.goBack());
+        });
+      }
+    }
+  }, [dispatch, params.google_place_id, params.id, history, t, isLoaded]);
 
   const CompressSendImage = (image, id) => {
     // eslint-disable-next-line no-new
@@ -95,10 +109,16 @@ const RatePlaceScreen = (props) => {
       success(result) {
         dispatch(postPlaceEvaluationMedia(result, id))
           .then(() => {
-            history.push('/place-details/'.concat(params.id), {
-              newPlace: history?.location?.state?.newPlace,
-              ratePlace: true,
-            });
+            history.push(
+              '/place-details/'
+                .concat(params.id)
+                .concat('/')
+                .concat(params.google_place_id),
+              {
+                newPlace: history?.location?.state?.newPlace,
+                ratePlace: true,
+              },
+            );
           })
           .catch((err) => {
             alert(err);
@@ -112,10 +132,16 @@ const RatePlaceScreen = (props) => {
   const SendFile = (file, id) => {
     dispatch(postPlaceEvaluationMedia(file, id))
       .then(() => {
-        history.push('/place-details/'.concat(params.id), {
-          newPlace: history?.location?.state?.newPlace,
-          ratePlace: true,
-        });
+        history.push(
+          '/place-details/'
+            .concat(params.id)
+            .concat('/')
+            .concat(params.google_place_id),
+          {
+            newPlace: history?.location?.state?.newPlace,
+            ratePlace: true,
+          },
+        );
       })
       .catch((err) => {
         alert(err);
@@ -133,12 +159,16 @@ const RatePlaceScreen = (props) => {
       dispatch(
         postPlaceEvaluation(
           accessibility,
-          place.name,
+          place?.name,
           commentRef.current.value,
           answers,
-          place.latitude,
-          place.longitude,
+          place?.latitude,
+          place?.longitude,
           file,
+          place?.city,
+          place?.country_code,
+          place?.place_type,
+          place?.google_place_id,
         ),
       )
         .then((result) => {
@@ -149,10 +179,16 @@ const RatePlaceScreen = (props) => {
               SendFile(file, result);
             }
           } else {
-            history.push('/place-details/'.concat(params.id), {
-              newPlace: history?.location?.state?.newPlace,
-              ratePlace: true,
-            });
+            history.push(
+              '/place-details/'
+                .concat(params.id)
+                .concat('/')
+                .concat(params.google_place_id),
+              {
+                newPlace: history?.location?.state?.newPlace,
+                ratePlace: true,
+              },
+            );
           }
         })
         .catch((err) => {

@@ -72,7 +72,7 @@ const routes = {
     private: true,
   },
   PLACE_RATE: {
-    path: '/rate-place/:id',
+    path: '/rate-place/:id/:google_place_id',
     component: RatePlaceScreen,
     private: true,
   },
@@ -82,7 +82,7 @@ const routes = {
     private: true,
   },
   PLACE_DETAILS: {
-    path: '/place-details/:id',
+    path: '/place-details/:id/:google_place_id',
     component: PlaceDetailsScreen,
     private: true,
   },
