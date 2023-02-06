@@ -88,11 +88,7 @@ const RatePlaceScreen = (props) => {
   useEffect(() => {
     if (isLoaded) {
       dispatch(getQuestions());
-      if (
-        params?.google_place_id !== 'null' &&
-        params?.google_place_id !== 'NaN' &&
-        params?.google_place_id !== 'undefined'
-      ) {
+      if (isDefined(params?.google_place_id)) {
         dispatch(getGooglePlace(params?.google_place_id));
         if (isDefined(params?.id)) {
           dispatch(getMorePlaceInfo(params?.id));
