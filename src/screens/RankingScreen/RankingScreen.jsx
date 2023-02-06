@@ -67,12 +67,9 @@ const RankingScreen = (props) => {
     history.push(routes.ACCESSIBILITY.path);
   }, [history, routes]);
 
-  const openDetails = useCallback(
-    (id) => {
-      history.push('/place-details/'.concat(id));
-    },
-    [history, routes],
-  );
+  const openDetails = (id) => {
+    history.push('/place-details/'.concat(id));
+  };
 
   const ascDescHandler = () => {
     setAscDescActive((prevState) => !prevState);

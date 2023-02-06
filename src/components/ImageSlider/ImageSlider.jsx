@@ -3,7 +3,7 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { colors } from '../../constants/colors';
-import { IMAGE_TYPES } from '../../constants';
+import { IMAGE_TYPES, PROVIDERS } from '../../constants';
 import { Img, Media } from './ImageSlider.styles';
 
 const settings = {
@@ -35,6 +35,9 @@ const ImageSlider = ({ photos }) => {
         }
         if (fileType === undefined) {
           return <Img key={index} src={media} />;
+        }
+        if (media?.type === PROVIDERS.GOOGLE) {
+          return <Img key={index} src={media?.file_url ?? media} />;
         }
         if (!IMAGE_TYPES.includes(fileType)) {
           return (

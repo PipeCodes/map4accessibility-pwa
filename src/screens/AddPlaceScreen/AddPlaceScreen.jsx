@@ -29,18 +29,20 @@ import TopBar from '../../components/TopBar/TopBar';
 import paperclipIcon from '../../assets/icons/paperclip.svg';
 import CustomButton from '../../components/CustomButton/CustomButton';
 import { postPlace, postPlaceMedia } from '../../store/actions/places';
+import { getCountryCity } from '../../helpers/utils';
 
 const AddPlaceScreen = (props) => {
   const { history, routes, location } = props;
   const { state } = location;
-  const dispatch = useDispatch();
   const { t } = useTranslation();
+  const dispatch = useDispatch();
 
   const font = useSelector((state) => state.accessibility.font);
   const fontSize = useSelector((state) => state.accessibility.fontSize);
   const backgroundColor = useSelector(
     (state) => state.accessibility.backgroundColor,
   );
+
   const loading = useSelector((state) => state.place.loading);
 
   const { isLoaded } = useJsApiLoader(GOOGLE_MAPS_OPTIONS);
@@ -66,46 +68,14 @@ const AddPlaceScreen = (props) => {
 
   useEffect(() => {
     if (isLoaded && state) {
-      // Reference https://gist.github.com/AmirHossein/92a0597b5f723b19c648
       const latlng = new google.maps.LatLng(state.lat, state.lng);
       new google.maps.Geocoder().geocode(
         { latLng: latlng },
         (results, status) => {
           if (status === google.maps.GeocoderStatus.OK) {
-            if (results[1]) {
-              let city = null;
-              let country = null;
-              let counter;
-              let counterLength;
-              let component;
-              for (let r = 0, rl = results.length; r < rl; r += 1) {
-                const result = results[r];
-
-                if (!city && result.types[0] === 'locality') {
-                  for (
-                    counter = 0,
-                      counterLength = result.address_components.length;
-                    counter < counterLength;
-                    counter += 1
-                  ) {
-                    component = result.address_components[counter];
-
-                    if (component.types[0] === 'locality') {
-                      city = component.long_name;
-                      break;
-                    }
-                  }
-                } else if (!country && result.types[0] === 'country') {
-                  country = result.address_components[0].short_name;
-                }
-
-                if (city && country) {
-                  break;
-                }
-              }
-              setCoutry(country);
-              setCity(city);
-            }
+            const response = getCountryCity(results);
+            setCoutry(response.country);
+            setCity(response.city);
           }
         },
       );

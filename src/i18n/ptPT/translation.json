@@ -145,5 +145,6 @@
   "place_conflict": "Local já existente, volte para o mapa para ver.",
   "results": "Resultados",
   "no_place": "Local já não existe.",
-  "are_you_sure": "Um pedido vai ser enviado! Tem a certeza?"
+  "are_you_sure": "Um pedido vai ser enviado! Tem a certeza?",
+  "view_more": "Ver mais"
 }

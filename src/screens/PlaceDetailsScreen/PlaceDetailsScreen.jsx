@@ -2,6 +2,7 @@ import React, { useEffect, useCallback, useState, useMemo } from 'react';
 import { withRouter, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
+import { useJsApiLoader } from '@react-google-maps/api';
 import moment from 'moment';
 import ThumbsUp from '../../assets/icons/maps/up.svg';
 import Pin from '../../assets/icons/places/details/pin.svg';
@@ -26,18 +27,23 @@ import {
 } from './PlaceDetailsScreen.styles';
 import TopBar from '../../components/TopBar/TopBar';
 import ImageSlider from '../../components/ImageSlider/ImageSlider';
-import { getPlace, deletePlace } from '../../store/actions/places';
+import {
+  getPlace,
+  deletePlace,
+  getGooglePlace,
+  getMorePlaceInfo,
+} from '../../store/actions/places';
 import LatestComments from '../../components/LatestComments/LatestComments';
 import { storePlace } from '../../store/actions/history';
-import { getMedia } from '../../helpers/utils';
+import { getMedia, isDefined } from '../../helpers/utils';
+import { GOOGLE_MAPS_OPTIONS } from '../../constants';
 
 const PlaceDetailsScreen = (props) => {
   const { history, routes } = props;
   const dispatch = useDispatch();
   const { t } = useTranslation();
-
+  const { isLoaded } = useJsApiLoader(GOOGLE_MAPS_OPTIONS);
   const [isAccessible, setIsAccessible] = useState('');
-
   // Accessibility settings with redux from the reducer
   const font = useSelector((state) => state.accessibility.font);
   const fontSize = useSelector((state) => state.accessibility.fontSize);
@@ -54,19 +60,29 @@ const PlaceDetailsScreen = (props) => {
   // Gets params from URL using ReactRouter
   const params = useParams();
 
-  const noPlace = () => {
-    alert(t('no_place'));
-    dispatch(history.goBack());
-  };
-
   // Gets Place from API to have the info
   useEffect(() => {
-    dispatch(getPlace(params.id)).catch(() => noPlace());
-  }, [dispatch]);
+    if (isLoaded) {
+      if (isDefined(params?.google_place_id)) {
+        dispatch(getGooglePlace(params?.google_place_id));
+        if (isDefined(params?.id)) {
+          dispatch(getMorePlaceInfo(params?.id));
+        }
+      } else {
+        dispatch(getPlace(params?.id)).catch(() => {
+          alert(t('no_place'));
+          dispatch(history.goBack());
+        });
+      }
+    }
+  }, [dispatch, params.google_place_id, params.id, t, history, isLoaded]);
 
   useEffect(() => {
     if (place && visitedHistory) {
-      if (visitedHistory[0]?.id !== place?.id) {
+      if (
+        visitedHistory[0]?.id !== place?.id &&
+        visitedHistory[0]?.google_place_id !== place?.google_place_id
+      ) {
         dispatch(storePlace(place, visitedHistory));
       }
     }
@@ -102,8 +118,12 @@ const PlaceDetailsScreen = (props) => {
   }, [history, routes]);
 
   const openComments = useCallback(() => {
-    history.push(`/rate-place/${params?.id}`);
-  }, [history, routes]);
+    if (history?.location?.state?.googlePlace) {
+      history.push(`/rate-place/${params?.id}/${params?.google_place_id}`);
+    } else {
+      history.push(`/rate-place/${params?.id}/${params?.google_place_id}`);
+    }
+  }, [history, params]);
 
   const getAccessibility = useMemo(() => {
     const sortedComments = place?.place_evaluations?.sort(
@@ -118,7 +138,7 @@ const PlaceDetailsScreen = (props) => {
       return t('not_accessible');
     }
     return '';
-  }, [setIsAccessible, place, t]);
+  }, [place, t]);
 
   return (
     <Page backgroundColor={backgroundColor}>
@@ -194,9 +214,11 @@ const PlaceDetailsScreen = (props) => {
             )}
             {place?.schedule && (
               <span>
-                <img src={Clock} alt={t('schedule')} /> {place?.schedule}
+                <img src={Clock} alt={t('schedule')} />
               </span>
             )}
+            {place?.schedule &&
+              place?.schedule?.map((line) => <span>{line}</span>)}
           </PlaceInformation>
           {place?.place_deletion?.find(
             (request) => request.app_user_id === user.id,

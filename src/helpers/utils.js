@@ -2,11 +2,30 @@
 /* eslint-disable prefer-rest-params */
 /* eslint-disable one-var */
 
-import DangerIcon from '../assets/icons/maps/red-alert-icon.svg';
-import DefaultIcon from '../assets/icons/maps/default.svg';
+import DangerIcon from '../assets/icons/maps/markers/red-alert-icon.svg';
+import HospitalIcon from '../assets/icons/maps/markers/hospital.svg';
+import CultureIcon from '../assets/icons/maps/markers/culture.svg';
+import LodgingIcon from '../assets/icons/maps/markers/lodging.svg';
+import PublicServiceIcon from '../assets/icons/maps/markers/public-service.svg';
+import TransportIcon from '../assets/icons/maps/markers/transport.svg';
+import FoodIcon from '../assets/icons/maps/markers/food.svg';
+import DefaultIcon from '../assets/icons/maps/markers/default.svg';
 import placeholder from '../assets/images/photo-stock-1.png';
+import {
+  food,
+  publicService,
+  lodging,
+  cultureLeisure,
+  transport,
+  hospital,
+} from '../constants/placeGroups';
 
 const photos = [placeholder, placeholder, placeholder];
+
+// ///////////////////////////
+//    Accessibility Utils   //
+// ///////////////////////////
+
 export const updateFontSize = (fontSize, incrementor) => {
   let newFontSize = fontSize + incrementor;
   if (newFontSize > 80) {
@@ -24,6 +43,7 @@ export const updateValue = (defaultValue, newValue) => {
   }
   return defaultValue;
 };
+
 export const setUnderline = (defaultValue, underline) => {
   if (underline) {
     return 'underline';
@@ -52,6 +72,10 @@ export const setLightsOff = (defaultValue, lighsOffMode) => {
   return defaultValue;
 };
 
+// ///////////////////////////
+// Debouce for map dragging //
+// ///////////////////////////
+
 export const debounce = (func, wait, immediate) => {
   let timeout;
   return function () {
@@ -68,11 +92,110 @@ export const debounce = (func, wait, immediate) => {
   };
 };
 
+// ///////////////////////////
+//        Places Utils      //
+// ///////////////////////////
+
 export const markerIcon = (type) => {
   if (type === 'danger') {
     return DangerIcon;
   }
+  if (type === 'hospital') {
+    return HospitalIcon;
+  }
+  if (type === 'culture') {
+    return CultureIcon;
+  }
+  if (type === 'lodging') {
+    return LodgingIcon;
+  }
+  if (type === 'public-service') {
+    return PublicServiceIcon;
+  }
+  if (type === 'transport') {
+    return TransportIcon;
+  }
+  if (type === 'food') {
+    return FoodIcon;
+  }
   return DefaultIcon;
+};
+
+export const choosePlaceType = (types) => {
+  if (typeof types === 'string') {
+    return types;
+  }
+  let response;
+  types?.forEach((value) => {
+    if (food.includes(value)) {
+      return 'food';
+    }
+    if (publicService.includes(value)) {
+      response = 'public-service';
+    }
+    if (lodging.includes(value)) {
+      response = 'lodging';
+    }
+    if (cultureLeisure.includes(value)) {
+      response = 'culture';
+    }
+    if (transport.includes(value)) {
+      response = 'transport';
+    }
+    if (hospital.includes(value)) {
+      response = 'hospital';
+    }
+  });
+  return response;
+};
+
+// Reference https://gist.github.com/AmirHossein/92a0597b5f723b19c648
+export const getCountryCity = (results, list) => {
+  // If list exists then its already formated
+  let city = null;
+  let country = null;
+  let counter;
+  let counterLength;
+  let component;
+  if (list) {
+    if (results) {
+      results.forEach((result) => {
+        if (!city && result?.types?.includes('locality')) {
+          city = result?.long_name;
+        } else if (!country && result?.types?.includes('country')) {
+          country = result?.short_name;
+        }
+      });
+    }
+    return { country, city };
+  }
+
+  if (results[1]) {
+    for (let r = 0, rl = results.length; r < rl; r += 1) {
+      const result = results[r];
+      if (!city && result.types[0] === 'locality') {
+        for (
+          counter = 0, counterLength = result.address_components.length;
+          counter < counterLength;
+          counter += 1
+        ) {
+          component = result.address_components[counter];
+
+          if (component.types[0] === 'locality') {
+            city = component.long_name;
+            break;
+          }
+        }
+      } else if (!country && result.types[0] === 'country') {
+        country = result.address_components[0].short_name;
+      }
+
+      if (city && country) {
+        break;
+      }
+    }
+  }
+  return { country, city };
 };
 
 export const googleMapsLink = (origin, destination) =>
@@ -88,8 +211,9 @@ export const googleMapsLink = (origin, destination) =>
         .concat('/')
         .concat(destination);
 
-export const camelToSnakeCase = (str) =>
-  str.replace(/[A-Z]/g, (letter) => `_${letter.toLowerCase()}`);
+// ///////////////////////////
+//        Images Utils      //
+// ///////////////////////////
 
 export const getMedia = (place) => {
   const pictures = [];
@@ -140,3 +264,13 @@ export const getFirstImage = (place) => {
 
   return placeholder;
 };
+
+export const isDefined = (item) =>
+  item !== 'null' && item !== 'NaN' && item !== 'undefined';
+
+// ///////////////////////////
+//        Others Utils      //
+// ///////////////////////////
+
+export const camelToSnakeCase = (str) =>
+  str.replace(/[A-Z]/g, (letter) => `_${letter.toLowerCase()}`);

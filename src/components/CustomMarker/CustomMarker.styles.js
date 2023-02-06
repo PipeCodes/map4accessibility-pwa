@@ -16,6 +16,7 @@ export const LikesAndDislikes = styled.div`
   justify-content: center;
   padding: 1px;
   gap: 9px;
+  width: fit-content;
 `;
 
 export const Likes = styled.span`
