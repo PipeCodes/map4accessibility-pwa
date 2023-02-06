@@ -141,3 +141,13 @@ export const ShowAll = styled.button`
   background: transparent;
   padding-bottom: 15px;
 `;
+
+export const ShowMore = styled.button`
+  font-size: ${(props) => updateFontSize(12, props.fontSize)};
+  font-family: ${(props) => updateValue('NotoSans-Regular', props.font)};
+  border: none;
+  background: transparent;
+  padding-bottom: 15px;
+  margin-left: 10px;
+  color: ${colors.primaryColor};
+`;

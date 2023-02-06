@@ -34,9 +34,11 @@ import {
   getMorePlaceInfo,
 } from '../../store/actions/places';
 import LatestComments from '../../components/LatestComments/LatestComments';
+
 import { storePlace } from '../../store/actions/history';
 import { getMedia, isDefined } from '../../helpers/utils';
 import { GOOGLE_MAPS_OPTIONS } from '../../constants';
+import QuestionPopUp from '../../components/QuestionsPopUp/QuestionsPopUp';
 
 const PlaceDetailsScreen = (props) => {
   const { history, routes } = props;
@@ -53,10 +55,10 @@ const PlaceDetailsScreen = (props) => {
   );
 
   const visitedHistory = useSelector((state) => state.history.history);
+  const [popUp, setPopUp] = useState(null);
 
   // Gets place from reducer
   const place = useSelector((state) => state.place.place);
-
   // Gets params from URL using ReactRouter
   const params = useParams();
 
@@ -142,6 +144,7 @@ const PlaceDetailsScreen = (props) => {
 
   return (
     <Page backgroundColor={backgroundColor}>
+      {popUp && <QuestionPopUp questions={popUp} setPopUp={setPopUp} />}
       <TopBar
         aligned
         page
@@ -237,8 +240,11 @@ const PlaceDetailsScreen = (props) => {
           )}
         </div>
         {place?.place_evaluations && (
-          <Evaluations fontSize={fontSize} className="mt-3">
-            <LatestComments comments={place?.place_evaluations} />
+          <Evaluations fontSize={fontSize} font={font} className="mt-3">
+            <LatestComments
+              comments={place?.place_evaluations}
+              setPopUp={setPopUp}
+            />
           </Evaluations>
         )}
         <ButtonComments onClick={() => openComments()}>
