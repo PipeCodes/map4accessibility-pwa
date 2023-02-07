@@ -102,7 +102,7 @@ const RatePlaceScreen = (props) => {
     }
   }, [dispatch, params.google_place_id, params.id, history, t, isLoaded]);
 
-  const CompressSendImage = (image, id) => {
+  const CompressSendImage = (image, id, placeId) => {
     // eslint-disable-next-line no-new
     new Compressor(image, {
       quality: 0.6,
@@ -111,7 +111,7 @@ const RatePlaceScreen = (props) => {
           .then(() => {
             history.push(
               '/place-details/'
-                .concat(params.id)
+                .concat(placeId)
                 .concat('/')
                 .concat(params.google_place_id),
               {
@@ -129,12 +129,12 @@ const RatePlaceScreen = (props) => {
       },
     });
   };
-  const SendFile = (file, id) => {
+  const SendFile = (file, id, placeId) => {
     dispatch(postPlaceEvaluationMedia(file, id))
       .then(() => {
         history.push(
           '/place-details/'
-            .concat(params.id)
+            .concat(placeId)
             .concat('/')
             .concat(params.google_place_id),
           {
@@ -174,14 +174,14 @@ const RatePlaceScreen = (props) => {
         .then((result) => {
           if (file !== undefined) {
             if (IMAGE_TYPES.includes(file?.type)) {
-              CompressSendImage(file, result);
+              CompressSendImage(file, result.id, result?.place?.id);
             } else {
-              SendFile(file, result);
+              SendFile(file, result.id, result?.place?.id);
             }
           } else {
             history.push(
               '/place-details/'
-                .concat(params.id)
+                .concat(result?.place?.id)
                 .concat('/')
                 .concat(params.google_place_id),
               {
