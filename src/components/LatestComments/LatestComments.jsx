@@ -21,6 +21,7 @@ import {
   Status,
   Name,
   ShowAll,
+  ShowMore,
   Media,
   Img,
   Box,
@@ -30,7 +31,7 @@ import { IMAGE_TYPES } from '../../constants';
 const Thumbs = [buttonDown, buttonUp];
 
 const LatestComments = (props) => {
-  const { comments, myComments } = props;
+  const { comments, myComments, setPopUp } = props;
   const { t } = useTranslation();
   const fontSize = useSelector((state) => state.accessibility.fontSize);
   const font = useSelector((state) => state.accessibility.font);
@@ -188,8 +189,16 @@ const LatestComments = (props) => {
                     </Media>
                   )}
                   <Body fontSize={fontSize} font={font}>
-                    {comment.comment}
+                    {comment?.comment}
                   </Body>
+                  <ShowMore
+                    fontSize={fontSize}
+                    font={font}
+                    type="button"
+                    onClick={() => setPopUp(comment?.questions_answers || [])}
+                  >
+                    {t('show_more')}
+                  </ShowMore>
                 </Box>
               </Comment>
             );

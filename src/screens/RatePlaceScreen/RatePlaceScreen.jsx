@@ -279,7 +279,7 @@ const RatePlaceScreen = (props) => {
           </Label>
           {questions &&
             questions.map((item, index) => (
-              <Question key={index}>
+              <Question key={item.id}>
                 <Title fontSize={fontSize} font={font}>
                   {index + 1}. {item?.title}
                 </Title>
@@ -294,7 +294,10 @@ const RatePlaceScreen = (props) => {
                           onChange={() => {
                             setAnswers((prevState) => ({
                               ...prevState,
-                              [item?.id]: answer?.id,
+                              [index]: {
+                                question: item?.title,
+                                answer: answer?.body,
+                              },
                             }));
                           }}
                         />
