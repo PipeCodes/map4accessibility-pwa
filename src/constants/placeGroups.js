@@ -35,4 +35,4 @@ export const transport = [
   'transport',
 ];
 
-export const hospital = ['hospital'];
+export const hospital = ['hospital', 'health'];

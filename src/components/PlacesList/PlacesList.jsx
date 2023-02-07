@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 
 import pinIcon from '../../assets/icons/places/pin.svg';
-import { getFirstImage } from '../../helpers/utils';
 import { resetHistory } from '../../store/actions/history';
 import {
   Wrapper,
@@ -12,7 +11,6 @@ import {
   PlacesContainer,
   Place,
   Name,
-  Image,
   TextWrapper,
   City,
   Button,
@@ -41,7 +39,7 @@ const PlacesList = ({ places, history, routes, searchText }) => {
     } else {
       setPlacesList(places?.slice(0, 5));
     }
-  }, [viewAll, places]);
+  }, [viewAll, places, dispatch]);
 
   const viewAllHandler = () => {
     setViewAll((prevState) => !prevState);
@@ -62,34 +60,26 @@ const PlacesList = ({ places, history, routes, searchText }) => {
       </TopWrapper>
       <PlacesContainer>
         {places && placesList?.length !== 0 ? (
-          placesList?.map((place, key) => {
-            const image = getFirstImage(place);
-            return (
-              <Place key={key}>
-                {image?.file_url ? (
-                  <Image className="1" src={image?.file_url} />
-                ) : (
-                  <Image className="2" src={image} />
-                )}
-                <TextWrapper>
-                  <Name fontSize={fontSize} font={font}>
-                    {place?.name}
-                  </Name>
-                  <City fontSize={fontSize} font={font}>
-                    {place?.city}
-                  </City>
-                </TextWrapper>
-                <Button
-                  type="button"
-                  onClick={() =>
-                    showPlaceOnMap(place?.latitude, place?.longitude)
-                  }
-                >
-                  <img src={pinIcon} alt={place.id} />
-                </Button>
-              </Place>
-            );
-          })
+          placesList?.map((place, key) => (
+            <Place key={key}>
+              <TextWrapper>
+                <Name fontSize={fontSize} font={font}>
+                  {place?.name}
+                </Name>
+                <City fontSize={fontSize} font={font}>
+                  {place?.city}
+                </City>
+              </TextWrapper>
+              <Button
+                type="button"
+                onClick={() =>
+                  showPlaceOnMap(place?.latitude, place?.longitude)
+                }
+              >
+                <img src={pinIcon} alt={place.id} />
+              </Button>
+            </Place>
+          ))
         ) : (
           <NoResults fontSize={fontSize} font={font}>
             {t('no_results')}

@@ -139,7 +139,9 @@ const AddPlaceScreen = (props) => {
               SendFile(file, result);
             }
           } else {
-            history.push('/rate-place/'.concat(result), { newPlace: true });
+            history.push('/rate-place/'.concat(result).concat('/null'), {
+              newPlace: true,
+            });
           }
         })
         .catch((err) => {

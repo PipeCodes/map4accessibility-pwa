@@ -22,6 +22,7 @@ export const PlusZoom = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 `;
 
 export const MinusZoom = styled.div`
@@ -35,4 +36,5 @@ export const MinusZoom = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 `;
