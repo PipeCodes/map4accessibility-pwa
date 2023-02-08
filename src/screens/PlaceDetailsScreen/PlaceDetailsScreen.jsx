@@ -151,7 +151,6 @@ const PlaceDetailsScreen = (props) => {
         hasBackButton
         backTarget={() => backClickHandler()}
         backgroundColor={backgroundColor}
-        magnifier
         hasAccessibilityButton={openAccessibility}
         title={t('place_details')}
       />

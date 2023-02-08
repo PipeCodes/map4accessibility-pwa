@@ -239,7 +239,7 @@ const MapScreen = (props) => {
             <GoogleMap
               mapContainerStyle={containerStyle}
               center={location}
-              zoom={history.location?.state?.search?.text ? 16 : 14}
+              zoom={history.location?.state?.search ? 20 : 14}
               onClick={(e) => {
                 if (add) {
                   setCoords({ lat: e.latLng.lat(), lng: e.latLng.lng() });

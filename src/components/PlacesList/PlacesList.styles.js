@@ -34,13 +34,6 @@ export const Place = styled.div`
   border-bottom: 1px solid ${colors.lightGrey};
 `;
 
-export const Image = styled.img`
-  height: 50px;
-  width: 50px;
-  border-radius: 100%;
-  background-color: ${colors.grey};
-`;
-
 export const TextWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -74,8 +67,8 @@ export const Button = styled.div`
   box-shadow: 0px 2px 2px ${colors.shadow};
   border: 1px solid ${colors.primaryColor};
   color: ${colors.white};
-  width: 32px;
-  height: 32px;
+  min-width: 32px;
+  min-height: 32px;
   display: flex;
   justify-content: center;
   align-items: center;

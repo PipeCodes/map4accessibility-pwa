@@ -379,10 +379,13 @@ export const getPlaceByParams = (params) => async (dispatch) => {
     if (statusCode === HTTP_STATUS.SUCCESS) {
       dispatch({
         type: GET_PLACE_SUCCESS,
-        place: response.data?.result ?? {},
+        place: response.data?.result[0] ?? {},
       });
     }
   } catch (error) {
+    dispatch({
+      type: GET_PLACE_ERROR,
+    });
     return Promise.reject(error?.response?.data?.message);
   }
 };
