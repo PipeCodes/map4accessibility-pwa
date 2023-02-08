@@ -128,19 +128,19 @@ export const choosePlaceType = (types) => {
   let response;
   types?.forEach((value) => {
     if (food.includes(value)) {
-      return 'food';
+      return 'restaurant';
     }
     if (publicService.includes(value)) {
-      response = 'public-service';
+      response = 'local_government_office';
     }
     if (lodging.includes(value)) {
       response = 'lodging';
     }
     if (cultureLeisure.includes(value)) {
-      response = 'culture';
+      response = 'tourist_attraction';
     }
     if (transport.includes(value)) {
-      response = 'transport';
+      response = 'parking';
     }
     if (hospital.includes(value)) {
       response = 'hospital';

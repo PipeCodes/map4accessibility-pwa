@@ -104,7 +104,7 @@ export const postPlaceEvaluation =
         if (!media) {
           dispatch({ type: POST_PLACE_EVALUATIONS_SUCCESS });
         }
-        return Promise.resolve(response?.data?.result.id);
+        return Promise.resolve(response?.data?.result);
       }
     } catch (error) {
       dispatch({ type: POST_PLACE_EVALUATIONS_ERROR });

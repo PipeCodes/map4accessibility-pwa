@@ -151,7 +151,6 @@ const PlaceDetailsScreen = (props) => {
         hasBackButton
         backTarget={() => backClickHandler()}
         backgroundColor={backgroundColor}
-        magnifier
         hasAccessibilityButton={openAccessibility}
         title={t('place_details')}
       />
@@ -223,21 +222,27 @@ const PlaceDetailsScreen = (props) => {
             {place?.schedule &&
               place?.schedule?.map((line) => <span>{line}</span>)}
           </PlaceInformation>
-          {place?.place_deletion?.find(
-            (request) => request.app_user_id === user.id,
-          ) ? (
-            <Button fontSize={fontSize} font={font} className="closed">
-              {t('marked_as_closed')}
-            </Button>
-          ) : (
-            <Button
-              fontSize={fontSize}
-              font={font}
-              onClick={() => markPlaceAsClosed()}
-            >
-              {t('mark_as_closed')}
-            </Button>
-          )}
+
+          {place?.id &&
+            place?.place_deletion?.find(
+              (request) => request.app_user_id === user.id,
+            ) && (
+              <Button fontSize={fontSize} font={font} className="closed">
+                {t('marked_as_closed')}
+              </Button>
+            )}
+          {place?.id &&
+            !place?.place_deletion?.find(
+              (request) => request.app_user_id === user.id,
+            ) && (
+              <Button
+                fontSize={fontSize}
+                font={font}
+                onClick={() => markPlaceAsClosed()}
+              >
+                {t('mark_as_closed')}
+              </Button>
+            )}
         </div>
         {place?.place_evaluations && (
           <Evaluations fontSize={fontSize} font={font} className="mt-3">

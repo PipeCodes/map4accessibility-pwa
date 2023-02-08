@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { withRouter } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import { Spinner } from 'react-bootstrap';
 import {
   Page,
   Container,
@@ -28,7 +29,8 @@ const SearchScreen = ({ history, routes }) => {
     (state) => state.accessibility.backgroundColor,
   );
 
-  const places = useSelector((state) => state?.place?.place?.data);
+  const places = useSelector((state) => state?.place?.place);
+  const loading = useSelector((state) => state?.place?.loading);
   const searchText = useSelector((state) => state?.search?.text);
   const filterType = useSelector((state) => state?.search?.placeType);
   const [searchData, setSearchData] = useState(null);
@@ -109,6 +111,7 @@ const SearchScreen = ({ history, routes }) => {
             )}
           </FiltersContainer>
         </SearchFilters>
+        {loading && <Spinner animation="border" variant="dark" />}
         {searchData && (
           <PlacesList
             places={searchData}
