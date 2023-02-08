@@ -97,7 +97,7 @@ const AddPlaceScreen = (props) => {
     setFile(fileObj);
   };
 
-  const CompressSendImage = (image, id) => {
+  const compressSendImage = (image, id) => {
     // eslint-disable-next-line no-new
     new Compressor(image, {
       quality: 0.6,
@@ -116,7 +116,7 @@ const AddPlaceScreen = (props) => {
     });
   };
 
-  const SendFile = (file, id) => {
+  const sendFile = (file, id) => {
     dispatch(postPlaceMedia(file, id))
       .then(() => {
         history.push('/rate-place/'.concat(id));
@@ -134,9 +134,9 @@ const AddPlaceScreen = (props) => {
         .then((result) => {
           if (file !== undefined) {
             if (IMAGE_TYPES.includes(file?.type)) {
-              CompressSendImage(file, result);
+              compressSendImage(file, result);
             } else {
-              SendFile(file, result);
+              sendFile(file, result);
             }
           } else {
             history.push('/rate-place/'.concat(result).concat('/null'), {
