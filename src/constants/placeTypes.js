@@ -23,7 +23,7 @@ export const types = [
   {
     id: 3,
     label: 'Restaurants',
-    placeType: 'food',
+    placeType: 'restaurant',
     icon: FoodIcon,
   },
   {
@@ -42,19 +42,19 @@ export const types = [
   {
     id: 6,
     label: 'Attractions',
-    placeType: 'culture',
+    placeType: 'tourist_attraction',
     icon: CultureIcon,
   },
   {
     id: 7,
-    label: 'Hospitals',
-    placeType: 'hospital',
+    label: 'Health',
+    placeType: 'health',
     icon: HospitalIcon,
   },
   {
     id: 8,
     label: 'Public Serv.',
-    placeType: 'public-service',
+    placeType: 'local_government_office',
     icon: PublicServiceIcon,
   },
 ];

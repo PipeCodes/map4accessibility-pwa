@@ -102,7 +102,7 @@ const RatePlaceScreen = (props) => {
     }
   }, [dispatch, params.google_place_id, params.id, history, t, isLoaded]);
 
-  const CompressSendImage = (image, id) => {
+  const compressSendImage = (image, id, placeId) => {
     // eslint-disable-next-line no-new
     new Compressor(image, {
       quality: 0.6,
@@ -111,7 +111,7 @@ const RatePlaceScreen = (props) => {
           .then(() => {
             history.push(
               '/place-details/'
-                .concat(params.id)
+                .concat(placeId)
                 .concat('/')
                 .concat(params.google_place_id),
               {
@@ -129,12 +129,12 @@ const RatePlaceScreen = (props) => {
       },
     });
   };
-  const SendFile = (file, id) => {
+  const sendFile = (file, id, placeId) => {
     dispatch(postPlaceEvaluationMedia(file, id))
       .then(() => {
         history.push(
           '/place-details/'
-            .concat(params.id)
+            .concat(placeId)
             .concat('/')
             .concat(params.google_place_id),
           {
@@ -174,14 +174,14 @@ const RatePlaceScreen = (props) => {
         .then((result) => {
           if (file !== undefined) {
             if (IMAGE_TYPES.includes(file?.type)) {
-              CompressSendImage(file, result);
+              compressSendImage(file, result.id, result?.place?.id);
             } else {
-              SendFile(file, result);
+              sendFile(file, result.id, result?.place?.id);
             }
           } else {
             history.push(
               '/place-details/'
-                .concat(params.id)
+                .concat(result?.place?.id)
                 .concat('/')
                 .concat(params.google_place_id),
               {
@@ -279,7 +279,7 @@ const RatePlaceScreen = (props) => {
           </Label>
           {questions &&
             questions.map((item, index) => (
-              <Question key={index}>
+              <Question key={item.id}>
                 <Title fontSize={fontSize} font={font}>
                   {index + 1}. {item?.title}
                 </Title>
@@ -294,7 +294,10 @@ const RatePlaceScreen = (props) => {
                           onChange={() => {
                             setAnswers((prevState) => ({
                               ...prevState,
-                              [item?.id]: answer?.id,
+                              [index]: {
+                                question: item?.title,
+                                answer: answer?.body,
+                              },
                             }));
                           }}
                         />

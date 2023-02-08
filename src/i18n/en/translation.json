@@ -144,9 +144,11 @@
   "problem_request_delete_place": "There was a problem requesting to delete place.",
   "mark_as_closed": "Mark this place as closed",
   "marked_as_closed": "You already marked this place as closed.",
+  "place_closed": "Place closed.",
   "place_conflict": "Place already exists, please go back to the map.",
   "results": "Results",
   "no_place": "Place doesn't exist anymore.",
   "are_you_sure": "A request is going to be sent! Are you sure?",
-  "view_more": "View more"
+  "view_more": "View more",
+  "show_more": "Show More"
 }

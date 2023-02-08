@@ -3,6 +3,7 @@ import React, { useEffect, useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import Compressor from 'compressorjs';
 import { updateProfile, getUser, logout } from '../../store/actions/auth';
 import { colors } from '../../constants/colors';
 import LogoutIcon from '../../assets/icons/logout.svg';
@@ -37,6 +38,7 @@ import CustomInput from '../../components/CustomInput/CustomInput';
 import CustomButton from '../../components/CustomButton/CustomButton';
 import TopBar from '../../components/TopBar/TopBar';
 import FooterMenu from '../../components/FooterMenu/FooterMenu';
+import { IMAGE_TYPES } from '../../constants';
 
 const initialValues = {
   firstName: '',
@@ -90,6 +92,29 @@ const ProfileScreen = (props) => {
     }
   }, [user]);
 
+  const compressSendImage = useCallback(
+    (image) => {
+      // eslint-disable-next-line no-new
+      new Compressor(image, {
+        quality: 0.6,
+        success(result) {
+          dispatch(updateProfile({ ...formData, avatar: result }))
+            .then(() => {
+              setEditActive((prevState) => !prevState);
+              dispatch(getUser());
+            })
+            .catch((error) => {
+              alert(error);
+            });
+        },
+        error(err) {
+          alert(err);
+        },
+      });
+    },
+    [dispatch, formData],
+  );
+
   //  Validates the fields
   const validate = (values) => {
     const errors = {};
@@ -124,13 +149,13 @@ const ProfileScreen = (props) => {
     setEditActive((prevState) => !prevState);
   };
 
-  const confirmEdit = () => {
+  const confirmEdit = useCallback(() => {
     setFormErrors(validate(formData));
     if (Object.keys(validate(formData)).length === 0) {
       return true;
     }
     return false;
-  };
+  }, [formData]);
 
   // Makes the call to the API after confirming all fields are validated,
   // If the avatar is not a file it is changed.
@@ -154,17 +179,10 @@ const ProfileScreen = (props) => {
             alert(error);
           });
       } else {
-        dispatch(updateProfile(formData))
-          .then(() => {
-            setEditActive((prevState) => !prevState);
-            dispatch(getUser());
-          })
-          .catch((error) => {
-            alert(error);
-          });
+        compressSendImage(formData?.avatar);
       }
     }
-  }, [dispatch, formData]);
+  }, [dispatch, formData, confirmEdit, compressSendImage]);
 
   const rankingHandler = () => {
     history.push(routes.RANKING.path);
@@ -265,6 +283,7 @@ const ProfileScreen = (props) => {
               <CustomInput
                 type="file"
                 fontSize={fontSize}
+                accept={IMAGE_TYPES}
                 font={font}
                 style={{}}
                 placeholder={t('avatar_placeholder')}
