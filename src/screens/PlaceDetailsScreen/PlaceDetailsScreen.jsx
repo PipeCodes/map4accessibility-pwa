@@ -222,8 +222,8 @@ const PlaceDetailsScreen = (props) => {
             {place?.schedule &&
               place?.schedule?.map((line) => <span>{line}</span>)}
           </PlaceInformation>
-
           {place?.id &&
+            !(place?.place_deletion[0]?.status === 'closed') &&
             place?.place_deletion?.find(
               (request) => request.app_user_id === user.id,
             ) && (
@@ -231,7 +231,13 @@ const PlaceDetailsScreen = (props) => {
                 {t('marked_as_closed')}
               </Button>
             )}
+          {place?.id && place?.place_deletion[0]?.status === 'closed' && (
+            <Button fontSize={fontSize} font={font} className="closed">
+              {t('place_closed')}
+            </Button>
+          )}
           {place?.id &&
+            !(place?.place_deletion[0]?.status === 'closed') &&
             !place?.place_deletion?.find(
               (request) => request.app_user_id === user.id,
             ) && (

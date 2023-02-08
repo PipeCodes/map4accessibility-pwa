@@ -142,6 +142,7 @@
   "problem_request_delete_place": "Ocurreu um problema ao efectuar o pedido de remoção.",
   "mark_as_closed": "Marcar este local como fechado",
   "marked_as_closed": "Já marcou este local como fechado.",
+  "place_closed": "Local fechado.",
   "place_conflict": "Local já existente, volte para o mapa para ver.",
   "results": "Resultados",
   "no_place": "Local já não existe.",
