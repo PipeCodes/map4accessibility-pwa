@@ -39,6 +39,7 @@ import CustomButton from '../../components/CustomButton/CustomButton';
 import TopBar from '../../components/TopBar/TopBar';
 import FooterMenu from '../../components/FooterMenu/FooterMenu';
 import { IMAGE_TYPES } from '../../constants';
+import { storageUrl } from '../../helpers/utils';
 
 const initialValues = {
   firstName: '',
@@ -211,8 +212,8 @@ const ProfileScreen = (props) => {
               src={
                 user.avatar
                   ? process.env.REACT_APP_EXTERNAL_LINKS_BASE.concat(
-                      `/${user.avatar}`,
-                    )
+                      storageUrl(user?.avatar),
+                    ).concat(`/${user?.avatar}`)
                   : AvatarImg
               }
               alt="avatar"
