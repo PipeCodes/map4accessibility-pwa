@@ -105,10 +105,12 @@ const ProfileScreen = (props) => {
               dispatch(getUser());
             })
             .catch((error) => {
+              // eslint-disable-next-line no-undef
               alert(error);
             });
         },
         error(err) {
+          // eslint-disable-next-line no-undef
           alert(err);
         },
       });
@@ -177,6 +179,7 @@ const ProfileScreen = (props) => {
             dispatch(getUser());
           })
           .catch((error) => {
+            // eslint-disable-next-line no-undef
             alert(error);
           });
       } else {
@@ -406,6 +409,7 @@ const ProfileScreen = (props) => {
             backgroundColor={colors.transparent}
             text={t('faqs')}
             icon={QuestionsIcon}
+            // eslint-disable-next-line no-undef
             onClick={() => window.open(faqs)}
           />
           <Link

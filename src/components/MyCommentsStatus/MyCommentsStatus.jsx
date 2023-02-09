@@ -4,7 +4,6 @@ import { useSelector } from 'react-redux';
 import { colors } from '../../constants/colors';
 import ThumbsUp from '../../assets/icons/maps/up.svg';
 import ThumbsDown from '../../assets/icons/maps/down.svg';
-import Pending from '../../assets/icons/maps/pending.svg';
 import Rejected from '../../assets/icons/maps/rejected.svg';
 import Accepted from '../../assets/icons/maps/accepted.svg';
 import {
@@ -22,7 +21,7 @@ import {
 } from './MyCommentsStatus.styles';
 
 const MyCommentsStatus = (props) => {
-  const { positive, negative, accepted, rejected, pending, comments } = props;
+  const { positive, negative, accepted, rejected, comments } = props;
   const fontSize = useSelector((state) => state.accessibility.fontSize);
   const font = useSelector((state) => state.accessibility.font);
 
@@ -87,21 +86,6 @@ const MyCommentsStatus = (props) => {
                 color={colors.primaryTextColor}
               >
                 {rejected && rejected}
-              </Count>
-            </Box>
-          </Line>
-          <Line>
-            <Box>
-              <Label font={font} fontSize={fontSize}>
-                <img src={Pending} alt={t('pending')} />
-                <span>{t('pending')}</span>
-              </Label>
-              <Count
-                font={font}
-                fontSize={fontSize}
-                color={colors.primaryTextColor}
-              >
-                {pending && pending}
               </Count>
             </Box>
           </Line>

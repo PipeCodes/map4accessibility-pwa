@@ -7,6 +7,7 @@ import {
   GoogleMap,
   MarkerClusterer,
 } from '@react-google-maps/api';
+import { Spinner } from 'react-bootstrap';
 import { debounce } from '../../helpers/utils';
 import {
   getPlacesRadiusMarkers,
@@ -50,6 +51,7 @@ const getRadius = (map) => {
   if (!bounds) return null;
 
   // computeDistanceBetween returns meters
+  // eslint-disable-next-line no-undef
   const radius = window.google.maps.geometry.spherical.computeDistanceBetween(
     bounds.getCenter(),
     bounds.getSouthWest(),
@@ -68,6 +70,7 @@ const MapScreen = (props) => {
 
   // Gets place from reducer
   const place = useSelector((state) => state.place.place);
+  const loading = useSelector((state) => state.place.loading);
 
   // Place pop-up
   const [popUp, setPopUp] = useState(false);
@@ -119,6 +122,7 @@ const MapScreen = (props) => {
         })
         .catch((error) => {
           setLocation({ lat: 38.736946, lng: -9.142685 });
+          // eslint-disable-next-line no-undef
           alert(error);
         });
     }
@@ -149,11 +153,14 @@ const MapScreen = (props) => {
       // Asks and sets user position (lat, long)
       getCurrentLocation()
         .then((position) => setLocation(position))
+        // eslint-disable-next-line no-undef
         .catch((error) => alert(error));
     }
   };
 
   // Debounce when moves on map
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const debounceSetCenter = useCallback(
     debounce((value, radius) => {
       if (
@@ -167,7 +174,7 @@ const MapScreen = (props) => {
       setRadius(getRadius(map));
       setCenter(value);
     }, 400),
-    [center, map, radius],
+    [center, map],
   );
 
   // Opens and closes places
@@ -191,7 +198,8 @@ const MapScreen = (props) => {
           setMarkers(list);
         })
         .catch((err) => {
-          console.error(err);
+          // eslint-disable-next-line no-undef
+          alert.error(err);
         });
     }
   }, [center, dispatch, radius]);
@@ -236,6 +244,9 @@ const MapScreen = (props) => {
               maxWidth: '820px',
             }}
           >
+            {loading && (
+              <Spinner animation="border" variant="dark" className="spinner" />
+            )}
             <GoogleMap
               mapContainerStyle={containerStyle}
               center={location}

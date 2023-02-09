@@ -94,10 +94,12 @@ const ChangePasswordScreen = (props) => {
   const recoverPasswordHandler = useCallback(() => {
     dispatch(changePassword(formData, query.get('token')))
       .then((result) => {
+        // eslint-disable-next-line no-undef
         alert(result);
         history.push(routes.LOGIN.path);
       })
       .catch((error) => {
+        // eslint-disable-next-line no-undef
         alert(error);
       });
   }, [dispatch, formData, history, routes, query]);

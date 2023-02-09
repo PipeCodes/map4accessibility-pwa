@@ -8,6 +8,7 @@ import { store, persistor } from './store';
 import App from './App';
 import './i18n';
 
+// eslint-disable-next-line no-undef
 const rootElement = document.getElementById('root');
 
 const root = ReactDOM.createRoot(rootElement);

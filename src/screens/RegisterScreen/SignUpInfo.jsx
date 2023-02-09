@@ -56,16 +56,17 @@ const SignUpInfo = (props) => {
           );
         })
         .catch((error) => {
+          // eslint-disable-next-line no-undef
           alert(error);
         }),
-    [dispatch, formData, validate],
+    [dispatch, formData, validate, setFormErrors],
   );
 
   const focusHandler = useCallback(
     (target) => {
       setFormErrors((prevErrors) => validate(target, formData, prevErrors));
     },
-    [validate, formData],
+    [validate, formData, setFormErrors],
   );
 
   const setPrivacyPolicyChecked = () => {
@@ -85,7 +86,7 @@ const SignUpInfo = (props) => {
       email: social?.email,
       avatar: social?.avatar,
     }));
-  }, [social]);
+  }, [social, setFormData]);
 
   useEffect(() => {
     if (social) {
@@ -121,7 +122,7 @@ const SignUpInfo = (props) => {
     } else {
       setNotReadySubmit(true);
     }
-  }, [formData, formErrors]);
+  }, [formData, formErrors, social, setNotReadySubmit]);
 
   return (
     <div className="fullDiv">
