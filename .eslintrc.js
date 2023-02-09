@@ -47,7 +47,7 @@ module.exports = {
     'no-continue': 'off',
     'prefer-destructuring': 'off',
     'import/no-extraneous-dependencies': 'off',
-    'react-hooks/exhaustive-deps': 'warn',
+    'react-hooks/exhaustive-deps': 'error',
     'react/forbid-prop-types': 'off',
     'prefer-promise-reject-errors': 'off',
     'no-debugger': 'off',

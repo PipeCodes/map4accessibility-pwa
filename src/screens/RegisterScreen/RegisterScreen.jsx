@@ -85,7 +85,7 @@ const RegisterScreen = (props) => {
     if (user && history) {
       history.replace(routes.LOGIN.path);
     }
-  }, [user, history]);
+  }, [user, history, routes.LOGIN.path]);
 
   const changePage = (value) => {
     setPage((currPage) => currPage + value);
@@ -148,7 +148,6 @@ const RegisterScreen = (props) => {
         break;
 
       default:
-        console.log('Field does not exist');
         break;
     }
 
@@ -184,6 +183,7 @@ const RegisterScreen = (props) => {
           history.push(routes.REGISTER_OPTIONS.path);
         })
         .catch((error) => {
+          // eslint-disable-next-line no-undef
           alert(error);
         });
     } else {
@@ -202,6 +202,7 @@ const RegisterScreen = (props) => {
           history.push(routes.EMAIL_VALIDATION.path);
         })
         .catch((error) => {
+          // eslint-disable-next-line no-undef
           alert(error);
         });
     }

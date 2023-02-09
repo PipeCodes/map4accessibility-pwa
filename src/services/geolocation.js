@@ -1,5 +1,6 @@
 export const getCurrentLocation = () =>
   new Promise((resolve, reject) => {
+    // eslint-disable-next-line no-undef
     navigator.geolocation.getCurrentPosition(
       (position) => {
         const coordinates = {

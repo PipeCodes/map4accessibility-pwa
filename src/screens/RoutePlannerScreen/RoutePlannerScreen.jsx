@@ -70,6 +70,7 @@ const RoutePlannerScreen = (props) => {
           }
         }
       })
+      // eslint-disable-next-line no-undef
       .catch((error) => alert(error));
   });
 

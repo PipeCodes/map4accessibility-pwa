@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import { LoginSocialGoogle, LoginSocialFacebook } from 'reactjs-social-login';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
@@ -13,7 +13,7 @@ const SocialLogin = ({ history, routes }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
-  const registerClickHandler = useCallback((provider, data) => {
+  const registerClickHandler = (provider, data) => {
     if (data === undefined && data === null) {
       return;
     }
@@ -41,7 +41,7 @@ const SocialLogin = ({ history, routes }) => {
         },
       });
     }
-  });
+  };
   return (
     <>
       <LoginSocialFacebook
@@ -55,7 +55,7 @@ const SocialLogin = ({ history, routes }) => {
           );
         }}
         onReject={(err) => {
-          console.log(err);
+          alert(err);
         }}
       >
         <CustomButton
@@ -81,7 +81,7 @@ const SocialLogin = ({ history, routes }) => {
           );
         }}
         onReject={(err) => {
-          console.log(err);
+          alert(err);
         }}
       >
         <CustomButton

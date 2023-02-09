@@ -29,7 +29,7 @@ const SearchBar = ({
     } else {
       return history.goBack();
     }
-  }, [searchData]);
+  }, [searchData, history, setSearchData]);
 
   const openAccessibility = useCallback(() => {
     history.push(routes.ACCESSIBILITY.path);

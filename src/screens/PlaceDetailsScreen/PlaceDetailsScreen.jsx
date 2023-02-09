@@ -72,6 +72,7 @@ const PlaceDetailsScreen = (props) => {
         }
       } else {
         dispatch(getPlace(params?.id)).catch(() => {
+          // eslint-disable-next-line no-undef
           alert(t('no_place'));
           dispatch(history.goBack());
         });
@@ -101,14 +102,17 @@ const PlaceDetailsScreen = (props) => {
   };
 
   const markPlaceAsClosed = () => {
+    // eslint-disable-next-line no-undef
     const confirmPopUp = confirm(t('are_you_sure'));
     if (confirmPopUp) {
       dispatch(deletePlace(user?.id, place.id))
         .then(() => {
+          // eslint-disable-next-line no-undef
           alert(t('request_sent_delete_place'));
           dispatch(getPlace(params.id));
         })
         .catch(() => {
+          // eslint-disable-next-line no-undef
           alert(t('problem_request_delete_place'));
         });
     }

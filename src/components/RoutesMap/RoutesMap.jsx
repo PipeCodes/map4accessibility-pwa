@@ -37,7 +37,6 @@ const Map = (props) => {
 
   // Map and route colours options
   const [map, setMap] = useState(/** @type google.maps.Map */ (null));
-  const directionsService = new google.maps.DirectionsService(); // Direction Service
   const polylineOptions = useCallback(
     (index) => {
       if (index === selectedRoute) {
@@ -68,11 +67,14 @@ const Map = (props) => {
   // Using Dirtections Service gets directions for current origin and destination
   const setDirections = useCallback(
     (originRoute, destinationRoute) => {
+      // eslint-disable-next-line no-undef
+      const directionsService = new google.maps.DirectionsService(); // Direction Service
       setGeneratingRoutes(true);
       directionsService
         .route({
           origin: originRoute,
           destination: destinationRoute,
+          // eslint-disable-next-line no-undef
           travelMode: google.maps.TravelMode.WALKING,
           provideRouteAlternatives: true,
         })
@@ -110,7 +112,9 @@ const Map = (props) => {
 
                 // Sets up route polyline and isLocationOnEdge function
                 const isLocationOnEdge =
+                  // eslint-disable-next-line no-undef
                   google.maps.geometry.poly.isLocationOnEdge;
+                // eslint-disable-next-line no-undef
                 const routePoly = new google.maps.Polyline({
                   path: route.overview_path,
                 });
@@ -124,6 +128,7 @@ const Map = (props) => {
                 markersList.forEach((marker) => {
                   // Checks if the marker is 2m around each point of the route
                   const check = isLocationOnEdge(
+                    // eslint-disable-next-line no-undef
                     new google.maps.LatLng(marker.latitude, marker.longitude),
                     routePoly,
                     0.0002,
@@ -173,7 +178,7 @@ const Map = (props) => {
           });
         });
     },
-    [directionsService, dispatch],
+    [dispatch],
   );
 
   // If there are loaded routes sets Generating routes to false
