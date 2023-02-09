@@ -54,7 +54,6 @@ export const getPlace = (id) => async (dispatch) => {
 
 // Gets Single Place by ID
 export const getMorePlaceInfo = (id) => async (dispatch) => {
-  // dispatch({ type: GET_PLACE_START });
   const queryParams = {
     id,
   };
@@ -156,7 +155,7 @@ export const getPlacesCountry = (country, order) => async (dispatch) => {
     if (statusCode === HTTP_STATUS.SUCCESS) {
       dispatch({
         type: GET_PLACES_RANKING_SUCCESS,
-        ranking: response.data?.result.data ?? [],
+        ranking: response.data?.result[0] ?? [],
       });
     }
   } catch (error) {
@@ -209,7 +208,7 @@ export const getPlacesByLocation = (order, radius) => async (dispatch) => {
 // Gets Markers Around Coordinates
 export const getPlacesRadiusMarkers =
   (latitude, longitude, radius) => async (dispatch) => {
-    dispatch({ type: GET_PLACES_RANKING_START });
+    dispatch({ type: GET_PLACE_START });
     const queryParams = {
       latitude: parseFloat(latitude),
       longitude: parseFloat(longitude),
@@ -232,6 +231,7 @@ export const getPlacesRadiusMarkers =
       const response = await axios.get(url, config);
       const statusCode = response.status;
       if (statusCode === HTTP_STATUS.SUCCESS) {
+        dispatch({ type: GET_PLACE_SUCCESS });
         return response.data?.result[0] ?? [];
       }
     } catch (error) {

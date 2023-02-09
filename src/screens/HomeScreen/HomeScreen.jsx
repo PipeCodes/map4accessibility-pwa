@@ -57,7 +57,6 @@ const HomeScreen = (props) => {
             negative={sums?.negative || 0}
             accepted={sums?.accepted || 0}
             rejected={sums?.rejected || 0}
-            pending={sums?.pending || 0}
             comments={myEvaluations}
           />
           <LatestComments myComments comments={myEvaluations} />
