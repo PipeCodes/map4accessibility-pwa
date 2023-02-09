@@ -52,6 +52,7 @@ export const login = (email, password) => async (dispatch) => {
 export const logout = () => (dispatch) => {
   dispatch({ type: LOGOUT });
   clearLocalStorage();
+  // eslint-disable-next-line no-undef
   window.location.replace(`${process.env.REACT_APP_URL}/`);
 };
 
@@ -245,6 +246,7 @@ export const updateProfile =
     dispatch({
       type: UPDATE_USER_START,
     });
+    // eslint-disable-next-line no-undef
     const body = new FormData();
     body.append('name', firstName);
     body.append('surname', surname);

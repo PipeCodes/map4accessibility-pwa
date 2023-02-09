@@ -58,6 +58,7 @@ const LoginScreen = (props) => {
   // ClickHandlers
   const loginClickHandler = useCallback(() => {
     dispatch(login(formData.email, formData.password)).catch((error) => {
+      // eslint-disable-next-line no-undef
       alert(error);
     });
   }, [dispatch, formData]);

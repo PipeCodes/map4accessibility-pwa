@@ -45,6 +45,7 @@ const RankingScreen = (props) => {
     const radius = 5000; // Default radius for location, needs to be discussed and set in another place
     if (sliderActive) {
       dispatch(getPlacesByLocation(order, radius)).catch((error) =>
+        // eslint-disable-next-line no-undef
         alert(error),
       );
     } else if (country) {

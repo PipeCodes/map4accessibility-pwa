@@ -95,6 +95,7 @@ const RatePlaceScreen = (props) => {
         }
       } else {
         dispatch(getPlace(params?.id)).catch(() => {
+          // eslint-disable-next-line no-undef
           alert(t('no_place'));
           dispatch(history.goBack());
         });
@@ -121,10 +122,12 @@ const RatePlaceScreen = (props) => {
             );
           })
           .catch((err) => {
+            // eslint-disable-next-line no-undef
             alert(err);
           });
       },
       error(err) {
+        // eslint-disable-next-line no-undef
         alert(err.message);
       },
     });
@@ -144,6 +147,7 @@ const RatePlaceScreen = (props) => {
         );
       })
       .catch((err) => {
+        // eslint-disable-next-line no-undef
         alert(err);
       });
   };
@@ -192,7 +196,8 @@ const RatePlaceScreen = (props) => {
           }
         })
         .catch((err) => {
-          console.log(err);
+          // eslint-disable-next-line no-undef
+          alert.log(err);
         });
     }
   };

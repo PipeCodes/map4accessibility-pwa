@@ -88,7 +88,9 @@ export const getMorePlaceInfo = (id) => async (dispatch) => {
 export const getGooglePlace = (id) => async (dispatch) => {
   dispatch({ type: GET_PLACE_START });
 
+  // eslint-disable-next-line no-undef
   const service = new google.maps.places.PlacesService(
+    // eslint-disable-next-line no-undef
     document.createElement('div'),
   );
   service.getDetails({ placeId: id }, (place) => {

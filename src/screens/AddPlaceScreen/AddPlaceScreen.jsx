@@ -68,10 +68,13 @@ const AddPlaceScreen = (props) => {
 
   useEffect(() => {
     if (isLoaded && state) {
+      // eslint-disable-next-line no-undef
       const latlng = new google.maps.LatLng(state.lat, state.lng);
+      // eslint-disable-next-line no-undef
       new google.maps.Geocoder().geocode(
         { latLng: latlng },
         (results, status) => {
+          // eslint-disable-next-line no-undef
           if (status === google.maps.GeocoderStatus.OK) {
             const response = getCountryCity(results);
             setCoutry(response.country);
@@ -107,10 +110,12 @@ const AddPlaceScreen = (props) => {
             history.push('/rate-place/'.concat(id));
           })
           .catch((err) => {
+            // eslint-disable-next-line no-undef
             alert(err);
           });
       },
       error(err) {
+        // eslint-disable-next-line no-undef
         alert(err);
       },
     });
@@ -122,6 +127,7 @@ const AddPlaceScreen = (props) => {
         history.push('/rate-place/'.concat(id));
       })
       .catch((err) => {
+        // eslint-disable-next-line no-undef
         alert(err);
       });
   };
@@ -145,6 +151,7 @@ const AddPlaceScreen = (props) => {
           }
         })
         .catch((err) => {
+          // eslint-disable-next-line no-undef
           alert(err);
         });
     }

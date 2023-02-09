@@ -40,6 +40,7 @@ const RecoverPasswordScreen = (props) => {
     dispatch(recoverPassword(formData.email))
       .then(() => history.push(routes.RECOVER_EMAIL.path))
       .catch((error) => {
+        // eslint-disable-next-line no-undef
         alert(error);
       });
   }, [dispatch, formData.email, history, routes]);
@@ -77,6 +78,7 @@ const RecoverPasswordScreen = (props) => {
         });
       })
       .catch((error) => {
+        // eslint-disable-next-line no-undef
         alert(error);
       });
   };
