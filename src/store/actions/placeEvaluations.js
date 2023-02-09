@@ -16,9 +16,10 @@ import {
 // Gets the user's place Evaluations
 export const getMyPlaceEvaluations = () => async (dispatch) => {
   dispatch({ type: GET_PLACE_EVALUATIONS_START });
+
   const queryParams = {
     page: 1,
-    size: 100,
+    size: 1000,
   };
   const url = generatePath(
     Endpoints.MY_PLACE_EVALUTATIONS.concat('?page=:page&size=:size'),

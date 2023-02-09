@@ -37,6 +37,15 @@ export const Container = styled.div`
     flex-direction: column;
     align-items: center;
   }
+
+  .spinner {
+    z-index: 1;
+    position: absolute;
+    margin: auto;
+    align-self: center;
+    height: 50px;
+    width: 50px;
+  }
 `;
 
 export const ButtonsContainer = styled.div`

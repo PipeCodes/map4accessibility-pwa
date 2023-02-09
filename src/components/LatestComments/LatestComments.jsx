@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import buttonUp from '../../assets/icons/places/like.svg';
 import buttonDown from '../../assets/icons/places/dislike.svg';
-import Pending from '../../assets/icons/maps/pending.svg';
 import Rejected from '../../assets/icons/maps/rejected.svg';
 import Accepted from '../../assets/icons/maps/accepted.svg';
 import Avatar from '../../assets/images/avatarDefault.png';
@@ -56,8 +55,6 @@ const LatestComments = (props) => {
 
   const renderState = (param) => {
     switch (param) {
-      case 'pending':
-        return <img src={Pending} alt="pending" />;
       case 'accepted':
         return <img src={Accepted} alt="accepted" />;
       case 'rejected':

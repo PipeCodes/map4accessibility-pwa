@@ -7,6 +7,7 @@ import {
   GoogleMap,
   MarkerClusterer,
 } from '@react-google-maps/api';
+import { Spinner } from 'react-bootstrap';
 import { debounce } from '../../helpers/utils';
 import {
   getPlacesRadiusMarkers,
@@ -68,6 +69,7 @@ const MapScreen = (props) => {
 
   // Gets place from reducer
   const place = useSelector((state) => state.place.place);
+  const loading = useSelector((state) => state.place.loading);
 
   // Place pop-up
   const [popUp, setPopUp] = useState(false);
@@ -236,6 +238,9 @@ const MapScreen = (props) => {
               maxWidth: '820px',
             }}
           >
+            {loading && (
+              <Spinner animation="border" variant="dark" className="spinner" />
+            )}
             <GoogleMap
               mapContainerStyle={containerStyle}
               center={location}

@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Autocomplete, useJsApiLoader } from '@react-google-maps/api';
 import { withRouter } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { Spinner } from 'react-bootstrap';
 import AccessibilityIcon from '../../assets/icons/accessibility.svg';
 import BackIcon from '../../assets/icons/back.svg';
 import LocationIcon from '../../assets/icons/maps/location.svg';
@@ -49,7 +50,7 @@ const RoutePlannerScreen = (props) => {
 
   // Gets place from reducer
   const place = useSelector((state) => state.place.place);
-
+  const loading = useSelector((state) => state.place.loading);
   const routesMap = useSelector((state) => state.directions.routes);
   const [userLocation, setUserLocation] = useState(null);
   const [origin, setOrigin] = useState(null);
@@ -151,6 +152,9 @@ const RoutePlannerScreen = (props) => {
         </AccessibilityButton>
       </TopContainer>
       <Container>
+        {loading && (
+          <Spinner animation="border" variant="dark" className="spinner" />
+        )}
         <RoutesMap
           origin={origin}
           destination={destination}

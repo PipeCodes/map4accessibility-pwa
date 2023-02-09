@@ -19,6 +19,16 @@ export const Container = styled.div`
   z-index: 54;
   width: 100%;
   height: 100%;
+
+  .spinner {
+    z-index: 1;
+    position: absolute;
+    margin: auto;
+    align-self: center;
+    height: 50px;
+    width: 50px;
+    margin-top: 100px;
+  }
 `;
 
 export const Map = styled.div`

@@ -49,7 +49,7 @@ export const BoxWrapper = styled.div`
 `;
 
 export const Box = styled.span`
-  margin-right: 75px;
+  width: 150px;
 `;
 
 export const Line = styled.div`
