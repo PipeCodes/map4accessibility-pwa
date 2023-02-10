@@ -1,6 +1,8 @@
 import {
   GET_PLACE_START,
   GET_PLACE_SUCCESS,
+  GET_MARKERS_START,
+  GET_MARKERS_SUCCESS,
   GET_MORE_PLACE_INFO,
   GET_PLACE_ERROR,
   POST_PLACE_START,
@@ -44,6 +46,16 @@ const placeReducer = (state = initialState, action) => {
         loading: false,
       };
     case POST_PLACE_ERROR:
+      return {
+        ...state,
+        loading: false,
+      };
+    case GET_MARKERS_START:
+      return {
+        ...state,
+        loading: true,
+      };
+    case GET_MARKERS_SUCCESS:
       return {
         ...state,
         loading: false,
