@@ -6,7 +6,7 @@ import buttonDown from '../../assets/icons/places/dislike.svg';
 import Rejected from '../../assets/icons/maps/rejected.svg';
 import Accepted from '../../assets/icons/maps/accepted.svg';
 import Avatar from '../../assets/images/avatarDefault.png';
-import { getFirstImage } from '../../helpers/utils';
+import { getFirstImage, storageUrl } from '../../helpers/utils';
 import {
   Container,
   Title,
@@ -149,8 +149,8 @@ const LatestComments = (props) => {
                   {comment?.app_user?.avatar ? (
                     <Image
                       src={process.env.REACT_APP_EXTERNAL_LINKS_BASE.concat(
-                        `/${comment?.app_user?.avatar}`,
-                      )}
+                        storageUrl(comment?.app_user?.avatar),
+                      ).concat(`/${comment?.app_user?.avatar}`)}
                     />
                   ) : (
                     <Image src={Avatar} />
