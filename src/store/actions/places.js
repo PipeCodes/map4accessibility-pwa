@@ -7,6 +7,8 @@ import {
   GET_PLACES_RANKING_ERROR,
   GET_PLACE_START,
   GET_PLACE_SUCCESS,
+  GET_MARKERS_START,
+  GET_MARKERS_SUCCESS,
   GET_PLACE_ERROR,
   POST_PLACE_START,
   POST_PLACE_SUCCESS,
@@ -210,7 +212,7 @@ export const getPlacesByLocation = (order, radius) => async (dispatch) => {
 // Gets Markers Around Coordinates
 export const getPlacesRadiusMarkers =
   (latitude, longitude, radius) => async (dispatch) => {
-    dispatch({ type: GET_PLACE_START });
+    dispatch({ type: GET_MARKERS_START });
     const queryParams = {
       latitude: parseFloat(latitude),
       longitude: parseFloat(longitude),
@@ -233,7 +235,7 @@ export const getPlacesRadiusMarkers =
       const response = await axios.get(url, config);
       const statusCode = response.status;
       if (statusCode === HTTP_STATUS.SUCCESS) {
-        dispatch({ type: GET_PLACE_SUCCESS });
+        dispatch({ type: GET_MARKERS_SUCCESS });
         return response.data?.result[0] ?? [];
       }
     } catch (error) {
