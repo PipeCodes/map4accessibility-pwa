@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
   <head>
     <meta charset="utf-8" />
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
@@ -84,6 +84,7 @@
       src="https://www.googletagmanager.com/gtag/js?id=G-J3SNC3XDFL"
     ></script>
     <script>
+      document.documentElement.setAttribute('lang', navigator.language);
       window.dataLayer = window.dataLayer || [];
       function gtag() {
         dataLayer.push(arguments);

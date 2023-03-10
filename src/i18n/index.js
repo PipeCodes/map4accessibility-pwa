@@ -31,9 +31,11 @@ i18n
   .init({
     resources,
     fallbackLng: 'en-GB',
+    detection: {
+      order: ['navigator'],
+      caches: [],
+    },
     debug: false,
   });
-
-i18n.changeLanguage('en-GB');
 
 export default i18n;
