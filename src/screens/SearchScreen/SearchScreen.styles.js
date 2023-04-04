@@ -22,6 +22,19 @@ export const Container = styled.div`
   margin-top: 30px;
 `;
 
+export const HeaderWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+export const HeaderText = styled.span`
+  font-size: ${(props) => updateFontSize(22, props.fontSize)};
+  font-family: ${(props) => updateValue('EasyReadingPro-Bold', props.font)};
+  color: ${colors.primaryTextColor};
+  margin-bottom: 10px;
+  align-self: start;
+`;
+
 export const Text = styled.span`
   font-size: ${(props) => updateFontSize(20, props.fontSize)};
   font-family: ${(props) => updateValue('EasyReadingPro-Bold', props.font)};
@@ -79,6 +92,10 @@ export const Filter = styled.div`
     &.active {
       border: 1px solid ${colors.primaryTextColor};
       background: ${colors.background};
+    }
+
+    &.tall-btn {
+      height: 55px;
     }
 
     img {
