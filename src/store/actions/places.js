@@ -364,12 +364,6 @@ export const getPlaceByParams = (params) => async (dispatch) => {
   if (placeType) Object.assign(queryParams, { place_type: placeType });
   if (disabilityType)
     Object.assign(queryParams, { disabilities: disabilityType });
-  if (name && placeType && disabilityType)
-    Object.assign(queryParams, {
-      name,
-      place_type: placeType,
-      disabilities: disabilityType,
-    });
 
   const config = {
     headers: {
@@ -377,7 +371,7 @@ export const getPlaceByParams = (params) => async (dispatch) => {
     },
   };
   const url = generatePath(
-    Endpoints.PLACES.concat(concatPlacesRequest(params)),
+    Endpoints.PLACES.concat(concatPlacesRequest(queryParams)),
     queryParams,
   );
 
