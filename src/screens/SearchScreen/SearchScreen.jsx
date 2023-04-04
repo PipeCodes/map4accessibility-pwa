@@ -12,6 +12,7 @@ import {
   Filter,
   HeaderText,
   HeaderWrapper,
+  DisabilityFilters,
 } from './SearchScreen.styles';
 import { getPlaceByParams, resetPlaceState } from '../../store/actions/places';
 
@@ -125,7 +126,7 @@ const SearchScreen = ({ history, routes }) => {
             )}
           </FiltersContainer>
         </SearchFilters>
-        <SearchFilters>
+        <DisabilityFilters>
           <HeaderText fontSize={fontSize} font={font}>
             {t('disability_types')}
           </HeaderText>
@@ -160,7 +161,7 @@ const SearchScreen = ({ history, routes }) => {
               ),
             )}
           </FiltersContainer>
-        </SearchFilters>
+        </DisabilityFilters>
         {loading && <Spinner animation="border" variant="dark" />}
         {searchData && (
           <PlacesList

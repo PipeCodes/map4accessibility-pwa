@@ -64,6 +64,13 @@ export const SearchFilters = styled.div`
   margin-top: 30px;
 `;
 
+export const DisabilityFilters = styled.div`
+  padding: 20px 15px;
+  background: ${colors.white};
+  width: 100%;
+  border-top: 1px solid ${colors.background};
+`;
+
 export const FiltersContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
