@@ -150,5 +150,7 @@
   "no_place": "Place doesn't exist anymore.",
   "are_you_sure": "A request is going to be sent! Are you sure?",
   "view_more": "View more",
-  "show_more": "Show More"
+  "show_more": "Show More",
+  "place_types": "Place types",
+  "disability_types": "Disability types"
 }

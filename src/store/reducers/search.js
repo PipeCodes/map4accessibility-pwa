@@ -2,14 +2,16 @@ import {
   SEARCH_SET_TEXT,
   SEARCH_SET_TYPE,
   SEARCH_CLEAN,
+  SEARCH_SET_DISABILITY,
 } from '../actions/types';
 
 const initialState = {
   text: null,
-  place_type: null,
+  placeType: null,
+  disabilityType: null,
 };
 
-const questionsReducer = (state = initialState, action) => {
+const searchReducer = (state = initialState, action) => {
   switch (action.type) {
     case SEARCH_SET_TEXT:
       return {
@@ -20,6 +22,11 @@ const questionsReducer = (state = initialState, action) => {
       return {
         ...state,
         placeType: action.value,
+      };
+    case SEARCH_SET_DISABILITY:
+      return {
+        ...state,
+        disabilityType: action.value,
       };
     case SEARCH_CLEAN:
       return {
@@ -32,4 +39,4 @@ const questionsReducer = (state = initialState, action) => {
   }
 };
 
-export default questionsReducer;
+export default searchReducer;

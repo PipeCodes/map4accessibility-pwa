@@ -356,14 +356,14 @@ const concatPlacesRequest = (params) =>
     .join('&');
 
 export const getPlaceByParams = (params) => async (dispatch) => {
-  const { name, placeType } = params;
+  const { name, placeType, disabilityType } = params;
   dispatch({ type: GET_PLACE_START });
   const queryParams = {};
 
   if (name) Object.assign(queryParams, { name });
   if (placeType) Object.assign(queryParams, { place_type: placeType });
-  if (name && placeType)
-    Object.assign(queryParams, { name, place_type: placeType });
+  if (disabilityType)
+    Object.assign(queryParams, { disabilities: disabilityType });
 
   const config = {
     headers: {
@@ -371,7 +371,7 @@ export const getPlaceByParams = (params) => async (dispatch) => {
     },
   };
   const url = generatePath(
-    Endpoints.PLACES.concat(concatPlacesRequest(params)),
+    Endpoints.PLACES.concat(concatPlacesRequest(queryParams)),
     queryParams,
   );
 
