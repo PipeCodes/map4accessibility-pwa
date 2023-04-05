@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useJsApiLoader } from '@react-google-maps/api';
 import moment from 'moment';
-import ThumbsUp from '../../assets/icons/maps/up.svg';
 import Pin from '../../assets/icons/places/details/pin.svg';
 import Phone from '../../assets/icons/places/details/phone.svg';
 import Clock from '../../assets/icons/places/details/clock.svg';
@@ -12,7 +11,9 @@ import Email from '../../assets/icons/places/details/email.svg';
 import Pointer from '../../assets/icons/places/details/mouse-pointer.svg';
 import Path from '../../assets/icons/places/details/path.svg';
 import Comment from '../../assets/icons/places/comment.svg';
+import ThumbsUp from '../../assets/icons/maps/up.svg';
 import ThumbsDown from '../../assets/icons/maps/down.svg';
+import Neutral from '../../assets/icons/places/neutral.svg';
 import {
   Page,
   Container,
@@ -37,7 +38,7 @@ import LatestComments from '../../components/LatestComments/LatestComments';
 
 import { storePlace } from '../../store/actions/history';
 import { getMedia, isDefined } from '../../helpers/utils';
-import { GOOGLE_MAPS_OPTIONS } from '../../constants';
+import { ACCESSIBILITY, GOOGLE_MAPS_OPTIONS } from '../../constants';
 import QuestionPopUp from '../../components/QuestionsPopUp/QuestionsPopUp';
 
 const PlaceDetailsScreen = (props) => {
@@ -137,14 +138,27 @@ const PlaceDetailsScreen = (props) => {
     );
     if (sortedComments?.length) {
       if (sortedComments[0].thumb_direction) {
-        setIsAccessible(true);
+        setIsAccessible(ACCESSIBILITY.ACCESSIBLE);
         return t('accessible');
       }
-      setIsAccessible(false);
+      setIsAccessible(ACCESSIBILITY.NOT_ACCESSIBLE);
       return t('not_accessible');
     }
     return '';
   }, [place, t]);
+
+  const getAccessibilityColor = useMemo(() => {
+    switch (isAccessible) {
+      case ACCESSIBILITY.ACCESSIBLE:
+        return 'accessible';
+      case ACCESSIBILITY.NOT_ACCESSIBLE:
+        return 'not-accessible';
+      case ACCESSIBILITY.NEUTRAL:
+        return 'neutral';
+      default:
+        break;
+    }
+  }, [isAccessible]);
 
   return (
     <Page backgroundColor={backgroundColor}>
@@ -177,13 +191,15 @@ const PlaceDetailsScreen = (props) => {
               )}
             </TextWrapper>
             <Accessible fontSize={fontSize}>
-              <span className={isAccessible ? 'accessible' : 'not-accessible'}>
-                {getAccessibility}
-              </span>
+              <span className={getAccessibilityColor}>{getAccessibility}</span>
               <div>
                 <span className="up">
                   <img src={ThumbsUp} alt={t('positive')} />{' '}
                   {place?.thumbs_up_count || 0}
+                </span>
+                <span className="neutral ms-2">
+                  <img src={Neutral} alt={t('neutral')} />{' '}
+                  {place?.neutral_count || 0}
                 </span>
                 <span className="down ms-2">
                   <img src={ThumbsDown} alt={t('negative')} />{' '}

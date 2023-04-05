@@ -45,3 +45,9 @@ export const GOOGLE_MAPS_OPTIONS = {
   googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
   libraries: ['places', 'geometry'],
 };
+
+export const ACCESSIBILITY = {
+  ACCESSIBLE: 'ACCESSIBLE',
+  NOT_ACCESSIBLE: 'NOT_ACCESSIBLE',
+  NEUTRAL: 'NEUTRAL',
+};

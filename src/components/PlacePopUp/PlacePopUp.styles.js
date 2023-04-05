@@ -87,6 +87,9 @@ export const Accessible = styled.div`
   .not-accessible {
     color: ${colors.red};
   }
+  .neutral {
+    color: ${colors.orange};
+  }
 
   text-align: right;
 
@@ -95,6 +98,12 @@ export const Accessible = styled.div`
   }
   .down {
     color: ${colors.red};
+  }
+  .neutral {
+    color: ${colors.orange};
+    img {
+      width: 12px;
+    }
   }
 `;
 

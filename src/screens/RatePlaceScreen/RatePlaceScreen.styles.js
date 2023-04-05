@@ -84,7 +84,7 @@ export const Text = styled.span`
 export const Vote = styled.div`
   display: flex;
   align-items: center;
-  gap: 60px;
+  gap: 20px;
 `;
 
 export const ThumbsUp = styled.div`
@@ -93,6 +93,8 @@ export const ThumbsUp = styled.div`
   padding: 6px;
   border: ${(props) => (props.thumbs === 1 ? '1px solid green' : 'none')};
   border-radius: 8px;
+  width: 110px;
+  text-align: center;
 
   img {
     cursor: pointer;
@@ -106,12 +108,43 @@ export const ThumbsUp = styled.div`
   }
 `;
 
+export const Neutral = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 6px;
+  border: ${(props) =>
+    props.thumbs === 2 ? `1px solid ${colors.orange}` : 'none'};
+  border-radius: 8px;
+  width: 110px;
+  text-align: center;
+  align-items: center;
+
+  img {
+    cursor: pointer;
+    max-height: 50px;
+    max-width: 50px;
+    background: white;
+    border: 1px solid ${colors.orange};
+    border-radius: 4px;
+    padding: 12px;
+  }
+  span {
+    color: ${colors.orange};
+    margin-top: 5px;
+    font-size: ${(props) => updateFontSize(14, props.fontSize)};
+    font-family: ${(props) => updateValue('EasyReadingPro', props.font)};
+  }
+`;
+
 export const ThumbsDown = styled.div`
   display: flex;
   flex-direction: column;
   padding: 6px;
   border: ${(props) => (props.thumbs === 0 ? '1px solid red' : 'none')};
   border-radius: 8px;
+  width: 110px;
+  text-align: center;
+
   img {
     cursor: pointer;
     max-height: 50px;
