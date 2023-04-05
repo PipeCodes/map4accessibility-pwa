@@ -99,6 +99,12 @@ export const Accessible = styled.div`
   .down {
     color: ${colors.red};
   }
+  .neutral {
+    color: ${colors.orange};
+    img {
+      width: 12px;
+    }
+  }
 `;
 
 export const TextWrapper = styled.div`

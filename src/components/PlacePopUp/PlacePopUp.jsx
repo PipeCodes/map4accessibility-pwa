@@ -5,14 +5,15 @@ import moment from 'moment';
 import ArrowRight from '../../assets/icons/arrow-right-colored.svg';
 import x from '../../assets/icons/close-colored.svg';
 import placeholder from '../../assets/images/photo-stock-1.png';
-import ThumbsUp from '../../assets/icons/maps/up.svg';
 import Pin from '../../assets/icons/places/details/pin.svg';
 import Phone from '../../assets/icons/places/details/phone.svg';
 import Clock from '../../assets/icons/places/details/clock.svg';
 import Email from '../../assets/icons/places/details/email.svg';
 import Pointer from '../../assets/icons/places/details/mouse-pointer.svg';
 import Path from '../../assets/icons/places/details/path.svg';
+import ThumbsUp from '../../assets/icons/maps/up.svg';
 import ThumbsDown from '../../assets/icons/maps/down.svg';
+import Neutral from '../../assets/icons/places/neutral.svg';
 import {
   PopUp,
   DarkOverlayContainer,
@@ -126,6 +127,10 @@ const PlacePopUpComponent = (props) => {
                     <span className="up">
                       <img src={ThumbsUp} alt={t('positive')} />{' '}
                       {place?.thumbs_up_count || 0}
+                    </span>
+                    <span className="neutral ms-2">
+                      <img src={Neutral} alt={t('neutral')} />{' '}
+                      {place?.neutral_count || 0}
                     </span>
                     <span className="down ms-2">
                       <img src={ThumbsDown} alt={t('negative')} />{' '}
