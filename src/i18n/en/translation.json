@@ -108,6 +108,7 @@
   "rate_place": "How would you rate this place?",
   "accessible": "Accessible",
   "not_accessible": "Not Accessible",
+  "neutral": "Neutral",
   "questions": "Questions",
   "submit": "Submit",
   "rate_error": "Please write a comment (Min 6 characters) and answer the questions",

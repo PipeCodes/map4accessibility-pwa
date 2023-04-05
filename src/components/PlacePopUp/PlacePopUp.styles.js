@@ -87,6 +87,9 @@ export const Accessible = styled.div`
   .not-accessible {
     color: ${colors.red};
   }
+  .neutral {
+    color: ${colors.orange};
+  }
 
   text-align: right;
 

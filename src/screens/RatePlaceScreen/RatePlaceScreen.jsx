@@ -29,11 +29,13 @@ import {
   Title,
   MediaLabel,
   Error,
+  Neutral,
 } from './RatePlaceScreen.styles';
 import TopBar from '../../components/TopBar/TopBar';
 import ImageSlider from '../../components/ImageSlider/ImageSlider';
 import buttonUp from '../../assets/icons/places/like.svg';
 import buttonDown from '../../assets/icons/places/dislike.svg';
+import buttonNeutral from '../../assets/icons/places/neutral.svg';
 import paperclipIcon from '../../assets/icons/paperclip.svg';
 import CustomButton from '../../components/CustomButton/CustomButton';
 import { getQuestions } from '../../store/actions/questions';
@@ -202,6 +204,10 @@ const RatePlaceScreen = (props) => {
     }
   };
 
+  const onClickNeutral = () => {
+    setAccessibility(2);
+  };
+
   const onClickThumbsUp = () => {
     setAccessibility(1);
   };
@@ -264,6 +270,15 @@ const RatePlaceScreen = (props) => {
             <img src={buttonUp} alt={t('accessible')} />
             <span>{t('accessible')}</span>
           </ThumbsUp>
+          <Neutral
+            fontSize={fontSize}
+            font={font}
+            thumbs={accessibility}
+            onClick={() => onClickNeutral()}
+          >
+            <img src={buttonNeutral} alt={t('neutral')} />
+            <span>{t('neutral')}</span>
+          </Neutral>
           <ThumbsDown
             fontSize={fontSize}
             font={font}

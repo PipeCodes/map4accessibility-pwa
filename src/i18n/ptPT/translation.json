@@ -108,6 +108,7 @@
   "rate_place": "Como avaliaria este local?",
   "accessible": "Acessivel",
   "not_accessible": "Não Acessivel",
+  "neutral": "Neutro",
   "questions": "Questões",
   "submit": "Enviar",
   "rate_error": "Escreva um comentário (Min 6 caracteres) e responda ás questões.",
