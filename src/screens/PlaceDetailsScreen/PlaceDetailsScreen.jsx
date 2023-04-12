@@ -137,12 +137,19 @@ const PlaceDetailsScreen = (props) => {
       (a, b) => moment(b.updated_at) - moment(a.updated_at),
     );
     if (sortedComments?.length) {
-      if (sortedComments[0].thumb_direction) {
-        setIsAccessible(ACCESSIBILITY.ACCESSIBLE);
-        return t('accessible');
+      switch (sortedComments[0].evaluation) {
+        case ACCESSIBILITY.ACCESSIBLE:
+          setIsAccessible(ACCESSIBILITY.ACCESSIBLE);
+          return t('accessible');
+        case ACCESSIBILITY.NOT_ACCESSIBLE:
+          setIsAccessible(ACCESSIBILITY.NOT_ACCESSIBLE);
+          return t('not_accessible');
+        case ACCESSIBILITY.NEUTRAL:
+          setIsAccessible(ACCESSIBILITY.NEUTRAL);
+          return t('neutral');
+        default:
+          break;
       }
-      setIsAccessible(ACCESSIBILITY.NOT_ACCESSIBLE);
-      return t('not_accessible');
     }
     return '';
   }, [place, t]);
@@ -195,7 +202,7 @@ const PlaceDetailsScreen = (props) => {
               <div>
                 <span className="up">
                   <img src={ThumbsUp} alt={t('positive')} />{' '}
-                  {place?.thumbs_up_count || 0}
+                  {place?.accessible_count || 0}
                 </span>
                 <span className="neutral ms-2">
                   <img src={Neutral} alt={t('neutral')} />{' '}
@@ -203,7 +210,7 @@ const PlaceDetailsScreen = (props) => {
                 </span>
                 <span className="down ms-2">
                   <img src={ThumbsDown} alt={t('negative')} />{' '}
-                  {place?.thumbs_down_count || 0}
+                  {place?.inaccessible_count || 0}
                 </span>
               </div>
             </Accessible>
@@ -240,9 +247,12 @@ const PlaceDetailsScreen = (props) => {
               </span>
             )}
             {place?.schedule &&
-              place?.schedule?.map((line) => <span>{line}</span>)}
+              place?.schedule?.map((line, key) => (
+                <span key={key}>{line}</span>
+              ))}
           </PlaceInformation>
           {place?.id &&
+            place?.place_deletion &&
             !(place?.place_deletion[0]?.status === 'closed') &&
             place?.place_deletion?.find(
               (request) => request.app_user_id === user.id,
@@ -251,12 +261,15 @@ const PlaceDetailsScreen = (props) => {
                 {t('marked_as_closed')}
               </Button>
             )}
-          {place?.id && place?.place_deletion[0]?.status === 'closed' && (
-            <Button fontSize={fontSize} font={font} className="closed">
-              {t('place_closed')}
-            </Button>
-          )}
           {place?.id &&
+            place?.place_deletion &&
+            place?.place_deletion[0]?.status === 'closed' && (
+              <Button fontSize={fontSize} font={font} className="closed">
+                {t('place_closed')}
+              </Button>
+            )}
+          {place?.id &&
+            place?.place_deletion &&
             !(place?.place_deletion[0]?.status === 'closed') &&
             !place?.place_deletion?.find(
               (request) => request.app_user_id === user.id,

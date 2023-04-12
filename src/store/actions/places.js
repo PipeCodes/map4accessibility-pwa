@@ -74,8 +74,9 @@ export const getMorePlaceInfo = (id) => async (dispatch) => {
         id,
         images: response.data?.result?.media_evaluations,
         evaluations: response.data?.result?.place_evaluations,
-        thumbs_down_count: response.data?.result?.thumbs_down_count,
-        thumbs_up_count: response.data?.result?.thumbs_up_count,
+        inaccessible_count: response.data?.result?.inaccessible_count,
+        accessible_count: response.data?.result?.accessible_count,
+        neutral_count: response.data?.result?.neutral_count,
       });
       return response.data?.result;
     }

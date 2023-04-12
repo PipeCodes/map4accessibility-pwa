@@ -64,7 +64,7 @@ const RatePlaceScreen = (props) => {
   const place = useSelector((state) => state.place.place);
 
   // Form Fields and Img input
-  const [accessibility, setAccessibility] = useState(1);
+  const [accessibility, setAccessibility] = useState(2);
   const commentRef = useRef();
   const inputRef = useRef(null);
   const [answers, setAnswers] = useState({});
@@ -204,11 +204,11 @@ const RatePlaceScreen = (props) => {
     }
   };
 
-  const onClickNeutral = () => {
+  const onClickThumbsUp = () => {
     setAccessibility(2);
   };
 
-  const onClickThumbsUp = () => {
+  const onClickNeutral = () => {
     setAccessibility(1);
   };
 

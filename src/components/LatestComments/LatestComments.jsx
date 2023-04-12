@@ -28,7 +28,7 @@ import {
 } from './LatestComments.styles';
 import { ACCESSIBILITY, IMAGE_TYPES } from '../../constants';
 
-const Thumbs = [buttonDown, buttonUp, buttonNeutral];
+const Thumbs = [buttonDown, buttonNeutral, buttonUp];
 
 const LatestComments = (props) => {
   const { comments, myComments, setPopUp } = props;
@@ -67,12 +67,12 @@ const LatestComments = (props) => {
 
   const getIcon = (key) => {
     switch (key) {
-      case false: // ACCESSIBILITY.NOT_ACCESSIBLE
+      case ACCESSIBILITY.NOT_ACCESSIBLE:
         return Thumbs[0];
-      case true: // ACCESSIBILITY.ACCESSIBLE
-        return Thumbs[1];
-      case ACCESSIBILITY.NEUTRAL:
+      case ACCESSIBILITY.ACCESSIBLE:
         return Thumbs[2];
+      case ACCESSIBILITY.NEUTRAL:
+        return Thumbs[1];
       default:
         break;
     }
@@ -80,9 +80,9 @@ const LatestComments = (props) => {
 
   const getLabel = (key) => {
     switch (key) {
-      case false: // ACCESSIBILITY.NOT_ACCESSIBLE
+      case ACCESSIBILITY.NOT_ACCESSIBLE:
         return t('not_accessible');
-      case true: // ACCESSIBILITY.ACCESSIBLE
+      case ACCESSIBILITY.ACCESSIBLE:
         return t('accessible');
       case ACCESSIBILITY.NEUTRAL:
         return t('neutral');
@@ -125,9 +125,9 @@ const LatestComments = (props) => {
                     <Status>{renderState(comment?.status)}</Status>
                   </Top>
                   <Accessible backgroundColor={backgroundColor}>
-                    <Icon src={getIcon(comment?.thumb_direction)} />
+                    <Icon src={getIcon(comment?.evaluation)} />
                     <Label fontSize={fontSize} font={font}>
-                      {getLabel(comment?.thumb_direction)}
+                      {getLabel(comment?.evaluation)}
                     </Label>
                   </Accessible>
                   <Box className={mediaType?.split('/', 1)}>
@@ -190,14 +190,14 @@ const LatestComments = (props) => {
                 <Accessible backgroundColor={backgroundColor}>
                   <Icon
                     className={`${
-                      comment?.thumb_direction === ACCESSIBILITY.NEUTRAL
+                      comment?.evaluation === ACCESSIBILITY.NEUTRAL
                         ? 'neutral-icon'
                         : ''
                     }`}
-                    src={getIcon(comment?.thumb_direction)}
+                    src={getIcon(comment?.evaluation)}
                   />
                   <Label fontSize={fontSize} font={font}>
-                    {getLabel(comment?.thumb_direction)}
+                    {getLabel(comment?.evaluation)}
                   </Label>
                 </Accessible>
                 <Box className={mediaType?.split('/', 1)}>
