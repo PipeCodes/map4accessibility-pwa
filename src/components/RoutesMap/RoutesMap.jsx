@@ -122,6 +122,7 @@ const Map = (props) => {
                 // Local Variables to sum verified results
                 let likes = 0;
                 let dislikes = 0;
+                let neutrals = 0;
                 const markersLocal = [];
 
                 // Iterates Markers
@@ -138,23 +139,29 @@ const Map = (props) => {
                   if (check) {
                     markersLocal.push(marker);
                     if (
-                      marker.thumbs_up_count !== null &&
-                      marker.thumbs_up_count !== undefined
+                      marker.accessible_count !== null &&
+                      marker.accessible_count !== undefined
                     ) {
-                      likes += marker.thumbs_up_count;
+                      likes += marker.accessible_count;
                     }
                     if (
-                      marker.thumbs_down_count !== null &&
-                      marker.thumbs_up_count !== undefined
+                      marker.neutral_count !== null &&
+                      marker.neutral_count !== undefined
                     ) {
-                      dislikes += marker.thumbs_down_count;
+                      neutrals += marker.neutral_count;
+                    }
+                    if (
+                      marker.inaccessible_count !== null &&
+                      marker.inaccessible_count !== undefined
+                    ) {
+                      dislikes += marker.inaccessible_count;
                     }
                   }
                 });
 
                 // Once all markers all markers for a route are checked the objects
                 // are pushed to the correpondent arrays
-                verifiedRatings[routeId] = { likes, dislikes };
+                verifiedRatings[routeId] = { likes, dislikes, neutrals };
                 verifiedMarkers[routeId] = markersLocal;
 
                 // If it has iterated all results the directions are saved with redux

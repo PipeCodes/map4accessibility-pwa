@@ -91,7 +91,7 @@ export const ThumbsUp = styled.div`
   display: flex;
   flex-direction: column;
   padding: 6px;
-  border: ${(props) => (props.thumbs === 1 ? '1px solid green' : 'none')};
+  border: ${(props) => (props.thumbs === 2 ? '1px solid green' : 'none')};
   border-radius: 8px;
   width: 110px;
   text-align: center;
@@ -113,7 +113,7 @@ export const Neutral = styled.div`
   flex-direction: column;
   padding: 6px;
   border: ${(props) =>
-    props.thumbs === 2 ? `1px solid ${colors.orange}` : 'none'};
+    props.thumbs === 1 ? `1px solid ${colors.orange}` : 'none'};
   border-radius: 8px;
   width: 110px;
   text-align: center;

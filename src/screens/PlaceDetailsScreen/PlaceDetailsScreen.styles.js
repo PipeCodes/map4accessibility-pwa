@@ -121,6 +121,7 @@ export const Accessible = styled.div`
   }
 
   text-align: right;
+  min-width: 100px;
 
   .up {
     color: ${colors.green};

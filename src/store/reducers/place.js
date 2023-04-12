@@ -71,8 +71,9 @@ const placeReducer = (state = initialState, action) => {
             action.images,
           ),
           place_evaluations: action.evaluations,
-          thumbs_down_count: action.thumbs_down_count,
-          thumbs_up_count: action.thumbs_up_count,
+          inaccessible_count: action.inaccessible_count,
+          accessible_count: action.accessible_count,
+          neutral_count: action.neutral_count,
         },
         loading: false,
       };

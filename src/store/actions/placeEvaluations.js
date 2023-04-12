@@ -75,7 +75,7 @@ export const postPlaceEvaluation =
   async (dispatch) => {
     dispatch({ type: POST_PLACE_EVALUATIONS_START });
     const body = {
-      thumb_direction: thumbDirection,
+      evaluation: thumbDirection,
       name,
       comment,
       questions_answers: answers,
