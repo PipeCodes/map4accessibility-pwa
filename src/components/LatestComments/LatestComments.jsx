@@ -90,7 +90,7 @@ const LatestComments = (props) => {
         break;
     }
   };
-  console.log(commentsList);
+
   return (
     <Container>
       <Title>{t('latest')}</Title>
