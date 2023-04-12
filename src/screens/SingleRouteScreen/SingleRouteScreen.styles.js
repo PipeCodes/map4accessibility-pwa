@@ -76,6 +76,11 @@ export const Rating = styled.div`
 export const Icon = styled.div`
   margin-right: 5px;
   align-self: flex-start;
+
+  .neutral {
+    color: ${colors.orange};
+    width: 12px;
+  }
 `;
 
 export const Number = styled.span`

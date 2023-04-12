@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { colors } from '../../constants/colors';
 import ThubsUpIcon from '../../assets/icons/maps/up.svg';
 import ThubsDownIcon from '../../assets/icons/maps/down.svg';
+import NeutralIcon from '../../assets/icons/places/neutral.svg';
 import { googleMapsLink } from '../../helpers/utils';
 import GoToIcon from '../../assets/icons/maps/goTo.svg';
 import RouteIcon from '../../assets/icons/maps/route.svg';
@@ -70,6 +71,12 @@ const SingleRouteScreen = (props) => {
               <img src={ThubsUpIcon} alt="Likes" />
             </Icon>
             <Number color={colors.green}>{route?.likes}</Number>
+          </Rating>
+          <Rating>
+            <Icon>
+              <img className="neutral" src={NeutralIcon} alt="Neutral" />
+            </Icon>
+            <Number color={colors.orange}>{route?.neutrals}</Number>
           </Rating>
           <Rating>
             <Icon>

@@ -90,7 +90,7 @@ const LatestComments = (props) => {
         break;
     }
   };
-
+  console.log(commentsList);
   return (
     <Container>
       <Title>{t('latest')}</Title>
@@ -125,7 +125,14 @@ const LatestComments = (props) => {
                     <Status>{renderState(comment?.status)}</Status>
                   </Top>
                   <Accessible backgroundColor={backgroundColor}>
-                    <Icon src={getIcon(comment?.evaluation)} />
+                    <Icon
+                      className={`${
+                        comment?.evaluation === ACCESSIBILITY.NEUTRAL
+                          ? 'neutral-icon'
+                          : ''
+                      }`}
+                      src={getIcon(comment?.evaluation)}
+                    />
                     <Label fontSize={fontSize} font={font}>
                       {getLabel(comment?.evaluation)}
                     </Label>

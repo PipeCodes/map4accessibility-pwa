@@ -41,7 +41,7 @@ const RankingScreen = (props) => {
   const loading = useSelector((state) => state.placesRanking.loading);
 
   useEffect(() => {
-    const order = ascDescActive ? 'thumbs_down_count' : 'thumbs_up_count';
+    const order = ascDescActive ? 'inaccessible_count' : 'accessible_count';
     const radius = 5000; // Default radius for location, needs to be discussed and set in another place
     if (sliderActive) {
       dispatch(getPlacesByLocation(order, radius)).catch((error) =>

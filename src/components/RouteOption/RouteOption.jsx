@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import ThubsUpIcon from '../../assets/icons/maps/up.svg';
 import ThubsDownIcon from '../../assets/icons/maps/down.svg';
+import NeutralIcon from '../../assets/icons/places/neutral.svg';
 import StepsIcon from '../../assets/icons/maps/steps.svg';
 import GoToIcon from '../../assets/icons/maps/goTo.svg';
 import { colors } from '../../constants/colors';
@@ -49,6 +50,12 @@ const MapRoute = ({ route, setRoute, active, history }) => {
             <img src={ThubsUpIcon} alt="Likes" />
           </Icon>
           <Number color={colors.green}>{route.likes}</Number>
+        </Rating>
+        <Rating>
+          <Icon>
+            <img className="neutral" src={NeutralIcon} alt="Neutral" />
+          </Icon>
+          <Number color={colors.orange}>{route.neutrals}</Number>
         </Rating>
         <Rating>
           <Icon>
