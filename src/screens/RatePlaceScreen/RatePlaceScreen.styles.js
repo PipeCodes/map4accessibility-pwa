@@ -239,3 +239,41 @@ export const Error = styled.div`
   margin-left: 10px;
   margin-bottom: 10px;
 `;
+
+export const Accordion = styled.div`
+  width: 100%;
+  .head {
+    width: 100%;
+    display: flex;
+    padding: 12px 12px;
+    font-weight: bold;
+    cursor: pointer;
+    background: ${colors.primaryColor};
+    color: #fff;
+    justify-content: space-between;
+    text-align: left;
+    img {
+      height: 24px;
+      width: 24px;
+    }
+  }
+  .content {
+    max-height: 0px;
+    height: 0;
+    margin-top: 10px;
+    width: 100%;
+    transition: max-height 0.3s ease-out;
+    overflow: hidden;
+    flex-direction: column;
+    div {
+      width: 100%;
+    }
+
+    &#active {
+      max-height: 100vh;
+      height: auto;
+      display: flex;
+      transition: max-height 0.3s ease-in;
+    }
+  }
+`;

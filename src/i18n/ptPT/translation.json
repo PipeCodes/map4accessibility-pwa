@@ -110,6 +110,8 @@
   "not_accessible": "Não Acessivel",
   "neutral": "Neutro",
   "questions": "Questões",
+  "mandatory_questions": "Questões Obrigatórias",
+  "optional_questions": "Questões Opcionais",
   "submit": "Enviar",
   "rate_error": "Escreva um comentário (Min 6 caracteres) e responda ás questões.",
   "place_details": "Detalhes",

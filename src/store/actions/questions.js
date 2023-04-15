@@ -21,13 +21,26 @@ export const getQuestions = () => async (dispatch) => {
 
   try {
     const response = await axios.get(Endpoints.QUESTIONS, config);
-
     const statusCode = response.status;
+    const questionsMandatory = [];
+    const questionsOptional = {};
 
     if (statusCode === HTTP_STATUS.SUCCESS) {
+      response.data?.result.questions.forEach((question) => {
+        if (question?.is_mandatory) {
+          questionsMandatory.push(question);
+        } else {
+          const sliced = question?.title?.split(':');
+          if (questionsOptional[sliced[0]]) {
+            questionsOptional[sliced[0]].push(question);
+          } else {
+            questionsOptional[sliced[0]] = [question];
+          }
+        }
+      });
       dispatch({
         type: GET_QUESTIONS_SUCCESS,
-        data: response.data?.result.questions,
+        data: { mandatory: questionsMandatory, optional: questionsOptional },
       });
     }
   } catch (error) {
