@@ -110,6 +110,8 @@
   "not_accessible": "Not Accessible",
   "neutral": "Neutral",
   "questions": "Questions",
+  "mandatory_questions": "Mandatory Questions",
+  "optional_questions": "Optional Questions",
   "submit": "Submit",
   "rate_error": "Please write a comment (Min 6 characters) and answer the questions",
   "place_details": "Place details",
