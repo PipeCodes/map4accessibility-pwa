@@ -5,14 +5,15 @@ import moment from 'moment';
 import ArrowRight from '../../assets/icons/arrow-right-colored.svg';
 import x from '../../assets/icons/close-colored.svg';
 import placeholder from '../../assets/images/photo-stock-1.png';
-import ThumbsUp from '../../assets/icons/maps/up.svg';
 import Pin from '../../assets/icons/places/details/pin.svg';
 import Phone from '../../assets/icons/places/details/phone.svg';
 import Clock from '../../assets/icons/places/details/clock.svg';
 import Email from '../../assets/icons/places/details/email.svg';
 import Pointer from '../../assets/icons/places/details/mouse-pointer.svg';
 import Path from '../../assets/icons/places/details/path.svg';
+import ThumbsUp from '../../assets/icons/maps/up.svg';
 import ThumbsDown from '../../assets/icons/maps/down.svg';
+import Neutral from '../../assets/icons/places/neutral.svg';
 import {
   PopUp,
   DarkOverlayContainer,
@@ -30,6 +31,7 @@ import {
 import CustomButton from '../CustomButton/CustomButton';
 
 import { colors } from '../../constants/colors';
+import { ACCESSIBILITY } from '../../constants';
 
 const PlacePopUpComponent = (props) => {
   const { history, place, display, setPopUp } = props;
@@ -47,12 +49,19 @@ const PlacePopUpComponent = (props) => {
       (a, b) => moment(b.updated_at) - moment(a.updated_at),
     );
     if (sortedComments?.length) {
-      if (sortedComments[0].thumb_direction) {
-        setIsAccessible(true);
-        return t('accessible');
+      switch (sortedComments[0].evaluation) {
+        case ACCESSIBILITY.ACCESSIBLE:
+          setIsAccessible(ACCESSIBILITY.ACCESSIBLE);
+          return t('accessible');
+        case ACCESSIBILITY.NOT_ACCESSIBLE:
+          setIsAccessible(ACCESSIBILITY.NOT_ACCESSIBLE);
+          return t('not_accessible');
+        case ACCESSIBILITY.NEUTRAL:
+          setIsAccessible(ACCESSIBILITY.NEUTRAL);
+          return t('neutral');
+        default:
+          break;
       }
-      setIsAccessible(false);
-      return t('not_accessible');
     }
     return '';
   }, [place, t]);
@@ -77,6 +86,19 @@ const PlacePopUpComponent = (props) => {
     }
     return placeholder;
   };
+
+  const getAccessibilityColor = useMemo(() => {
+    switch (isAccessible) {
+      case ACCESSIBILITY.ACCESSIBLE:
+        return 'accessible';
+      case ACCESSIBILITY.NOT_ACCESSIBLE:
+        return 'not-accessible';
+      case ACCESSIBILITY.NEUTRAL:
+        return 'neutral';
+      default:
+        break;
+    }
+  }, [isAccessible]);
 
   return (
     <Container>
@@ -105,19 +127,21 @@ const PlacePopUpComponent = (props) => {
                   )}
                 </TextWrapper>
                 <Accessible fontSize={fontSize} font={font}>
-                  <span
-                    className={isAccessible ? 'accessible' : 'not-accessible'}
-                  >
+                  <span className={getAccessibilityColor}>
                     {getAccessibility}
                   </span>
                   <div>
                     <span className="up">
                       <img src={ThumbsUp} alt={t('positive')} />{' '}
-                      {place?.thumbs_up_count || 0}
+                      {place?.accessible_count || 0}
+                    </span>
+                    <span className="neutral ms-2">
+                      <img src={Neutral} alt={t('neutral')} />{' '}
+                      {place?.neutral_count || 0}
                     </span>
                     <span className="down ms-2">
                       <img src={ThumbsDown} alt={t('negative')} />{' '}
-                      {place?.thumbs_down_count || 0}
+                      {place?.inaccessible_count || 0}
                     </span>
                   </div>
                 </Accessible>
@@ -126,7 +150,7 @@ const PlacePopUpComponent = (props) => {
               <PlaceInformation fontSize={fontSize} font={font}>
                 {place?.place_type && (
                   <span className="fw-bold">
-                    <img src={Path} alt={t('place')} /> {place?.place_type}
+                    <img src={Path} alt={t('place')} /> {t(place?.place_type)}
                   </span>
                 )}
                 {place?.address && (

@@ -115,6 +115,13 @@ export const Accessible = styled.div`
 export const Icon = styled.img`
   width: 33px;
   height: 33px;
+
+  &.neutral-icon {
+    background-color: ${colors.white};
+    padding: 6px;
+    border-radius: 3px;
+    border: 1px solid ${colors.orange};
+  }
 `;
 
 export const Label = styled.div`

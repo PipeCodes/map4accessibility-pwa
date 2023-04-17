@@ -52,6 +52,16 @@ export const Rating = styled.div`
 export const Icon = styled.div`
   margin-right: 5px;
   align-self: flex-start;
+  &.neutral-icon {
+    background-color: ${colors.white};
+    padding: 6px;
+    border-radius: 3px;
+    border: 1px solid ${colors.orange};
+  }
+  .neutral {
+    color: ${colors.orange};
+    width: 12px;
+  }
 `;
 
 export const Number = styled.span`

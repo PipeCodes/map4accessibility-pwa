@@ -108,7 +108,10 @@
   "rate_place": "How would you rate this place?",
   "accessible": "Accessible",
   "not_accessible": "Not Accessible",
+  "neutral": "Neutral",
   "questions": "Questions",
+  "mandatory_questions": "Mandatory Questions",
+  "optional_questions": "Optional Questions",
   "submit": "Submit",
   "rate_error": "Please write a comment (Min 6 characters) and answer the questions",
   "place_details": "Place details",
@@ -150,5 +153,7 @@
   "no_place": "Place doesn't exist anymore.",
   "are_you_sure": "A request is going to be sent! Are you sure?",
   "view_more": "View more",
-  "show_more": "Show More"
+  "show_more": "Show More",
+  "place_types": "Place types",
+  "disability_types": "Disability types"
 }

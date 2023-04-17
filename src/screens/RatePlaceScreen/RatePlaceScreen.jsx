@@ -29,14 +29,19 @@ import {
   Title,
   MediaLabel,
   Error,
+  Neutral,
+  Accordion,
 } from './RatePlaceScreen.styles';
 import TopBar from '../../components/TopBar/TopBar';
 import ImageSlider from '../../components/ImageSlider/ImageSlider';
 import buttonUp from '../../assets/icons/places/like.svg';
 import buttonDown from '../../assets/icons/places/dislike.svg';
+import buttonNeutral from '../../assets/icons/places/neutral.svg';
 import paperclipIcon from '../../assets/icons/paperclip.svg';
 import CustomButton from '../../components/CustomButton/CustomButton';
 import { getQuestions } from '../../store/actions/questions';
+import upIcon from '../../assets/icons/up.svg';
+import downIcon from '../../assets/icons/down.svg';
 import {
   getPlace,
   getGooglePlace,
@@ -60,9 +65,10 @@ const RatePlaceScreen = (props) => {
   const { isLoaded } = useJsApiLoader(GOOGLE_MAPS_OPTIONS);
   const questions = useSelector((state) => state.questions.questions);
   const place = useSelector((state) => state.place.place);
+  const [optionalQuestions, setOptionalQuestions] = useState({});
 
   // Form Fields and Img input
-  const [accessibility, setAccessibility] = useState(1);
+  const [accessibility, setAccessibility] = useState(2);
   const commentRef = useRef();
   const inputRef = useRef(null);
   const [answers, setAnswers] = useState({});
@@ -76,6 +82,14 @@ const RatePlaceScreen = (props) => {
     inputRef.current.click();
   };
 
+  const handleOptionalClick = (id) => {
+    setOptionalQuestions((prev) => {
+      if (Object.values(optionalQuestions).includes(id)) {
+        return { ...prev, id: null };
+      }
+      return { ...prev, id };
+    });
+  };
   const handleFileChange = (event) => {
     const fileObj = event.target.files && event.target.files[0];
     if (!fileObj) {
@@ -154,7 +168,8 @@ const RatePlaceScreen = (props) => {
 
   const onSubmit = () => {
     if (
-      Object.keys(answers).length !== Object.keys(questions).length ||
+      Object.keys(answers).filter((key) => key.includes('mandatory')).length !==
+        Object.keys(questions?.mandatory).length ||
       commentRef?.current?.value === null ||
       commentRef?.current?.value?.length < 6
     ) {
@@ -197,12 +212,16 @@ const RatePlaceScreen = (props) => {
         })
         .catch((err) => {
           // eslint-disable-next-line no-undef
-          alert.log(err);
+          alert(err);
         });
     }
   };
 
   const onClickThumbsUp = () => {
+    setAccessibility(2);
+  };
+
+  const onClickNeutral = () => {
     setAccessibility(1);
   };
 
@@ -264,6 +283,15 @@ const RatePlaceScreen = (props) => {
             <img src={buttonUp} alt={t('accessible')} />
             <span>{t('accessible')}</span>
           </ThumbsUp>
+          <Neutral
+            fontSize={fontSize}
+            font={font}
+            thumbs={accessibility}
+            onClick={() => onClickNeutral()}
+          >
+            <img src={buttonNeutral} alt={t('neutral')} />
+            <span>{t('neutral')}</span>
+          </Neutral>
           <ThumbsDown
             fontSize={fontSize}
             font={font}
@@ -274,51 +302,127 @@ const RatePlaceScreen = (props) => {
             <span>{t('not_accessible')}</span>
           </ThumbsDown>
         </Vote>
+
         <Form className="questions">
           <Label fontSize={fontSize} font={font}>
             {t('comment')}
           </Label>
           <Comment maxlength={255} rows={5} ref={commentRef} />
           <Label fontSize={fontSize} font={font}>
-            {t('questions')}
+            {t('mandatory_questions')}
           </Label>
-          {questions &&
-            questions.map((item, index) => (
-              <Question key={item.id}>
-                <Title fontSize={fontSize} font={font}>
-                  {index + 1}. {item?.title}
-                </Title>
-                <Options>
-                  {item?.answers &&
-                    item?.answers.map((answer) => (
-                      <Option key={answer?.id}>
-                        <input
-                          type="radio"
-                          name={item?.id}
-                          id={answer?.id}
-                          onChange={() => {
-                            setAnswers((prevState) => ({
-                              ...prevState,
-                              [index]: {
-                                question: item?.title,
-                                answer: answer?.body,
-                              },
-                            }));
-                          }}
-                        />
-                        <AnswerLabel
-                          fontSize={fontSize}
-                          font={font}
-                          for={answer?.id}
-                        >
-                          {answer?.body}
-                        </AnswerLabel>
-                      </Option>
-                    ))}
-                </Options>
-              </Question>
-            ))}
+          {isDefined(params?.google_place_id) && (
+            <>
+              {questions?.mandatory &&
+                questions.mandatory.map((item, index) => (
+                  <Question key={item.id}>
+                    <Title fontSize={fontSize} font={font}>
+                      {index + 1}. {item?.title}
+                    </Title>
+                    <Options>
+                      {item?.answers &&
+                        item?.answers.map((answer) => (
+                          <Option key={answer?.id}>
+                            <input
+                              type="radio"
+                              name={item?.id}
+                              id={answer?.id}
+                              onChange={() => {
+                                setAnswers((prevState) => ({
+                                  ...prevState,
+                                  [`${index}_mandatory`]: {
+                                    question: item?.title,
+                                    answer: answer?.body,
+                                  },
+                                }));
+                              }}
+                            />
+                            <AnswerLabel
+                              fontSize={fontSize}
+                              font={font}
+                              for={answer?.id}
+                            >
+                              {answer?.body}
+                            </AnswerLabel>
+                          </Option>
+                        ))}
+                    </Options>
+                  </Question>
+                ))}
+              <Label fontSize={fontSize} font={font}>
+                {t('optional_questions')}
+              </Label>
+              {questions?.optional &&
+                Object.entries(questions?.optional)
+                  .reverse()
+                  .map((group) => (
+                    <Accordion>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          handleOptionalClick(group?.[0]);
+                        }}
+                        className="head"
+                      >
+                        <div>{group?.[0]}</div>
+                        {Object.values(optionalQuestions).includes(
+                          group?.[0],
+                        ) ? (
+                          <img src={upIcon} alt="closed" />
+                        ) : (
+                          <img src={downIcon} alt="open" />
+                        )}
+                      </button>
+                      <div
+                        className="content"
+                        id={
+                          Object.values(optionalQuestions).includes(
+                            group?.[0],
+                          ) && 'active'
+                        }
+                      >
+                        {group?.[1].map((item, index) => (
+                          <Question key={item.id}>
+                            <Title fontSize={fontSize} font={font}>
+                              {index + 1}. {item?.title?.split(':')[1]}
+                            </Title>
+                            <Options>
+                              {item?.answers &&
+                                item?.answers.map((answer) => (
+                                  <Option key={answer?.id}>
+                                    <input
+                                      type="radio"
+                                      name={item?.id}
+                                      id={answer?.id}
+                                      onChange={() => {
+                                        setAnswers((prevState) => ({
+                                          ...prevState,
+                                          [`${index}_optional`]: {
+                                            question: item?.title,
+                                            answer: answer?.body,
+                                          },
+                                        }));
+                                      }}
+                                    />
+                                    <AnswerLabel
+                                      fontSize={fontSize}
+                                      font={font}
+                                      for={answer?.id}
+                                    >
+                                      {answer?.body}
+                                    </AnswerLabel>
+                                  </Option>
+                                ))}
+                            </Options>
+                          </Question>
+                        ))}
+                      </div>
+                    </Accordion>
+                  ))}
+            </>
+          )}
         </Form>
+
         <ButtonContainer>
           <CustomButton
             style={{

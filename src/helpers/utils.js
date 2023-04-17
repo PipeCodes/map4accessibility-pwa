@@ -2,7 +2,12 @@
 /* eslint-disable prefer-rest-params */
 /* eslint-disable one-var */
 
-import DangerIcon from '../assets/icons/maps/markers/red-alert-icon.svg';
+import OtherObstacleIcon from '../assets/icons/maps/markers/place-other-obstacle.svg';
+import PedestrianCrossIcon from '../assets/icons/maps/markers/place-pedestrians-cross.svg';
+import RoadblockIcon from '../assets/icons/maps/markers/place-roadblock.svg';
+import StepStairsIcon from '../assets/icons/maps/markers/place-step-stairs.svg';
+import StreetWorksIcon from '../assets/icons/maps/markers/place-street-works.svg';
+import TrafficLightIcon from '../assets/icons/maps/markers/place-traffic-light.svg';
 import HospitalIcon from '../assets/icons/maps/markers/hospital.svg';
 import CultureIcon from '../assets/icons/maps/markers/culture.svg';
 import LodgingIcon from '../assets/icons/maps/markers/lodging.svg';
@@ -97,8 +102,23 @@ export const debounce = (func, wait, immediate) => {
 // ///////////////////////////
 
 export const markerIcon = (type) => {
-  if (type === 'danger') {
-    return DangerIcon;
+  if (type === 'pedestrian_cross') {
+    return PedestrianCrossIcon;
+  }
+  if (type === 'roadblock') {
+    return RoadblockIcon;
+  }
+  if (type === 'street_works') {
+    return StreetWorksIcon;
+  }
+  if (type === 'faulty_traffic_light') {
+    return TrafficLightIcon;
+  }
+  if (type === 'step_stairs') {
+    return StepStairsIcon;
+  }
+  if (type === 'obstacle') {
+    return OtherObstacleIcon;
   }
   if (type === 'hospital') {
     return HospitalIcon;

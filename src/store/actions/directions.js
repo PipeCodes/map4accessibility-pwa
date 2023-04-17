@@ -27,6 +27,7 @@ export const changeDirections =
           distance: route.legs[0].distance.text,
           likes: verifiedRatings[index].likes,
           dislikes: verifiedRatings[index].dislikes,
+          neutrals: verifiedRatings[index].neutrals,
           steps: [route.legs[0].steps],
           origin: originRoute,
           destination: destinationRoute,

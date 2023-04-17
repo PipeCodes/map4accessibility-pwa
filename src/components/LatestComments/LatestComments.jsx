@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import buttonUp from '../../assets/icons/places/like.svg';
 import buttonDown from '../../assets/icons/places/dislike.svg';
+import buttonNeutral from '../../assets/icons/places/neutral.svg';
 import Rejected from '../../assets/icons/maps/rejected.svg';
 import Accepted from '../../assets/icons/maps/accepted.svg';
 import Avatar from '../../assets/images/avatarDefault.png';
@@ -25,9 +26,9 @@ import {
   Img,
   Box,
 } from './LatestComments.styles';
-import { IMAGE_TYPES } from '../../constants';
+import { ACCESSIBILITY, IMAGE_TYPES } from '../../constants';
 
-const Thumbs = [buttonDown, buttonUp];
+const Thumbs = [buttonDown, buttonNeutral, buttonUp];
 
 const LatestComments = (props) => {
   const { comments, myComments, setPopUp } = props;
@@ -61,6 +62,32 @@ const LatestComments = (props) => {
         return <img src={Rejected} alt="rejected" />;
       default:
         return '';
+    }
+  };
+
+  const getIcon = (key) => {
+    switch (key) {
+      case ACCESSIBILITY.NOT_ACCESSIBLE:
+        return Thumbs[0];
+      case ACCESSIBILITY.ACCESSIBLE:
+        return Thumbs[2];
+      case ACCESSIBILITY.NEUTRAL:
+        return Thumbs[1];
+      default:
+        break;
+    }
+  };
+
+  const getLabel = (key) => {
+    switch (key) {
+      case ACCESSIBILITY.NOT_ACCESSIBLE:
+        return t('not_accessible');
+      case ACCESSIBILITY.ACCESSIBLE:
+        return t('accessible');
+      case ACCESSIBILITY.NEUTRAL:
+        return t('neutral');
+      default:
+        break;
     }
   };
 
@@ -98,11 +125,16 @@ const LatestComments = (props) => {
                     <Status>{renderState(comment?.status)}</Status>
                   </Top>
                   <Accessible backgroundColor={backgroundColor}>
-                    <Icon src={Thumbs[comment?.thumb_direction ? 1 : 0]} />
+                    <Icon
+                      className={`${
+                        comment?.evaluation === ACCESSIBILITY.NEUTRAL
+                          ? 'neutral-icon'
+                          : ''
+                      }`}
+                      src={getIcon(comment?.evaluation)}
+                    />
                     <Label fontSize={fontSize} font={font}>
-                      {comment?.thumb_direction
-                        ? t('accessible')
-                        : t('not_accessible')}
+                      {getLabel(comment?.evaluation)}
                     </Label>
                   </Accessible>
                   <Box className={mediaType?.split('/', 1)}>
@@ -163,11 +195,16 @@ const LatestComments = (props) => {
                   </Name>
                 </Top>
                 <Accessible backgroundColor={backgroundColor}>
-                  <Icon src={Thumbs[comment?.thumb_direction ? 1 : 0]} />
+                  <Icon
+                    className={`${
+                      comment?.evaluation === ACCESSIBILITY.NEUTRAL
+                        ? 'neutral-icon'
+                        : ''
+                    }`}
+                    src={getIcon(comment?.evaluation)}
+                  />
                   <Label fontSize={fontSize} font={font}>
-                    {comment?.thumb_direction
-                      ? t('accessible')
-                      : t('not_accessible')}
+                    {getLabel(comment?.evaluation)}
                   </Label>
                 </Accessible>
                 <Box className={mediaType?.split('/', 1)}>

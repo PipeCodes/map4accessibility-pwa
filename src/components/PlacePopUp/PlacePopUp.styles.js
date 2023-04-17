@@ -87,14 +87,24 @@ export const Accessible = styled.div`
   .not-accessible {
     color: ${colors.red};
   }
+  .neutral {
+    color: ${colors.orange};
+  }
 
   text-align: right;
+  min-width: 100px;
 
   .up {
     color: ${colors.green};
   }
   .down {
     color: ${colors.red};
+  }
+  .neutral {
+    color: ${colors.orange};
+    img {
+      width: 12px;
+    }
   }
 `;
 

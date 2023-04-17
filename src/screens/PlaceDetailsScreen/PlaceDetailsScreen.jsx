@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useJsApiLoader } from '@react-google-maps/api';
 import moment from 'moment';
-import ThumbsUp from '../../assets/icons/maps/up.svg';
 import Pin from '../../assets/icons/places/details/pin.svg';
 import Phone from '../../assets/icons/places/details/phone.svg';
 import Clock from '../../assets/icons/places/details/clock.svg';
@@ -12,7 +11,9 @@ import Email from '../../assets/icons/places/details/email.svg';
 import Pointer from '../../assets/icons/places/details/mouse-pointer.svg';
 import Path from '../../assets/icons/places/details/path.svg';
 import Comment from '../../assets/icons/places/comment.svg';
+import ThumbsUp from '../../assets/icons/maps/up.svg';
 import ThumbsDown from '../../assets/icons/maps/down.svg';
+import Neutral from '../../assets/icons/places/neutral.svg';
 import {
   Page,
   Container,
@@ -37,7 +38,7 @@ import LatestComments from '../../components/LatestComments/LatestComments';
 
 import { storePlace } from '../../store/actions/history';
 import { getMedia, isDefined } from '../../helpers/utils';
-import { GOOGLE_MAPS_OPTIONS } from '../../constants';
+import { ACCESSIBILITY, GOOGLE_MAPS_OPTIONS } from '../../constants';
 import QuestionPopUp from '../../components/QuestionsPopUp/QuestionsPopUp';
 
 const PlaceDetailsScreen = (props) => {
@@ -136,15 +137,35 @@ const PlaceDetailsScreen = (props) => {
       (a, b) => moment(b.updated_at) - moment(a.updated_at),
     );
     if (sortedComments?.length) {
-      if (sortedComments[0].thumb_direction) {
-        setIsAccessible(true);
-        return t('accessible');
+      switch (sortedComments[0].evaluation) {
+        case ACCESSIBILITY.ACCESSIBLE:
+          setIsAccessible(ACCESSIBILITY.ACCESSIBLE);
+          return t('accessible');
+        case ACCESSIBILITY.NOT_ACCESSIBLE:
+          setIsAccessible(ACCESSIBILITY.NOT_ACCESSIBLE);
+          return t('not_accessible');
+        case ACCESSIBILITY.NEUTRAL:
+          setIsAccessible(ACCESSIBILITY.NEUTRAL);
+          return t('neutral');
+        default:
+          break;
       }
-      setIsAccessible(false);
-      return t('not_accessible');
     }
     return '';
   }, [place, t]);
+
+  const getAccessibilityColor = useMemo(() => {
+    switch (isAccessible) {
+      case ACCESSIBILITY.ACCESSIBLE:
+        return 'accessible';
+      case ACCESSIBILITY.NOT_ACCESSIBLE:
+        return 'not-accessible';
+      case ACCESSIBILITY.NEUTRAL:
+        return 'neutral';
+      default:
+        break;
+    }
+  }, [isAccessible]);
 
   return (
     <Page backgroundColor={backgroundColor}>
@@ -177,17 +198,19 @@ const PlaceDetailsScreen = (props) => {
               )}
             </TextWrapper>
             <Accessible fontSize={fontSize}>
-              <span className={isAccessible ? 'accessible' : 'not-accessible'}>
-                {getAccessibility}
-              </span>
+              <span className={getAccessibilityColor}>{getAccessibility}</span>
               <div>
                 <span className="up">
                   <img src={ThumbsUp} alt={t('positive')} />{' '}
-                  {place?.thumbs_up_count || 0}
+                  {place?.accessible_count || 0}
+                </span>
+                <span className="neutral ms-2">
+                  <img src={Neutral} alt={t('neutral')} />{' '}
+                  {place?.neutral_count || 0}
                 </span>
                 <span className="down ms-2">
                   <img src={ThumbsDown} alt={t('negative')} />{' '}
-                  {place?.thumbs_down_count || 0}
+                  {place?.inaccessible_count || 0}
                 </span>
               </div>
             </Accessible>
@@ -195,7 +218,7 @@ const PlaceDetailsScreen = (props) => {
           <PlaceInformation fontSize={fontSize}>
             {place?.place_type && (
               <span className="fw-bold">
-                <img src={Path} alt={t('place')} /> {place?.place_type}
+                <img src={Path} alt={t('place')} /> {t(place?.place_type)}
               </span>
             )}
             {place?.address && (
@@ -224,9 +247,12 @@ const PlaceDetailsScreen = (props) => {
               </span>
             )}
             {place?.schedule &&
-              place?.schedule?.map((line) => <span>{line}</span>)}
+              place?.schedule?.map((line, key) => (
+                <span key={key}>{line}</span>
+              ))}
           </PlaceInformation>
           {place?.id &&
+            place?.place_deletion &&
             !(place?.place_deletion[0]?.status === 'closed') &&
             place?.place_deletion?.find(
               (request) => request.app_user_id === user.id,
@@ -235,12 +261,15 @@ const PlaceDetailsScreen = (props) => {
                 {t('marked_as_closed')}
               </Button>
             )}
-          {place?.id && place?.place_deletion[0]?.status === 'closed' && (
-            <Button fontSize={fontSize} font={font} className="closed">
-              {t('place_closed')}
-            </Button>
-          )}
           {place?.id &&
+            place?.place_deletion &&
+            place?.place_deletion[0]?.status === 'closed' && (
+              <Button fontSize={fontSize} font={font} className="closed">
+                {t('place_closed')}
+              </Button>
+            )}
+          {place?.id &&
+            place?.place_deletion &&
             !(place?.place_deletion[0]?.status === 'closed') &&
             !place?.place_deletion?.find(
               (request) => request.app_user_id === user.id,

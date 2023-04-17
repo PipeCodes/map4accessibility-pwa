@@ -13,7 +13,7 @@ export const Page = styled.div`
 
   .slick-slider {
     width: 100%;
-
+    margin-top: -50px;
     .slick-dots {
       bottom: 10px;
       li {
@@ -84,15 +84,17 @@ export const Text = styled.span`
 export const Vote = styled.div`
   display: flex;
   align-items: center;
-  gap: 60px;
+  gap: 20px;
 `;
 
 export const ThumbsUp = styled.div`
   display: flex;
   flex-direction: column;
   padding: 6px;
-  border: ${(props) => (props.thumbs === 1 ? '1px solid green' : 'none')};
+  border: ${(props) => (props.thumbs === 2 ? '1px solid green' : 'none')};
   border-radius: 8px;
+  width: 110px;
+  text-align: center;
 
   img {
     cursor: pointer;
@@ -106,12 +108,43 @@ export const ThumbsUp = styled.div`
   }
 `;
 
+export const Neutral = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 6px;
+  border: ${(props) =>
+    props.thumbs === 1 ? `1px solid ${colors.orange}` : 'none'};
+  border-radius: 8px;
+  width: 110px;
+  text-align: center;
+  align-items: center;
+
+  img {
+    cursor: pointer;
+    max-height: 50px;
+    max-width: 50px;
+    background: white;
+    border: 1px solid ${colors.orange};
+    border-radius: 4px;
+    padding: 12px;
+  }
+  span {
+    color: ${colors.orange};
+    margin-top: 5px;
+    font-size: ${(props) => updateFontSize(14, props.fontSize)};
+    font-family: ${(props) => updateValue('EasyReadingPro', props.font)};
+  }
+`;
+
 export const ThumbsDown = styled.div`
   display: flex;
   flex-direction: column;
   padding: 6px;
   border: ${(props) => (props.thumbs === 0 ? '1px solid red' : 'none')};
   border-radius: 8px;
+  width: 110px;
+  text-align: center;
+
   img {
     cursor: pointer;
     max-height: 50px;
@@ -205,4 +238,42 @@ export const Error = styled.div`
   color: ${colors.orange};
   margin-left: 10px;
   margin-bottom: 10px;
+`;
+
+export const Accordion = styled.div`
+  width: 100%;
+  .head {
+    width: 100%;
+    display: flex;
+    padding: 12px 12px;
+    font-weight: bold;
+    cursor: pointer;
+    background: ${colors.primaryColor};
+    color: #fff;
+    justify-content: space-between;
+    text-align: left;
+    img {
+      height: 24px;
+      width: 24px;
+    }
+  }
+  .content {
+    max-height: 0px;
+    height: 0;
+    margin-top: 10px;
+    width: 100%;
+    transition: max-height 0.3s ease-out;
+    overflow: hidden;
+    flex-direction: column;
+    div {
+      width: 100%;
+    }
+
+    &#active {
+      max-height: 100vh;
+      height: auto;
+      display: flex;
+      transition: max-height 0.3s ease-in;
+    }
+  }
 `;
