@@ -21,7 +21,6 @@ const QuestionPopUp = (props) => {
   const backgroundColor = useSelector(
     (state) => state.accessibility.backgroundColor,
   );
-  console.log(questions);
   return (
     <Container>
       <DarkOverlayContainer />
