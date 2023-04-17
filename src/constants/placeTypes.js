@@ -1,4 +1,4 @@
-import DangerIcon from '../assets/icons/places/types/danger-icon.svg';
+import i18n from 'i18next';
 import HospitalIcon from '../assets/icons/places/types/hospital.svg';
 import CultureIcon from '../assets/icons/places/types/culture.svg';
 import LodgingIcon from '../assets/icons/places/types/lodging.svg';
@@ -6,6 +6,12 @@ import PublicServiceIcon from '../assets/icons/places/types/public-service.svg';
 import TransportIcon from '../assets/icons/places/types/transport.svg';
 import FoodIcon from '../assets/icons/places/types/food.svg';
 import DefaultIcon from '../assets/icons/places/types/default.svg';
+import PedestrianIcon from '../assets/icons/places/types/pedestrians-cross.svg';
+import RoadblockIcon from '../assets/icons/places/types/roadblock.svg';
+import StreetWorksIcon from '../assets/icons/places/types/street-works.svg';
+import TraficLightIcon from '../assets/icons/places/types/traffic-light.svg';
+import StepStairsIcon from '../assets/icons/places/types/step-stairs.svg';
+import ObstacleIcon from '../assets/icons/places/types/other-obstacle.svg';
 
 export const types = [
   {
@@ -16,68 +22,74 @@ export const types = [
   },
   {
     id: 2,
-    label: 'Pedestrian Cross',
+    label: i18n.t('pedestrian_cross'),
     placeType: 'pedestrian_cross',
-    icon: DangerIcon,
+    icon: PedestrianIcon,
   },
   {
     id: 3,
-    label: 'Roadblock / cobblsestone in the street',
+    label: i18n.t('roadblock'),
     placeType: 'roadblock',
-    icon: DangerIcon,
+    icon: RoadblockIcon,
   },
   {
     id: 4,
-    label: 'Street works',
+    label: i18n.t('street_works'),
     placeType: 'street_works',
-    icon: DangerIcon,
+    icon: StreetWorksIcon,
   },
   {
     id: 5,
-    label: 'Not audible traffic light',
+    label: i18n.t('faulty_traffic_light'),
     placeType: 'faulty_traffic_light',
-    icon: DangerIcon,
+    icon: TraficLightIcon,
   },
   {
     id: 6,
-    label: 'Other Obstacle',
-    placeType: 'obstacle',
-    icon: DangerIcon,
+    label: i18n.t('step_stairs'),
+    placeType: 'step_stairs',
+    icon: StepStairsIcon,
   },
   {
     id: 7,
-    label: 'Restaurants',
+    label: i18n.t('obstacle'),
+    placeType: 'obstacle',
+    icon: ObstacleIcon,
+  },
+  {
+    id: 8,
+    label: i18n.t('restaurant'),
     placeType: 'restaurant',
     icon: FoodIcon,
   },
   {
-    id: 8,
-    label: 'Transportation',
+    id: 9,
+    label: i18n.t('transport'),
     placeType: 'transport',
     icon: TransportIcon,
   },
   {
-    id: 9,
-    label: 'Lodging',
+    id: 10,
+    label: i18n.t('lodging'),
     placeType: 'lodging',
     icon: LodgingIcon,
   },
 
   {
-    id: 10,
-    label: 'Attractions',
+    id: 11,
+    label: i18n.t('tourist_attraction'),
     placeType: 'tourist_attraction',
     icon: CultureIcon,
   },
   {
-    id: 11,
-    label: 'Health',
+    id: 12,
+    label: i18n.t('health'),
     placeType: 'health',
     icon: HospitalIcon,
   },
   {
-    id: 12,
-    label: 'Public Serv.',
+    id: 13,
+    label: i18n.t('local_government_office'),
     placeType: 'local_government_office',
     icon: PublicServiceIcon,
   },
