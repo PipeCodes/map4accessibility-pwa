@@ -79,6 +79,7 @@ export const FiltersContainer = styled.div`
 export const Filter = styled.div`
   flex-grow: 1;
   flex-basis: 25%;
+  min-width: fit-content;
   margin-top: 10px;
   font-size: ${(props) => updateFontSize(16, props.fontSize)};
   font-family: ${(props) => updateValue('EasyReadingPro', props.font)};
