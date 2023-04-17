@@ -49,7 +49,7 @@ const AddPlaceScreen = (props) => {
 
   const filterTypes = useMemo(() => {
     const formatted = types.map((option) => ({
-      value: option.label,
+      value: option.placeType,
       label: t(option.label),
       icon: option.icon,
     }));
