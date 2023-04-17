@@ -13,7 +13,7 @@ export const Page = styled.div`
 
   .slick-slider {
     width: 100%;
-
+    margin-top: -50px;
     .slick-dots {
       bottom: 10px;
       li {

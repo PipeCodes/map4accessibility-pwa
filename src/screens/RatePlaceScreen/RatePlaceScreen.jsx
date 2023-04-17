@@ -212,7 +212,7 @@ const RatePlaceScreen = (props) => {
         })
         .catch((err) => {
           // eslint-disable-next-line no-undef
-          alert.log(err);
+          alert(err);
         });
     }
   };
@@ -303,120 +303,125 @@ const RatePlaceScreen = (props) => {
           </ThumbsDown>
         </Vote>
 
-        {isDefined(params?.google_place_id) && (
-          <Form className="questions">
-            <Label fontSize={fontSize} font={font}>
-              {t('comment')}
-            </Label>
-            <Comment maxlength={255} rows={5} ref={commentRef} />
-            <Label fontSize={fontSize} font={font}>
-              {t('mandatory_questions')}
-            </Label>
-            {questions?.mandatory &&
-              questions.mandatory.map((item, index) => (
-                <Question key={item.id}>
-                  <Title fontSize={fontSize} font={font}>
-                    {index + 1}. {item?.title}
-                  </Title>
-                  <Options>
-                    {item?.answers &&
-                      item?.answers.map((answer) => (
-                        <Option key={answer?.id}>
-                          <input
-                            type="radio"
-                            name={item?.id}
-                            id={answer?.id}
-                            onChange={() => {
-                              setAnswers((prevState) => ({
-                                ...prevState,
-                                [`${index}_mandatory`]: {
-                                  question: item?.title,
-                                  answer: answer?.body,
-                                },
-                              }));
-                            }}
-                          />
-                          <AnswerLabel
-                            fontSize={fontSize}
-                            font={font}
-                            for={answer?.id}
-                          >
-                            {answer?.body}
-                          </AnswerLabel>
-                        </Option>
-                      ))}
-                  </Options>
-                </Question>
-              ))}
-            <Label fontSize={fontSize} font={font}>
-              {t('optional_questions')}
-            </Label>
-            {questions?.optional &&
-              Object.entries(questions?.optional)
-                .reverse()
-                .map((group) => (
-                  <Accordion>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        handleOptionalClick(group?.[0]);
-                      }}
-                      className="head"
-                    >
-                      <div>{group?.[0]}</div>
-                      {Object.values(optionalQuestions).includes(group?.[0]) ? (
-                        <img src={upIcon} alt="closed" />
-                      ) : (
-                        <img src={downIcon} alt="open" />
-                      )}
-                    </button>
-                    <div
-                      className="content"
-                      id={
-                        Object.values(optionalQuestions).includes(group?.[0]) &&
-                        'active'
-                      }
-                    >
-                      {group?.[1].map((item, index) => (
-                        <Question key={item.id}>
-                          <Title fontSize={fontSize} font={font}>
-                            {index + 1}. {item?.title?.split(':')[1]}
-                          </Title>
-                          <Options>
-                            {item?.answers &&
-                              item?.answers.map((answer) => (
-                                <Option key={answer?.id}>
-                                  <input
-                                    type="radio"
-                                    name={item?.id}
-                                    id={answer?.id}
-                                    onChange={() => {
-                                      setAnswers((prevState) => ({
-                                        ...prevState,
-                                        [`${index}_optional`]: {
-                                          question: item?.title,
-                                          answer: answer?.body,
-                                        },
-                                      }));
-                                    }}
-                                  />
-                                  <AnswerLabel
-                                    fontSize={fontSize}
-                                    font={font}
-                                    for={answer?.id}
-                                  >
-                                    {answer?.body}
-                                  </AnswerLabel>
-                                </Option>
-                              ))}
-                          </Options>
-                        </Question>
-                      ))}
-                    </div>
-                  </Accordion>
+        <Form className="questions">
+          <Label fontSize={fontSize} font={font}>
+            {t('comment')}
+          </Label>
+          <Comment maxlength={255} rows={5} ref={commentRef} />
+          <Label fontSize={fontSize} font={font}>
+            {t('mandatory_questions')}
+          </Label>
+          {isDefined(params?.google_place_id) && (
+            <>
+              {questions?.mandatory &&
+                questions.mandatory.map((item, index) => (
+                  <Question key={item.id}>
+                    <Title fontSize={fontSize} font={font}>
+                      {index + 1}. {item?.title}
+                    </Title>
+                    <Options>
+                      {item?.answers &&
+                        item?.answers.map((answer) => (
+                          <Option key={answer?.id}>
+                            <input
+                              type="radio"
+                              name={item?.id}
+                              id={answer?.id}
+                              onChange={() => {
+                                setAnswers((prevState) => ({
+                                  ...prevState,
+                                  [`${index}_mandatory`]: {
+                                    question: item?.title,
+                                    answer: answer?.body,
+                                  },
+                                }));
+                              }}
+                            />
+                            <AnswerLabel
+                              fontSize={fontSize}
+                              font={font}
+                              for={answer?.id}
+                            >
+                              {answer?.body}
+                            </AnswerLabel>
+                          </Option>
+                        ))}
+                    </Options>
+                  </Question>
                 ))}
-          </Form>
-        )}
+              <Label fontSize={fontSize} font={font}>
+                {t('optional_questions')}
+              </Label>
+              {questions?.optional &&
+                Object.entries(questions?.optional)
+                  .reverse()
+                  .map((group) => (
+                    <Accordion>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          handleOptionalClick(group?.[0]);
+                        }}
+                        className="head"
+                      >
+                        <div>{group?.[0]}</div>
+                        {Object.values(optionalQuestions).includes(
+                          group?.[0],
+                        ) ? (
+                          <img src={upIcon} alt="closed" />
+                        ) : (
+                          <img src={downIcon} alt="open" />
+                        )}
+                      </button>
+                      <div
+                        className="content"
+                        id={
+                          Object.values(optionalQuestions).includes(
+                            group?.[0],
+                          ) && 'active'
+                        }
+                      >
+                        {group?.[1].map((item, index) => (
+                          <Question key={item.id}>
+                            <Title fontSize={fontSize} font={font}>
+                              {index + 1}. {item?.title?.split(':')[1]}
+                            </Title>
+                            <Options>
+                              {item?.answers &&
+                                item?.answers.map((answer) => (
+                                  <Option key={answer?.id}>
+                                    <input
+                                      type="radio"
+                                      name={item?.id}
+                                      id={answer?.id}
+                                      onChange={() => {
+                                        setAnswers((prevState) => ({
+                                          ...prevState,
+                                          [`${index}_optional`]: {
+                                            question: item?.title,
+                                            answer: answer?.body,
+                                          },
+                                        }));
+                                      }}
+                                    />
+                                    <AnswerLabel
+                                      fontSize={fontSize}
+                                      font={font}
+                                      for={answer?.id}
+                                    >
+                                      {answer?.body}
+                                    </AnswerLabel>
+                                  </Option>
+                                ))}
+                            </Options>
+                          </Question>
+                        ))}
+                      </div>
+                    </Accordion>
+                  ))}
+            </>
+          )}
+        </Form>
 
         <ButtonContainer>
           <CustomButton
