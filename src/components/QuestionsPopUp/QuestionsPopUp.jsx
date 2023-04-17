@@ -31,18 +31,34 @@ const QuestionPopUp = (props) => {
         <Close onClick={() => setPopUp(null)}>
           <img src={x} alt="back" />
         </Close>
-        {questions?.length ? (
+        {questions ? (
           <Content>
-            {questions?.map((question, index) => (
-              <>
-                <Question fontSize={fontSize} font={font}>
-                  {index + 1}. {question?.question}
-                </Question>
-                <Answer fontSize={fontSize} font={font}>
-                  - {question?.answer}
-                </Answer>
-              </>
-            ))}
+            {Object.entries(questions)
+              .reverse()
+              .map((question, index) => {
+                if (question[0].includes('optional')) {
+                  return (
+                    <>
+                      <Question fontSize={fontSize} font={font}>
+                        {index + 1}. {question[1]?.question.split(':')[1]}
+                      </Question>
+                      <Answer fontSize={fontSize} font={font}>
+                        - {question[1]?.answer}
+                      </Answer>
+                    </>
+                  );
+                }
+                return (
+                  <>
+                    <Question fontSize={fontSize} font={font}>
+                      {index + 1}. {question[1]?.question}
+                    </Question>
+                    <Answer fontSize={fontSize} font={font}>
+                      - {question[1]?.answer}
+                    </Answer>
+                  </>
+                );
+              })}
           </Content>
         ) : (
           <Content>
