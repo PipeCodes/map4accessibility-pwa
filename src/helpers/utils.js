@@ -102,43 +102,34 @@ export const debounce = (func, wait, immediate) => {
 // ///////////////////////////
 
 export const markerIcon = (type) => {
-  if (type === 'pedestrian_cross') {
-    return PedestrianCrossIcon;
+  switch (type) {
+    case 'pedestrian_cross':
+      return PedestrianCrossIcon;
+    case 'roadblock':
+      return RoadblockIcon;
+    case 'street_works':
+      return StreetWorksIcon;
+    case 'faulty_traffic_light':
+      return TrafficLightIcon;
+    case 'step_stairs':
+      return StepStairsIcon;
+    case 'obstacle':
+      return OtherObstacleIcon;
+    case 'health':
+      return HospitalIcon;
+    case 'tourist_attraction':
+      return CultureIcon;
+    case 'lodging':
+      return LodgingIcon;
+    case 'local_government_office':
+      return PublicServiceIcon;
+    case 'transport':
+      return TransportIcon;
+    case 'restaurant':
+      return FoodIcon;
+    default:
+      return DefaultIcon;
   }
-  if (type === 'roadblock') {
-    return RoadblockIcon;
-  }
-  if (type === 'street_works') {
-    return StreetWorksIcon;
-  }
-  if (type === 'faulty_traffic_light') {
-    return TrafficLightIcon;
-  }
-  if (type === 'step_stairs') {
-    return StepStairsIcon;
-  }
-  if (type === 'obstacle') {
-    return OtherObstacleIcon;
-  }
-  if (type === 'health') {
-    return HospitalIcon;
-  }
-  if (type === 'tourist_attraction') {
-    return CultureIcon;
-  }
-  if (type === 'lodging') {
-    return LodgingIcon;
-  }
-  if (type === 'local_government_office') {
-    return PublicServiceIcon;
-  }
-  if (type === 'transport') {
-    return TransportIcon;
-  }
-  if (type === 'restaurant') {
-    return FoodIcon;
-  }
-  return DefaultIcon;
 };
 
 export const choosePlaceType = (types) => {
