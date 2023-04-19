@@ -168,8 +168,9 @@ const RatePlaceScreen = (props) => {
 
   const onSubmit = () => {
     if (
-      Object.keys(answers).filter((key) => key.includes('mandatory')).length !==
-        Object.keys(questions?.mandatory).length ||
+      (Object.keys(answers).filter((key) => key.includes('mandatory'))
+        .length !== Object.keys(questions?.mandatory).length &&
+        isDefined(params?.google_place_id)) ||
       commentRef?.current?.value === null ||
       commentRef?.current?.value?.length < 6
     ) {

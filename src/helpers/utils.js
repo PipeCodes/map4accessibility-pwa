@@ -102,43 +102,34 @@ export const debounce = (func, wait, immediate) => {
 // ///////////////////////////
 
 export const markerIcon = (type) => {
-  if (type === 'pedestrian_cross') {
-    return PedestrianCrossIcon;
+  switch (type) {
+    case 'pedestrian_cross':
+      return PedestrianCrossIcon;
+    case 'roadblock':
+      return RoadblockIcon;
+    case 'street_works':
+      return StreetWorksIcon;
+    case 'faulty_traffic_light':
+      return TrafficLightIcon;
+    case 'step_stairs':
+      return StepStairsIcon;
+    case 'obstacle':
+      return OtherObstacleIcon;
+    case 'health':
+      return HospitalIcon;
+    case 'tourist_attraction':
+      return CultureIcon;
+    case 'lodging':
+      return LodgingIcon;
+    case 'local_government_office':
+      return PublicServiceIcon;
+    case 'transport':
+      return TransportIcon;
+    case 'restaurant':
+      return FoodIcon;
+    default:
+      return DefaultIcon;
   }
-  if (type === 'roadblock') {
-    return RoadblockIcon;
-  }
-  if (type === 'street_works') {
-    return StreetWorksIcon;
-  }
-  if (type === 'faulty_traffic_light') {
-    return TrafficLightIcon;
-  }
-  if (type === 'step_stairs') {
-    return StepStairsIcon;
-  }
-  if (type === 'obstacle') {
-    return OtherObstacleIcon;
-  }
-  if (type === 'hospital') {
-    return HospitalIcon;
-  }
-  if (type === 'culture') {
-    return CultureIcon;
-  }
-  if (type === 'lodging') {
-    return LodgingIcon;
-  }
-  if (type === 'public-service') {
-    return PublicServiceIcon;
-  }
-  if (type === 'transport') {
-    return TransportIcon;
-  }
-  if (type === 'food') {
-    return FoodIcon;
-  }
-  return DefaultIcon;
 };
 
 export const choosePlaceType = (types) => {
@@ -148,7 +139,7 @@ export const choosePlaceType = (types) => {
   let response;
   types?.forEach((value) => {
     if (food.includes(value)) {
-      return 'restaurant';
+      response = 'restaurant';
     }
     if (publicService.includes(value)) {
       response = 'local_government_office';
@@ -160,10 +151,10 @@ export const choosePlaceType = (types) => {
       response = 'tourist_attraction';
     }
     if (transport.includes(value)) {
-      response = 'parking';
+      response = 'transport';
     }
     if (hospital.includes(value)) {
-      response = 'hospital';
+      response = 'health';
     }
   });
   return response;
