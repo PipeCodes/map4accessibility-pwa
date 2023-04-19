@@ -6,6 +6,7 @@ import ThumbsUp from '../../assets/icons/maps/up.svg';
 import ThumbsDown from '../../assets/icons/maps/down.svg';
 import Rejected from '../../assets/icons/maps/rejected.svg';
 import Accepted from '../../assets/icons/maps/accepted.svg';
+import Neutral from '../../assets/icons/places/neutral.svg';
 import {
   Wrapper,
   TopWrapper,
@@ -21,7 +22,7 @@ import {
 } from './MyCommentsStatus.styles';
 
 const MyCommentsStatus = (props) => {
-  const { positive, negative, accepted, rejected, comments } = props;
+  const { positive, negative, accepted, rejected, neutral, comments } = props;
   const fontSize = useSelector((state) => state.accessibility.fontSize);
   const font = useSelector((state) => state.accessibility.font);
 
@@ -49,6 +50,15 @@ const MyCommentsStatus = (props) => {
               </Label>
               <Count font={font} fontSize={fontSize} color={colors.green}>
                 {positive && positive}
+              </Count>
+            </Box>
+            <Box>
+              <Label font={font} fontSize={fontSize}>
+                <img src={Neutral} alt={t('neutral')} />
+                <span>{t('neutral')}</span>
+              </Label>
+              <Count font={font} fontSize={fontSize} color={colors.orange}>
+                {neutral && neutral}
               </Count>
             </Box>
             <Box>

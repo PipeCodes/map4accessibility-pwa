@@ -65,6 +65,8 @@ export const Label = styled.div`
 
   img {
     margin-right: 7px;
+    height: 13px;
+    width: 13px;
   }
 
   span {
