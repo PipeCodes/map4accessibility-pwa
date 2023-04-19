@@ -120,22 +120,22 @@ export const markerIcon = (type) => {
   if (type === 'obstacle') {
     return OtherObstacleIcon;
   }
-  if (type === 'hospital') {
+  if (type === 'health') {
     return HospitalIcon;
   }
-  if (type === 'culture') {
+  if (type === 'tourist_attraction') {
     return CultureIcon;
   }
   if (type === 'lodging') {
     return LodgingIcon;
   }
-  if (type === 'public-service') {
+  if (type === 'local_government_office') {
     return PublicServiceIcon;
   }
   if (type === 'transport') {
     return TransportIcon;
   }
-  if (type === 'food') {
+  if (type === 'restaurant') {
     return FoodIcon;
   }
   return DefaultIcon;
@@ -148,7 +148,7 @@ export const choosePlaceType = (types) => {
   let response;
   types?.forEach((value) => {
     if (food.includes(value)) {
-      return 'restaurant';
+      response = 'restaurant';
     }
     if (publicService.includes(value)) {
       response = 'local_government_office';
@@ -160,10 +160,10 @@ export const choosePlaceType = (types) => {
       response = 'tourist_attraction';
     }
     if (transport.includes(value)) {
-      response = 'parking';
+      response = 'transport';
     }
     if (hospital.includes(value)) {
-      response = 'hospital';
+      response = 'health';
     }
   });
   return response;
