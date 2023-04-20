@@ -38,8 +38,8 @@ export const getMyPlaceEvaluations = () => async (dispatch) => {
       accepted: response?.data?.result?.total_accepted,
       pending: response?.data?.result?.total_pending,
       rejected: response?.data?.result?.total_rejected,
-      negative: response?.data?.result?.total_accessible,
-      positive: response?.data?.result?.total_inaccessible,
+      positive: response?.data?.result?.total_accessible,
+      negative: response?.data?.result?.total_inaccessible,
       neutral: response?.data?.result?.total_neutral,
     };
     if (statusCode === HTTP_STATUS.SUCCESS) {
