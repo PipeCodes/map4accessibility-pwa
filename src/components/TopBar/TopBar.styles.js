@@ -36,6 +36,8 @@ export const TopBarContainer = styled.div`
     background: unset;
     box-shadow: unset;
     border-radius: unset;
+    background-color: ${(props) =>
+      updateValue(colors.primaryColor, props.backgroundColor)};
   }
 
   box-shadow: 0px 2px 4px ${colors.shadow};

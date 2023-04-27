@@ -76,7 +76,7 @@ export const ButtonComments = styled.div`
   border: 1px solid ${colors.lightGrey};
   padding: 10px;
   border-radius: 25px;
-  position: sticky;
+  position: fixed;
   bottom: 20px;
   right: 20px;
   cursor: pointer;
@@ -109,7 +109,7 @@ export const Button = styled.button`
 
 export const Accessible = styled.div`
   margin-right: 15px;
-  align-self: start;
+  align-self: flex-end;
   font-size: ${(props) => updateFontSize(14, props.fontSize)};
   font-family: ${(props) => updateValue('EasyReadingPro', props.font)};
 
@@ -119,20 +119,33 @@ export const Accessible = styled.div`
   .not-accessible {
     color: ${colors.red};
   }
+  .neutral {
+    color: ${colors.orange};
+  }
 
   text-align: right;
   min-width: 100px;
 
-  .up {
-    color: ${colors.green};
-  }
-  .down {
-    color: ${colors.red};
-  }
-  .neutral {
-    color: ${colors.orange};
-    img {
-      width: 12px;
+  .rates {
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+    span {
+      display: flex;
+      gap: 5px;
+      align-self: center;
+    }
+    .up {
+      color: ${colors.green};
+    }
+    .down {
+      color: ${colors.red};
+    }
+    .neutral {
+      color: ${colors.orange};
+      img {
+        width: 12px;
+      }
     }
   }
 `;
