@@ -151,7 +151,8 @@ const PlaceDetailsScreen = (props) => {
           break;
       }
     }
-    return '';
+    setIsAccessible(ACCESSIBILITY.NEUTRAL);
+    return t('neutral');
   }, [place, t]);
 
   const getAccessibilityColor = useMemo(() => {
@@ -163,7 +164,7 @@ const PlaceDetailsScreen = (props) => {
       case ACCESSIBILITY.NEUTRAL:
         return 'neutral';
       default:
-        break;
+        return 'neutral';
     }
   }, [isAccessible]);
 
@@ -182,7 +183,8 @@ const PlaceDetailsScreen = (props) => {
       {place && <ImageSlider photos={getMedia(place)} />}
       <Container>
         <div className="card">
-          <div className="header-row">
+          {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions, jsx-a11y/click-events-have-key-events */}
+          <div className="header-row" onClick={() => openComments()}>
             <TextWrapper>
               <Name fontSize={fontSize} font={font}>
                 {place?.name}
@@ -199,18 +201,18 @@ const PlaceDetailsScreen = (props) => {
             </TextWrapper>
             <Accessible fontSize={fontSize}>
               <span className={getAccessibilityColor}>{getAccessibility}</span>
-              <div>
+              <div className="rates">
                 <span className="up">
-                  <img src={ThumbsUp} alt={t('positive')} />{' '}
-                  {place?.accessible_count || 0}
+                  <img src={ThumbsUp} alt={t('positive')} />
+                  <div>{place?.accessible_count || 0}</div>
                 </span>
-                <span className="neutral ms-2">
-                  <img src={Neutral} alt={t('neutral')} />{' '}
-                  {place?.neutral_count || 0}
+                <span className="neutral">
+                  <img src={Neutral} alt={t('neutral')} />
+                  <div>{place?.neutral_count || 0}</div>
                 </span>
-                <span className="down ms-2">
-                  <img src={ThumbsDown} alt={t('negative')} />{' '}
-                  {place?.inaccessible_count || 0}
+                <span className="down">
+                  <img src={ThumbsDown} alt={t('negative')} />
+                  <div>{place?.inaccessible_count || 0}</div>
                 </span>
               </div>
             </Accessible>
