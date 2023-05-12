@@ -209,18 +209,20 @@ export const getCountryCity = (results, list) => {
   return { country, city };
 };
 
-export const googleMapsLink = (origin, destination) =>
-  typeof origin === 'string'
-    ? 'https://www.google.com/maps/dir/'
-        .concat(origin)
-        .concat('/')
-        .concat(destination)
-    : 'https://www.google.com/maps/dir/'
-        .concat(origin.lat)
-        .concat(',')
-        .concat(origin.lng)
-        .concat('/')
-        .concat(destination);
+export function getGoogleMapsUrl(origin, destination) {
+  const baseUrl = 'https://www.google.com/maps/dir/?api=1';
+  const params = {
+    origin: typeof origin === 'string' ? origin : `${origin.lat},${origin.lng}`,
+    destination,
+    travelmode: 'walking',
+    dir_action: 'navigate',
+    // overview_polyline: 'enc:'.concat(overviewPolyline),
+  };
+  const queryParams = Object.keys(params)
+    .map((key) => `${key}=${params[key]}`)
+    .join('&');
+  return `${baseUrl}&${queryParams}`;
+}
 
 // ///////////////////////////
 //        Images Utils      //
