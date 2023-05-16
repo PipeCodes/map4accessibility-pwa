@@ -6,7 +6,7 @@ import { colors } from '../../constants/colors';
 import ThubsUpIcon from '../../assets/icons/maps/up.svg';
 import ThubsDownIcon from '../../assets/icons/maps/down.svg';
 import NeutralIcon from '../../assets/icons/places/neutral.svg';
-import { googleMapsLink } from '../../helpers/utils';
+import { getGoogleMapsUrl } from '../../helpers/utils';
 import GoToIcon from '../../assets/icons/maps/goTo.svg';
 import RouteIcon from '../../assets/icons/maps/route.svg';
 import Step from '../../components/Step/Step';
@@ -51,7 +51,8 @@ const SingleRouteScreen = (props) => {
   const params = useParams();
   const routesMap = useSelector((state) => state.directions.routes);
   const route = routesMap[params.id];
-  const googleMaps = googleMapsLink(route.origin, route.destination);
+  const googleMaps = getGoogleMapsUrl(route.origin, route.destination);
+
   const steps = route.steps[0];
   return (
     <Page backgroundColor={backgroundColor}>

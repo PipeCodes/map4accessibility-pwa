@@ -46,7 +46,7 @@ const initialValues = {
   surname: '',
   birthDate: '',
   email: '',
-  avatar: '',
+  avatar: null,
 };
 
 const setUser = (user) => {
@@ -92,6 +92,21 @@ const ProfileScreen = (props) => {
       setFormData(setUser(user));
     }
   }, [user]);
+
+  // Sets image source
+  const getImageSource = (user, formData) => {
+    if (user === null && formData === null) {
+      return AvatarImg;
+    }
+
+    if (typeof formData !== 'string' && formData !== null) {
+      return URL.createObjectURL(formData);
+    }
+
+    return process.env.REACT_APP_EXTERNAL_LINKS_BASE.concat(
+      storageUrl(user),
+    ).concat(`/${user}`);
+  };
 
   const compressSendImage = useCallback(
     (image) => {
@@ -212,13 +227,7 @@ const ProfileScreen = (props) => {
           </RankingButton>
           <StackContainer>
             <Avatar
-              src={
-                user.avatar
-                  ? process.env.REACT_APP_EXTERNAL_LINKS_BASE.concat(
-                      storageUrl(user?.avatar),
-                    ).concat(`/${user?.avatar}`)
-                  : AvatarImg
-              }
+              src={getImageSource(user?.avatar, formData?.avatar)}
               alt="avatar"
             />
             <Name fontSize={fontSize}>

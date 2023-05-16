@@ -171,7 +171,10 @@ const PlacePopUpComponent = (props) => {
                 )}
                 {place?.website && (
                   <span>
-                    <img src={Pointer} alt={t('website')} /> {place?.website}
+                    <img src={Pointer} alt={t('website')} />{' '}
+                    <a href={place?.website} target="_blank" rel="noreferrer">
+                      {place?.website}
+                    </a>
                   </span>
                 )}
                 {place?.schedule && (

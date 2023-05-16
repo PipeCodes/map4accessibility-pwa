@@ -51,7 +51,12 @@ export const Rating = styled.div`
 
 export const Icon = styled.div`
   margin-right: 5px;
-  align-self: flex-start;
+  align-self: center;
+
+  img {
+    vertical-align: unset;
+  }
+
   &.neutral-icon {
     background-color: ${colors.white};
     padding: 6px;

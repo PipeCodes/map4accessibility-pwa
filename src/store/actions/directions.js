@@ -32,6 +32,7 @@ export const changeDirections =
           origin: originRoute,
           destination: destinationRoute,
           markers: verifiedMarkers[index],
+          overviewPolyline: route.overview_polyline,
         })),
       });
       return Promise.resolve('Success');
