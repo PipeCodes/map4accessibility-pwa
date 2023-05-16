@@ -211,16 +211,28 @@ const ProfileScreen = (props) => {
             <img src={PodiumIcon} alt="Ranking" />
           </RankingButton>
           <StackContainer>
-            <Avatar
-              src={
-                user.avatar
-                  ? process.env.REACT_APP_EXTERNAL_LINKS_BASE.concat(
-                      storageUrl(user?.avatar),
-                    ).concat(`/${user?.avatar}`)
-                  : AvatarImg
-              }
-              alt="avatar"
-            />
+            {user?.avatar === formData?.avatar ? (
+              <Avatar
+                src={
+                  user.avatar
+                    ? process.env.REACT_APP_EXTERNAL_LINKS_BASE.concat(
+                        storageUrl(user?.avatar),
+                      ).concat(`/${user?.avatar}`)
+                    : AvatarImg
+                }
+                alt="avatar"
+              />
+            ) : (
+              <Avatar
+                src={
+                  formData.avatar
+                    ? URL.createObjectURL(formData?.avatar)
+                    : AvatarImg
+                }
+                alt="avatar"
+              />
+            )}
+
             <Name fontSize={fontSize}>
               {formData.firstName} {formData.surname}
             </Name>
@@ -297,6 +309,8 @@ const ProfileScreen = (props) => {
                     ...prevState,
                     avatar: e.target.files[0],
                   }));
+                  setImageTemp(e.target);
+                  console.log(e);
                 }}
               />
             </div>
