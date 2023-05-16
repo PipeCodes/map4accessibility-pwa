@@ -94,7 +94,7 @@ const ProfileScreen = (props) => {
   }, [user]);
 
   // Sets image source
-  const setImageSource = (user, formData) => {
+  const getImageSource = (user, formData) => {
     if (user === null && formData === null) {
       return AvatarImg;
     }
@@ -227,7 +227,7 @@ const ProfileScreen = (props) => {
           </RankingButton>
           <StackContainer>
             <Avatar
-              src={setImageSource(user?.avatar, formData?.avatar)}
+              src={getImageSource(user?.avatar, formData?.avatar)}
               alt="avatar"
             />
             <Name fontSize={fontSize}>
