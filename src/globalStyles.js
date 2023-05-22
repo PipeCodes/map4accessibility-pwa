@@ -34,6 +34,7 @@ html {
 
   #root {
     height: 100%;
+    position: relative;
   }
 
   body {
