@@ -171,8 +171,8 @@ const RatePlaceScreen = (props) => {
       (Object.keys(answers).filter((key) => key.includes('mandatory'))
         .length !== Object.keys(questions?.mandatory).length &&
         isDefined(params?.google_place_id)) ||
-      commentRef?.current?.value === null ||
-      commentRef?.current?.value?.length < 6
+      (commentRef?.current?.value !== '' &&
+        commentRef?.current?.value?.length < 6)
     ) {
       setError(t('rate_error'));
     } else {
@@ -180,7 +180,7 @@ const RatePlaceScreen = (props) => {
         postPlaceEvaluation(
           accessibility,
           place?.name,
-          commentRef.current.value,
+          commentRef?.current?.value,
           answers,
           place?.latitude,
           place?.longitude,

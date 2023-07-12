@@ -1,5 +1,5 @@
-import moment from "moment";
-import {REGEX_DATE, REGEX_PASSWORD, REGEX_EMAIL} from '../../constants';
+import moment from 'moment';
+import { REGEX_DATE, REGEX_PASSWORD, REGEX_EMAIL } from '../../constants';
 
 export const validateFirstName = (firstName) => {
   let error = null;
@@ -22,16 +22,19 @@ export const validateSurname = (surname) => {
 };
 
 export const validateBirthDate = (birthDate) => {
-
-  const startBirthDateValidation = moment().subtract(100, "years");
-  const endBirthDateValidation = moment().subtract(16, "years");
+  const startBirthDateValidation = moment().subtract(100, 'years');
+  const endBirthDateValidation = moment().subtract(16, 'years');
 
   let error = null;
-  if (!birthDate) {
-    error = 'required_birthDate';
-  } else if (!REGEX_DATE.test(birthDate)) {
+  if (!REGEX_DATE.test(birthDate) && birthDate !== '') {
     error = 'invalid_birthDate';
-  } else if (!moment(birthDate).isBetween(startBirthDateValidation, endBirthDateValidation)) {
+  } else if (
+    birthDate &&
+    !moment(birthDate).isBetween(
+      startBirthDateValidation,
+      endBirthDateValidation,
+    )
+  ) {
     error = 'invalid_is_between_birthDate';
   }
   return error;

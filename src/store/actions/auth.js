@@ -1,3 +1,4 @@
+import moment from 'moment';
 import axios, { Endpoints, getErrorMessage } from '../../services/api';
 import {
   AUTH_START,
@@ -64,7 +65,7 @@ export const signup =
     const body = {
       name,
       surname,
-      birthdate,
+      ...(moment(birthdate).isValid() && { birthdate }),
       email: email?.trim().toLowerCase(),
       password,
       terms_accepted: termsAccepted,

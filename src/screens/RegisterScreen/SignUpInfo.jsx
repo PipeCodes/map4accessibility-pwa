@@ -178,7 +178,6 @@ const SignUpInfo = (props) => {
 
       <InputLabel fontSize={fontSize} font={font}>
         {t('birth_date')}
-        <span>*</span>
       </InputLabel>
       <CustomInput
         fontSize={fontSize}
