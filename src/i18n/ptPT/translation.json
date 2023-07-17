@@ -163,5 +163,6 @@
   "show_more": "Mostrar Mais",
   "place_types": "Tipos de locais",
   "disability_types": "Tipos de deficiência",
-  "close": "Sair"
+  "close": "Sair",
+  "birthdate_not_set": "Data de nascimento"
 }

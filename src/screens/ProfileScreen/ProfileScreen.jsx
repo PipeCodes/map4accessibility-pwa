@@ -344,7 +344,9 @@ const ProfileScreen = (props) => {
             style={{ minWidth: 'intrinsic' }}
             placeholder={t('birth_date_placeholder')}
             type={editActive ? 'date' : 'text'}
-            value={formData.birthDate}
+            value={
+              formData.birthDate ? formData.birthDate : t('birthdate_not_set')
+            }
             name="birthDate"
             min={moment().subtract(100, 'years').format('YYYY-MM-DD')}
             max={moment().subtract(16, 'years').format('yyyy-MM-DD')}

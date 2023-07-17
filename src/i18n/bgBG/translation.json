@@ -156,5 +156,6 @@
   "show_more": "Show More",
   "place_types": "Place types",
   "disability_types": "Disability types",
-  "close": "Close"
+  "close": "Close",
+  "birthdate_not_set": "Birthdate not set"
 }
