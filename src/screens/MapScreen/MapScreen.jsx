@@ -32,6 +32,7 @@ import {
   ButtonCreate,
   ButtonDirections,
   ButtonLocation,
+  ToolTip,
 } from './MapScreen.styles';
 import { GOOGLE_MAPS_OPTIONS } from '../../constants';
 import MapZoom from '../../components/MapZoom/MapZoom';
@@ -322,6 +323,9 @@ const MapScreen = (props) => {
         }}
       />
       <ButtonsContainer>
+        <ToolTip>
+          <span>{add ? t('click_map') : t('add_new')}</span>
+        </ToolTip>
         <ButtonCreate type="button" add={add} onClick={() => openAddPlace()}>
           <img src={AddIcon} alt={t('add_place')} />
         </ButtonCreate>

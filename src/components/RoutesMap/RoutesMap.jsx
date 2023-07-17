@@ -288,16 +288,18 @@ const Map = (props) => {
       <Routes backgroundColor={backgroundColor}>
         {routes &&
           routes.length > 0 &&
-          routes.map((route) => (
-            <RouteOption
-              route={route}
-              setRoute={(id) => changeRoute(id)}
-              keyProp={route.id}
-              key={route.id}
-              active={selectedRoute === route.id}
-              history={history}
-            />
-          ))}
+          routes
+            ?.sort((a, b) => parseFloat(a?.dislikes) - parseFloat(b?.dislikes))
+            ?.map((route) => (
+              <RouteOption
+                route={route}
+                setRoute={(id) => changeRoute(id)}
+                keyProp={route.id}
+                key={route.id}
+                active={selectedRoute === route.id}
+                history={history}
+              />
+            ))}
       </Routes>
     </div>
   );
