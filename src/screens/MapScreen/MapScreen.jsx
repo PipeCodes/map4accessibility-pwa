@@ -8,7 +8,7 @@ import {
   MarkerClusterer,
 } from '@react-google-maps/api';
 import { Spinner } from 'react-bootstrap';
-import { debounce } from '../../helpers/utils';
+import { debounce, getMarkerColor } from '../../helpers/utils';
 import {
   getPlacesRadiusMarkers,
   getPlace,
@@ -190,6 +190,15 @@ const MapScreen = (props) => {
     setPopUp(true);
   };
 
+  const markerColor = (marker) => {
+    const color = getMarkerColor({
+      green: marker?.accessible_count,
+      yellow: marker?.neutral_count,
+      red: marker?.inaccessible_count,
+    });
+    return color;
+  };
+
   // Gets all Markers
   useEffect(() => {
     if (center && radius) {
@@ -284,6 +293,7 @@ const MapScreen = (props) => {
                 {(clusterer) =>
                   markers?.map((marker) => (
                     <CustomMarker
+                      markerColor={markerColor(marker)}
                       marker={marker}
                       key={marker.id || marker.google_place_id}
                       clusterer={clusterer}

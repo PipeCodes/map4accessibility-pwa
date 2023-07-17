@@ -2,10 +2,10 @@ import React, { useMemo } from 'react';
 import { Marker } from '@react-google-maps/api';
 import { choosePlaceType, markerIcon } from '../../helpers/utils';
 
-const CustomMarker = ({ marker, onClick, clusterer, isEvaluated }) => {
+const CustomMarker = ({ marker, onClick, clusterer, markerColor }) => {
   const icon = useMemo(
-    () => markerIcon(choosePlaceType(marker?.place_type), isEvaluated),
-    [marker, isEvaluated],
+    () => markerIcon(choosePlaceType(marker?.place_type), markerColor),
+    [marker, markerColor],
   );
 
   const coords = {
