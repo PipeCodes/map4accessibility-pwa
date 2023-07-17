@@ -130,6 +130,8 @@
   "rejected": "Rejeitado",
   "pending": "Pendente",
   "add_place": "Adicionar Local",
+  "add_new": "Adicionar Novo",
+  "click_map": "Clicar no mapa para marcar",
   "name": "Nome",
   "type": "Tipo",
   "pedestrian_cross": "Passadeira",

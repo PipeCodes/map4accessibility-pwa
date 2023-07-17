@@ -218,7 +218,10 @@ const RatePlaceScreen = (props) => {
         .finally(() => {
           history.push(routes.MAP.path, {
             search: {
-              location: { lat: place?.latitude, lng: place?.longitude },
+              location: {
+                lat: Number(place?.latitude),
+                lng: Number(place?.longitude),
+              },
             },
           });
         });
