@@ -214,6 +214,13 @@ const RatePlaceScreen = (props) => {
         .catch((err) => {
           // eslint-disable-next-line no-undef
           alert(err);
+        })
+        .finally(() => {
+          history.push(routes.MAP.path, {
+            search: {
+              location: { lat: place?.latitude, lng: place?.longitude },
+            },
+          });
         });
     }
   };

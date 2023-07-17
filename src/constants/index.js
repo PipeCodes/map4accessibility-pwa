@@ -51,3 +51,10 @@ export const ACCESSIBILITY = {
   NEUTRAL: 1,
   NOT_ACCESSIBLE: 0,
 };
+
+export const MARKER_COLOR = {
+  DEFAULT: 'default',
+  GREEN: 'green',
+  YELLOW: 'yellow',
+  RED: 'red',
+};
