@@ -249,6 +249,15 @@ const RatePlaceScreen = (props) => {
       history.replace(routes.MAP.path);
     } else if (history?.location?.state?.ratePlace) {
       history.go(-2);
+    } else if (history?.location?.state?.placePopup) {
+      history.push(routes.MAP.path, {
+        returnToMap: {
+          location: {
+            lat: parseFloat(place?.latitude),
+            lng: parseFloat(place?.longitude),
+          },
+        },
+      });
     } else {
       history.goBack();
     }

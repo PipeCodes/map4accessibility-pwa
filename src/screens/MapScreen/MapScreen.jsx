@@ -117,6 +117,8 @@ const MapScreen = (props) => {
         .then((position) => {
           if (history?.location?.state?.search?.location) {
             setLocation(history?.location?.state?.search?.location);
+          } else if (history?.location?.state?.returnToMap) {
+            setLocation(history?.location?.state?.returnToMap?.location);
           } else {
             setLocation(position);
           }
@@ -127,7 +129,12 @@ const MapScreen = (props) => {
           alert(error);
         });
     }
-  }, [isLoaded, history?.location?.state?.search?.location, t]);
+  }, [
+    isLoaded,
+    history?.location?.state?.search?.location,
+    t,
+    history?.location?.state?.returnToMap,
+  ]);
 
   // If coords are selected opens Add Place Screen
   useEffect(() => {
