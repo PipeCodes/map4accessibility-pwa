@@ -130,6 +130,8 @@
   "rejected": "Rejected",
   "pending": "Pending",
   "add_place": "Add Place",
+  "add_new": "Add New",
+  "click_map": "Click on map to mark",
   "name": "Name",
   "type": "Type",
   "pedestrian_cross": "Pedestrian Cross",
