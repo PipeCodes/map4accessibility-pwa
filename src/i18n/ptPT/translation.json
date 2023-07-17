@@ -65,6 +65,11 @@
   "visual_disability": "Deficiência visual",
   "hearing_disability": "Deficiência auditiva",
   "intellectual_disability": "Deficiência intelectual",
+  "motor": "Motora",
+  "visual": "Visual",
+  "hearing": "Auditiva",
+  "intellectual": "Intelectual",
+  "no_disabilities": "Nenhuma",
   "required_firstName": "Nome é um campo obrigatório",
   "required_surname": "Apelido é um campo obrigatório",
   "required_birthDate": "Data de Nascimento é um campo obrigatório",
@@ -163,5 +168,6 @@
   "show_more": "Mostrar Mais",
   "place_types": "Tipos de locais",
   "disability_types": "Tipos de deficiência",
-  "close": "Sair"
+  "close": "Sair",
+  "birthdate_not_set": "Data de nascimento"
 }

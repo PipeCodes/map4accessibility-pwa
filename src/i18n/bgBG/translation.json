@@ -65,6 +65,11 @@
   "visual_disability": "Visual disability",
   "hearing_disability": "Hearing disability",
   "intellectual_disability": "Intellectual disability",
+  "motor": "Motor",
+  "visual": "Visual",
+  "hearing": "Hearing",
+  "intellectual": "Intellectual",
+  "no_disabilities": "None",
   "required_firstName": "First Name is required",
   "required_surname": "Surname is required",
   "required_birthDate": "Birth Date is required",
@@ -156,5 +161,6 @@
   "show_more": "Show More",
   "place_types": "Place types",
   "disability_types": "Disability types",
-  "close": "Close"
+  "close": "Close",
+  "birthdate_not_set": "Birthdate not set"
 }
