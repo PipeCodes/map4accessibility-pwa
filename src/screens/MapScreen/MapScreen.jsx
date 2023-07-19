@@ -83,6 +83,7 @@ const MapScreen = (props) => {
   const [location, setLocation] = useState(null);
   const [coords, setCoords] = useState(null);
   const [add, setAdd] = useState(null);
+  const [pinMarker, setPinMarker] = useState(null);
   const [radius, setRadius] = useState(null);
 
   const { isLoaded } = useJsApiLoader(GOOGLE_MAPS_OPTIONS);
@@ -139,7 +140,11 @@ const MapScreen = (props) => {
   // If coords are selected opens Add Place Screen
   useEffect(() => {
     if (coords) {
-      history.push(routes.ADD_PLACE.path, coords);
+      setPinMarker(coords);
+      setTimeout(() => {
+        setPinMarker(null);
+        history.push(routes.ADD_PLACE.path, coords);
+      }, 2000);
     }
   }, [coords, history, routes.ADD_PLACE.path]);
 
@@ -285,31 +290,41 @@ const MapScreen = (props) => {
               }}
               options={mapOptions}
             >
-              <MarkerClusterer
-                autoPan={false}
-                options={options}
-                averageCenter
-                styles={[
-                  {
-                    url: ClusterImg,
-                    height: 50,
-                    lineHeight: 35,
-                    width: 50,
-                  },
-                ]}
-              >
-                {(clusterer) =>
-                  markers?.map((marker) => (
-                    <CustomMarker
-                      markerColor={markerColor(marker)}
-                      marker={marker}
-                      key={marker.id || marker.google_place_id}
-                      clusterer={clusterer}
-                      onClick={() => openPlaceInfo(marker)}
-                    />
-                  ))
-                }
-              </MarkerClusterer>
+              <>
+                <MarkerClusterer
+                  autoPan={false}
+                  options={options}
+                  averageCenter
+                  styles={[
+                    {
+                      url: ClusterImg,
+                      height: 50,
+                      lineHeight: 35,
+                      width: 50,
+                    },
+                  ]}
+                >
+                  {(clusterer) =>
+                    markers?.map((marker) => (
+                      <CustomMarker
+                        markerColor={markerColor(marker)}
+                        marker={marker}
+                        key={marker.id || marker.google_place_id}
+                        clusterer={clusterer}
+                        onClick={() => openPlaceInfo(marker)}
+                      />
+                    ))
+                  }
+                </MarkerClusterer>
+                {pinMarker && (
+                  <CustomMarker
+                    marker={{
+                      latitude: pinMarker?.lat,
+                      longitude: pinMarker?.lng,
+                    }}
+                  />
+                )}
+              </>
             </GoogleMap>
           </div>
         )}
