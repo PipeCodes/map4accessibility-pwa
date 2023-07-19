@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { GoogleMap, DirectionsRenderer } from '@react-google-maps/api';
 import { useSelector, useDispatch } from 'react-redux';
-import { Routes } from './RoutesMap.styles';
+import { Container, Routes } from './RoutesMap.styles';
 import { getPlacesRadiusMarkers } from '../../store/actions/places';
 import {
   changeRouteId,
@@ -220,7 +220,7 @@ const Map = (props) => {
   }
 
   return (
-    <div
+    <Container
       style={{
         width: '100vw',
         height: '100%',
@@ -237,9 +237,15 @@ const Map = (props) => {
         options={{
           zoomControl: false,
           streetViewControl: false,
-          mapTypeControl: false,
+          mapTypeControl: true,
           fullscreenControl: false,
           disableDefaultUI: true,
+          mapTypeControlOptions: {
+            // eslint-disable-next-line no-undef
+            style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+            // eslint-disable-next-line no-undef
+            position: google.maps.ControlPosition.TOP_LEFT,
+          },
           styles: [
             {
               featureType: 'poi',
@@ -288,20 +294,18 @@ const Map = (props) => {
       <Routes backgroundColor={backgroundColor}>
         {routes &&
           routes.length > 0 &&
-          routes
-            ?.sort((a, b) => parseFloat(a?.dislikes) - parseFloat(b?.dislikes))
-            ?.map((route) => (
-              <RouteOption
-                route={route}
-                setRoute={(id) => changeRoute(id)}
-                keyProp={route.id}
-                key={route.id}
-                active={selectedRoute === route.id}
-                history={history}
-              />
-            ))}
+          routes.map((route) => (
+            <RouteOption
+              route={route}
+              setRoute={(id) => changeRoute(id)}
+              keyProp={route.id}
+              key={route.id}
+              active={selectedRoute === route.id}
+              history={history}
+            />
+          ))}
       </Routes>
-    </div>
+    </Container>
   );
 };
 

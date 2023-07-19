@@ -1,6 +1,14 @@
 import styled from 'styled-components';
 import { updateValue } from '../../helpers/utils';
 
+export const Container = styled.div`
+  .gmnoprint {
+    ul {
+      display: none;
+    }
+  }
+`;
+
 export const Routes = styled.div`
   background-color: ${(props) => updateValue('white', props.backgroundColor)};
   align-items: center;
