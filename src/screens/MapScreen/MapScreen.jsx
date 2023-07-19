@@ -87,23 +87,6 @@ const MapScreen = (props) => {
 
   const { isLoaded } = useJsApiLoader(GOOGLE_MAPS_OPTIONS);
 
-  // Map Options
-  const mapOptions = {
-    zoomControl: false,
-    streetViewControl: false,
-    mapTypeControl: false,
-    fullscreenControl: false,
-    disableDefaultUI: true,
-    styles: [
-      {
-        featureType: 'poi',
-        elementType: 'labels',
-        stylers: [{ visibility: 'off' }],
-        // https://developers.google.com/maps/documentation/javascript/examples/event-poi
-      },
-    ],
-  };
-
   // Cluster Options
   const options = {
     maxZoom: 15,
@@ -283,7 +266,27 @@ const MapScreen = (props) => {
               onLoad={(map) => {
                 setMap(map);
               }}
-              options={mapOptions}
+              options={{
+                zoomControl: false,
+                streetViewControl: false,
+                mapTypeControl: true,
+                fullscreenControl: false,
+                disableDefaultUI: true,
+                mapTypeControlOptions: {
+                  // eslint-disable-next-line no-undef
+                  style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+                  // eslint-disable-next-line no-undef
+                  position: google.maps.ControlPosition.TOP_LEFT,
+                },
+                styles: [
+                  {
+                    featureType: 'poi',
+                    elementType: 'labels',
+                    stylers: [{ visibility: 'off' }],
+                    // https://developers.google.com/maps/documentation/javascript/examples/event-poi
+                  },
+                ],
+              }}
             >
               <MarkerClusterer
                 autoPan={false}

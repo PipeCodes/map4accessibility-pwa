@@ -46,6 +46,12 @@ export const Container = styled.div`
     height: 50px;
     width: 50px;
   }
+  .gmnoprint {
+    margin-top: 100px !important;
+    ul {
+      display: none;
+    }
+  }
 `;
 
 export const ButtonsContainer = styled.div`
