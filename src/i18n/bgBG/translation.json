@@ -164,5 +164,6 @@
   "place_types": "Place types",
   "disability_types": "Disability types",
   "close": "Close",
-  "birthdate_not_set": "Birthdate not set"
+  "birthdate_not_set": "Birthdate not set",
+  "confirm_delete": "Are you sure you wish to delete this item?"
 }

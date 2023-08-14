@@ -7,14 +7,9 @@ import { StyledSelect } from './CustomSelect.styles';
 const { Option } = components;
 const IconOption = (props) => {
   const { data } = props;
-  const { icon, label } = data;
+  const { label } = data;
 
-  return (
-    <Option {...props}>
-      <img src={icon} style={{ height: 16, marginRight: 7 }} alt={label} />
-      {label}
-    </Option>
-  );
+  return <Option {...props}>{label}</Option>;
 };
 
 const CustomSelect = (props) => {
