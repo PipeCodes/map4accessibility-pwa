@@ -5,7 +5,6 @@ import PWAPrompt from 'react-ios-pwa-prompt';
 import GlobalStyles from './globalStyles';
 import GlobalRoutes from './routes/routes';
 import DarkOverlay from './components/DarkOverlay/DarkOverlay';
-import ExitApp from './components/ExitApp/ExitApp';
 
 const App = () => {
   const { t } = useTranslation();
@@ -35,7 +34,6 @@ const App = () => {
         textColor={textColor}
       />
       <DarkOverlay lightsOffMode={lightsOffMode} />
-      <ExitApp />
       <GlobalRoutes />
     </>
   );

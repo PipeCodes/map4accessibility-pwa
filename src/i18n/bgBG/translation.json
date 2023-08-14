@@ -65,6 +65,11 @@
   "visual_disability": "Visual disability",
   "hearing_disability": "Hearing disability",
   "intellectual_disability": "Intellectual disability",
+  "motor": "Motor",
+  "visual": "Visual",
+  "hearing": "Hearing",
+  "intellectual": "Intellectual",
+  "no_disabilities": "None",
   "required_firstName": "First Name is required",
   "required_surname": "Surname is required",
   "required_birthDate": "Birth Date is required",
@@ -108,7 +113,7 @@
   "rate_place": "How would you rate this place?",
   "accessible": "Accessible",
   "not_accessible": "Not Accessible",
-  "neutral": "Neutral",
+  "neutral": "Partially Acessible",
   "questions": "Questions",
   "mandatory_questions": "Mandatory Questions",
   "optional_questions": "Optional Questions",
@@ -125,6 +130,8 @@
   "rejected": "Rejected",
   "pending": "Pending",
   "add_place": "Add Place",
+  "add_new": "Add New",
+  "click_map": "Click on map to mark",
   "name": "Name",
   "type": "Type",
   "groceries": "Groceries",
@@ -156,5 +163,6 @@
   "show_more": "Show More",
   "place_types": "Place types",
   "disability_types": "Disability types",
-  "close": "Close"
+  "close": "Close",
+  "birthdate_not_set": "Birthdate not set"
 }

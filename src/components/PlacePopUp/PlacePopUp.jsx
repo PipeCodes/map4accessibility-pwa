@@ -77,6 +77,12 @@ const PlacePopUpComponent = (props) => {
     );
   };
 
+  const openComments = () => {
+    history.push(`/rate-place/${place.id}/${place.google_place_id}`, {
+      placePopup: true,
+    });
+  };
+
   // Gets Place Media
   const getMedia = (place) => {
     if (place?.media) {
@@ -131,7 +137,8 @@ const PlacePopUpComponent = (props) => {
                   <span className={getAccessibilityColor}>
                     {getAccessibility}
                   </span>
-                  <div className="rates">
+                  {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions, jsx-a11y/click-events-have-key-events */}
+                  <div className="rates" onClick={() => openComments()}>
                     <span className="up">
                       <img src={ThumbsUp} alt={t('positive')} />
                       <div>{place?.accessible_count || 0}</div>

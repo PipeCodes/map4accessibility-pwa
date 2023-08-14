@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import Compressor from 'compressorjs';
+import i18n from '../../i18n';
 import { updateProfile, getUser, logout } from '../../store/actions/auth';
 import { colors } from '../../constants/colors';
 import LogoutIcon from '../../assets/icons/logout.svg';
@@ -46,16 +47,28 @@ const initialValues = {
   surname: '',
   birthDate: '',
   email: '',
+  disabilities: '',
   avatar: null,
 };
 
 const setUser = (user) => {
+  let disabilitiesList;
+  if (user.disabilities.length > 0) {
+    disabilitiesList = user.disabilities.map((disability) =>
+      i18n.t(disability),
+    );
+  }
+  const disabilitiesText = disabilitiesList
+    ? disabilitiesList.join(', ')
+    : i18n.t('no_disabilities');
+
   const values = {
     firstName: user.name,
     surname: user.surname,
     birthDate: user.birthdate,
     email: user.email,
     avatar: user.avatar,
+    disabilities: disabilitiesText,
   };
   return values;
 };
@@ -344,7 +357,9 @@ const ProfileScreen = (props) => {
             style={{ minWidth: 'intrinsic' }}
             placeholder={t('birth_date_placeholder')}
             type={editActive ? 'date' : 'text'}
-            value={formData.birthDate}
+            value={
+              formData.birthDate ? formData.birthDate : t('birthdate_not_set')
+            }
             name="birthDate"
             min={moment().subtract(100, 'years').format('YYYY-MM-DD')}
             max={moment().subtract(16, 'years').format('yyyy-MM-DD')}
@@ -361,6 +376,27 @@ const ProfileScreen = (props) => {
               {t(formErrors.birthDate)}
             </Error>
           )}
+
+          <InputLabel fontSize={fontSize} font={font}>
+            {t('disability_types')}
+          </InputLabel>
+          <CustomInput
+            fontSize={fontSize}
+            font={font}
+            style={{}}
+            placeholder={t('disability_types')}
+            type="text"
+            value={formData.disabilities}
+            name="disabilities"
+            readOnly
+            onChange={(e) => {
+              setFormData((prevState) => ({
+                ...prevState,
+                disabilities: e.target.value,
+              }));
+            }}
+          />
+
           {editActive && (
             <CustomButton
               style={{

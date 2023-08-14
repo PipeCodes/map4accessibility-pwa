@@ -171,8 +171,8 @@ const RatePlaceScreen = (props) => {
       (Object.keys(answers).filter((key) => key.includes('mandatory'))
         .length !== Object.keys(questions?.mandatory).length &&
         isDefined(params?.google_place_id)) ||
-      commentRef?.current?.value === null ||
-      commentRef?.current?.value?.length < 6
+      (commentRef?.current?.value !== '' &&
+        commentRef?.current?.value?.length < 6)
     ) {
       setError(t('rate_error'));
     } else {
@@ -180,7 +180,7 @@ const RatePlaceScreen = (props) => {
         postPlaceEvaluation(
           accessibility,
           place?.name,
-          commentRef.current.value,
+          commentRef?.current?.value,
           answers,
           place?.latitude,
           place?.longitude,
@@ -214,6 +214,16 @@ const RatePlaceScreen = (props) => {
         .catch((err) => {
           // eslint-disable-next-line no-undef
           alert(err);
+        })
+        .finally(() => {
+          history.push(routes.MAP.path, {
+            search: {
+              location: {
+                lat: Number(place?.latitude),
+                lng: Number(place?.longitude),
+              },
+            },
+          });
         });
     }
   };
@@ -239,6 +249,15 @@ const RatePlaceScreen = (props) => {
       history.replace(routes.MAP.path);
     } else if (history?.location?.state?.ratePlace) {
       history.go(-2);
+    } else if (history?.location?.state?.placePopup) {
+      history.push(routes.MAP.path, {
+        returnToMap: {
+          location: {
+            lat: parseFloat(place?.latitude),
+            lng: parseFloat(place?.longitude),
+          },
+        },
+      });
     } else {
       history.goBack();
     }

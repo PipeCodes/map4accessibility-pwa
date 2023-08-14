@@ -8,7 +8,7 @@ import {
   MarkerClusterer,
 } from '@react-google-maps/api';
 import { Spinner } from 'react-bootstrap';
-import { debounce } from '../../helpers/utils';
+import { debounce, getMarkerColor } from '../../helpers/utils';
 import {
   getPlacesRadiusMarkers,
   getPlace,
@@ -32,6 +32,7 @@ import {
   ButtonCreate,
   ButtonDirections,
   ButtonLocation,
+  ToolTip,
 } from './MapScreen.styles';
 import { GOOGLE_MAPS_OPTIONS } from '../../constants';
 import MapZoom from '../../components/MapZoom/MapZoom';
@@ -82,26 +83,10 @@ const MapScreen = (props) => {
   const [location, setLocation] = useState(null);
   const [coords, setCoords] = useState(null);
   const [add, setAdd] = useState(null);
+  const [pinMarker, setPinMarker] = useState(null);
   const [radius, setRadius] = useState(null);
 
   const { isLoaded } = useJsApiLoader(GOOGLE_MAPS_OPTIONS);
-
-  // Map Options
-  const mapOptions = {
-    zoomControl: false,
-    streetViewControl: false,
-    mapTypeControl: false,
-    fullscreenControl: false,
-    disableDefaultUI: true,
-    styles: [
-      {
-        featureType: 'poi',
-        elementType: 'labels',
-        stylers: [{ visibility: 'off' }],
-        // https://developers.google.com/maps/documentation/javascript/examples/event-poi
-      },
-    ],
-  };
 
   // Cluster Options
   const options = {
@@ -116,6 +101,8 @@ const MapScreen = (props) => {
         .then((position) => {
           if (history?.location?.state?.search?.location) {
             setLocation(history?.location?.state?.search?.location);
+          } else if (history?.location?.state?.returnToMap) {
+            setLocation(history?.location?.state?.returnToMap?.location);
           } else {
             setLocation(position);
           }
@@ -126,12 +113,21 @@ const MapScreen = (props) => {
           alert(error);
         });
     }
-  }, [isLoaded, history?.location?.state?.search?.location, t]);
+  }, [
+    isLoaded,
+    history?.location?.state?.search?.location,
+    t,
+    history?.location?.state?.returnToMap,
+  ]);
 
   // If coords are selected opens Add Place Screen
   useEffect(() => {
     if (coords) {
-      history.push(routes.ADD_PLACE.path, coords);
+      setPinMarker(coords);
+      setTimeout(() => {
+        setPinMarker(null);
+        history.push(routes.ADD_PLACE.path, coords);
+      }, 2000);
     }
   }, [coords, history, routes.ADD_PLACE.path]);
 
@@ -188,6 +184,15 @@ const MapScreen = (props) => {
       dispatch(getPlace(marker?.id));
     }
     setPopUp(true);
+  };
+
+  const markerColor = (marker) => {
+    const color = getMarkerColor({
+      green: marker?.accessible_count,
+      yellow: marker?.neutral_count,
+      red: marker?.inaccessible_count,
+    });
+    return color;
   };
 
   // Gets all Markers
@@ -266,32 +271,63 @@ const MapScreen = (props) => {
               onLoad={(map) => {
                 setMap(map);
               }}
-              options={mapOptions}
-            >
-              <MarkerClusterer
-                autoPan={false}
-                options={options}
-                averageCenter
-                styles={[
+              options={{
+                zoomControl: false,
+                streetViewControl: false,
+                mapTypeControl: true,
+                fullscreenControl: false,
+                disableDefaultUI: true,
+                mapTypeControlOptions: {
+                  // eslint-disable-next-line no-undef
+                  style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+                  // eslint-disable-next-line no-undef
+                  position: google.maps.ControlPosition.TOP_LEFT,
+                },
+                styles: [
                   {
-                    url: ClusterImg,
-                    height: 50,
-                    lineHeight: 35,
-                    width: 50,
+                    featureType: 'poi',
+                    elementType: 'labels',
+                    stylers: [{ visibility: 'off' }],
+                    // https://developers.google.com/maps/documentation/javascript/examples/event-poi
                   },
-                ]}
-              >
-                {(clusterer) =>
-                  markers?.map((marker) => (
-                    <CustomMarker
-                      marker={marker}
-                      key={marker.id || marker.google_place_id}
-                      clusterer={clusterer}
-                      onClick={() => openPlaceInfo(marker)}
-                    />
-                  ))
-                }
-              </MarkerClusterer>
+                ],
+              }}
+            >
+              <>
+                <MarkerClusterer
+                  autoPan={false}
+                  options={options}
+                  averageCenter
+                  styles={[
+                    {
+                      url: ClusterImg,
+                      height: 50,
+                      lineHeight: 35,
+                      width: 50,
+                    },
+                  ]}
+                >
+                  {(clusterer) =>
+                    markers?.map((marker) => (
+                      <CustomMarker
+                        markerColor={markerColor(marker)}
+                        marker={marker}
+                        key={marker.id || marker.google_place_id}
+                        clusterer={clusterer}
+                        onClick={() => openPlaceInfo(marker)}
+                      />
+                    ))
+                  }
+                </MarkerClusterer>
+                {pinMarker && (
+                  <CustomMarker
+                    marker={{
+                      latitude: pinMarker?.lat,
+                      longitude: pinMarker?.lng,
+                    }}
+                  />
+                )}
+              </>
             </GoogleMap>
           </div>
         )}
@@ -305,6 +341,9 @@ const MapScreen = (props) => {
         }}
       />
       <ButtonsContainer>
+        <ToolTip>
+          <span>{add ? t('click_map') : t('add_new')}</span>
+        </ToolTip>
         <ButtonCreate type="button" add={add} onClick={() => openAddPlace()}>
           <img src={AddIcon} alt={t('add_place')} />
         </ButtonCreate>

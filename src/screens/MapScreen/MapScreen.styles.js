@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { colors } from '../../constants/colors';
-import { updateValue } from '../../helpers/utils';
+import { updateFontSize, updateValue } from '../../helpers/utils';
 
 export const Page = styled.div`
   display: flex;
@@ -45,6 +45,12 @@ export const Container = styled.div`
     align-self: center;
     height: 50px;
     width: 50px;
+  }
+  .gmnoprint {
+    margin-top: 100px !important;
+    ul {
+      display: none;
+    }
   }
 `;
 
@@ -104,4 +110,15 @@ export const ButtonLocation = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
+`;
+
+export const ToolTip = styled.div`
+  position: absolute;
+  bottom: 50px;
+  border: 1px solid ${colors.lightGrey};
+  padding: 5px;
+  border-radius: 3px;
+  background-color: ${colors.background};
+  font-size: ${(props) => updateFontSize(14, props.fontSize)};
+  font-family: ${(props) => updateValue('EasyReadingPro', props.font)};
 `;
