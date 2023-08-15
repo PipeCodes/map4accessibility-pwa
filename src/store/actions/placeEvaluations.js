@@ -11,6 +11,9 @@ import {
   POST_PLACE_EVALUATIONS_SUCCESS,
   POST_PLACE_EVALUATIONS_START,
   POST_PLACE_EVALUATIONS_ERROR,
+  DELETE_PLACE_EVALUATIONS_SUCCESS,
+  DELETE_PLACE_EVALUATIONS_START,
+  DELETE_PLACE_EVALUATIONS_ERROR,
 } from './types';
 
 // Gets the user's place Evaluations
@@ -113,6 +116,40 @@ export const postPlaceEvaluation =
       return Promise.reject(getErrorMessage(error, i18n.t('something_wrong')));
     }
   };
+
+// Deletes a user evaluation
+export const deletePlaceEvaluation = (commentToRemove) => async (dispatch) => {
+  dispatch({ type: DELETE_PLACE_EVALUATIONS_START });
+
+  const body = {
+    commentId: commentToRemove.id,
+  };
+  const config = {
+    headers: {
+      Authorization: `Bearer ${getAuthToken()}`,
+    },
+  };
+
+  try {
+    const response = await axios.delete(
+      Endpoints.PLACE_EVALUTATIONS,
+      body,
+      config,
+    );
+
+    const statusCode = response.status;
+
+    if (statusCode === HTTP_STATUS.SUCCESS) {
+      if (!media) {
+        dispatch({ type: DELETE_PLACE_EVALUATIONS_SUCCESS });
+      }
+      return Promise.resolve(response?.data?.result);
+    }
+  } catch (error) {
+    dispatch({ type: DELETE_PLACE_EVALUATIONS_ERROR });
+    return Promise.reject(getErrorMessage(error, i18n.t('something_wrong')));
+  }
+};
 
 // Sends the media for the new place evaluation to the API
 export const postPlaceEvaluationMedia = (media, id) => async (dispatch) => {

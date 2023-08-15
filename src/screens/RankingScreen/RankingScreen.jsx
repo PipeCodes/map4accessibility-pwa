@@ -36,7 +36,7 @@ const RankingScreen = (props) => {
   );
   const [ascDescActive, setAscDescActive] = useState(false);
   const [sliderActive, setSliderActive] = useState(false);
-  const [country, setCountry] = useState(countries[0]);
+  const [country, setCountry] = useState(countries[139]);
   const ranking = useSelector((state) => state.placesRanking.ranking);
   const loading = useSelector((state) => state.placesRanking.loading);
 
@@ -49,15 +49,14 @@ const RankingScreen = (props) => {
         alert(error),
       );
     } else if (country) {
-      dispatch(getPlacesCountry(country.label, order));
+      dispatch(getPlacesCountry(country.value, order));
     }
   }, [sliderActive, country, ascDescActive, dispatch]);
 
   const filterCountries = useMemo(() => {
     const formatted = countries.map((option) => ({
-      value: option.id,
+      value: option.value,
       label: t(option.label),
-      icon: option.icon,
     }));
 
     return [...formatted];
@@ -126,7 +125,7 @@ const RankingScreen = (props) => {
 
           <CustomSelect
             style={sliderActive ? { display: 'none' } : { width: '100%' }}
-            defaultValue={filterCountries[0]}
+            defaultValue={filterCountries[139]}
             options={filterCountries}
             onChange={(value) => setCountry(value)}
           />

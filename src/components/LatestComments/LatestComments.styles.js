@@ -97,6 +97,12 @@ export const Name = styled.div`
   font-family: ${(props) => updateValue('EasyReadingPro', props.font)};
 `;
 
+export const RemoveIcon = styled.img`
+  margin-left: 10px;
+  max-width: 18px;
+  margin-top: -4px;
+`;
+
 export const Status = styled.div`
   margin-right: 15px;
 `;
