@@ -1,13 +1,16 @@
 import { useTranslation } from 'react-i18next';
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import buttonUp from '../../assets/icons/places/like.svg';
 import buttonDown from '../../assets/icons/places/dislike.svg';
 import buttonNeutral from '../../assets/icons/places/neutral.svg';
 import Rejected from '../../assets/icons/maps/rejected.svg';
 import Accepted from '../../assets/icons/maps/accepted.svg';
+import Remove from '../../assets/icons/trash.svg';
 import Avatar from '../../assets/images/avatarDefault.png';
 import { getFirstImage, storageUrl } from '../../helpers/utils';
+import { deletePlaceEvaluation } from '../../store/actions/placeEvaluations';
+
 import {
   Container,
   Title,
@@ -25,18 +28,37 @@ import {
   Media,
   Img,
   Box,
+  RemoveIcon,
 } from './LatestComments.styles';
 import { ACCESSIBILITY, IMAGE_TYPES } from '../../constants';
 
 const Thumbs = [buttonDown, buttonNeutral, buttonUp];
 
 const LatestComments = (props) => {
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.auth.user);
+
   const { comments, myComments, setPopUp } = props;
   const { t } = useTranslation();
   const fontSize = useSelector((state) => state.accessibility.fontSize);
   const font = useSelector((state) => state.accessibility.font);
   const [viewAll, setViewAll] = useState(false);
   const [commentsList, setCommentsList] = useState([]);
+
+  const removeComment = (commentToRemove) => {
+    const confirmDelete = window?.confirm(t('confirm_delete'));
+    if (confirmDelete) {
+      dispatch(deletePlaceEvaluation(commentToRemove));
+    }
+  };
+
+  const renderDelete = (commentToDelete) => (
+    <RemoveIcon
+      src={Remove}
+      alt="remove"
+      onClick={() => removeComment(commentToDelete)}
+    />
+  );
 
   const viewAllHandler = () => {
     setViewAll((prevState) => !prevState);
@@ -121,6 +143,8 @@ const LatestComments = (props) => {
                     )}
                     <Name fontSize={fontSize} font={font}>
                       {comment?.place && comment?.place?.name}
+                      {comment?.app_user?.id === user.id &&
+                        renderDelete(comment)}
                     </Name>
                     <Status>{renderState(comment?.status)}</Status>
                   </Top>
@@ -192,6 +216,7 @@ const LatestComments = (props) => {
                       comment?.app_user?.name
                         .concat(' ')
                         .concat(comment?.app_user?.surname)}
+                    {comment?.app_user?.id === user.id && renderDelete(comment)}
                   </Name>
                 </Top>
                 <Accessible backgroundColor={backgroundColor}>
