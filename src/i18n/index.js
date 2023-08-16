@@ -5,6 +5,7 @@ import enGBTranslation from './en/translation.json';
 import ptPTTranslation from './ptPT/translation.json';
 import deDETranslation from './deDE/translation.json';
 import bgBGTranslation from './bgBG/translation.json';
+import itTranslation from './it/translation.json';
 
 const resources = {
   'pt-PT': {
@@ -15,6 +16,9 @@ const resources = {
   },
   'bg-BG': {
     translation: bgBGTranslation,
+  },
+  it: {
+    translation: itTranslation,
   },
   'en-GB': {
     translation: enGBTranslation,
