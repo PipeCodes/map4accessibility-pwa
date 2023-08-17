@@ -82,7 +82,7 @@ const SignUpInfo = (props) => {
       provider: social?.provider,
       firstName: social?.name,
       surname: social?.surname,
-      birthdate: social?.birthDate,
+      birthdate: social?.birthDate ? social?.birthDate : null,
       email: social?.email,
       avatar: social?.avatar,
     }));

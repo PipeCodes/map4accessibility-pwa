@@ -119,7 +119,7 @@ export const signupProvider =
     const body = {
       name,
       surname,
-      birthdate,
+      ...(moment(birthdate).isValid() && { birthdate }),
       email: email?.trim().toLowerCase(),
       terms_accepted: termsAccepted,
       disabilities,

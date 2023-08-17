@@ -121,9 +121,6 @@ export const postPlaceEvaluation =
 export const deletePlaceEvaluation = (commentToRemove) => async (dispatch) => {
   dispatch({ type: DELETE_PLACE_EVALUATIONS_START });
 
-  const body = {
-    commentId: commentToRemove.id,
-  };
   const config = {
     headers: {
       Authorization: `Bearer ${getAuthToken()}`,
@@ -132,18 +129,15 @@ export const deletePlaceEvaluation = (commentToRemove) => async (dispatch) => {
 
   try {
     const response = await axios.delete(
-      Endpoints.PLACE_EVALUTATIONS,
-      body,
+      Endpoints.PLACE_EVALUTATIONS.concat(`?commentId=${commentToRemove.id}`),
       config,
     );
 
     const statusCode = response.status;
 
     if (statusCode === HTTP_STATUS.SUCCESS) {
-      if (!media) {
-        dispatch({ type: DELETE_PLACE_EVALUATIONS_SUCCESS });
-      }
-      return Promise.resolve(response?.data?.result);
+      dispatch({ type: DELETE_PLACE_EVALUATIONS_SUCCESS });
+      return Promise.resolve(commentToRemove.id);
     }
   } catch (error) {
     dispatch({ type: DELETE_PLACE_EVALUATIONS_ERROR });
