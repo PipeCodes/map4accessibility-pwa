@@ -48,7 +48,13 @@ const LatestComments = (props) => {
   const removeComment = (commentToRemove) => {
     const confirmDelete = window?.confirm(t('confirm_delete'));
     if (confirmDelete) {
-      dispatch(deletePlaceEvaluation(commentToRemove));
+      dispatch(deletePlaceEvaluation(commentToRemove))
+        .then((commentIdRemoved) => {
+          setCommentsList(
+            commentsList.filter((itemComm) => itemComm.id !== commentIdRemoved),
+          );
+        })
+        .catch((errorMessage) => alert(errorMessage));
     }
   };
 

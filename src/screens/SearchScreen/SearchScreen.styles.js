@@ -111,3 +111,26 @@ export const Filter = styled.div`
     }
   }
 `;
+
+export const FilterToggleHeader = styled.div`
+  display: inline-block;
+  width: 100%;
+  margin-top: 50px;
+  margin-bottom: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+`;
+
+export const FilterToggleArrow = styled.div`
+  img {
+    transform: ${(props) =>
+      props.collapsed ? 'rotate(270deg)' : 'rotate(90deg)'};
+    float: right;
+    margin-top: -23px;
+    width: 27px;
+  }
+`;
+
+export const FilterToggleContent = styled.div`
+  display: ${(props) => (props.collapsed ? 'none' : 'inline-block')};
+`;
