@@ -94,7 +94,7 @@ const SearchScreen = ({ history, routes }) => {
       <Container backgroundColor={backgroundColor}>
         <FilterToggleHeader
           onClick={() => {
-            setFilterCollapsed(!filterCollapsed);
+            setFilterCollapsed((prevState) => !prevState);
           }}
         >
           <Text fontSize={fontSize} font={font}>
