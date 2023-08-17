@@ -13,10 +13,15 @@ import {
   HeaderText,
   HeaderWrapper,
   DisabilityFilters,
+  FilterToggleHeader,
+  FilterToggleContent,
+  FilterToggleArrow,
 } from './SearchScreen.styles';
 import { getPlaceByParams, resetPlaceState } from '../../store/actions/places';
 
 import FilterIcon from '../../assets/icons/filters/filter.svg';
+import FilterIconArrow from '../../assets/icons/back.svg';
+
 import { types } from '../../constants/placeTypes';
 import { disabilityTypes } from '../../constants/disabilityTypes';
 import PlacesList from '../../components/PlacesList/PlacesList';
@@ -39,6 +44,7 @@ const SearchScreen = ({ history, routes }) => {
   const filterType = useSelector((state) => state?.search?.placeType);
   const disabilityType = useSelector((state) => state?.search?.disabilityType);
   const [searchData, setSearchData] = useState(null);
+  const [filterCollapsed, setFilterCollapsed] = useState(true);
 
   useEffect(() => {
     dispatch(resetPlaceState());
@@ -46,6 +52,7 @@ const SearchScreen = ({ history, routes }) => {
 
   useEffect(() => {
     setSearchData(places);
+    setFilterCollapsed(true);
   }, [places]);
 
   const handleSearch = (value) => {
@@ -85,83 +92,93 @@ const SearchScreen = ({ history, routes }) => {
         handleSearch={handleSearch}
       />
       <Container backgroundColor={backgroundColor}>
-        <SearchFilters>
-          <HeaderWrapper>
+        <FilterToggleHeader
+          onClick={() => {
+            setFilterCollapsed((prevState) => !prevState);
+          }}
+        >
+          <Text fontSize={fontSize} font={font}>
+            <img src={FilterIcon} alt="filter-icon" /> {t('filters')}
+          </Text>
+          <FilterToggleArrow collapsed={filterCollapsed}>
+            <img src={FilterIconArrow} alt="arrow-filter-icon" />
+          </FilterToggleArrow>
+        </FilterToggleHeader>
+        <FilterToggleContent collapsed={filterCollapsed}>
+          <SearchFilters>
+            <HeaderWrapper>
+              <HeaderText fontSize={fontSize} font={font}>
+                {t('place_types')}
+              </HeaderText>
+            </HeaderWrapper>
+            <FiltersContainer fontSize={fontSize} font={font}>
+              {types?.map((filter, index) =>
+                filter?.placeType === filterType ? (
+                  <Filter fontSize={fontSize} font={font} key={index}>
+                    <button
+                      className="active"
+                      type="button"
+                      onClick={() => {
+                        setFilterType(filter?.placeType);
+                      }}
+                    >
+                      <img src={filter?.icon} alt={filter?.label} />
+                      {filter?.label}
+                    </button>
+                  </Filter>
+                ) : (
+                  <Filter key={index}>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setFilterType(filter?.placeType);
+                      }}
+                    >
+                      <img src={filter?.icon} alt={filter?.label} />
+                      {filter?.label}
+                    </button>
+                  </Filter>
+                ),
+              )}
+            </FiltersContainer>
+          </SearchFilters>
+          <DisabilityFilters>
             <HeaderText fontSize={fontSize} font={font}>
-              {t('place_types')}
+              {t('disability_types')}
             </HeaderText>
-            <Text fontSize={fontSize} font={font}>
-              <img src={FilterIcon} alt="filter-icon" /> {t('filters')}
-            </Text>
-          </HeaderWrapper>
-
-          <FiltersContainer fontSize={fontSize} font={font}>
-            {types?.map((filter, index) =>
-              filter?.placeType === filterType ? (
-                <Filter fontSize={fontSize} font={font} key={index}>
-                  <button
-                    className="active"
-                    type="button"
-                    onClick={() => {
-                      setFilterType(filter?.placeType);
-                    }}
-                  >
-                    <img src={filter?.icon} alt={filter?.label} />
-                    {filter?.label}
-                  </button>
-                </Filter>
-              ) : (
-                <Filter key={index}>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setFilterType(filter?.placeType);
-                    }}
-                  >
-                    <img src={filter?.icon} alt={filter?.label} />
-                    {filter?.label}
-                  </button>
-                </Filter>
-              ),
-            )}
-          </FiltersContainer>
-        </SearchFilters>
-        <DisabilityFilters>
-          <HeaderText fontSize={fontSize} font={font}>
-            {t('disability_types')}
-          </HeaderText>
-          <FiltersContainer fontSize={fontSize} font={font}>
-            {disabilityTypes?.map((disability, index) =>
-              disability?.type === disabilityType ? (
-                <Filter fontSize={fontSize} font={font} key={index}>
-                  <button
-                    className="active tall-btn"
-                    type="button"
-                    onClick={() => {
-                      setDisabilityType(disability?.type);
-                    }}
-                  >
-                    <img src={disability?.icon} alt={disability?.label} />
-                    {disability?.label}
-                  </button>
-                </Filter>
-              ) : (
-                <Filter key={index}>
-                  <button
-                    className="tall-btn"
-                    type="button"
-                    onClick={() => {
-                      setDisabilityType(disability?.type);
-                    }}
-                  >
-                    <img src={disability?.icon} alt={disability?.label} />
-                    {disability?.label}
-                  </button>
-                </Filter>
-              ),
-            )}
-          </FiltersContainer>
-        </DisabilityFilters>
+            <FiltersContainer fontSize={fontSize} font={font}>
+              {disabilityTypes?.map((disability, index) =>
+                disability?.type === disabilityType ? (
+                  <Filter fontSize={fontSize} font={font} key={index}>
+                    <button
+                      className="active tall-btn"
+                      type="button"
+                      onClick={() => {
+                        setDisabilityType(disability?.type);
+                      }}
+                    >
+                      <img src={disability?.icon} alt={disability?.label} />
+                      {disability?.label}
+                    </button>
+                  </Filter>
+                ) : (
+                  <Filter key={index}>
+                    <button
+                      className="tall-btn"
+                      type="button"
+                      onClick={() => {
+                        setDisabilityType(disability?.type);
+                      }}
+                    >
+                      <img src={disability?.icon} alt={disability?.label} />
+                      {disability?.label}
+                    </button>
+                  </Filter>
+                ),
+              )}
+            </FiltersContainer>
+          </DisabilityFilters>
+        </FilterToggleContent>
         {loading && <Spinner animation="border" variant="dark" />}
         {searchData && (
           <PlacesList
