@@ -1,4 +1,5 @@
-import React from 'react';
+/* eslint-disable no-undef */
+import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import PWAPrompt from 'react-ios-pwa-prompt';
@@ -6,7 +7,7 @@ import GlobalStyles from './globalStyles';
 import GlobalRoutes from './routes/routes';
 import DarkOverlay from './components/DarkOverlay/DarkOverlay';
 
-const App = () => {
+const App = ({ history }) => {
   const { t } = useTranslation();
   const font = useSelector((state) => state.accessibility.font);
   const underline = useSelector((state) => state.accessibility.underline);
@@ -15,6 +16,16 @@ const App = () => {
   const lightsOffMode = useSelector(
     (state) => state.accessibility.lightsOffMode,
   );
+
+  useEffect(() => {
+    history?.listen(() => {
+      if (window.swUpdateReady) {
+        window.swUpdateReady = false;
+        window.stop();
+        window.location.reload();
+      }
+    });
+  }, [history]);
 
   return (
     <>
