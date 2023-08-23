@@ -60,16 +60,10 @@ export function register(config) {
 }
 
 function registerValidSW(swUrl, config) {
-  navigator.serviceWorker.getRegistration(swUrl).then((swReg) => {
-    if (swReg) {
-      navigator.serviceWorker.addEventListener('controllerchange', () => {
-        window.swUpdateReady = true;
-      });
-    }
-  });
   navigator.serviceWorker
     .register(swUrl)
     .then((registration) => {
+      registration.update();
       registration.onupdatefound = () => {
         const installingWorker = registration.installing;
         if (installingWorker == null) {
