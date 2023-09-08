@@ -7,6 +7,7 @@ import reportWebVitals from './reportWebVitals';
 import { store, persistor } from './store';
 import App from './App';
 import './i18n';
+import './services/sentry';
 
 // eslint-disable-next-line no-undef
 const rootElement = document.getElementById('root');
