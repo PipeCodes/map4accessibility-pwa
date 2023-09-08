@@ -38,6 +38,8 @@
     "@fortawesome/fontawesome-free": "^6.2.0",
     "@googlemaps/markerclusterer": "^2.0.14",
     "@react-google-maps/api": "^2.16.1",
+    "@sentry/cli": "^2.20.6",
+    "@sentry/react": "^7.68.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^14.4.3",
