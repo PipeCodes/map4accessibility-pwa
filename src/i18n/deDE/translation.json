@@ -148,7 +148,7 @@
   "route_planner": "Routenplaner",
   "latest_evaluations": "Letzte Bewertungen",
   "radius_error": "Es ist nicht möglich, eine Route für denselben Ausgangs- und Zielort zu definieren",
-  "search": "Suche",
+  "search": "Ort, Stadt suchen...",
   "filters": "Filter",
   "show_route": "Route anzeigen",
   "last_places_visited": "Zuletzt besuchte Orte",
@@ -167,5 +167,7 @@
   "disability_types": "Arten von Behinderungen",
   "close": "Schließen",
   "birthdate_not_set": "Geburtsdatum nicht festgelegt",
-  "confirm_delete": "Sind Sie sicher, dass Sie dieses Element löschen möchten?"
+  "confirm_delete": "Sind Sie sicher, dass Sie dieses Element löschen möchten?",
+  "is_it_unaccessible": "Dieser Ort ist für die folgenden Behinderungen unzugänglich:",
+  "mandatory": "(Obligatorisch)"
 }

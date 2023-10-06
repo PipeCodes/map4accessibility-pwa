@@ -36,3 +36,10 @@ export const disabilityTypes = [
     icon: IntellectualIcon,
   },
 ];
+
+export const DISABILITIES = {
+  MOTOR: 'motor',
+  VISUAL: 'visual',
+  HEARING: 'hearing',
+  INTELLECTUAL: 'intellectual',
+};

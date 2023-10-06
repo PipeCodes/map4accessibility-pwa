@@ -51,6 +51,8 @@ import {
   postPlaceEvaluation,
   postPlaceEvaluationMedia,
 } from '../../store/actions/placeEvaluations';
+import DisabilityOptions from './DisabilityOptions';
+import { DISABILITIES } from '../../constants/disabilityTypes';
 
 const RatePlaceScreen = (props) => {
   const { history, routes } = props;
@@ -69,6 +71,7 @@ const RatePlaceScreen = (props) => {
 
   // Form Fields and Img input
   const [accessibility, setAccessibility] = useState(2);
+  const [disabilityData, setDisabilityData] = useState([]);
   const commentRef = useRef();
   const inputRef = useRef(null);
   const [answers, setAnswers] = useState({});
@@ -189,6 +192,7 @@ const RatePlaceScreen = (props) => {
           place?.country_code,
           place?.place_type,
           place?.google_place_id,
+          disabilityData,
         ),
       )
         .then((result) => {
@@ -239,6 +243,46 @@ const RatePlaceScreen = (props) => {
   const onClickThumbsDown = () => {
     setAccessibility(0);
   };
+
+  // ClickHandlers
+  const disabilityClickHandler = useCallback(
+    (disabilityOpt) => {
+      switch (disabilityOpt) {
+        case DISABILITIES?.MOTOR:
+          if (disabilityData.includes(DISABILITIES?.MOTOR))
+            setDisabilityData((prev) =>
+              prev.filter((item) => item !== DISABILITIES?.MOTOR),
+            );
+          else setDisabilityData((prev) => [...prev, DISABILITIES?.MOTOR]);
+          break;
+        case DISABILITIES?.VISUAL:
+          if (disabilityData.includes(DISABILITIES?.VISUAL))
+            setDisabilityData((prev) =>
+              prev.filter((item) => item !== DISABILITIES?.VISUAL),
+            );
+          else setDisabilityData((prev) => [...prev, DISABILITIES?.VISUAL]);
+          break;
+        case DISABILITIES?.HEARING:
+          if (disabilityData.includes(DISABILITIES?.HEARING))
+            setDisabilityData((prev) =>
+              prev.filter((item) => item !== DISABILITIES?.HEARING),
+            );
+          else setDisabilityData((prev) => [...prev, DISABILITIES?.HEARING]);
+          break;
+        case DISABILITIES?.INTELLECTUAL:
+          if (disabilityData.includes(DISABILITIES?.INTELLECTUAL))
+            setDisabilityData((prev) =>
+              prev.filter((item) => item !== DISABILITIES?.INTELLECTUAL),
+            );
+          else
+            setDisabilityData((prev) => [...prev, DISABILITIES?.INTELLECTUAL]);
+          break;
+        default:
+          break;
+      }
+    },
+    [setDisabilityData, disabilityData],
+  );
 
   const openAccessibility = useCallback(() => {
     history.push(routes.ACCESSIBILITY.path);
@@ -322,6 +366,11 @@ const RatePlaceScreen = (props) => {
             <span>{t('not_accessible')}</span>
           </ThumbsDown>
         </Vote>
+
+        <DisabilityOptions
+          disabilityClickHandler={disabilityClickHandler}
+          disabilityData={disabilityData}
+        />
 
         <Form className="questions">
           <Label fontSize={fontSize} font={font}>

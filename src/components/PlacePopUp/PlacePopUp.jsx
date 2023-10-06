@@ -14,6 +14,7 @@ import Path from '../../assets/icons/places/details/path.svg';
 import ThumbsUp from '../../assets/icons/maps/up.svg';
 import ThumbsDown from '../../assets/icons/maps/down.svg';
 import Neutral from '../../assets/icons/places/neutral.svg';
+import Comment from '../../assets/icons/places/comment.svg';
 import {
   PopUp,
   DarkOverlayContainer,
@@ -27,6 +28,8 @@ import {
   Accessible,
   PlaceInformation,
   Header,
+  ButtonComments,
+  ActionContainer,
 } from './PlacePopUp.styles';
 import CustomButton from '../CustomButton/CustomButton';
 
@@ -192,22 +195,28 @@ const PlacePopUpComponent = (props) => {
                 {place?.schedule &&
                   place?.schedule?.map((line) => <span>{line}</span>)}
               </PlaceInformation>
-
-              <CustomButton
-                style={{
-                  marginTop: 30,
-                  marginBottom: 20,
-                  width: '100%',
-                  borderRadius: '25px',
-                  color: colors.grey,
-                  border: '1px solid grey',
-                }}
-                backgroundColor={colors.transparent}
-                text={t('view_more')}
-                onClick={() => openDetails()}
-                buttonicon
-                icon={ArrowRight}
-              />
+              <ActionContainer>
+                <CustomButton
+                  style={{
+                    marginTop: 30,
+                    marginBottom: 20,
+                    width: '100%',
+                    borderRadius: '25px',
+                    color: colors.grey,
+                    border: '1px solid grey',
+                  }}
+                  backgroundColor={colors.transparent}
+                  text={t('view_more')}
+                  onClick={() => openDetails()}
+                  buttonicon
+                  icon={ArrowRight}
+                />
+                <ButtonComments onClick={() => openComments()}>
+                  <button type="button">
+                    <img src={Comment} alt="comment" />
+                  </button>
+                </ButtonComments>
+              </ActionContainer>
             </Content>
           </PopUp>
         </>
