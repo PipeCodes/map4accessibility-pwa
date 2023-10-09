@@ -372,7 +372,7 @@ export const getPlaceByParams = (params) => async (dispatch) => {
     },
   };
   const url = generatePath(
-    Endpoints.PLACES.concat('?', concatPlacesRequest(queryParams)),
+    Endpoints.PLACES.concat(`?${concatPlacesRequest(queryParams)}`),
     queryParams,
   );
 
