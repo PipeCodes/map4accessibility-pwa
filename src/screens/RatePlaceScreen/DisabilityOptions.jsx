@@ -2,10 +2,12 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import CustomButton from '../../components/CustomButton/CustomButton';
+import NoDisabilityIcon from '../../assets/icons/disabilities/no-disability.svg';
 import MotorIcon from '../../assets/icons/disabilities/motor-disability.svg';
 import VisualIcon from '../../assets/icons/disabilities/visual-disability.svg';
 import HearingIcon from '../../assets/icons/disabilities/hearing-disability.svg';
 import IntellectualIcon from '../../assets/icons/disabilities/intellectual-disability.svg';
+import NoDisabilityActiveIcon from '../../assets/icons/disabilities/no-disability-active.svg';
 import MotorActiveIcon from '../../assets/icons/disabilities/motor-disability-active.svg';
 import VisualActiveIcon from '../../assets/icons/disabilities/visual-disability-active.svg';
 import HearingActiveIcon from '../../assets/icons/disabilities/hearing-disability-active.svg';
@@ -43,6 +45,17 @@ const DisabilityOptions = ({ disabilityData, disabilityClickHandler }) => {
         {t('is_it_unaccessible')}
         <span>{t('mandatory').toLocaleLowerCase()}</span>
       </Text>
+      <CustomButton
+        style={disabilityData?.length === 0 ? activeButton : inactiveButton}
+        backgroundColor={colors.transparent}
+        text={t('no_disability')}
+        icon={
+          disabilityData?.length === 0
+            ? NoDisabilityActiveIcon
+            : NoDisabilityIcon
+        }
+        onClick={() => disabilityClickHandler(DISABILITIES?.NO_DISABILITY)}
+      />
       <CustomButton
         style={
           disabilityData?.includes(DISABILITIES?.MOTOR)

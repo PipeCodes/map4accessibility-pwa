@@ -38,6 +38,7 @@ export const disabilityTypes = [
 ];
 
 export const DISABILITIES = {
+  NO_DISABILITY: 'no-disability',
   MOTOR: 'motor',
   VISUAL: 'visual',
   HEARING: 'hearing',

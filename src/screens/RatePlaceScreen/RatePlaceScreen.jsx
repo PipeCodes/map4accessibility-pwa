@@ -248,7 +248,24 @@ const RatePlaceScreen = (props) => {
   const disabilityClickHandler = useCallback(
     (disabilityOpt) => {
       switch (disabilityOpt) {
+        case DISABILITIES?.NO_DISABILITY:
+          setDisabilityData((prev) =>
+            prev.filter(
+              (item) =>
+                ![
+                  DISABILITIES?.MOTOR,
+                  DISABILITIES?.VISUAL,
+                  DISABILITIES?.HEARING,
+                  DISABILITIES?.INTELLECTUAL,
+                ].includes(item),
+            ),
+          );
+          break;
         case DISABILITIES?.MOTOR:
+          if (disabilityData.includes(DISABILITIES?.NO_DISABILITY))
+            setDisabilityData((prev) =>
+              prev.filter((item) => item !== DISABILITIES?.NO_DISABILITY),
+            );
           if (disabilityData.includes(DISABILITIES?.MOTOR))
             setDisabilityData((prev) =>
               prev.filter((item) => item !== DISABILITIES?.MOTOR),
@@ -256,6 +273,10 @@ const RatePlaceScreen = (props) => {
           else setDisabilityData((prev) => [...prev, DISABILITIES?.MOTOR]);
           break;
         case DISABILITIES?.VISUAL:
+          if (disabilityData.includes(DISABILITIES?.NO_DISABILITY))
+            setDisabilityData((prev) =>
+              prev.filter((item) => item !== DISABILITIES?.NO_DISABILITY),
+            );
           if (disabilityData.includes(DISABILITIES?.VISUAL))
             setDisabilityData((prev) =>
               prev.filter((item) => item !== DISABILITIES?.VISUAL),
@@ -263,6 +284,10 @@ const RatePlaceScreen = (props) => {
           else setDisabilityData((prev) => [...prev, DISABILITIES?.VISUAL]);
           break;
         case DISABILITIES?.HEARING:
+          if (disabilityData.includes(DISABILITIES?.NO_DISABILITY))
+            setDisabilityData((prev) =>
+              prev.filter((item) => item !== DISABILITIES?.NO_DISABILITY),
+            );
           if (disabilityData.includes(DISABILITIES?.HEARING))
             setDisabilityData((prev) =>
               prev.filter((item) => item !== DISABILITIES?.HEARING),
@@ -270,6 +295,10 @@ const RatePlaceScreen = (props) => {
           else setDisabilityData((prev) => [...prev, DISABILITIES?.HEARING]);
           break;
         case DISABILITIES?.INTELLECTUAL:
+          if (disabilityData.includes(DISABILITIES?.NO_DISABILITY))
+            setDisabilityData((prev) =>
+              prev.filter((item) => item !== DISABILITIES?.NO_DISABILITY),
+            );
           if (disabilityData.includes(DISABILITIES?.INTELLECTUAL))
             setDisabilityData((prev) =>
               prev.filter((item) => item !== DISABILITIES?.INTELLECTUAL),
@@ -409,7 +438,7 @@ const RatePlaceScreen = (props) => {
                             <AnswerLabel
                               fontSize={fontSize}
                               font={font}
-                              for={answer?.id}
+                              htmlFor={answer?.id}
                             >
                               {answer?.body}
                             </AnswerLabel>
@@ -424,8 +453,8 @@ const RatePlaceScreen = (props) => {
               {questions?.optional &&
                 Object.entries(questions?.optional)
                   .reverse()
-                  .map((group) => (
-                    <Accordion>
+                  .map((group, index) => (
+                    <Accordion key={index}>
                       <button
                         type="button"
                         onClick={() => {
@@ -476,7 +505,7 @@ const RatePlaceScreen = (props) => {
                                     <AnswerLabel
                                       fontSize={fontSize}
                                       font={font}
-                                      for={answer?.id}
+                                      htmlFor={answer?.id}
                                     >
                                       {answer?.body}
                                     </AnswerLabel>
