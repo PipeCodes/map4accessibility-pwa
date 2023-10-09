@@ -353,7 +353,7 @@ export const deletePlace = (userId, placeId) => async () => {
 
 const concatPlacesRequest = (params) =>
   Object.keys(params)
-    .map((key) => `?${camelToSnakeCase(key)}=:${camelToSnakeCase(key)}`)
+    .map((key) => `${camelToSnakeCase(key)}=:${camelToSnakeCase(key)}`)
     .join('&');
 
 export const getPlaceByParams = (params) => async (dispatch) => {
@@ -372,7 +372,7 @@ export const getPlaceByParams = (params) => async (dispatch) => {
     },
   };
   const url = generatePath(
-    Endpoints.PLACES.concat(concatPlacesRequest(queryParams)),
+    Endpoints.PLACES.concat('?', concatPlacesRequest(queryParams)),
     queryParams,
   );
 
