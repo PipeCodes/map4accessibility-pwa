@@ -65,6 +65,10 @@ const MapScreen = (props) => {
   const { history, routes } = props;
   const { t } = useTranslation();
   const dispatch = useDispatch();
+
+  const font = useSelector((state) => state.accessibility.font);
+  const fontSize = useSelector((state) => state.accessibility.fontSize);
+
   const backgroundColor = useSelector(
     (state) => state.accessibility.backgroundColor,
   );
@@ -341,7 +345,7 @@ const MapScreen = (props) => {
         }}
       />
       <ButtonsContainer>
-        <ToolTip>
+        <ToolTip font={font} fontSize={fontSize}>
           <span>{add ? t('click_map') : t('add_new')}</span>
         </ToolTip>
         <ButtonCreate type="button" add={add} onClick={() => openAddPlace()}>

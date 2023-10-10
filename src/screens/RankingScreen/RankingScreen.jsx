@@ -115,6 +115,8 @@ const RankingScreen = (props) => {
               <span>{t('country')}</span>
             </SliderButon>
             <SliderButon
+              font={font}
+              fontSize={fontSize}
               onClick={setLocationHandler}
               className={sliderActive ? 'active' : ''}
             >
