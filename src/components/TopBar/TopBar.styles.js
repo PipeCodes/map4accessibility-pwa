@@ -7,6 +7,7 @@ export const Title = styled.span`
   font-size: ${(props) => updateFontSize(28, props.fontSize)};
   font-family: ${(props) => updateValue('EasyReadingPro', props.font)};
   display: flex;
+  line-height: 38px;
 
   img {
     margin-right: 10px;
