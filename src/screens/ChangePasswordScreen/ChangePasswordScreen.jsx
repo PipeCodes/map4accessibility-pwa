@@ -164,7 +164,9 @@ const ChangePasswordScreen = (props) => {
             }}
           />
           {formErrors.password && (
-            <Error fontSize={fontSize}>{t(formErrors.password)}</Error>
+            <Error fontSize={fontSize} font={font}>
+              {t(formErrors.password)}
+            </Error>
           )}
           <InputLabel fontSize={fontSize} font={font}>
             {t('confirm_password')}
@@ -187,7 +189,9 @@ const ChangePasswordScreen = (props) => {
             }}
           />
           {formErrors.confirmPassword && (
-            <Error fontSize={fontSize}>{t(formErrors.confirmPassword)}</Error>
+            <Error fontSize={fontSize} font={font}>
+              {t(formErrors.confirmPassword)}
+            </Error>
           )}
           <CustomButton
             style={{

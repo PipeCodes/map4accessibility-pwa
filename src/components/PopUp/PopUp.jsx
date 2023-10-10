@@ -16,6 +16,7 @@ import { colors } from '../../constants/colors';
 
 const PopUpComponent = (props) => {
   const { title, text, buttonText, action, buttonIcon, icon } = props;
+  const font = useSelector((state) => state.accessibility.font);
   const fontSize = useSelector((state) => state.accessibility.fontSize);
   const backgroundColor = useSelector(
     (state) => state.accessibility.backgroundColor,
@@ -27,8 +28,12 @@ const PopUpComponent = (props) => {
         <Icon>
           <img src={icon} alt="back" />
         </Icon>
-        <Text fontSize={fontSize}>{title}</Text>
-        <TextSecondary fontSize={fontSize}>{text} </TextSecondary>
+        <Text fontSize={fontSize} font={font}>
+          {title}
+        </Text>
+        <TextSecondary fontSize={fontSize} font={font}>
+          {text}{' '}
+        </TextSecondary>
         <CustomButton
           style={{
             marginTop: 30,
