@@ -310,7 +310,7 @@ const RatePlaceScreen = (props) => {
           break;
       }
     },
-    [setDisabilityData, disabilityData],
+    [disabilityData],
   );
 
   const openAccessibility = useCallback(() => {

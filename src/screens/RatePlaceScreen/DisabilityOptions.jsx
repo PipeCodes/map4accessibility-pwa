@@ -39,6 +39,7 @@ const DisabilityOptions = ({ disabilityData, disabilityClickHandler }) => {
     boxShadow: 'none',
     marginTop: '15px',
   };
+
   return (
     <>
       <Text fontSize={fontSize} font={font}>
