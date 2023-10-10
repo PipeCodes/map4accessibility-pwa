@@ -243,7 +243,7 @@ const ProfileScreen = (props) => {
               src={getImageSource(user?.avatar, formData?.avatar)}
               alt="avatar"
             />
-            <Name fontSize={fontSize}>
+            <Name font={font} fontSize={fontSize}>
               {formData.firstName} {formData.surname}
             </Name>
           </StackContainer>

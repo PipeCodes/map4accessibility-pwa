@@ -127,7 +127,7 @@ const SearchScreen = ({ history, routes }) => {
                     </button>
                   </Filter>
                 ) : (
-                  <Filter key={index}>
+                  <Filter fontSize={fontSize} font={font} key={index}>
                     <button
                       type="button"
                       onClick={() => {
@@ -162,7 +162,7 @@ const SearchScreen = ({ history, routes }) => {
                     </button>
                   </Filter>
                 ) : (
-                  <Filter key={index}>
+                  <Filter fontSize={fontSize} font={font} key={index}>
                     <button
                       className="tall-btn"
                       type="button"

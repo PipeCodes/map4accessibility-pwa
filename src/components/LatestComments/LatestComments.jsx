@@ -121,7 +121,9 @@ const LatestComments = (props) => {
 
   return (
     <Container>
-      <Title>{t('latest')}</Title>
+      <Title font={font} fontSize={fontSize}>
+        {t('latest')}
+      </Title>
       {myComments
         ? commentsList
           ? commentsList.map((comment) => {

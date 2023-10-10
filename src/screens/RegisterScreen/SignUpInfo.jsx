@@ -150,7 +150,9 @@ const SignUpInfo = (props) => {
         maxLength="25"
       />
       {formErrors.firstName && (
-        <Error fontSize={fontSize}>{t(formErrors.firstName)}</Error>
+        <Error fontSize={fontSize} font={font}>
+          {t(formErrors.firstName)}
+        </Error>
       )}
       <InputLabel fontSize={fontSize} font={font}>
         {t('surname')}
@@ -173,7 +175,9 @@ const SignUpInfo = (props) => {
         maxLength="25"
       />
       {formErrors.surname && (
-        <Error fontSize={fontSize}>{t(formErrors.surname)}</Error>
+        <Error fontSize={fontSize} font={font}>
+          {t(formErrors.surname)}
+        </Error>
       )}
 
       <InputLabel fontSize={fontSize} font={font}>
@@ -198,7 +202,9 @@ const SignUpInfo = (props) => {
         }}
       />
       {formErrors.birthDate && (
-        <Error fontSize={fontSize}>{t(formErrors.birthDate)}</Error>
+        <Error fontSize={fontSize} font={font}>
+          {t(formErrors.birthDate)}
+        </Error>
       )}
       <InputLabel fontSize={fontSize} font={font}>
         {t('email')}
@@ -224,7 +230,9 @@ const SignUpInfo = (props) => {
         }}
       />
       {formErrors.email && (
-        <Error fontSize={fontSize}>{t(formErrors.email)}</Error>
+        <Error fontSize={fontSize} font={font}>
+          {t(formErrors.email)}
+        </Error>
       )}
       {!social && (
         <>
@@ -250,7 +258,9 @@ const SignUpInfo = (props) => {
             }}
           />
           {formErrors.password && (
-            <Error fontSize={fontSize}>{t(formErrors.password)}</Error>
+            <Error fontSize={fontSize} font={font}>
+              {t(formErrors.password)}
+            </Error>
           )}
           <InputLabel fontSize={fontSize} font={font}>
             {t('confirm_password')}
@@ -274,7 +284,9 @@ const SignUpInfo = (props) => {
             }}
           />
           {formErrors.confirmPassword && (
-            <Error fontSize={fontSize}>{t(formErrors.confirmPassword)}</Error>
+            <Error fontSize={fontSize} font={font}>
+              {t(formErrors.confirmPassword)}
+            </Error>
           )}
         </>
       )}
@@ -299,7 +311,9 @@ const SignUpInfo = (props) => {
       </CheckboxWrapper>
 
       {formErrors.termsAccepted && (
-        <Error fontSize={fontSize}>{t(formErrors.termsAccepted)}</Error>
+        <Error fontSize={fontSize} font={font}>
+          {t(formErrors.termsAccepted)}
+        </Error>
       )}
     </div>
   );
