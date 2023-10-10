@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import CustomButton from '../../components/CustomButton/CustomButton';
@@ -14,6 +14,7 @@ import VisualActiveIcon from '../../assets/icons/disabilities/visual-disability-
 import HearingActiveIcon from '../../assets/icons/disabilities/hearing-disability-active.svg';
 import IntellectualActiveIcon from '../../assets/icons/disabilities/intellectual-disability-active.svg';
 import { Text } from './RegisterScreen.styles';
+import { DISABILITIES } from '../../constants/disabilityTypes';
 
 const ExtraStep = (props) => {
   const { formData, setFormData } = props;
@@ -40,6 +41,74 @@ const ExtraStep = (props) => {
     marginTop: '30px',
   };
 
+  useEffect(() => {
+    if (
+      formData?.motorDisability ||
+      formData?.visualDisability ||
+      formData?.hearingDisability ||
+      formData?.intellectualDisability
+    )
+      setFormData((prev) => ({
+        ...prev,
+        noDisability: false,
+      }));
+    else if (
+      !formData?.motorDisability &&
+      !formData?.visualDisability &&
+      !formData?.hearingDisability &&
+      !formData?.intellectualDisability
+    )
+      setFormData((prev) => ({
+        ...prev,
+        noDisability: true,
+      }));
+  }, [formData, setFormData]);
+
+  const disabilityClickHandler = useCallback(
+    (disabilityOpt) => {
+      switch (disabilityOpt) {
+        case DISABILITIES?.NO_DISABILITY:
+          setFormData((prev) => ({
+            ...prev,
+            noDisability: true,
+            motorDisability: false,
+            visualDisability: false,
+            hearingDisability: false,
+            intellectualDisability: false,
+          }));
+          break;
+        case DISABILITIES?.MOTOR:
+          setFormData((prev) => ({
+            ...prev,
+            motorDisability: !prev.motorDisability,
+          }));
+          break;
+        case DISABILITIES?.VISUAL:
+          setFormData((prev) => ({
+            ...prev,
+            visualDisability: !prev.visualDisability,
+          }));
+          break;
+        case DISABILITIES?.HEARING:
+          setFormData((prev) => ({
+            ...prev,
+            hearingDisability: !prev.hearingDisability,
+          }));
+          break;
+        case DISABILITIES?.INTELLECTUAL:
+          setFormData((prev) => ({
+            ...prev,
+            intellectualDisability: !prev.intellectualDisability,
+          }));
+          break;
+
+        default:
+          break;
+      }
+    },
+    [setFormData],
+  );
+
   return (
     <div className="fullDiv">
       <Text fontSize={fontSize} font={font}>
@@ -51,44 +120,28 @@ const ExtraStep = (props) => {
         backgroundColor={colors.transparent}
         text={t('no_disability')}
         icon={formData.noDisability ? NoDisabilityActiveIcon : NoDisabilityIcon}
-        onClick={() =>
-          formData.noDisability
-            ? setFormData({ ...formData, noDisability: false })
-            : setFormData({ ...formData, noDisability: true })
-        }
+        onClick={() => disabilityClickHandler(DISABILITIES?.NO_DISABILITY)}
       />
       <CustomButton
         style={formData.motorDisability ? activeButton : inactiveButton}
         backgroundColor={colors.transparent}
         text={t('motor_disability')}
         icon={formData.motorDisability ? MotorActiveIcon : MotorIcon}
-        onClick={() =>
-          formData.motorDisability
-            ? setFormData({ ...formData, motorDisability: false })
-            : setFormData({ ...formData, motorDisability: true })
-        }
+        onClick={() => disabilityClickHandler(DISABILITIES?.MOTOR)}
       />
       <CustomButton
         style={formData.visualDisability ? activeButton : inactiveButton}
         backgroundColor={colors.transparent}
         text={t('visual_disability')}
         icon={formData.visualDisability ? VisualActiveIcon : VisualIcon}
-        onClick={() =>
-          formData.visualDisability
-            ? setFormData({ ...formData, visualDisability: false })
-            : setFormData({ ...formData, visualDisability: true })
-        }
+        onClick={() => disabilityClickHandler(DISABILITIES?.VISUAL)}
       />
       <CustomButton
         style={formData.hearingDisability ? activeButton : inactiveButton}
         backgroundColor={colors.transparent}
         text={t('hearing_disability')}
         icon={formData.hearingDisability ? HearingActiveIcon : HearingIcon}
-        onClick={() =>
-          formData.hearingDisability
-            ? setFormData({ ...formData, hearingDisability: false })
-            : setFormData({ ...formData, hearingDisability: true })
-        }
+        onClick={() => disabilityClickHandler(DISABILITIES?.HEARING)}
       />
       <CustomButton
         style={formData.intellectualDisability ? activeButton : inactiveButton}
@@ -99,11 +152,7 @@ const ExtraStep = (props) => {
             ? IntellectualActiveIcon
             : IntellectualIcon
         }
-        onClick={() =>
-          formData.intellectualDisability
-            ? setFormData({ ...formData, intellectualDisability: false })
-            : setFormData({ ...formData, intellectualDisability: true })
-        }
+        onClick={() => disabilityClickHandler(DISABILITIES?.INTELLECTUAL)}
       />
     </div>
   );

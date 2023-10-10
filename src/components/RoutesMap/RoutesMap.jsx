@@ -12,6 +12,7 @@ import RouteOption from '../RouteOption/RouteOption';
 import CustomMarker from '../CustomMarker/CustomMarker';
 import PlacesVisited from '../PlacesVisited/PlacesVisited';
 import MapZoom from '../MapZoom/MapZoom';
+import { getMarkerColor } from '../../helpers/utils';
 
 // Map styling
 const containerStyle = {
@@ -215,6 +216,15 @@ const Map = (props) => {
     }
   }, [origin, destination, routes, setDirections]);
 
+  const markerColor = (marker) => {
+    const color = getMarkerColor({
+      green: marker?.accessible_count,
+      yellow: marker?.neutral_count,
+      red: marker?.inaccessible_count,
+    });
+    return color;
+  };
+
   if (!destination) {
     return <PlacesVisited history={history} />;
   }
@@ -280,6 +290,7 @@ const Map = (props) => {
               key={i}
               onClick={() => openPlaceInfo(marker)}
               info
+              markerColor={markerColor(marker)}
             />
           ))}
       </GoogleMap>
