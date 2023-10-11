@@ -88,6 +88,7 @@ export const Filter = styled.div`
     color: ${colors.primaryTextColor};
     all: unset;
     border: 1px solid #d3d2da;
+    min-height: 55px;
     border-radius: 18px;
     display: flex;
     align-items: center;
