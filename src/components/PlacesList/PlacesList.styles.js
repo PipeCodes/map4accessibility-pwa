@@ -69,6 +69,8 @@ export const Button = styled.div`
   color: ${colors.white};
   min-width: 32px;
   min-height: 32px;
+  width: 34px;
+  height: 34px;
   display: flex;
   justify-content: center;
   align-items: center;
