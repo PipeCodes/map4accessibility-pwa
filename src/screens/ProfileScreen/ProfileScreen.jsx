@@ -193,7 +193,7 @@ const ProfileScreen = (props) => {
   const updateProfileHandler = useCallback(() => {
     const result = confirmEdit();
     if (result) {
-      if (typeof formData.avatar === 'string') {
+      if (typeof formData.avatar === 'string' || formData.avatar === null) {
         dispatch(
           updateProfile({
             firstName: formData.firstName,
