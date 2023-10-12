@@ -39,7 +39,7 @@ i18n
       order: ['navigator'],
       caches: [],
     },
-    debug: true,
+    debug: false,
   });
 
 export default i18n;
