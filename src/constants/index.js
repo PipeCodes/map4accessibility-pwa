@@ -58,3 +58,5 @@ export const MARKER_COLOR = {
   YELLOW: 'yellow',
   RED: 'red',
 };
+
+export const AVAILABLE_LANGUAGES = ['pt', 'en', 'it', 'bg', 'de'];

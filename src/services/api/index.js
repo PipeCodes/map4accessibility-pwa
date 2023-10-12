@@ -1,7 +1,14 @@
 import axios from 'axios';
 import * as Endpoints from './endpoints';
+import { AVAILABLE_LANGUAGES } from '../../constants';
 
 export { Endpoints };
+
+const getAcceptLanguage = () => {
+  // eslint-disable-next-line no-undef
+  const langCode = navigator?.language.slice(0, 2);
+  return AVAILABLE_LANGUAGES.includes(langCode) ? langCode : 'en';
+};
 
 export default axios.create({
   baseURL: process.env.REACT_APP_API_BASE_URL,
@@ -10,7 +17,7 @@ export default axios.create({
     Accept: 'application/json',
     'x-api-key': process.env.REACT_APP_API_STATIC_KEY,
     // eslint-disable-next-line no-undef
-    'Accept-Language': navigator?.language || 'en-GB',
+    'Accept-Language': getAcceptLanguage(),
   },
 });
 
