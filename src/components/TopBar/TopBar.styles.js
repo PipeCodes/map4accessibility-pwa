@@ -78,8 +78,7 @@ export const AccessibilityButton = styled.button`
   -ms-transform: translateY(-50%);
   transform: translateY(-50%);
   right: 15px;
-  width: 42px;
-  height: 42px;
+  padding: 8px 10px;
   display: flex;
   justify-content: center;
   align-items: center;
