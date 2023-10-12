@@ -68,7 +68,10 @@ export const Input = styled.input`
   padding: 6px 10px;
   font-size: ${(props) => updateFontSize(14, props.fontSize)};
   font-family: ${(props) => updateValue('NotoSans-Regular', props.font)};
-  max-width: 240px;
+
+  @media (max-width: 450px) {
+    width: 240px;
+  }
 `;
 
 export const RouteInputs = styled.div`
