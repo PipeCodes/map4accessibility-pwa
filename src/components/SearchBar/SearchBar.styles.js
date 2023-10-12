@@ -41,8 +41,7 @@ export const AccessibilityButton = styled.button`
   margin: 0;
   position: absolute;
   right: 15px;
-  width: 42px;
-  height: 42px;
+  padding: 8px 10px;
   display: flex;
   justify-content: center;
   align-items: center;

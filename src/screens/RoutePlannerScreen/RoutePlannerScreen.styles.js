@@ -68,6 +68,7 @@ export const Input = styled.input`
   padding: 6px 10px;
   font-size: ${(props) => updateFontSize(14, props.fontSize)};
   font-family: ${(props) => updateValue('NotoSans-Regular', props.font)};
+  max-width: 240px;
 `;
 
 export const RouteInputs = styled.div`
@@ -102,8 +103,7 @@ export const AccessibilityButton = styled.button`
   color: white;
   margin: 0;
   right: 15px;
-  width: 42px;
-  height: 42px;
+  padding: 8px 10px;
   display: flex;
   justify-content: center;
   align-items: center;
