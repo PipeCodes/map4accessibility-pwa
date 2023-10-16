@@ -153,7 +153,7 @@
   "latest": "Recentes",
   "map": "Mapa",
   "route_planner": "Planear Rota",
-  "search": "Pesquisa",
+  "search": "Pesquisar local, cidade...",
   "filters": "Filtros",
   "show_route": "Mostar Rota",
   "last_places_visited": "Últimos Locais Visitados",
@@ -172,5 +172,7 @@
   "disability_types": "Tipos de deficiência",
   "close": "Sair",
   "birthdate_not_set": "Data de nascimento",
-  "confirm_delete": "Tem a certeza que pretende remover este item?"
+  "confirm_delete": "Tem a certeza que pretende remover este item?",
+  "is_it_unaccessible": "Este local não é acessível às seguintes deficiências:",
+  "mandatory": "(Obrigatório)"
 }

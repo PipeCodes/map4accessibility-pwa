@@ -199,7 +199,7 @@ const PlaceDetailsScreen = (props) => {
                 </City>
               )}
             </TextWrapper>
-            <Accessible fontSize={fontSize}>
+            <Accessible fontSize={fontSize} font={font}>
               <span className={getAccessibilityColor}>{getAccessibility}</span>
               <div className="rates">
                 <span className="up">
@@ -217,7 +217,7 @@ const PlaceDetailsScreen = (props) => {
               </div>
             </Accessible>
           </div>
-          <PlaceInformation fontSize={fontSize}>
+          <PlaceInformation fontSize={fontSize} font={font}>
             {place?.place_type && (
               <span className="fw-bold">
                 <img src={Path} alt={t('place')} /> {t(place?.place_type)}

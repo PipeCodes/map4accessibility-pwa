@@ -155,7 +155,7 @@
   "route_planner": "Route Planner",
   "latest_evaluations": "Latest Evaluations",
   "radius_error": "Unable to define route for same origin and destination location",
-  "search": "Search",
+  "search": "Search place, city...",
   "filters": "Filters",
   "show_route": "Show Route",
   "last_places_visited": "Last Places Visited",
@@ -174,5 +174,7 @@
   "disability_types": "Disability types",
   "close": "Close",
   "birthdate_not_set": "Birthdate not set",
-  "confirm_delete": "Are you sure you wish to delete this item?"
+  "confirm_delete": "Are you sure you wish to delete this item?",
+  "is_it_unaccessible": "This place is unaccessible to the following disabilities",
+  "mandatory": "(Mandatory)"
 }

@@ -193,7 +193,7 @@ const ProfileScreen = (props) => {
   const updateProfileHandler = useCallback(() => {
     const result = confirmEdit();
     if (result) {
-      if (typeof formData.avatar === 'string') {
+      if (typeof formData.avatar === 'string' || formData.avatar === null) {
         dispatch(
           updateProfile({
             firstName: formData.firstName,
@@ -243,7 +243,7 @@ const ProfileScreen = (props) => {
               src={getImageSource(user?.avatar, formData?.avatar)}
               alt="avatar"
             />
-            <Name fontSize={fontSize}>
+            <Name font={font} fontSize={fontSize}>
               {formData.firstName} {formData.surname}
             </Name>
           </StackContainer>

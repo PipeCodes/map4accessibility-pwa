@@ -75,6 +75,7 @@ export const postPlaceEvaluation =
     countryCode,
     placeType,
     googlePlaceId,
+    disabilities,
   ) =>
   async (dispatch) => {
     dispatch({ type: POST_PLACE_EVALUATIONS_START });
@@ -89,6 +90,7 @@ export const postPlaceEvaluation =
       city,
       country_code: countryCode,
       place_type: placeType,
+      disabilities,
     };
     const config = {
       headers: {

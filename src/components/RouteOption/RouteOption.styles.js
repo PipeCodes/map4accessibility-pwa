@@ -11,17 +11,22 @@ export const RouteContainer = styled.div`
   min-width: 236px;
   min-height: 160px;
   margin: 20px 0;
+  display: flex;
+  flex-direction: column;
 `;
 
 export const ContainerName = styled.div`
   width: 100%;
   display: flex;
+  margin-bottom: auto;
 `;
 export const Name = styled.div`
   color: ${colors.primaryTextColor};
   font-size: ${(props) => updateFontSize(18, props.fontSize)};
   font-family: ${(props) => updateValue('EasyReadingPro', props.font)};
   margin-right: 5px;
+  margin-top: auto;
+  margin-bottom: auto;
 `;
 export const Index = styled.div`
   width: 26px;
@@ -31,12 +36,15 @@ export const Index = styled.div`
   border: 1px solid ${colors.white};
   border-radius: 3px;
   text-align: center;
+  margin-top: auto;
+  margin-bottom: auto;
 `;
 export const Distance = styled.div`
   color: ${colors.grey};
   padding: 8px 0;
   font-size: ${(props) => updateFontSize(16, props.fontSize)};
   font-family: ${(props) => updateValue('EasyReadingPro', props.font)};
+  margin-left: auto;
 `;
 export const Ratings = styled.div`
   font-size: ${(props) => updateFontSize(16, props.fontSize)};

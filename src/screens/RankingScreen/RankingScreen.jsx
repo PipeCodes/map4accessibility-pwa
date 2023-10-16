@@ -67,8 +67,9 @@ const RankingScreen = (props) => {
     history.push(routes.ACCESSIBILITY.path);
   }, [history, routes]);
 
+  // Open Page Details
   const openDetails = (id) => {
-    history.push('/place-details/'.concat(id));
+    history.push('/place-details/'.concat(id).concat('/null'));
   };
 
   const ascDescHandler = () => {
@@ -115,6 +116,8 @@ const RankingScreen = (props) => {
               <span>{t('country')}</span>
             </SliderButon>
             <SliderButon
+              font={font}
+              fontSize={fontSize}
               onClick={setLocationHandler}
               className={sliderActive ? 'active' : ''}
             >

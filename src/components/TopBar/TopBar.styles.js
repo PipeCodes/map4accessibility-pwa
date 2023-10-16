@@ -7,6 +7,7 @@ export const Title = styled.span`
   font-size: ${(props) => updateFontSize(28, props.fontSize)};
   font-family: ${(props) => updateValue('EasyReadingPro', props.font)};
   display: flex;
+  line-height: 38px;
 
   img {
     margin-right: 10px;
@@ -77,8 +78,7 @@ export const AccessibilityButton = styled.button`
   -ms-transform: translateY(-50%);
   transform: translateY(-50%);
   right: 15px;
-  width: 42px;
-  height: 42px;
+  padding: 8px 10px;
   display: flex;
   justify-content: center;
   align-items: center;

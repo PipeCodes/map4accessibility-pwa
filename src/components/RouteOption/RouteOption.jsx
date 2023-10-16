@@ -39,10 +39,10 @@ const MapRoute = ({ route, setRoute, active, history }) => {
           {route.name}
         </Name>
         <Index active={active}>{route.key}</Index>
+        <Distance fontSize={fontSize} font={font}>
+          {route.distance}
+        </Distance>
       </ContainerName>
-      <Distance fontSize={fontSize} font={font}>
-        {route.distance}
-      </Distance>
       <Ratings fontSize={fontSize} font={font}>
         <Rating>
           <Icon>

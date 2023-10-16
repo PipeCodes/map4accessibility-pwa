@@ -73,7 +73,7 @@ export const DisabilityFilters = styled.div`
 
 export const FiltersContainer = styled.div`
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
 `;
 
 export const Filter = styled.div`
@@ -88,12 +88,13 @@ export const Filter = styled.div`
     color: ${colors.primaryTextColor};
     all: unset;
     border: 1px solid #d3d2da;
+    min-height: 55px;
     border-radius: 18px;
-    height: 35px;
-    width: 150px;
     display: flex;
     align-items: center;
-    width: -webkit-fill-available;
+    width: -moz-available; /* WebKit-based browsers will ignore this. */
+    width: -webkit-fill-available; /* Mozilla-based browsers will ignore this. */
+    width: fill-available;
     margin-right: 8px;
     padding: 0 12px;
 
@@ -103,7 +104,7 @@ export const Filter = styled.div`
     }
 
     &.tall-btn {
-      height: 55px;
+      min-height: 55px;
     }
 
     img {
@@ -133,4 +134,5 @@ export const FilterToggleArrow = styled.div`
 
 export const FilterToggleContent = styled.div`
   display: ${(props) => (props.collapsed ? 'none' : 'inline-block')};
+  width: 100%;
 `;

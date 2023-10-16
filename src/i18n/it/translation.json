@@ -148,7 +148,7 @@
   "route_planner": "pianificatore di percorso",
   "latest_evaluations": "ultime valutazioni",
   "radius_error": "errore di raggio",
-  "search": "cerca",
+  "search": "cerca luogo, città...",
   "filters": "filtri",
   "show_route": "mostra percorso",
   "last_places_visited": "ultimi posti visitati",
@@ -167,5 +167,7 @@
   "disability_types": "tipi di disabilità",
   "close": "chiuso",
   "birthdate_not_set": "Data di nascita non impostata",
-  "confirm_delete": "Sei sicuro di voler eliminare questo elemento?"
+  "confirm_delete": "Sei sicuro di voler eliminare questo elemento?",
+  "is_it_unaccessible": "Questo luogo non è accessibile alle seguenti disabilità:",
+  "mandatory": "(Obbligatorio)"
 }

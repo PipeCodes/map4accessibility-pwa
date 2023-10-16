@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { colors } from '../../constants/colors';
-import { updateValue } from '../../helpers/utils';
+import { updateFontSize, updateValue } from '../../helpers/utils';
 
 export const Page = styled.div`
   display: flex;
@@ -57,6 +57,8 @@ export const SliderButon = styled.button`
   border-radius: 20px;
   color: ${colors.white};
   align-items: center;
+  font-size: ${(props) => updateFontSize(16, props.fontSize)};
+  font-family: ${(props) => updateValue('EasyReadingPro', props.font)};
 
   img {
     height: 20px;
