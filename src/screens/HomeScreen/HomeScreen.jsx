@@ -40,9 +40,9 @@ const HomeScreen = (props) => {
 
   useEffect(() => {
     if (tutorialCookie !== 'accepted') {
-      history.replace('/tutorial');
+      history.replace(routes.WALKTHROUGH_TUTORIAL.path);
     }
-  }, [tutorialCookie, readTutorial, history]);
+  }, [tutorialCookie, readTutorial, history, routes]);
 
   const openAccessibility = useCallback(() => {
     history.push(routes.ACCESSIBILITY.path);

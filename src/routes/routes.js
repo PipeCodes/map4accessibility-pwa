@@ -53,7 +53,7 @@ const routes = {
     private: false,
   },
   WALKTHROUGH_TUTORIAL: {
-    path: '/tutorial',
+    path: '/help',
     component: WalkthroughScreen,
     private: true,
   },

@@ -470,7 +470,7 @@ const ProfileScreen = (props) => {
               marginTop: '8px',
             }}
             backgroundColor={colors.transparent}
-            text={t('tutorial')}
+            text={t('help')}
             icon={QuestionsIcon}
             // eslint-disable-next-line no-undef
             onClick={() => readTutorial()}
