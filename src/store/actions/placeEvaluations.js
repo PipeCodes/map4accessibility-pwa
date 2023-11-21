@@ -55,7 +55,6 @@ export const getMyPlaceEvaluations = () => async (dispatch) => {
         sums: sums ?? {},
       });
     }
-    return;
   } catch (error) {
     return Promise.reject(error?.response?.data?.message);
   }

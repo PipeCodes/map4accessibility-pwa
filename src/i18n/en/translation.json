@@ -16,6 +16,7 @@
   "login": "Login",
   "register": "Register",
   "faqs": "FAQs & About",
+  "help": "Help",
   "terms_conditions": "Terms & Conditions",
   "confirm": "Confirm",
   "add_to_home_screen": "Add to Home Screen",
@@ -176,5 +177,7 @@
   "birthdate_not_set": "Birthdate not set",
   "confirm_delete": "Are you sure you wish to delete this item?",
   "is_it_unaccessible": "This place is unaccessible to the following disabilities",
-  "mandatory": "(Mandatory)"
+  "mandatory": "(Mandatory)",
+  "how-it-works": "How it works",
+  "lorem-ipsum": "Lorem ipsum dolor sit amet, consetetur sit sadipscing elitr, sed diam nonumy eirmod ut tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua."
 }
