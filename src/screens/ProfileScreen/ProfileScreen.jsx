@@ -106,6 +106,10 @@ const ProfileScreen = (props) => {
     }
   }, [user]);
 
+  const readTutorial = () => {
+    history.push(routes.WALKTHROUGH_TUTORIAL.path);
+  };
+
   // Sets image source
   const getImageSource = (user, formData) => {
     if (user === null && formData === null) {
@@ -456,6 +460,20 @@ const ProfileScreen = (props) => {
             icon={QuestionsIcon}
             // eslint-disable-next-line no-undef
             onClick={() => window.open(faqs)}
+          />
+          <CustomButton
+            style={{
+              width: 'auto',
+              borderRadius: '25px',
+              color: colors.grey,
+              boxShadow: 'none',
+              marginTop: '8px',
+            }}
+            backgroundColor={colors.transparent}
+            text={t('tutorial')}
+            icon={QuestionsIcon}
+            // eslint-disable-next-line no-undef
+            onClick={() => readTutorial()}
           />
           <Link
             fontSize={fontSize}

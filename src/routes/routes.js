@@ -19,6 +19,7 @@ import AddPlaceScreen from '../screens/AddPlaceScreen/AddPlaceScreen';
 import PlaceDetailsScreen from '../screens/PlaceDetailsScreen/PlaceDetailsScreen';
 import SingleRouteScreen from '../screens/SingleRouteScreen/SingleRouteScreen';
 import InfoScreen from '../screens/InfoScreen/InfoScreen';
+import WalkthroughScreen from '../screens/WalkthroughScreen/WalkthroughScreen';
 import { isAuthenticated } from '../services/local';
 import SearchScreen from '../screens/SearchScreen/SearchScreen';
 
@@ -50,6 +51,11 @@ const routes = {
     path: '/email-validation',
     component: InfoScreen,
     private: false,
+  },
+  WALKTHROUGH_TUTORIAL: {
+    path: '/tutorial',
+    component: WalkthroughScreen,
+    private: true,
   },
   EMAIL_CONFIRMATION: {
     path: '/email-confirmation',

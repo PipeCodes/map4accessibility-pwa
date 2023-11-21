@@ -16,6 +16,7 @@
   "login": "Login",
   "register": "registra",
   "faqs": "FAQs",
+  "tutorial": "Tutorial",
   "terms_conditions": "Termini e condizioni",
   "confirm": "conferma",
   "add_to_home_screen": "aggiungi alla schermata principale",
@@ -169,5 +170,7 @@
   "birthdate_not_set": "Data di nascita non impostata",
   "confirm_delete": "Sei sicuro di voler eliminare questo elemento?",
   "is_it_unaccessible": "Questo luogo non è accessibile alle seguenti disabilità:",
-  "mandatory": "(Obbligatorio)"
+  "mandatory": "(Obbligatorio)",
+  "how-it-works": "Come funziona",
+  "lorem-ipsum": "Lorem ipsum dolor sit amet, consetetur sit sadipscing elitr, sed diam nonumy eirmod ut tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua."
 }

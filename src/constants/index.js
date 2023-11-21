@@ -60,3 +60,8 @@ export const MARKER_COLOR = {
 };
 
 export const AVAILABLE_LANGUAGES = ['pt', 'en', 'it', 'bg', 'de'];
+
+export const STEP = {
+  NEXT: 'next',
+  PREVIOUS: 'previous',
+};
