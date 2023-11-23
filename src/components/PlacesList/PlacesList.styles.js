@@ -61,7 +61,7 @@ export const NoResults = styled.div`
   margin-bottom: 15px;
 `;
 
-export const Button = styled.div`
+export const PlacePin = styled.div`
   border-radius: 100%;
   background: ${colors.primaryColor} 0% 0% no-repeat padding-box;
   box-shadow: 0px 2px 2px ${colors.shadow};
