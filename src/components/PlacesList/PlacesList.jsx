@@ -13,9 +13,9 @@ import {
   Name,
   TextWrapper,
   City,
-  Button,
   ShowAll,
   NoResults,
+  PlacePin,
 } from './PlacesList.styles';
 
 const PlacesList = ({ places, history, routes, searchText }) => {
@@ -61,7 +61,11 @@ const PlacesList = ({ places, history, routes, searchText }) => {
       <PlacesContainer>
         {places && placesList?.length !== 0 ? (
           placesList?.map((place, key) => (
-            <Place key={key}>
+            <Place
+              key={key}
+              type="button"
+              onClick={() => showPlaceOnMap(place?.latitude, place?.longitude)}
+            >
               <TextWrapper>
                 <Name fontSize={fontSize} font={font}>
                   {place?.name}
@@ -70,14 +74,9 @@ const PlacesList = ({ places, history, routes, searchText }) => {
                   {place?.city}
                 </City>
               </TextWrapper>
-              <Button
-                type="button"
-                onClick={() =>
-                  showPlaceOnMap(place?.latitude, place?.longitude)
-                }
-              >
+              <PlacePin>
                 <img src={pinIcon} alt={place.id} />
-              </Button>
+              </PlacePin>
             </Place>
           ))
         ) : (
