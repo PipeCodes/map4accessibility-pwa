@@ -13,6 +13,8 @@ import CustomMarker from '../CustomMarker/CustomMarker';
 import PlacesVisited from '../PlacesVisited/PlacesVisited';
 import MapZoom from '../MapZoom/MapZoom';
 import { getMarkerColor } from '../../helpers/utils';
+import { MARKER_COLOR } from '../../constants';
+import { getCurrentLocation } from '../../services/geolocation';
 
 // Map styling
 const containerStyle = {
@@ -35,6 +37,7 @@ const Map = (props) => {
   const directions = useSelector((state) => state.directions.directions);
   const selectedRoute = useSelector((state) => state.directions.selectedRoute);
   const [generatingRoutes, setGeneratingRoutes] = useState(false);
+  const [liveLocation, setLiveLocation] = useState(null);
 
   // Map and route colours options
   const [map, setMap] = useState(/** @type google.maps.Map */ (null));
@@ -55,6 +58,13 @@ const Map = (props) => {
     },
     [selectedRoute],
   );
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      getCurrentLocation().then((value) => setLiveLocation(value));
+    }, 3000);
+    return () => clearInterval(intervalId);
+  }, []);
 
   // Click Handlers
   // Change Route
@@ -293,6 +303,17 @@ const Map = (props) => {
               markerColor={markerColor(marker)}
             />
           ))}
+
+        {liveLocation && (
+          <CustomMarker
+            onClick={() => {}}
+            markerColor={MARKER_COLOR.CURRENT_LOCATION}
+            marker={{
+              latitude: liveLocation?.lat,
+              longitude: liveLocation?.lng,
+            }}
+          />
+        )}
       </GoogleMap>
       <MapZoom
         zoomIn={() => {
