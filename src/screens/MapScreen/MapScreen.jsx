@@ -34,7 +34,7 @@ import {
   ButtonLocation,
   ToolTip,
 } from './MapScreen.styles';
-import { GOOGLE_MAPS_OPTIONS } from '../../constants';
+import { GOOGLE_MAPS_OPTIONS, MARKER_COLOR } from '../../constants';
 import MapZoom from '../../components/MapZoom/MapZoom';
 
 // Map styling
@@ -85,6 +85,7 @@ const MapScreen = (props) => {
   const [center, setCenter] = useState(null);
   const [markers, setMarkers] = useState(null);
   const [location, setLocation] = useState(null);
+  const [liveLocation, setLiveLocation] = useState(null);
   const [coords, setCoords] = useState(null);
   const [add, setAdd] = useState(null);
   const [pinMarker, setPinMarker] = useState(null);
@@ -123,6 +124,13 @@ const MapScreen = (props) => {
     t,
     history?.location?.state?.returnToMap,
   ]);
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      getCurrentLocation().then((value) => setLiveLocation(value));
+    }, 3000);
+    return () => clearInterval(intervalId);
+  }, []);
 
   // If coords are selected opens Add Place Screen
   useEffect(() => {
@@ -328,6 +336,16 @@ const MapScreen = (props) => {
                     marker={{
                       latitude: pinMarker?.lat,
                       longitude: pinMarker?.lng,
+                    }}
+                  />
+                )}
+                {liveLocation && (
+                  <CustomMarker
+                    onClick={() => {}}
+                    markerColor={MARKER_COLOR.CURRENT_LOCATION}
+                    marker={{
+                      latitude: liveLocation?.lat,
+                      longitude: liveLocation?.lng,
                     }}
                   />
                 )}
