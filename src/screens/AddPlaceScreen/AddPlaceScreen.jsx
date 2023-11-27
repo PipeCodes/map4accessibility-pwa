@@ -107,7 +107,7 @@ const AddPlaceScreen = (props) => {
       success(result) {
         dispatch(postPlaceMedia(result, id))
           .then(() => {
-            history.push('/rate-place/'.concat(id));
+            history.push(`/rate-place/${id}/${null}`);
           })
           .catch((err) => {
             // eslint-disable-next-line no-undef
