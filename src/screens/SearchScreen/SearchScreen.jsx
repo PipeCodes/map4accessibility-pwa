@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { withRouter } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
@@ -67,11 +67,21 @@ const SearchScreen = ({ history, routes }) => {
     dispatch(setDisability(value));
   };
 
+  const handleSearchAction = useCallback(() => {
+    dispatch(
+      getPlaceByParams({
+        name: searchText,
+        placeType: filterType ?? undefined,
+        disabilityType: disabilityType ?? undefined,
+      }),
+    );
+  }, [filterType, disabilityType, searchText, dispatch]);
+
   useEffect(() => {
-    if (searchText?.length >= 4 || filterType || disabilityType) {
+    if (filterType || disabilityType) {
       dispatch(
         getPlaceByParams({
-          name: searchText?.length >= 4 ? searchText : undefined,
+          name: searchText,
           placeType: filterType ?? undefined,
           disabilityType: disabilityType ?? undefined,
         }),
@@ -90,6 +100,7 @@ const SearchScreen = ({ history, routes }) => {
         routes={routes}
         searchText={searchText}
         handleSearch={handleSearch}
+        handleSearchAction={handleSearchAction}
       />
       <Container backgroundColor={backgroundColor}>
         <FilterToggleHeader
