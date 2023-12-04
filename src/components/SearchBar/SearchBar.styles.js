@@ -32,6 +32,18 @@ export const LeftButton = styled.button`
   }
 `;
 
+export const SearchButton = styled.button`
+  border: none;
+  background: ${colors.transparent};
+  margin: 0;
+  padding: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  right: 70px;
+`;
+
 export const AccessibilityButton = styled.button`
   border-radius: 100%;
   background: ${colors.primaryColor} 0% 0% no-repeat padding-box;

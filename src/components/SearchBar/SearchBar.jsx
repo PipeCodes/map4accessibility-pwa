@@ -5,6 +5,7 @@ import {
   LeftButton,
   SearchHeader,
   AccessibilityButton,
+  SearchButton,
 } from './SearchBar.styles';
 import BackIcon from '../../assets/icons/back.svg';
 import AccessibilityIcon from '../../assets/icons/accessibility.svg';
@@ -18,6 +19,7 @@ const SearchBar = ({
   routes,
   searchText,
   handleSearch,
+  handleSearchAction,
 }) => {
   const { t } = useTranslation();
   const fontSize = useSelector((state) => state.accessibility.fontSize);
@@ -53,6 +55,9 @@ const SearchBar = ({
         onChange={(e) => handleSearch(e.target.value)}
         icon={Magnifier}
       />
+      <SearchButton type="button" onClick={handleSearchAction}>
+        <img src={Magnifier} alt="Search" />
+      </SearchButton>
       <AccessibilityButton type="button" onClick={openAccessibility}>
         <img src={AccessibilityIcon} alt="Accessibility" />
       </AccessibilityButton>

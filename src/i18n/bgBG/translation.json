@@ -16,6 +16,7 @@
   "login": "Вход",
   "register": "Регистрация",
   "faqs": "Често задавани въпроси & относно",
+  "help": "Помощ",
   "terms_conditions": "Общи условия",
   "confirm": "Потвърди",
   "add_to_home_screen": "Добави към начален екран",
@@ -169,5 +170,7 @@
   "birthdate_not_set": "Рождената дата не е зададена",
   "confirm_delete": "Сигурни ли сте, че искате да изтриете този елемент?",
   "is_it_unaccessible": "Това място е недостъпно за следните увреждания",
-  "mandatory": "(Задължително)"
+  "mandatory": "(Задължително)",
+  "how-it-works": "Как работи",
+  "lorem-ipsum": "Lorem ipsum dolor sit amet, consetetur sit sadipscing elitr, sed diam nonumy eirmod ut tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua."
 }

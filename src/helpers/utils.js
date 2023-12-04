@@ -2,6 +2,8 @@
 /* eslint-disable prefer-rest-params */
 /* eslint-disable one-var */
 
+import CurrentLocationIcon from '../assets/icons/maps/markers/current-location.svg';
+
 // Default Icons
 import OtherObstacleIcon from '../assets/icons/maps/markers/place-other-obstacle.svg';
 import PedestrianCrossIcon from '../assets/icons/maps/markers/place-pedestrians-cross.svg';
@@ -150,6 +152,9 @@ export const debounce = (func, wait, immediate) => {
 // ///////////////////////////
 
 export const markerIcon = (type, markerColor) => {
+  if (markerColor === MARKER_COLOR.CURRENT_LOCATION) {
+    return CurrentLocationIcon;
+  }
   if (markerColor === MARKER_COLOR.GREEN) {
     switch (type) {
       case 'pedestrian_cross':

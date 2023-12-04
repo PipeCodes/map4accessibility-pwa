@@ -57,6 +57,12 @@ export const MARKER_COLOR = {
   GREEN: 'green',
   YELLOW: 'yellow',
   RED: 'red',
+  CURRENT_LOCATION: 'location',
 };
 
 export const AVAILABLE_LANGUAGES = ['pt', 'en', 'it', 'bg', 'de'];
+
+export const STEP = {
+  NEXT: 'next',
+  PREVIOUS: 'previous',
+};

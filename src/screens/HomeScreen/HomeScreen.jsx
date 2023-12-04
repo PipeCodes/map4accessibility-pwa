@@ -1,7 +1,8 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { withRouter } from 'react-router-dom';
+import Cookies from 'js-cookie';
 import TopBar from '../../components/TopBar/TopBar';
 import FooterMenu from '../../components/FooterMenu/FooterMenu';
 import { Page, Container, Text, MyArea } from './HomeScreen.styles';
@@ -27,11 +28,21 @@ const HomeScreen = (props) => {
   );
   const sums = useSelector((state) => state.placeEvaluations.sums);
 
+  const tutorialCookie = Cookies.get('tutorial');
+
   // Gets user info on load
   useEffect(() => {
     dispatch(getUser());
     dispatch(getMyPlaceEvaluations());
   }, [dispatch]);
+
+  const readTutorial = useMemo(() => tutorialCookie, [tutorialCookie]);
+
+  useEffect(() => {
+    if (tutorialCookie !== 'accepted') {
+      history.replace(routes.WALKTHROUGH_TUTORIAL.path);
+    }
+  }, [tutorialCookie, readTutorial, history, routes]);
 
   const openAccessibility = useCallback(() => {
     history.push(routes.ACCESSIBILITY.path);
