@@ -1,6 +1,7 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback, useMemo } from 'react';
 import { withRouter } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import Cookies from 'js-cookie';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   useJsApiLoader,
@@ -93,10 +94,35 @@ const MapScreen = (props) => {
 
   const { isLoaded } = useJsApiLoader(GOOGLE_MAPS_OPTIONS);
 
+  const tutorialCookie = Cookies.get('tutorial');
+
+  const readTutorial = useMemo(() => tutorialCookie, [tutorialCookie]);
+
+  useEffect(() => {
+    if (tutorialCookie !== 'accepted') {
+      history.replace(routes.WALKTHROUGH_TUTORIAL.path);
+    }
+  }, [tutorialCookie, readTutorial, history, routes]);
+
   // Cluster Options
   const options = {
     maxZoom: 15,
   };
+
+  const openPlaceInfo = useCallback(
+    (marker) => {
+      if (marker?.google_place_id) {
+        dispatch(getGooglePlace(marker?.google_place_id));
+        if (marker?.id) {
+          dispatch(getMorePlaceInfo(marker?.id));
+        }
+      } else {
+        dispatch(getPlace(marker?.id));
+      }
+      setPopUp(true);
+    },
+    [dispatch],
+  );
 
   // Gets Position and sets Location
   useEffect(() => {
@@ -106,6 +132,7 @@ const MapScreen = (props) => {
         .then((position) => {
           if (history?.location?.state?.search?.location) {
             setLocation(history?.location?.state?.search?.location);
+            openPlaceInfo(history?.location?.state?.search?.place);
           } else if (history?.location?.state?.returnToMap) {
             setLocation(history?.location?.state?.returnToMap?.location);
           } else {
@@ -115,22 +142,32 @@ const MapScreen = (props) => {
         .catch((error) => {
           setLocation({ lat: 38.736946, lng: -9.142685 });
           // eslint-disable-next-line no-undef
-          alert(error);
+          console.log(error);
+          alert(t('denied_geo'));
         });
     }
   }, [
     isLoaded,
     history?.location?.state?.search?.location,
+    history?.location?.state?.search?.zoom,
+    history?.location?.state?.search?.place,
+    openPlaceInfo,
+    map,
     t,
     history?.location?.state?.returnToMap,
   ]);
 
   useEffect(() => {
     const intervalId = setInterval(() => {
-      getCurrentLocation().then((value) => setLiveLocation(value));
+      try {
+        getCurrentLocation().then((value) => setLiveLocation(value));
+      } catch (error) {
+        console.log(error);
+        alert(t('denied_geo'));
+      }
     }, 3000);
     return () => clearInterval(intervalId);
-  }, []);
+  }, [t]);
 
   // If coords are selected opens Add Place Screen
   useEffect(() => {
@@ -160,9 +197,15 @@ const MapScreen = (props) => {
     if (isLoaded) {
       // Asks and sets user position (lat, long)
       getCurrentLocation()
-        .then((position) => setLocation(position))
+        .then((position) => {
+          setLocation(position);
+          map.setZoom(25);
+        })
         // eslint-disable-next-line no-undef
-        .catch((error) => alert(error));
+        .catch((error) => {
+          console.log(error);
+          alert(t('denied_geo'));
+        });
     }
   };
 
@@ -184,19 +227,6 @@ const MapScreen = (props) => {
     }, 400),
     [center, map],
   );
-
-  // Opens and closes places
-  const openPlaceInfo = (marker) => {
-    if (marker?.google_place_id) {
-      dispatch(getGooglePlace(marker?.google_place_id));
-      if (marker?.id) {
-        dispatch(getMorePlaceInfo(marker?.id));
-      }
-    } else {
-      dispatch(getPlace(marker?.id));
-    }
-    setPopUp(true);
-  };
 
   const markerColor = (marker) => {
     const color = getMarkerColor({
@@ -267,7 +297,7 @@ const MapScreen = (props) => {
             <GoogleMap
               mapContainerStyle={containerStyle}
               center={location}
-              zoom={history.location?.state?.search ? 20 : 14}
+              zoom={history.location?.state?.search ? 30 : 14}
               onClick={(e) => {
                 if (add) {
                   setCoords({ lat: e.latLng.lat(), lng: e.latLng.lng() });
