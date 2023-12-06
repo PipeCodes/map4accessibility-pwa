@@ -32,9 +32,9 @@ const LoginScreen = (props) => {
 
   useEffect(() => {
     if (user && history) {
-      history.replace(routes.HOME.path);
+      history.replace(routes.MAP.path);
     }
-  }, [user, history, routes.HOME.path]);
+  }, [user, history, routes.MAP.path]);
 
   // Validates the fields
   const validate = (values) => {

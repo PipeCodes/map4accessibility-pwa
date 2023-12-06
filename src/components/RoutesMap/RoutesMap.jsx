@@ -61,7 +61,12 @@ const Map = (props) => {
 
   useEffect(() => {
     const intervalId = setInterval(() => {
-      getCurrentLocation().then((value) => setLiveLocation(value));
+      try {
+        getCurrentLocation().then((value) => setLiveLocation(value));
+      } catch (error) {
+        console.log(error);
+        alert(t('denied_geo'));
+      }
     }, 3000);
     return () => clearInterval(intervalId);
   }, []);

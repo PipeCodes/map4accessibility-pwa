@@ -159,19 +159,3 @@ export const ActionContainer = styled.div`
   gap: 16px;
   align-items: center;
 `;
-
-export const ButtonComments = styled.div`
-  margin-left: auto;
-  background: ${colors.orange};
-  box-shadow: 0px 2px 2px ${colors.shadow};
-  border: 1px solid ${colors.lightGrey};
-  padding: 10px;
-  border-radius: 25px;
-  height: fit-content;
-  cursor: pointer;
-  margin-bottom: -5px;
-
-  button {
-    all: unset;
-  }
-`;

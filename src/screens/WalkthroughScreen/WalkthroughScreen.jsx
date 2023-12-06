@@ -15,8 +15,6 @@ import { colors } from '../../constants/colors';
 import ArrowLeft from '../../assets/icons/arrow-left.svg';
 import ArrowRight from '../../assets/icons/arrow-right.svg';
 import TutorialFirst from '../../assets/icons/tutorial/onboarding-01.svg';
-import TutorialSecond from '../../assets/icons/tutorial/onboarding-02.svg';
-import TutorialThird from '../../assets/icons/tutorial/onboarding-03.svg';
 import TopBar from '../../components/TopBar/TopBar';
 import { STEP } from '../../constants';
 import PageIndicator from '../../components/PageIndicator/PageIndicator';
@@ -48,9 +46,9 @@ const WalkthroughScreen = (props) => {
   );
 
   useEffect(() => {
-    if (currentStep === 3) {
+    if (currentStep === 7) {
       Cookies.set('tutorial', 'accepted');
-      history.replace(routes.HOME.path);
+      history.replace(routes.MAP.path);
     }
   }, [currentStep, history, routes]);
 
@@ -73,28 +71,76 @@ const WalkthroughScreen = (props) => {
             <>
               <Image src={TutorialFirst} />
               <Text fontSize={fontSize} font={font}>
-                {t('lorem-ipsum')}
+                <span>{t('tutorial_1_title')}</span>
+                <br />
+                {t('tutorial_1')}
               </Text>
             </>
           )}
           {currentStep === 1 && (
             <>
-              <Image src={TutorialSecond} />
+              <Image src={TutorialFirst} />
               <Text fontSize={fontSize} font={font}>
-                {t('lorem-ipsum')}
+                <span>{t('tutorial_2_title')}</span>
+                <br />
+                {t('tutorial_2')}
               </Text>
             </>
           )}
           {currentStep === 2 && (
             <>
-              <Image src={TutorialThird} />
+              <Image src={TutorialFirst} />
               <Text fontSize={fontSize} font={font}>
-                {t('lorem-ipsum')}
+                <span>{t('tutorial_3_title')}</span>
+                <br />
+                {t('tutorial_3')}
+              </Text>
+            </>
+          )}
+          {currentStep === 3 && (
+            <>
+              <Image src={TutorialFirst} />
+              <Text fontSize={fontSize} font={font}>
+                <span>{t('tutorial_4_title')}</span>
+                <br />
+                {t('tutorial_4')}
+              </Text>
+            </>
+          )}
+          {currentStep === 4 && (
+            <>
+              <Image src={TutorialFirst} />
+              <Text fontSize={fontSize} font={font}>
+                <span>{t('tutorial_5_title')}</span>
+                <br />
+                {t('tutorial_5')}
+              </Text>
+            </>
+          )}
+          {currentStep === 5 && (
+            <>
+              <Image src={TutorialFirst} />
+              <Text fontSize={fontSize} font={font}>
+                <span>{t('tutorial_6_title')}</span>
+                <br />
+                {t('tutorial_6')}
+              </Text>
+            </>
+          )}
+          {currentStep === 6 && (
+            <>
+              <Image src={TutorialFirst} />
+              <Text fontSize={fontSize} font={font}>
+                <span>{t('tutorial_7_title')}</span>
+                <br />
+                {t('tutorial_7_1')}
+                <br />
+                {t('tutorial_7_2')}
               </Text>
             </>
           )}
         </div>
-        <PageIndicator currentStep={currentStep} total={3} />
+        <PageIndicator currentStep={currentStep} total={7} />
         <ButtonContainer>
           {currentStep > 0 && (
             <CustomButton

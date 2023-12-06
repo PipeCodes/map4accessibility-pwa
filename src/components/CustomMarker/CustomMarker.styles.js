@@ -9,6 +9,11 @@ export const Title = styled.span`
   font-family: ${(props) => updateValue('EasyReadingPro', props.font)};
 `;
 
+export const Wrapper = styled.div`
+  max-height: 94px;
+  max-width: 94px;
+`;
+
 export const LikesAndDislikes = styled.div`
   background-color: white;
   border-radius: 32px;
