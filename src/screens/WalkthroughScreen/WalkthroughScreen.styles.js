@@ -43,12 +43,13 @@ export const Image = styled.img`
 `;
 
 export const Text = styled.span`
-  font-size: ${(props) => updateFontSize(16, props.fontSize)};
+  font-size: ${(props) => updateFontSize(14, props.fontSize)};
   font-family: ${(props) => updateValue('EasyReadingPro', props.font)};
   color: ${colors.primaryColorText};
   margin-bottom: 10px;
+  max-width: 90%;
   span {
-    font-size: ${(props) => updateFontSize(14, props.fontSize)};
+    font-size: ${(props) => updateFontSize(22, props.fontSize)};
     color: ${colors.primaryColor};
     margin-left: 5px;
   }

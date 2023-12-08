@@ -28,7 +28,6 @@ import {
   Accessible,
   PlaceInformation,
   Header,
-  ButtonComments,
   ActionContainer,
 } from './PlacePopUp.styles';
 import CustomButton from '../CustomButton/CustomButton';
@@ -211,11 +210,20 @@ const PlacePopUpComponent = (props) => {
                   buttonicon
                   icon={ArrowRight}
                 />
-                <ButtonComments onClick={() => openComments()}>
-                  <button type="button">
-                    <img src={Comment} alt="comment" />
-                  </button>
-                </ButtonComments>
+                <CustomButton
+                  style={{
+                    marginTop: 30,
+                    marginBottom: 20,
+                    width: '100%',
+                    borderRadius: '25px',
+                    color: colors.white,
+                  }}
+                  backgroundColor={colors.orange}
+                  text={t('review')}
+                  onClick={() => openComments()}
+                  buttonicon
+                  icon={Comment}
+                />
               </ActionContainer>
             </Content>
           </PopUp>

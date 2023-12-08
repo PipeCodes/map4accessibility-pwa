@@ -45,9 +45,13 @@ const PlacesList = ({ places, history, routes, searchText }) => {
     setViewAll((prevState) => !prevState);
   };
 
-  const showPlaceOnMap = (lat, lng) => {
+  const showPlaceOnMap = (lat, lng, place) => {
     history.push(routes.MAP.path, {
-      search: { location: { lat: +lat, lng: +lng }, text: searchText },
+      search: {
+        location: { lat: +lat, lng: +lng },
+        text: searchText,
+        place,
+      },
     });
   };
 
@@ -64,7 +68,9 @@ const PlacesList = ({ places, history, routes, searchText }) => {
             <Place
               key={key}
               type="button"
-              onClick={() => showPlaceOnMap(place?.latitude, place?.longitude)}
+              onClick={() =>
+                showPlaceOnMap(place?.latitude, place?.longitude, place)
+              }
             >
               <TextWrapper>
                 <Name fontSize={fontSize} font={font}>

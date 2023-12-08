@@ -71,7 +71,10 @@ const RoutePlannerScreen = (props) => {
         }
       })
       // eslint-disable-next-line no-undef
-      .catch((error) => alert(error));
+      .catch((error) => {
+        console.log(error);
+        alert(t('denied_geo'));
+      });
   });
 
   // If saved Route Loads data into fields

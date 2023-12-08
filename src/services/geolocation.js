@@ -1,3 +1,5 @@
+// import { useTranslation } from 'react-i18next';
+
 export const getCurrentLocation = () =>
   new Promise((resolve, reject) => {
     // eslint-disable-next-line no-undef

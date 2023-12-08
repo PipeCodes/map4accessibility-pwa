@@ -30,18 +30,18 @@ const FooterBar = (props) => {
 
   return (
     <FooterBarContainter backgroundColor={backgroundColor} {...colors}>
-      <MenuButton type="button" onClick={mapClickHandler}>
-        {map ? (
-          <img src={MapActiveIcon} alt="map" />
-        ) : (
-          <img src={MapIcon} alt="map active" />
-        )}
-      </MenuButton>
       <MenuButton type="button" onClick={homeClickHandler}>
         {home ? (
           <img src={HomeActiveIcon} alt="home active" />
         ) : (
           <img src={HomeIcon} alt="home" />
+        )}
+      </MenuButton>
+      <MenuButton type="button" onClick={mapClickHandler}>
+        {map ? (
+          <img src={MapActiveIcon} alt="map" />
+        ) : (
+          <img src={MapIcon} alt="map active" />
         )}
       </MenuButton>
       <MenuButton type="button" onClick={profileClickHandler}>

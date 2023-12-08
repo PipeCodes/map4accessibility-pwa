@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
 import { Marker } from '@react-google-maps/api';
 import { choosePlaceType, markerIcon } from '../../helpers/utils';
+import { Wrapper } from './CustomMarker.styles';
 
 const CustomMarker = ({ marker, onClick, clusterer, markerColor }) => {
   const icon = useMemo(
@@ -14,14 +15,16 @@ const CustomMarker = ({ marker, onClick, clusterer, markerColor }) => {
   };
 
   return (
-    <Marker
-      autoPan={false}
-      key={marker.id}
-      icon={icon}
-      position={coords}
-      clusterer={clusterer}
-      onClick={() => onClick()}
-    />
+    <Wrapper>
+      <Marker
+        autoPan={false}
+        key={marker.id}
+        icon={icon}
+        position={coords}
+        clusterer={clusterer}
+        onClick={() => onClick()}
+      />
+    </Wrapper>
   );
 };
 
