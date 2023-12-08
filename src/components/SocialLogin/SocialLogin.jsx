@@ -55,7 +55,8 @@ const SocialLogin = ({ history, routes }) => {
           );
         }}
         onReject={(err) => {
-          alert(err);
+          console.log(err);
+          alert('Operation canceled by the user');
         }}
       >
         <CustomButton
@@ -81,7 +82,8 @@ const SocialLogin = ({ history, routes }) => {
           );
         }}
         onReject={(err) => {
-          alert(err);
+          console.log(err);
+          alert('Error occured');
         }}
       >
         <CustomButton
