@@ -7,18 +7,44 @@ const CustomInput = (props) => {
     borderColor,
     style,
     type = 'text',
+    maxLength,
     onChange,
     value,
+    name,
+    min,
+    max,
+    onBlur,
+    readOnly,
+    fontSize,
+    font,
+    icon,
   } = props;
 
   return (
     <InputStyle
       style={style}
+      fontSize={fontSize}
+      font={font}
       type={type}
       placeholder={placeholder}
+      min={min}
+      max={max}
       onChange={onChange}
+      onPaste={(e) => {
+        e.preventDefault();
+        return false;
+      }}
+      onCopy={(e) => {
+        e.preventDefault();
+        return false;
+      }}
+      maxLength={maxLength}
       value={value}
+      name={name}
+      onBlur={onBlur}
+      {...{ readOnly }}
       {...{ borderColor }}
+      icon={icon}
     />
   );
 };

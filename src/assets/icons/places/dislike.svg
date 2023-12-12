@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 50 50">
+  <g id="dislike" transform="translate(-50 -803)">
+    <g id="Rectangle_22" data-name="Rectangle 22" transform="translate(50 803)" fill="#fff" stroke="#ee4141" stroke-width="1">
+      <rect width="50" height="50" rx="4" stroke="none"/>
+      <rect x="0.5" y="0.5" width="49" height="49" rx="3.5" fill="none"/>
+    </g>
+    <path id="Icon_feather-thumbs-down" data-name="Icon feather-thumbs-down" d="M10.631,15.913v3.973a2.98,2.98,0,0,0,2.98,2.98l3.973-8.939V3H6.38A1.987,1.987,0,0,0,4.393,4.689L3.023,13.628a1.987,1.987,0,0,0,1.987,2.285ZM17.584,3h2.98A1.987,1.987,0,0,1,22.55,4.987v6.953a1.987,1.987,0,0,1-1.987,1.987h-2.98" transform="translate(62.5 815.5)" fill="none" stroke="#ee4141" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+  </g>
+</svg>

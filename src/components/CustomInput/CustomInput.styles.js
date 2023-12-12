@@ -1,19 +1,19 @@
 import styled from 'styled-components';
 import { colors } from '../../constants/colors';
+import { updateFontSize, updateValue } from '../../helpers/utils';
 
 const InputStyle = styled.input`
-  border-radius: 5px;
-  background-color: #ffffff;
-  height: 37px;
-  min-height: 37px;
-  width: 276px;
-  font-size: 13px;
-  padding-left: 16px;
-  padding-right: 16px;
-  outline: none;
+  background-color: ${colors.white};
+  height: 40px;
+  min-height: 40px;
+  width: 100%;
+  font-size: ${(props) => updateFontSize(14, props.fontSize)};
+  font-family: ${(props) => updateValue('EasyReadingPro', props.font)};
+  padding-left: 15px;
+  padding-right: ${(props) => (props.icon ? '40px' : '15px')};
   color: ${colors.grey};
-  border-color: transparent;
-
+  border: 1px solid ${colors.lightGrey};
+  border-radius: 21px;
   &::placeholder {
     /* Chrome, Firefox, Opera, Safari 10.1+ */
     color: ${colors.grey};

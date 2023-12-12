@@ -1,31 +1,40 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { SELECT_MODE } from './CustomSelect.constants';
+import { components } from 'react-select';
 import { StyledSelect } from './CustomSelect.styles';
 
-const CustomSelect = (props) => {
-  const {
-    style,
-    options,
-    onChange,
-    defaultValue,
-    value,
-    mode = SELECT_MODE.light,
-  } = props;
+const { Option } = components;
+const IconOption = (props) => {
+  const { data } = props;
+  const { label } = data;
 
+  return <Option {...props}>{label}</Option>;
+};
+
+const CustomSelect = (props) => {
+  const { style, options, onChange, defaultValue, value } = props;
   const { t } = useTranslation();
+  const font = useSelector((state) => state.accessibility.font);
+  const fontSize = useSelector((state) => state.accessibility.fontSize);
+  const backgroundColor = useSelector(
+    (state) => state.accessibility.backgroundColor,
+  );
 
   return (
     <div style={style}>
       <StyledSelect
+        font={font}
+        fontSize={fontSize}
+        backgroundColor={backgroundColor}
         classNamePrefix="react-select"
         options={options}
         defaultValue={defaultValue}
         value={value}
-        mode={mode}
         placeholder={t('region')}
         noOptionsMessage={() => t('no_options')}
         onChange={onChange}
+        components={{ Option: IconOption, SingleValue: IconOption }}
       />
     </div>
   );

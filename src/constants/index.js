@@ -1,44 +1,32 @@
-import Avatar1 from '../assets/images/old_delete/avatars/avatar_1.png';
-import Avatar2 from '../assets/images/old_delete/avatars/avatar_2.png';
-import Avatar3 from '../assets/images/old_delete/avatars/avatar_3.png';
-import Avatar4 from '../assets/images/old_delete/avatars/avatar_4.png';
-import Avatar5 from '../assets/images/old_delete/avatars/avatar_5.png';
-import Avatar6 from '../assets/images/old_delete/avatars/avatar_6.png';
-
-import regions from './regions.json';
-
-export { regions };
-
-export const AVATARS = [
-  {
-    id: 'avatar_1',
-    element: Avatar1,
-  },
-  {
-    id: 'avatar_2',
-    element: Avatar2,
-  },
-  {
-    id: 'avatar_3',
-    element: Avatar3,
-  },
-  {
-    id: 'avatar_4',
-    element: Avatar4,
-  },
-  {
-    id: 'avatar_5',
-    element: Avatar5,
-  },
-  {
-    id: 'avatar_6',
-    element: Avatar6,
-  },
-];
+// Tags FOR ROUTE KEYS
+export const options = ['A', 'B', 'C', 'D', 'E'];
 
 // GENERAL STATUSES
 export const SUCCESS = 'success';
 export const ERROR = 'error';
+
+// SOCIAL LOGIN PROVIDERS
+export const PROVIDERS = {
+  FACEBOOK: 'facebook',
+  GOOGLE: 'google',
+};
+
+// REGEX
+export const REGEX_EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
+export const REGEX_PASSWORD =
+  /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d!@#$%^&*^~+=`|\\[\](){}:;'<>ç,.?/"_-]{8,}$/;
+export const REGEX_DATE = /^[0-9]{1,4}[-,/][0-9]{1,2}[-,/][0-9]{1,4}$/;
+
+// MEDIA TYPES
+export const MEDIA_TYPES =
+  'image/png, image/jpg, image/jpeg, image/jpg,  image/webp, video/mp4, audio/mp3, audio/wav';
+
+export const IMAGE_TYPES = [
+  'image/png',
+  'image/jpg',
+  'image/jpeg',
+  'image/webp',
+];
 
 // HTTP STATUS
 export const HTTP_STATUS = {
@@ -50,4 +38,31 @@ export const HTTP_STATUS = {
   ERROR: 500,
   NOT_FOUND: 404,
   CONFLICT: 409,
+};
+
+// GOOGLE MAPS OPTIONS FOR LOAD
+export const GOOGLE_MAPS_OPTIONS = {
+  googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
+  libraries: ['places', 'geometry'],
+};
+
+export const ACCESSIBILITY = {
+  ACCESSIBLE: 2,
+  NEUTRAL: 1,
+  NOT_ACCESSIBLE: 0,
+};
+
+export const MARKER_COLOR = {
+  DEFAULT: 'default',
+  GREEN: 'green',
+  YELLOW: 'yellow',
+  RED: 'red',
+  CURRENT_LOCATION: 'location',
+};
+
+export const AVAILABLE_LANGUAGES = ['pt', 'en', 'it', 'bg', 'de'];
+
+export const STEP = {
+  NEXT: 'next',
+  PREVIOUS: 'previous',
 };

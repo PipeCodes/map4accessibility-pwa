@@ -1,3 +1,4 @@
+import moment from 'moment';
 import axios, { Endpoints, getErrorMessage } from '../../services/api';
 import {
   AUTH_START,
@@ -5,58 +6,70 @@ import {
   AUTH_ERROR,
   GET_USER_SUCCESS,
   LOGOUT,
+  UPDATE_USER_SUCCESS,
+  UPDATE_USER_START,
+  UPDATE_USER_ERROR,
+  CREATE_USER_START,
+  CREATE_USER_SUCCESS,
+  CREATE_USER_ERROR,
 } from './types';
-import { HTTP_STATUS } from '../../constants';
+import { HTTP_STATUS, PROVIDERS } from '../../constants';
+import i18n from '../../i18n';
+
 import {
   clearLocalStorage,
   getAuthToken,
-  saveUser,
-  saveUserData,
+  saveAuthToken,
 } from '../../services/local';
 
-export const login =
-  (emailOrUsername, password, translate) => async (dispatch) => {
-    dispatch({ type: AUTH_START });
+export const login = (email, password) => async (dispatch) => {
+  dispatch({ type: AUTH_START });
 
-    const body = {
-      email_username: emailOrUsername?.trim(),
-      password,
-    };
-
-    try {
-      const response = await axios.post(Endpoints.LOGIN, body);
-
-      const statusCode = response.status;
-
-      if (statusCode === HTTP_STATUS.SUCCESS) {
-        saveUserData(response.data?.data?._token, response.data?.data?.user);
-
-        dispatch({
-          type: AUTH_SUCCESS,
-          user: response.data?.data?.user,
-        });
-      }
-    } catch (error) {
-      dispatch({ type: AUTH_ERROR });
-
-      return Promise.reject(
-        error?.response?.data?.message ?? translate('something_wrong'),
-      );
-    }
+  const body = {
+    email: email?.trim(),
+    password,
   };
 
+  try {
+    const response = await axios.post(Endpoints.LOGIN, body);
+    const statusCode = response.status;
+
+    if (statusCode === HTTP_STATUS.SUCCESS) {
+      saveAuthToken(response.data?.result?.authorization?.token);
+      dispatch({
+        type: AUTH_SUCCESS,
+        user: response.data?.result?.user,
+      });
+    }
+  } catch (error) {
+    dispatch({ type: AUTH_ERROR });
+
+    return Promise.reject(
+      error?.response?.data?.message ?? i18n.t('something_wrong'),
+    );
+  }
+};
+
+export const logout = () => (dispatch) => {
+  dispatch({ type: LOGOUT });
+  clearLocalStorage();
+  // eslint-disable-next-line no-undef
+  window.location.replace(`${process.env.REACT_APP_URL}/`);
+};
+
 export const signup =
-  (avatar, name, email, username, password, region, translate) =>
+  (name, surname, birthdate, email, password, termsAccepted, disabilities) =>
   async (dispatch) => {
-    dispatch({ type: AUTH_START });
+    dispatch({ type: CREATE_USER_START });
 
     const body = {
-      avatar,
       name,
+      surname,
+      ...(moment(birthdate).isValid() && { birthdate }),
       email: email?.trim().toLowerCase(),
-      username: username?.trim(),
       password,
-      region_id: region,
+      terms_accepted: termsAccepted,
+      disabilities,
     };
 
     try {
@@ -64,55 +77,150 @@ export const signup =
 
       const statusCode = response.status;
 
-      if (statusCode === HTTP_STATUS.SUCCESS) {
-        saveUserData(response.data?.data?._token, response.data?.data?.user);
+      if (statusCode === HTTP_STATUS.SUCCESS_CREATED) {
+        dispatch({ type: CREATE_USER_SUCCESS });
+        return Promise.resolve(response?.data?.message);
+      }
+    } catch (error) {
+      dispatch({ type: CREATE_USER_ERROR });
 
+      return Promise.reject(getErrorMessage(error, i18n.t('something_wrong')));
+    }
+  };
+
+export const signupProvider =
+  (
+    name,
+    surname,
+    birthdate,
+    email,
+    termsAccepted,
+    disabilities,
+    id,
+    provider,
+  ) =>
+  async (dispatch) => {
+    dispatch({ type: AUTH_START });
+
+    let authProviders;
+
+    if (provider === PROVIDERS.GOOGLE) {
+      authProviders = {
+        google: id,
+      };
+    }
+
+    if (provider === PROVIDERS.FACEBOOK) {
+      authProviders = {
+        facebook: id,
+      };
+    }
+
+    const body = {
+      name,
+      surname,
+      ...(moment(birthdate).isValid() && { birthdate }),
+      email: email?.trim().toLowerCase(),
+      terms_accepted: termsAccepted,
+      disabilities,
+      auth_providers: authProviders,
+    };
+
+    try {
+      const response = await axios.post(Endpoints.SIGNUP, body);
+      const statusCode = response.status;
+      if (statusCode === HTTP_STATUS.SUCCESS_CREATED) {
+        saveAuthToken(response.data?.result?.authorization?.token);
         dispatch({
           type: AUTH_SUCCESS,
-          user: response.data?.data?.user,
+          user: response.data?.result?.user,
+        });
+      }
+    } catch (error) {
+      dispatch({ type: AUTH_ERROR });
+
+      return Promise.reject(getErrorMessage(error, i18n.t('something_wrong')));
+    }
+  };
+
+export const loginByProvider =
+  (email, provider, authCode) => async (dispatch) => {
+    dispatch({ type: AUTH_START });
+
+    const body = {
+      email: email?.trim(),
+      auth_type: provider,
+      auth_code: authCode,
+    };
+
+    try {
+      const response = await axios.post(Endpoints.LOGIN_BY_PROVIDER, body);
+      const statusCode = response.status;
+
+      if (statusCode === HTTP_STATUS.SUCCESS) {
+        saveAuthToken(response.data?.result?.authorization?.token);
+        dispatch({
+          type: AUTH_SUCCESS,
+          user: response.data?.result?.user,
         });
       }
     } catch (error) {
       dispatch({ type: AUTH_ERROR });
 
       return Promise.reject(
-        getErrorMessage(error, translate('something_wrong')),
+        error?.response?.data?.message ?? i18n.t('something_wrong'),
       );
     }
   };
 
-export const recoverPassword = (emailOrUsername) => async (dispatch) => {
-  dispatch({ type: AUTH_START });
-
+export const checkEmail = (email) => async () => {
   const body = {
-    email_username: emailOrUsername?.trim(),
+    email: email?.trim(),
+  };
+
+  try {
+    const response = await axios.post(Endpoints.CHECK_EMAIL, body);
+    const statusCode = response.status;
+
+    if (statusCode === HTTP_STATUS.SUCCESS) {
+      return Promise.resolve(false);
+    }
+  } catch (error) {
+    if (error?.response?.data?.error_code === 409) {
+      return Promise.resolve(true);
+    }
+
+    return Promise.reject(
+      error?.response?.data?.message ?? i18n.t('something_wrong'),
+    );
+  }
+};
+
+export const recoverPassword = (email) => async () => {
+  const body = {
+    email: email?.trim(),
   };
 
   try {
     const response = await axios.post(Endpoints.RECOVER_PASSWORD, body);
-
     const statusCode = response.status;
 
     if (statusCode === HTTP_STATUS.SUCCESS) {
-      dispatch({
-        type: AUTH_SUCCESS,
-      });
-
       return Promise.resolve(response?.data?.message);
     }
   } catch (error) {
-    dispatch({ type: AUTH_ERROR });
-
     return Promise.reject(error?.response?.data?.message);
   }
 };
 
-export const changePassword = (token, newPassword) => async (dispatch) => {
+export const changePassword = (form, token) => async (dispatch) => {
   dispatch({ type: AUTH_START });
 
   const body = {
     token,
-    new_password: newPassword,
+    email: form.email,
+    password: form.password,
+    password_confirmation: form.confirmPassword,
   };
 
   try {
@@ -124,23 +232,71 @@ export const changePassword = (token, newPassword) => async (dispatch) => {
       dispatch({
         type: AUTH_SUCCESS,
       });
-
       return Promise.resolve(response?.data?.message);
     }
   } catch (error) {
     dispatch({ type: AUTH_ERROR });
 
-    return Promise.reject(error?.response?.data?.message);
+    return Promise.reject(getErrorMessage(error, 'something_wrong'));
   }
 };
 
-export const logout = () => (dispatch) => {
-  dispatch({ type: LOGOUT });
+export const updateProfile =
+  ({ firstName, surname, birthDate, email, avatar }) =>
+  async (dispatch, getState) => {
+    dispatch({
+      type: UPDATE_USER_START,
+    });
+    // eslint-disable-next-line no-undef
+    const body = new FormData();
+    body.append('name', firstName);
+    body.append('surname', surname);
+    body.append('birthdate', birthDate);
+    body.append('email', email?.trim().toLowerCase());
 
-  clearLocalStorage();
+    if (avatar) {
+      body.append('avatar', avatar);
+    }
 
-  window.location.replace(`${process.env.REACT_APP_URL}/`);
-};
+    const config = {
+      headers: {
+        Authorization: `Bearer ${getAuthToken()}`,
+        'Content-Type': 'multipart/form-data',
+      },
+    };
+
+    try {
+      const response = await axios.post(Endpoints.UPDATE_USER, body, config);
+      const statusCode = response.status;
+
+      if (statusCode === HTTP_STATUS.SUCCESS) {
+        const user = getState().auth.user;
+
+        const updatedUser = {
+          ...user,
+          body,
+        };
+
+        dispatch({
+          type: UPDATE_USER_SUCCESS,
+          user: updatedUser,
+        });
+
+        return Promise.resolve('profile_updated_successfully');
+      }
+    } catch (error) {
+      const statusCode = error?.response?.status ?? HTTP_STATUS.ERROR;
+      if (
+        statusCode === HTTP_STATUS.UNHAUTORIZED ||
+        statusCode === HTTP_STATUS.FORBIDDEN
+      ) {
+        dispatch(logout());
+      } else {
+        dispatch({ type: UPDATE_USER_ERROR });
+        return Promise.reject(getErrorMessage(error, 'something_wrong'));
+      }
+    }
+  };
 
 export const getUser = () => async (dispatch) => {
   const config = {
@@ -148,22 +304,14 @@ export const getUser = () => async (dispatch) => {
       Authorization: `Bearer ${getAuthToken()}`,
     },
   };
-
   try {
     const response = await axios.get(Endpoints.GET_USER, config);
-
     const statusCode = response.status;
 
     if (statusCode === HTTP_STATUS.SUCCESS) {
       const user = {
-        ...response.data?.data?.user,
-        quizzes_played: response.data?.data?.quizzes_played,
-        quizzes_completed: response.data?.data?.quizzes_completed,
-        points: response.data?.data?.points,
+        ...response.data?.result,
       };
-
-      saveUser(user);
-
       dispatch({
         type: GET_USER_SUCCESS,
         user,
@@ -179,56 +327,3 @@ export const getUser = () => async (dispatch) => {
     }
   }
 };
-
-export const updateUser =
-  (avatar, name, username, region, translate) => async (dispatch, getState) => {
-    const body = {
-      avatar,
-      name,
-      username: username?.trim(),
-      region_id: region,
-      _method: 'PATCH',
-    };
-
-    const config = {
-      headers: {
-        Authorization: `Bearer ${getAuthToken()}`,
-      },
-    };
-
-    try {
-      const response = await axios.post(Endpoints.UPDATE_USER, body, config);
-
-      const statusCode = response.status;
-
-      if (statusCode === HTTP_STATUS.SUCCESS) {
-        const user = getState().auth.user;
-
-        const updatedUser = {
-          ...user,
-          username: response.data?.data?.user?.username,
-        };
-
-        saveUser(updatedUser);
-
-        dispatch({
-          type: GET_USER_SUCCESS,
-          user: updatedUser,
-        });
-
-        return Promise.resolve(translate('profile_updated_successfully'));
-      }
-    } catch (error) {
-      const statusCode = error?.response?.status ?? HTTP_STATUS.ERROR;
-      if (
-        statusCode === HTTP_STATUS.UNHAUTORIZED ||
-        statusCode === HTTP_STATUS.FORBIDDEN
-      ) {
-        dispatch(logout());
-      } else {
-        return Promise.reject(
-          getErrorMessage(error, translate('something_wrong')),
-        );
-      }
-    }
-  };

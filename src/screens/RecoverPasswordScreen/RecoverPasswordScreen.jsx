@@ -1,59 +1,170 @@
-import React, { useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import React, { useState, useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import { recoverPassword, checkEmail } from '../../store/actions/auth';
+import {
+  Page,
+  Container,
+  Box,
+  Text,
+  InputLabel,
+  Error,
+} from './RecoverPasswordScreen.styles';
 import CustomButton from '../../components/CustomButton/CustomButton';
-import CustomInput from '../../components/CustomInput/CustomInput';
 import { colors } from '../../constants/colors';
-import { Page, LogoImage, Subtitle } from './RecoverPasswordScreen.styles';
-import Logo from '../../assets/images/old_delete/logo.svg';
-import { recoverPassword } from '../../store/actions/auth';
+import MaterialLoop from '../../assets/icons/material-loop.svg';
 import TopBar from '../../components/TopBar/TopBar';
+import CustomInput from '../../components/CustomInput/CustomInput';
+import { validateEmailExists } from '../RegisterScreen/validate';
 
-const RecoverPasswordScreen = () => {
+const initialValues = {
+  email: '',
+};
+
+const RecoverPasswordScreen = (props) => {
+  const { history, routes } = props;
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const fontSize = useSelector((state) => state.accessibility.fontSize);
+  const font = useSelector((state) => state.accessibility.font);
+  const backgroundColor = useSelector(
+    (state) => state.accessibility.backgroundColor,
+  );
 
-  const loading = useSelector((state) => state.auth.loading);
+  const [formData, setFormData] = useState(initialValues);
+  const [formErrors, setFormErrors] = useState({});
+  const [notReadySubmit, setNotReadySubmit] = useState(true);
 
-  const [emailOrUsername, setEmailOrUsername] = useState('');
+  const recoverPasswordHandler = useCallback(() => {
+    dispatch(recoverPassword(formData.email))
+      .then(() => history.push(routes.RECOVER_EMAIL.path))
+      .catch((error) => {
+        // eslint-disable-next-line no-undef
+        alert(error);
+      });
+  }, [dispatch, formData.email, history, routes]);
 
-  const recoverHandler = () => {
-    dispatch(recoverPassword(emailOrUsername, t))
-      .then((message) => {
-        setEmailOrUsername('');
-        alert(message);
+  useEffect(() => {
+    if (validateEmailExists(formData.email, true) === null) {
+      setNotReadySubmit(false);
+    } else {
+      setNotReadySubmit(true);
+    }
+  }, [formData.email]);
+
+  //  Validates the fields
+  const validate = (values, lastErrors, exists) => {
+    const errors = { ...lastErrors };
+    const error = validateEmailExists(values.email, exists);
+    delete errors.email;
+    if (error !== null) {
+      errors.email = error;
+    }
+    return errors;
+  };
+
+  //  Click Handlers
+  const clickHandler = (email) => {
+    let errors = {};
+    dispatch(checkEmail(email))
+      .then((value) => {
+        setFormErrors((prevErrors) => {
+          errors = validate(formData, prevErrors, value);
+          if (Object.keys(errors).length === 0) {
+            recoverPasswordHandler();
+          }
+          return errors;
+        });
       })
       .catch((error) => {
+        // eslint-disable-next-line no-undef
         alert(error);
       });
   };
 
-  return (
-    <Page>
-      <TopBar hasBackButton />
-      <LogoImage className="logo_img" alt="logo" src={Logo} />
-      <Subtitle>{t('recover_password')}</Subtitle>
-      <CustomInput
-        style={{
-          marginTop: 30,
-        }}
-        placeholder={t('username_email')}
-        type="email"
-        onChange={(e) => setEmailOrUsername(e.target.value)}
-        value={emailOrUsername}
-      />
+  const openAccessibility = useCallback(() => {
+    history.push(routes.ACCESSIBILITY.path);
+  }, [history, routes]);
 
-      <CustomButton
-        style={{
-          marginTop: 50,
-        }}
-        backgroundColor={colors.green}
-        text={t('recover')}
-        onClick={recoverHandler}
-        disabled={loading}
+  const backClickHandler = () => {
+    history.goBack();
+  };
+
+  return (
+    <Page backgroundColor={backgroundColor}>
+      <TopBar
+        backTarget={() => backClickHandler()}
+        aligned
+        hasBackButton
+        hasLogo
+        hasAccessibilityButton={openAccessibility}
+        backgroundColor={backgroundColor}
       />
+      <Container>
+        <div className="fullDiv">
+          <Text fontSize={fontSize} font={font}>
+            {t('recover_password')}
+          </Text>
+          <InputLabel fontSize={fontSize} font={font}>
+            {t('email')}
+            <span>*</span>
+          </InputLabel>
+          <CustomInput
+            fontSize={fontSize}
+            font={font}
+            style={{}}
+            placeholder={t('email_placeholder')}
+            type="email"
+            value={formData.email}
+            onChange={(e) =>
+              setFormData({ ...formData, email: e.target.value })
+            }
+          />
+          {formErrors.email && (
+            <Error fontSize={fontSize} font={font}>
+              {t(formErrors.email)}
+            </Error>
+          )}
+        </div>
+        <CustomButton
+          style={{
+            marginTop: 30,
+            marginBottom: 20,
+            width: '100%',
+            borderRadius: '25px',
+          }}
+          disabled={notReadySubmit}
+          backgroundColor={notReadySubmit ? colors.grey : colors.orange}
+          text={t('recover')}
+          icon={MaterialLoop}
+          onClick={() => clickHandler(formData.email)}
+        />
+        <Box>
+          <CustomButton
+            style={{
+              width: 'auto',
+              color: colors.primaryColor,
+              boxShadow: 'none',
+            }}
+            backgroundColor={colors.transparent}
+            text={t('create_account')}
+            onClick={() => history.push(routes.REGISTER.path)}
+          />
+          <CustomButton
+            style={{
+              width: 'auto',
+              color: colors.primaryColor,
+              boxShadow: 'none',
+            }}
+            backgroundColor={colors.transparent}
+            text={t('login')}
+            onClick={() => history.push(routes.LOGIN.path)}
+          />
+        </Box>
+      </Container>
     </Page>
   );
 };
 
-export default RecoverPasswordScreen;
+export default withRouter(RecoverPasswordScreen);

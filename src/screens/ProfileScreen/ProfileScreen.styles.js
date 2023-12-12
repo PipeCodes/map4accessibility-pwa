@@ -1,174 +1,148 @@
 import styled from 'styled-components';
-import BackgroundImage from '../../assets/images/old_delete/bg_blue.svg';
 import { colors } from '../../constants/colors';
+import { updateFontSize, updateValue } from '../../helpers/utils';
 
 export const Page = styled.div`
   display: flex;
   flex-direction: column;
-  height: 100vh;
   align-items: center;
-  background: url(${BackgroundImage}) no-repeat center center fixed;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-  background-color: ${colors.bgBlue};
+  height: ${(props) => (props.editActive === true ? '100%' : '100vh')};
+  z-index: 54;
+  background-color: ${(props) =>
+    updateValue(colors.transparent, props.backgroundColor)};
 `;
 
 export const Container = styled.div`
   display: flex;
-  overflow: hidden;
+  padding: 0px 15px;
   flex-direction: column;
   align-items: center;
-  flex: 1;
+  z-index: 54;
   width: 100%;
-  padding-left: 32px;
-  padding-right: 32px;
-  justify-content: space-between;
+  padding-bottom: 92px;
+
+  .fullDiv {
+    height: 100%;
+    width: 100%;
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 
 export const TopWrapper = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  justify-content: space-between;
   width: 100%;
-  align-items: center;
+  margin-top: 20px;
+`;
+
+export const FormWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  input {
+    border: none;
+    border-radius: 4px;
+    box-shadow: 0px 2px 2px ${colors.shadow};
+    -webkit-appearance: none;
+    -webkit-box-shadow: 0px 2px 2px ${colors.shadow};
+    padding: 5px;
+    padding-left: 10px;
+    color: ${colors.grey};
+    margin-bottom: 10px;
+    margin-top: 5px;
+  }
 `;
 
 export const BottomWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  width: 100%;
   align-items: center;
 `;
 
-export const ScoreContainer = styled.div`
+export const Link = styled.a`
+  color: ${colors.grey};
+  font-size: ${(props) => updateFontSize(14, props.fontSize)};
+  font-family: ${(props) => updateValue('NotoSans-Regular', props.font)};
+  margin-bottom: 10px;
+`;
+
+export const RankingButton = styled.button`
+  border-radius: 100%;
+  background: ${colors.primaryColor};
+  box-shadow: 0px 2px 2px ${colors.shadow};
+  border: none;
+  color: ${colors.white};
+  margin: 0;
+  width: 32px;
+  height: 32px;
   display: flex;
-  flex-direction: row;
+  justify-content: center;
   align-items: center;
+  padding: 0;
+
+  img {
+    height: 25px;
+    width: 25px;
+  }
 `;
 
-export const ScoreImg = styled.img`
-  height: 21px;
-  margin-left: 5px;
-`;
-
-export const Score = styled.span`
-  font-family: 'Rubik-Bold';
-  font-size: 42px;
-  color: #fff;
-`;
-
-export const EditableContainer = styled.div`
-  margin-top: 15px;
+export const StackContainer = styled.div`
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  width: 100%;
-  justify-content: space-between;
-`;
-
-export const UserInfoContainer = styled.div`
-  display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
 `;
 
 export const Avatar = styled.img`
-  width: 64px;
-  height: 64px;
+  width: 80px;
+  height: 80px;
   object-fit: cover;
-  border-radius: 32px;
+  border-radius: 100%;
+  border: 3px solid ${colors.primaryColor};
 `;
 
-export const UsernameContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-left: 12px;
-`;
-
-export const Username = styled.span`
-  color: #fff;
-  font-size: 22px;
-  font-family: 'Rubik-Regular';
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;
-  max-width: 200px;
-
-  @media (max-width: 375px) {
-    max-width: 185px;
-  }
-
-  @media (max-width: 320px) {
-    max-width: 120px;
-  }
-`;
-
-export const Region = styled.span`
-  color: #fff;
-  font-size: 14px;
-  font-family: 'Rubik-Regular';
-`;
-
-export const EditButton = styled.img`
-  display: flex;
-  justify-self: flex-end;
-`;
-
-export const StatsContainer = styled.div`
-  display: flex;
-  width: 100%;
-  flex-direction: row;
-  justify-content: space-around;
-  margin-top: 30px;
-`;
-
-export const StatsItem = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-
-export const StatsItemCount = styled.span`
-  color: #fff;
-  font-family: 'Rubik-Bold';
-  font-size: 24px;
-  margin-bottom: 5px;
-`;
-
-export const StatsItemTitle = styled.span`
-  color: #fff;
-  font-family: 'Rubik-Regular';
-  font-size: 14px;
+export const Name = styled.span`
+  font-size: ${(props) => updateFontSize(20, props.fontSize)};
+  font-family: ${(props) => updateValue('EasyReadingPro', props.font)};
+  color: ${colors.primaryTextColor};
+  margin-top: 5px;
   text-align: center;
 `;
 
-export const PrivacyPolicyLink = styled.button`
-  color: #fff;
-  outline: none;
-  border: none;
-  background-color: transparent;
-  text-decoration: underline;
-  font-family: 'Rubik-Regular';
-  font-size: 13px;
-  margin-bottom: 40px;
+export const EditButton = styled.button`
+  border-radius: 100%;
+  background: ${colors.transparent};
+  box-shadow: 0px 2px 2px ${colors.shadow};
+  border: 2px solid ${colors.primaryColor};
+  color: ${colors.white};
+  margin: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
 
-  &:hover {
-    color: #fff;
+  &.active {
+    background: ${colors.primaryColor};
   }
 `;
 
-export const LogoutButton = styled.div`
-  margin-bottom: 25px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
+export const InputLabel = styled.span`
+  font-size: ${(props) => updateFontSize(16, props.fontSize)};
+  font-family: ${(props) => updateValue('EasyReadingPro', props.font)};
+  color: ${colors.primaryTextColor};
+  place-self: start;
+  margin-top: 10px;
+`;
 
-  span {
-    color: #fff;
-    text-decoration: underline;
-    font-family: 'Rubik-Bold';
-    font-size: 20px;
-    margin-left: 10px;
-  }
+export const Error = styled.div`
+  font-size: ${(props) => updateFontSize(10, props.fontSize)};
+  font-family: ${(props) => updateValue('NotoSans-Regular', props.font)};
+  place-self: start;
+  color: ${colors.orange};
+  margin-left: 10px;
 `;

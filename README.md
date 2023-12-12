@@ -2,14 +2,13 @@
 
 ## Versions
 
-Node: v14.15.5
-
-nvm: 0.37.2
+Node: v14.19.1
 
 ## Starting Dev:
+
 <ol>
-<li>Make sure you have the Prettier VSCode extension</li>
-<li>nvm use 14.15.5</li>
+<li>Make sure you have the Prettier and ESLint VSCode extensions</li>
+<li>nvm use v14.19.1</li>
 <li>npm install</li>
 <li>npm run start</li>
 </ol>
@@ -48,4 +47,3 @@ The build is minified and the filenames include the hashes.\
 Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
