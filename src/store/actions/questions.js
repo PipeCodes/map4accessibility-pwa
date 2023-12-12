@@ -4,9 +4,16 @@ import {
   GET_QUESTIONS_SUCCESS,
   GET_QUESTIONS_ERROR,
 } from './types';
-import { HTTP_STATUS } from '../../constants';
+
+import { HTTP_STATUS, AVAILABLE_LANGUAGES } from '../../constants';
 
 import { getAuthToken } from '../../services/local';
+
+const getAcceptLanguage = () => {
+  // eslint-disable-next-line no-undef
+  const langCode = navigator?.language.slice(0, 2);
+  return AVAILABLE_LANGUAGES.includes(langCode) ? langCode : 'en';
+};
 
 // Gets questions for Evaluations from the API
 export const getQuestions = () => async (dispatch) => {
@@ -15,7 +22,7 @@ export const getQuestions = () => async (dispatch) => {
   const config = {
     headers: {
       Authorization: `Bearer ${getAuthToken()}`,
-      'Accept-Language': 'en',
+      'Accept-Language': getAcceptLanguage(),
     },
   };
 
