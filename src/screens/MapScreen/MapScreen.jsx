@@ -21,17 +21,17 @@ import FooterMenu from '../../components/FooterMenu/FooterMenu';
 import CustomMarker from '../../components/CustomMarker/CustomMarker';
 import PlacePopUp from '../../components/PlacePopUp/PlacePopUp';
 import SearchBar from '../../components/SearchBar/SearchBar';
+import CustomButton from '../../components/CustomButton/CustomButton';
 import LocationIcon from '../../assets/icons/maps/locate.svg';
 import AddIcon from '../../assets/icons/maps/add.svg';
 import ClusterImg from '../../assets/icons/maps/clusters/m1.svg';
-import DirectionsIcon from '../../assets/icons/maps/directions.svg';
+import { colors } from '../../constants/colors';
 import { getCurrentLocation } from '../../services/geolocation';
 import {
   Page,
   Container,
   ButtonsContainer,
   ButtonCreate,
-  ButtonDirections,
   ButtonLocation,
   ToolTip,
 } from './MapScreen.styles';
@@ -126,43 +126,28 @@ const MapScreen = (props) => {
 
   // Gets Position and sets Location
   useEffect(() => {
-    if (isLoaded) {
-      // Asks and sets user position (lat, long)
-      getCurrentLocation()
-        .then((position) => {
-          if (history?.location?.state?.search?.location) {
-            setLocation(history?.location?.state?.search?.location);
-            openPlaceInfo(history?.location?.state?.search?.place);
-          } else if (history?.location?.state?.returnToMap) {
-            setLocation(history?.location?.state?.returnToMap?.location);
-          } else {
-            setLocation(position);
-          }
-        })
-        .catch((error) => {
-          setLocation({ lat: 38.736946, lng: -9.142685 });
-          // eslint-disable-next-line no-undef
-          console.log(error);
-          alert(t('denied_geo'));
-        });
-    }
-  }, [
-    isLoaded,
-    history?.location?.state?.search?.location,
-    history?.location?.state?.search?.zoom,
-    history?.location?.state?.search?.place,
-    openPlaceInfo,
-    map,
-    t,
-    history?.location?.state?.returnToMap,
-  ]);
+    getCurrentLocation()
+      .then((position) => {
+        setLocation(position);
+        setCenter(position);
+      })
+      .catch((error) => {
+        setLocation({ lat: 38.736946, lng: -9.142685 });
+        // eslint-disable-next-line no-console
+        console.log(error);
+        // eslint-disable-next-line no-undef
+        alert(t('denied_geo'));
+      });
+  }, [map, t]);
 
   useEffect(() => {
     const intervalId = setInterval(() => {
       try {
         getCurrentLocation().then((value) => setLiveLocation(value));
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.log(error);
+        // eslint-disable-next-line no-undef
         alert(t('denied_geo'));
       }
     }, 3000);
@@ -189,9 +174,20 @@ const MapScreen = (props) => {
     setAdd((prev) => !prev);
   };
 
-  const openRoutes = useCallback(() => {
-    history.push(routes.ROUTE_PLANNER.path);
-  }, [history, routes]);
+  const showPins = () => {
+    const radius = getRadius(map);
+
+    if (center && radius) {
+      dispatch(getPlacesRadiusMarkers(center.lat, center.lng, radius))
+        .then((list) => {
+          setMarkers(list);
+        })
+        .catch((err) => {
+          // eslint-disable-next-line no-undef
+          alert.error(err);
+        });
+    }
+  };
 
   const setCenterMap = () => {
     if (isLoaded) {
@@ -237,20 +233,6 @@ const MapScreen = (props) => {
     return color;
   };
 
-  // Gets all Markers
-  useEffect(() => {
-    if (center && radius) {
-      dispatch(getPlacesRadiusMarkers(center.lat, center.lng, radius))
-        .then((list) => {
-          setMarkers(list);
-        })
-        .catch((err) => {
-          // eslint-disable-next-line no-undef
-          alert.error(err);
-        });
-    }
-  }, [center, dispatch, radius]);
-
   const handleSearch = (value) => {
     history.push(routes.SEARCH.path, { search: value });
   };
@@ -291,7 +273,7 @@ const MapScreen = (props) => {
               maxWidth: '820px',
             }}
           >
-            {loading && (
+            {(loading || !liveLocation) && (
               <Spinner animation="border" variant="dark" className="spinner" />
             )}
             <GoogleMap
@@ -399,9 +381,17 @@ const MapScreen = (props) => {
         <ButtonCreate type="button" add={add} onClick={() => openAddPlace()}>
           <img src={AddIcon} alt={t('add_place')} />
         </ButtonCreate>
-        <ButtonDirections type="button" onClick={() => openRoutes()}>
-          <img src={DirectionsIcon} alt={t('route_planner')} />
-        </ButtonDirections>
+        <CustomButton
+          style={{
+            marginTop: 30,
+            marginBottom: 20,
+            width: '120px',
+            borderRadius: '25px',
+          }}
+          backgroundColor={colors.orange}
+          text={t('search_area')}
+          onClick={() => showPins()}
+        />
         <ButtonLocation type="button" onClick={() => setCenterMap()}>
           <img src={LocationIcon} alt={t('location')} />
         </ButtonLocation>

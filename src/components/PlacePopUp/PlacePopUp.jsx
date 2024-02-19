@@ -192,7 +192,9 @@ const PlacePopUpComponent = (props) => {
                   </span>
                 )}
                 {place?.schedule &&
-                  place?.schedule?.map((line) => <span>{line}</span>)}
+                  place?.schedule?.map((line, key) => (
+                    <span key={key}>{line}</span>
+                  ))}
               </PlaceInformation>
               <ActionContainer>
                 <CustomButton
