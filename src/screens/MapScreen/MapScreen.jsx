@@ -273,7 +273,7 @@ const MapScreen = (props) => {
               maxWidth: '820px',
             }}
           >
-            {loading && (
+            {(loading || !liveLocation) && (
               <Spinner animation="border" variant="dark" className="spinner" />
             )}
             <GoogleMap
