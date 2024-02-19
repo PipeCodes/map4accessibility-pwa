@@ -28,6 +28,13 @@ export const IMAGE_TYPES = [
   'image/webp',
 ];
 
+export const MENU_OPTIONS = {
+  HOME: 'HOME',
+  MAP: 'MAP',
+  PROFILE: 'PROFILE',
+  ROUTE_PLANNER: 'ROUTE_PLANNER',
+};
+
 // HTTP STATUS
 export const HTTP_STATUS = {
   UNHAUTORIZED: 401,
