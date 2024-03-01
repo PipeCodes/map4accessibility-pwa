@@ -79,6 +79,7 @@ const MapScreen = (props) => {
   const loading = useSelector((state) => state.place.loading);
 
   // Place pop-up
+  const [text, setText] = useState(null);
   const [popUp, setPopUp] = useState(false);
 
   // Google Maps
@@ -142,10 +143,12 @@ const MapScreen = (props) => {
   // Gets Position and sets Location
   useEffect(() => {
     if (history?.location?.state?.search.text && center && map) {
-      showPins();
+      if (text !== history?.location?.state?.search.text) {
+        showPins();
+        setText(history?.location?.state?.search.text);
+      }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [center, history?.location?.state?.search.text, map, showPins, text]);
 
   // Gets Position and sets Location
   useEffect(() => {
