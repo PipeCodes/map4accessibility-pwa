@@ -79,6 +79,7 @@ const MapScreen = (props) => {
   const loading = useSelector((state) => state.place.loading);
 
   // Place pop-up
+  const [text, setText] = useState(null);
   const [popUp, setPopUp] = useState(false);
 
   // Google Maps
@@ -97,6 +98,21 @@ const MapScreen = (props) => {
   const tutorialCookie = Cookies.get('tutorial');
 
   const readTutorial = useMemo(() => tutorialCookie, [tutorialCookie]);
+
+  const showPins = useCallback(() => {
+    const radius = getRadius(map);
+
+    if (center && radius) {
+      dispatch(getPlacesRadiusMarkers(center.lat, center.lng, radius))
+        .then((list) => {
+          setMarkers(list);
+        })
+        .catch((err) => {
+          // eslint-disable-next-line no-undef
+          alert.error(err);
+        });
+    }
+  }, [center, dispatch, map]);
 
   useEffect(() => {
     if (tutorialCookie !== 'accepted') {
@@ -126,19 +142,46 @@ const MapScreen = (props) => {
 
   // Gets Position and sets Location
   useEffect(() => {
-    getCurrentLocation()
-      .then((position) => {
-        setLocation(position);
-        setCenter(position);
-      })
-      .catch((error) => {
-        setLocation({ lat: 38.736946, lng: -9.142685 });
-        // eslint-disable-next-line no-console
-        console.log(error);
-        // eslint-disable-next-line no-undef
-        alert(t('denied_geo'));
-      });
-  }, [map, t]);
+    if (history?.location?.state?.search.text && center && map) {
+      if (text !== history?.location?.state?.search.text) {
+        showPins();
+        setText(history?.location?.state?.search.text);
+      }
+    }
+  }, [center, history?.location?.state?.search.text, map, showPins, text]);
+
+  // Gets Position and sets Location
+  useEffect(() => {
+    if (isLoaded) {
+      getCurrentLocation()
+        .then((position) => {
+          if (history?.location?.state?.search?.location) {
+            setLocation(history?.location?.state?.search?.location);
+            if (history?.location?.state?.search?.place) {
+              openPlaceInfo(history?.location?.state?.search?.place);
+            }
+          } else if (history?.location?.state?.returnToMap) {
+            setLocation(history?.location?.state?.returnToMap?.location);
+          } else {
+            setLocation(position);
+          }
+        })
+        .catch((error) => {
+          setLocation({ lat: 38.736946, lng: -9.142685 });
+          // eslint-disable-next-line no-console
+          console.log(error);
+          // eslint-disable-next-line no-undef
+          alert(t('denied_geo'));
+        });
+    }
+  }, [
+    isLoaded,
+    history?.location?.state?.search?.location,
+    history?.location?.state?.search?.place,
+    openPlaceInfo,
+    t,
+    history?.location?.state?.returnToMap,
+  ]);
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -172,21 +215,6 @@ const MapScreen = (props) => {
 
   const openAddPlace = () => {
     setAdd((prev) => !prev);
-  };
-
-  const showPins = () => {
-    const radius = getRadius(map);
-
-    if (center && radius) {
-      dispatch(getPlacesRadiusMarkers(center.lat, center.lng, radius))
-        .then((list) => {
-          setMarkers(list);
-        })
-        .catch((err) => {
-          // eslint-disable-next-line no-undef
-          alert.error(err);
-        });
-    }
   };
 
   const setCenterMap = () => {

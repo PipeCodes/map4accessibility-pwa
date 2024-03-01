@@ -40,9 +40,9 @@ export const Container = styled.div`
 
   .spinner {
     z-index: 1;
-    position: absolute;
-    margin: auto;
-    align-self: center;
+    position: fixed;
+    top: 50%;
+    left: 50%;
     height: 50px;
     width: 50px;
   }
