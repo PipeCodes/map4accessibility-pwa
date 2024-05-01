@@ -9,6 +9,7 @@ import BackIcon from '../../assets/icons/back.svg';
 import LocationIcon from '../../assets/icons/maps/location.svg';
 import DestinationIcon from '../../assets/icons/maps/destination.svg';
 import ArrowsIcon from '../../assets/icons/arrows.svg';
+import FooterMenu from '../../components/FooterMenu/FooterMenu';
 import RoutesMap from '../../components/RoutesMap/RoutesMap';
 import PlacePopUp from '../../components/PlacePopUp/PlacePopUp';
 import {
@@ -168,6 +169,7 @@ const RoutePlannerScreen = (props) => {
           openPlaceInfo={openPlaceInfo}
         />
       </Container>
+      <FooterMenu routes={routes} routePlanner />
     </Page>
   );
 };

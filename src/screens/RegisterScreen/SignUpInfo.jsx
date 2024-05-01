@@ -127,7 +127,7 @@ const SignUpInfo = (props) => {
   return (
     <div className="fullDiv">
       <Text fontSize={fontSize} font={font}>
-        {t('Create Account')}
+        {t('create_account')}
       </Text>
       <InputLabel fontSize={fontSize} font={font}>
         {t('first_name')}
