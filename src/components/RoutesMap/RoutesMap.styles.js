@@ -21,4 +21,5 @@ export const Routes = styled.div`
   overflow-x: auto;
   overflow-y: clip;
   border-radius: 14px 14px 0 0;
+  padding-bottom: 100px;
 `;
