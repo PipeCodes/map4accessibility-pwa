@@ -31,7 +31,7 @@ const CustomButton = (props) => {
       {loading ? (
         <Spinner animation="border" variant="dark" />
       ) : (
-        icon && <img src={icon} alt={altText || text} />
+        icon && <img src={icon} alt={altText || `${text} icon`} />
       )}
       {text}
     </ButtonStyle>
