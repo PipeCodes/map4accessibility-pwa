@@ -106,11 +106,12 @@ const RecoverPasswordScreen = (props) => {
           <Text fontSize={fontSize} font={font}>
             {t('recover_password')}
           </Text>
-          <InputLabel fontSize={fontSize} font={font}>
+          <InputLabel fontSize={fontSize} font={font} htmlFor="email">
             {t('email')}
             <span>*</span>
           </InputLabel>
           <CustomInput
+            id="email"
             fontSize={fontSize}
             font={font}
             style={{}}
@@ -137,6 +138,7 @@ const RecoverPasswordScreen = (props) => {
           disabled={notReadySubmit}
           backgroundColor={notReadySubmit ? colors.grey : colors.orange}
           text={t('recover')}
+          altText={t('recover-password')}
           icon={MaterialLoop}
           onClick={() => clickHandler(formData.email)}
         />
