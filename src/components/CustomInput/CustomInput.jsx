@@ -18,10 +18,12 @@ const CustomInput = (props) => {
     fontSize,
     font,
     icon,
+    id,
   } = props;
 
   return (
     <InputStyle
+      id={id}
       style={style}
       fontSize={fontSize}
       font={font}

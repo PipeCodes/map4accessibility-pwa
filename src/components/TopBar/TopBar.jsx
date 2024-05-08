@@ -86,7 +86,7 @@ const TopBar = (props) => {
 
       {hasLogo && (
         <Logo className={aligned ? 'aligned' : null}>
-          <img src={map4AccessibilityIcon} alt="Logo" />
+          <img src={map4AccessibilityIcon} alt="app logo" />
         </Logo>
       )}
     </TopBarContainer>

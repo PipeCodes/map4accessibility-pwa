@@ -66,7 +66,7 @@ export const TextSecondary = styled.span`
   color: ${colors.grey};
 `;
 
-export const InputLabel = styled.div`
+export const InputLabel = styled.label`
   font-size: ${(props) => updateFontSize(16, props.fontSize)};
   font-family: ${(props) => updateValue('EasyReadingPro', props.font)};
   color: ${colors.grey};
@@ -94,7 +94,7 @@ export const CheckboxWrapper = styled.div`
   }
 `;
 
-export const PrivacyPolicyLabel = styled.div`
+export const PrivacyPolicyLabel = styled.label`
   color: ${colors.grey};
   font-size: ${(props) => updateFontSize(14, props.fontSize)};
   font-family: ${(props) => updateValue('EasyReadingPro', props.font)};

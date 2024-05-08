@@ -13,6 +13,7 @@ const CustomButton = (props) => {
     disabled,
     icon,
     loading,
+    alt,
   } = props;
   const fontSize = useSelector((state) => state.accessibility.fontSize);
   const font = useSelector((state) => state.accessibility.font);
@@ -26,11 +27,12 @@ const CustomButton = (props) => {
       {...{ small }}
       {...{ disabled }}
       {...{ style }}
+      alt={alt}
     >
       {loading ? (
         <Spinner animation="border" variant="dark" />
       ) : (
-        icon && <img src={icon} alt={text} />
+        icon && <img src={icon} alt={`${text} icon`} />
       )}
       {text}
     </ButtonStyle>
