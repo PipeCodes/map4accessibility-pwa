@@ -67,6 +67,7 @@ const SocialLogin = ({ history, routes }) => {
           }}
           backgroundColor={colors.facebook_blue}
           text={t('sign_in_facebook')}
+          altText={t('facebook-logo')}
           icon={FacebookIcon}
         />
       </LoginSocialFacebook>
@@ -93,6 +94,7 @@ const SocialLogin = ({ history, routes }) => {
           }}
           backgroundColor={colors.google_red}
           text={t('sign_in_google')}
+          altText={t('google-logo')}
           icon={GoogleIcon}
         />
       </LoginSocialGoogle>
