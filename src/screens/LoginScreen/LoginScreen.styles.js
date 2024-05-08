@@ -68,7 +68,7 @@ export const TextSecondary = styled.span`
   color: ${colors.grey};
 `;
 
-export const InputLabel = styled.div`
+export const InputLabel = styled.label`
   font-size: ${(props) => updateFontSize(16, props.fontSize)};
   font-family: ${(props) => updateValue('EasyReadingPro', props.font)};
   color: ${colors.grey};
