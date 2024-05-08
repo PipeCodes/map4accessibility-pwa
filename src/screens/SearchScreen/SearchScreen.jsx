@@ -27,6 +27,7 @@ import { disabilityTypes } from '../../constants/disabilityTypes';
 import PlacesList from '../../components/PlacesList/PlacesList';
 import SearchBar from '../../components/SearchBar/SearchBar';
 import { setDisability, setText, setType } from '../../store/actions/search';
+import { getCurrentLocation } from '../../services/geolocation';
 
 const SearchScreen = ({ history, routes }) => {
   const { t } = useTranslation();
@@ -45,6 +46,19 @@ const SearchScreen = ({ history, routes }) => {
   const disabilityType = useSelector((state) => state?.search?.disabilityType);
   const [searchData, setSearchData] = useState(null);
   const [filterCollapsed, setFilterCollapsed] = useState(true);
+  const [userLocation, setUserLocation] = useState(null);
+
+  useEffect(() => {
+    getCurrentLocation()
+      .then((position) => {
+        setUserLocation(position);
+      })
+      // eslint-disable-next-line no-undef
+      .catch((error) => {
+        console.log(error);
+        alert(t('denied_geo'));
+      });
+  });
 
   useEffect(() => {
     dispatch(resetPlaceState());
@@ -73,9 +87,10 @@ const SearchScreen = ({ history, routes }) => {
         name: searchText,
         placeType: filterType ?? undefined,
         disabilityType: disabilityType ?? undefined,
+        location: userLocation,
       }),
     );
-  }, [filterType, disabilityType, searchText, dispatch]);
+  }, [filterType, disabilityType, searchText, dispatch, userLocation]);
 
   useEffect(() => {
     if (filterType || disabilityType) {
