@@ -44,7 +44,7 @@ const SearchBar = ({
         <img src={BackIcon} alt="back" />
       </LeftButton>
       <InputLabel htmlFor="search-input" className="input-label">
-        {t('Search text input')}
+        {t('search')}
       </InputLabel>
       <CustomInput
         fontSize={fontSize}
