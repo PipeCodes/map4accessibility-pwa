@@ -61,20 +61,20 @@ const TopBar = (props) => {
 
       {title && (
         <Title className={page ? 'page' : null} fontSize={fontSize} font={font}>
-          {hasIcon && <img src={AccessibilityIcon} alt="Accessibility" />}
+          {hasIcon && <img src={AccessibilityIcon} alt="Accessibility icon" />}
           {title}
         </Title>
       )}
 
       {magnifier && (
         <MagnifierButton type="button" onClick={() => searchClickHandler()}>
-          <img src={Magnifier} alt="Magnifier" />
+          <img src={Magnifier} alt="Magnifier icon" />
         </MagnifierButton>
       )}
 
       {hasAccessibilityButton && (
         <AccessibilityButton type="button" onClick={hasAccessibilityButton}>
-          <img src={AccessibilityIcon} alt="Accessibility" />
+          <img src={AccessibilityIcon} alt="Accessibility icon" />
         </AccessibilityButton>
       )}
 
