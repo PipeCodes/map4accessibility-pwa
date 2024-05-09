@@ -198,5 +198,13 @@
   "tutorial_7_1": "Mais avaliações significam mais informações úteis para que outros encontrem espaços acessíveis.",
   "tutorial_7_2": "Divirta-se a usar o Map4Accessibility e ajude a criar um mundo mais acessível. A sua opinião é importante!",
   "denied_geo": "Não conseguimos obter a sua posição atual. Por favor, verifique as configurações de localização do seu dispositivo ou navegador.",
-  "review": "Avaliar"
+  "review": "Avaliar",
+  "alt_text": {
+    "tutorial_phone_icon": "Ícone do telefone do tutorial",
+    "positive_icon": "Ícone positivo",
+    "neutral_icon": "Ícone neutro",
+    "negative_icon": "Ícone negativo",
+    "accepted_icon": "Ícone aceite",
+    "rejected_icon": "Ícone rejeitado"
+  }
 }

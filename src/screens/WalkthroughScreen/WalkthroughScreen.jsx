@@ -69,7 +69,10 @@ const WalkthroughScreen = (props) => {
         <div className="fullDiv">
           {currentStep === 0 && (
             <>
-              <Image src={TutorialFirst} alt="Tutorial Phone Icon" />
+              <Image
+                src={TutorialFirst}
+                alt={t('alt_text.tutorial_phone_icon')}
+              />
               <Text fontSize={fontSize} font={font}>
                 <span>{t('tutorial_1_title')}</span>
                 <br />
@@ -79,7 +82,10 @@ const WalkthroughScreen = (props) => {
           )}
           {currentStep === 1 && (
             <>
-              <Image src={TutorialFirst} alt="Tutorial Phone Icon" />
+              <Image
+                src={TutorialFirst}
+                alt={t('alt_text.tutorial_phone_icon')}
+              />
               <Text fontSize={fontSize} font={font}>
                 <span>{t('tutorial_2_title')}</span>
                 <br />
@@ -89,7 +95,10 @@ const WalkthroughScreen = (props) => {
           )}
           {currentStep === 2 && (
             <>
-              <Image src={TutorialFirst} alt="Tutorial Phone Icon" />
+              <Image
+                src={TutorialFirst}
+                alt={t('alt_text.tutorial_phone_icon')}
+              />
               <Text fontSize={fontSize} font={font}>
                 <span>{t('tutorial_3_title')}</span>
                 <br />
@@ -99,7 +108,10 @@ const WalkthroughScreen = (props) => {
           )}
           {currentStep === 3 && (
             <>
-              <Image src={TutorialFirst} alt="Tutorial Phone Icon" />
+              <Image
+                src={TutorialFirst}
+                alt={t('alt_text.tutorial_phone_icon')}
+              />
               <Text fontSize={fontSize} font={font}>
                 <span>{t('tutorial_4_title')}</span>
                 <br />
@@ -109,7 +121,10 @@ const WalkthroughScreen = (props) => {
           )}
           {currentStep === 4 && (
             <>
-              <Image src={TutorialFirst} alt="Tutorial Phone Icon" />
+              <Image
+                src={TutorialFirst}
+                alt={t('alt_text.tutorial_phone_icon')}
+              />
               <Text fontSize={fontSize} font={font}>
                 <span>{t('tutorial_5_title')}</span>
                 <br />
@@ -119,7 +134,10 @@ const WalkthroughScreen = (props) => {
           )}
           {currentStep === 5 && (
             <>
-              <Image src={TutorialFirst} alt="Tutorial Phone Icon" />
+              <Image
+                src={TutorialFirst}
+                alt={t('alt_text.tutorial_phone_icon')}
+              />
               <Text fontSize={fontSize} font={font}>
                 <span>{t('tutorial_6_title')}</span>
                 <br />
@@ -129,7 +147,10 @@ const WalkthroughScreen = (props) => {
           )}
           {currentStep === 6 && (
             <>
-              <Image src={TutorialFirst} alt="Tutorial Phone Icon" />
+              <Image
+                src={TutorialFirst}
+                alt={t('alt_text.tutorial_phone_icon')}
+              />
               <Text fontSize={fontSize} font={font}>
                 <span>{t('tutorial_7_title')}</span>
                 <br />
