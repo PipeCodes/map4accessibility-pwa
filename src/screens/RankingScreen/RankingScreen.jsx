@@ -125,13 +125,15 @@ const RankingScreen = (props) => {
               <span>{t('location')}</span>
             </SliderButon>
           </SliderFilter>
-
-          <CustomSelect
-            style={sliderActive ? { display: 'none' } : { width: '100%' }}
-            defaultValue={filterCountries[139]}
-            options={filterCountries}
-            onChange={(value) => setCountry(value)}
-          />
+          <label htmlFor="country-select">
+            <CustomSelect
+              id="country-select"
+              style={sliderActive ? { display: 'none' } : { width: '100%' }}
+              defaultValue={filterCountries[139]}
+              options={filterCountries}
+              onChange={(value) => setCountry(value)}
+            />{' '}
+          </label>
         </FiltersWrapper>
         {loading ? (
           <Spinner animation="border" variant="dark" />

@@ -36,9 +36,9 @@ const RankingItem = (props) => {
         {rank + 1}
       </Rank>
       {image?.file_url ? (
-        <Image src={image?.file_url} />
+        <Image src={image?.file_url} alt="avatar" />
       ) : (
-        <Image src={image} />
+        <Image src={image} alt="avatar" />
       )}
       <TextWrapper>
         <Name fontSize={fontSize} font={font}>
