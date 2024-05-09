@@ -195,6 +195,7 @@
   "denied_geo": "Wir konnten Ihren aktuellen Standort nicht ermitteln. Überprüfen Sie die Standorteinstellungen Ihres Geräts oder Browsers.",
   "review": "Rezension",
   "alt_text": {
+    "icon": "Icon",
     "tutorial_phone_icon": "Tutorial Telefon-Symbol",
     "positive_icon": "Positiv-Symbol",
     "neutral_icon": "Neutrales Icon",
@@ -202,6 +203,7 @@
     "accepted_icon": "Angenommenes Icon",
     "rejected_icon": "Abgelehntes Icon",
     "profile_picture": "Profilbild",
-    "evaluation_icon": "Bewertungssymbol"
+    "evaluation_icon": "Bewertungssymbol",
+    "place_image": "Bild platzieren"
   }
 }

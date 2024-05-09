@@ -164,7 +164,15 @@ export const Form = styled.div`
   width: 100%;
 `;
 
-export const Label = styled.span`
+export const InfoText = styled.span`
+  font-size: ${(props) => updateFontSize(16, props.fontSize)};
+  font-family: ${(props) => updateValue('EasyReadingPro', props.font)};
+  color: ${colors.primaryTextColor};
+  margin-top: 30px;
+  margin-bottom: 10px;
+`;
+
+export const Label = styled.label`
   font-size: ${(props) => updateFontSize(16, props.fontSize)};
   font-family: ${(props) => updateValue('EasyReadingPro', props.font)};
   color: ${colors.primaryTextColor};
@@ -220,7 +228,7 @@ export const ButtonContainer = styled.div`
   width: 100%;
 `;
 
-export const MediaLabel = styled.div`
+export const MediaLabel = styled.label`
   font-size: ${(props) => updateFontSize(12, props.fontSize)};
   font-family: ${(props) => updateValue('EasyReadingPro', props.font)};
   margin-top: 10px;

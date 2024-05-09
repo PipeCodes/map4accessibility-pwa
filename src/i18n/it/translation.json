@@ -195,6 +195,7 @@
   "denied_geo": "Non siamo riusciti a ottenere la tua posizione attuale. Controlla le impostazioni di posizione del tuo dispositivo o browser.",
   "review": "Rezension",
   "alt_text": {
+    "icon": "Icona",
     "tutorial_phone_icon": "Icona telefono tutorial",
     "positive_icon": "Icona positiva",
     "neutral_icon": "Icona neutrale",
@@ -202,6 +203,7 @@
     "accepted_icon": "Icona accettata",
     "rejected_icon": "Icona rifiutata",
     "profile_picture": "Immagine del profilo",
-    "evaluation_icon": "Icona Valutazione"
+    "evaluation_icon": "Icona Valutazione",
+    "place_image": "Immagine del luogo"
   }
 }

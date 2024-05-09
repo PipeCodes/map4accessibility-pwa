@@ -203,6 +203,7 @@
   "denied_geo": "We were unable to get your current position. Please check your device or browser location settings",
   "review": "Review",
   "alt_text": {
+    "icon": "Icon",
     "tutorial_phone_icon": "Tutorial Phone Icon",
     "positive_icon": "Positive Icon",
     "neutral_icon": "Neutral Icon",
@@ -210,6 +211,7 @@
     "accepted_icon": "Accepted Icon",
     "rejected_icon": "Rejected Icon",
     "profile_picture": "Profile picture",
-    "evaluation_icon": "Evaluation Icon"
+    "evaluation_icon": "Evaluation Icon",
+    "place_image": "Place Image"
   }
 }
