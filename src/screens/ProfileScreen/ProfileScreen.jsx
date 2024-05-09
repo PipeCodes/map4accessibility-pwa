@@ -261,10 +261,11 @@ const ProfileScreen = (props) => {
         <FormWrapper>
           {editActive && (
             <div>
-              <InputLabel fontSize={fontSize} font={font}>
+              <InputLabel fontSize={fontSize} font={font} htmlFor="first_name">
                 {t('first_name')}
               </InputLabel>
               <CustomInput
+                id="first_name"
                 fontSize={fontSize}
                 font={font}
                 style={{}}
@@ -284,10 +285,11 @@ const ProfileScreen = (props) => {
                   {t(formErrors.firstName)}
                 </Error>
               )}
-              <InputLabel fontSize={fontSize} font={font}>
+              <InputLabel fontSize={fontSize} font={font} htmlFor="surname">
                 {t('surname')}
               </InputLabel>
               <CustomInput
+                id="surname"
                 fontSize={fontSize}
                 font={font}
                 style={{}}
@@ -307,10 +309,11 @@ const ProfileScreen = (props) => {
                   {t(formErrors.surname)}
                 </Error>
               )}
-              <InputLabel fontSize={fontSize} font={font}>
+              <InputLabel fontSize={fontSize} font={font} htmlFor="avatar">
                 {t('avatar')}
               </InputLabel>
               <CustomInput
+                id="avatar"
                 type="file"
                 fontSize={fontSize}
                 accept={IMAGE_TYPES}
