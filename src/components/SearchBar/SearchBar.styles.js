@@ -58,3 +58,7 @@ export const AccessibilityButton = styled.button`
   justify-content: center;
   align-items: center;
 `;
+
+export const InputLabel = styled.label`
+  visibility: hidden;
+`;
