@@ -55,7 +55,7 @@ const routes = {
   WALKTHROUGH_TUTORIAL: {
     path: '/help',
     component: WalkthroughScreen,
-    private: false,
+    private: true,
   },
   EMAIL_CONFIRMATION: {
     path: '/email-confirmation',
@@ -75,47 +75,47 @@ const routes = {
   PROFILE: {
     path: '/profile',
     component: ProfileScreen,
-    private: false,
+    private: true,
   },
   PLACE_RATE: {
     path: '/rate-place/:id/:google_place_id',
     component: RatePlaceScreen,
-    private: false,
+    private: true,
   },
   ADD_PLACE: {
     path: '/add-place/',
     component: AddPlaceScreen,
-    private: false,
+    private: true,
   },
   PLACE_DETAILS: {
     path: '/place-details/:id/:google_place_id',
     component: PlaceDetailsScreen,
-    private: false,
+    private: true,
   },
   ROUTE_PLANNER: {
     path: '/route-planner',
     component: RoutePlannerScreen,
-    private: false,
+    private: true,
   },
   SINGLE_ROUTE: {
     path: '/route/:id',
     component: SingleRouteScreen,
-    private: false,
+    private: true,
   },
   MAP: {
     path: '/map',
     component: MapScreen,
-    private: false,
+    private: true,
   },
   HOME: {
     path: '/home',
     component: HomeScreen,
-    private: false,
+    private: true,
   },
   RANKING: {
     path: '/ranking',
     component: RankingScreen,
-    private: false,
+    private: true,
   },
   CHANGE_PASSWORD: {
     path: '/change-password',
@@ -125,7 +125,7 @@ const routes = {
   SEARCH: {
     path: '/search',
     component: SearchScreen,
-    private: false,
+    private: true,
   },
 };
 
