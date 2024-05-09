@@ -201,5 +201,13 @@
   "tutorial_7_1": "More reviews mean more useful information for others to find accessible spaces.",
   "tutorial_7_2": "Enjoy using Map4Accessibility and help create a more accessible world. Your input matters!",
   "denied_geo": "We were unable to get your current position. Please check your device or browser location settings",
-  "review": "Review"
+  "review": "Review",
+  "alt_text": {
+    "tutorial_phone_icon": "Tutorial Phone Icon",
+    "positive_icon": "Positive Icon",
+    "neutral_icon": "Neutral Icon",
+    "negative_icon": "Negative Icon",
+    "accepted_icon": "Accepted Icon",
+    "rejected_icon": "Rejected Icon"
+  }
 }
