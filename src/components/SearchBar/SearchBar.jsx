@@ -6,6 +6,7 @@ import {
   SearchHeader,
   AccessibilityButton,
   SearchButton,
+  InputLabel,
 } from './SearchBar.styles';
 import BackIcon from '../../assets/icons/back.svg';
 import AccessibilityIcon from '../../assets/icons/accessibility.svg';
@@ -42,6 +43,9 @@ const SearchBar = ({
       <LeftButton type="button" onClick={() => handleBackButton()}>
         <img src={BackIcon} alt="back" />
       </LeftButton>
+      <InputLabel htmlFor="search-input" className="input-label">
+        {t('Search text input')}
+      </InputLabel>
       <CustomInput
         fontSize={fontSize}
         font={font}
@@ -51,12 +55,14 @@ const SearchBar = ({
         }}
         placeholder={t('search')}
         type="text"
+        alt
         value={searchText}
         onChange={(e) => handleSearch(e.target.value)}
         icon={Magnifier}
+        id="search-input"
       />
       <SearchButton type="button" onClick={handleSearchAction}>
-        <img src={Magnifier} alt="Search" />
+        <img src={Magnifier} alt="Search Icon" />
       </SearchButton>
       <AccessibilityButton type="button" onClick={openAccessibility}>
         <img src={AccessibilityIcon} alt="Accessibility" />
