@@ -200,6 +200,8 @@
     "neutral_icon": "Icona neutrale",
     "negative_icon": "Icona negativa",
     "accepted_icon": "Icona accettata",
-    "rejected_icon": "Icona rifiutata"
+    "rejected_icon": "Icona rifiutata",
+    "profile_picture": "Immagine del profilo",
+    "evaluation_icon": "Icona Valutazione"
   }
 }

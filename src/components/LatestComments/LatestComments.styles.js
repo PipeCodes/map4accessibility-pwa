@@ -139,7 +139,6 @@ export const Label = styled.div`
 
 export const Body = styled.div`
   padding: 10px 15px;
-  text-align: justify;
   color: ${colors.grey};
   flex: 1;
   min-width: 150px;
