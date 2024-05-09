@@ -200,6 +200,8 @@
     "neutral_icon": "Неутрална икона",
     "negative_icon": "Негативна икона",
     "accepted_icon": "Приета икона",
-    "rejected_icon": "Отхвърлена икона"
+    "rejected_icon": "Отхвърлена икона",
+    "profile_picture": "Профилна снимка",
+    "evaluation_icon": "Икона за оценка"
   }
 }

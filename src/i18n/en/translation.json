@@ -208,6 +208,8 @@
     "neutral_icon": "Neutral Icon",
     "negative_icon": "Negative Icon",
     "accepted_icon": "Accepted Icon",
-    "rejected_icon": "Rejected Icon"
+    "rejected_icon": "Rejected Icon",
+    "profile_picture": "Profile picture",
+    "evaluation_icon": "Evaluation Icon"
   }
 }
