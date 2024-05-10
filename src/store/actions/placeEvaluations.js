@@ -71,6 +71,7 @@ export const postPlaceEvaluation =
     longitude,
     media,
     city,
+    county,
     countryCode,
     placeType,
     googlePlaceId,
@@ -87,6 +88,7 @@ export const postPlaceEvaluation =
       longitude,
       google_place_id: googlePlaceId,
       city,
+      county,
       country_code: countryCode,
       place_type: placeType,
       disabilities,
@@ -94,6 +96,7 @@ export const postPlaceEvaluation =
     const config = {
       headers: {
         Authorization: `Bearer ${getAuthToken()}`,
+        'Access-Control-Allow-Origin': '*',
       },
     };
 

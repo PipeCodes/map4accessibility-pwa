@@ -190,6 +190,7 @@ const RatePlaceScreen = (props) => {
           place?.longitude,
           file,
           place?.city,
+          place?.county,
           place?.country_code,
           place?.place_type,
           place?.google_place_id,
