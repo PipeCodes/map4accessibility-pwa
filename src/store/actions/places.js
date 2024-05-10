@@ -107,6 +107,13 @@ export const getGooglePlace = (id) => async (dispatch) => {
         });
       });
 
+      let county = '';
+      if (place?.address_components) {
+        county = place?.address_components
+          .filter((item) => item.types.includes('administrative_area_level_2'))
+          .map((item) => item.long_name)[0];
+      }
+
       const formatedPlace = {
         latitude: place?.geometry?.location?.lat(),
         longitude: place?.geometry.location?.lng(),
@@ -115,6 +122,7 @@ export const getGooglePlace = (id) => async (dispatch) => {
         country_code: location?.country,
         place_type: choosePlaceType(place?.types),
         city: location?.city,
+        county,
         address: place?.vicinity,
         phone: place?.formatted_phone_number,
         email: place?.email,
