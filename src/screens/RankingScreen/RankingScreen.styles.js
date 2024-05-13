@@ -37,6 +37,9 @@ export const FiltersWrapper = styled.div`
   gap: 15px;
   align-items: center;
   width: 100%;
+  label {
+    width: 100%;
+  }
 `;
 
 export const SliderFilter = styled.div`

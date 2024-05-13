@@ -132,22 +132,30 @@ const RoutePlannerScreen = (props) => {
             </Icons>
             <Inputs>
               <Autocomplete>
-                <Input
-                  ref={originInputRef}
-                  fontSize={fontSize}
-                  font={font}
-                  type="text"
-                  onBlur={(e) => setOrigin(e.target.value)}
-                />
+                <label htmlFor="origin">
+                  <span hidden>origin</span>
+                  <Input
+                    id="origin"
+                    ref={originInputRef}
+                    fontSize={fontSize}
+                    font={font}
+                    type="text"
+                    onBlur={(e) => setOrigin(e.target.value)}
+                  />{' '}
+                </label>
               </Autocomplete>
               <Autocomplete>
-                <Input
-                  ref={destinationInputRef}
-                  fontSize={fontSize}
-                  font={font}
-                  type="text"
-                  onBlur={(e) => setDestination(e.target.value)}
-                />
+                <label htmlFor="destination">
+                  <span hidden>destination</span>
+                  <Input
+                    id="destination"
+                    ref={destinationInputRef}
+                    fontSize={fontSize}
+                    font={font}
+                    type="text"
+                    onBlur={(e) => setDestination(e.target.value)}
+                  />{' '}
+                </label>
               </Autocomplete>
             </Inputs>
           </RouteInputs>

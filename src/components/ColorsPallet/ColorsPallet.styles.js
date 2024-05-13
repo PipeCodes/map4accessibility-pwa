@@ -7,10 +7,11 @@ export const ColorsPalletContainer = styled.div`
   display: flex;
 `;
 
-export const Color = styled.button`
+export const Color = styled.span`
   background-color: ${(props) => props.color};
   border-radius: 20px;
   height: 30px;
   width: 30px;
   border: 2px solid black;
+  cursor: pointer;
 `;

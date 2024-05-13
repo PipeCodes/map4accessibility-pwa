@@ -131,7 +131,7 @@ export const EditButton = styled.button`
   }
 `;
 
-export const InputLabel = styled.span`
+export const InputLabel = styled.label`
   font-size: ${(props) => updateFontSize(16, props.fontSize)};
   font-family: ${(props) => updateValue('EasyReadingPro', props.font)};
   color: ${colors.primaryTextColor};

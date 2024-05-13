@@ -129,11 +129,12 @@ const SignUpInfo = (props) => {
       <Text fontSize={fontSize} font={font}>
         {t('create_account')}
       </Text>
-      <InputLabel fontSize={fontSize} font={font}>
+      <InputLabel fontSize={fontSize} font={font} htmlFor="firstName">
         {t('first_name')}
         <span>*</span>
       </InputLabel>
       <CustomInput
+        id="firstName"
         fontSize={fontSize}
         font={font}
         style={{}}
@@ -154,11 +155,12 @@ const SignUpInfo = (props) => {
           {t(formErrors.firstName)}
         </Error>
       )}
-      <InputLabel fontSize={fontSize} font={font}>
+      <InputLabel fontSize={fontSize} font={font} htmlFor="surname">
         {t('surname')}
         <span>*</span>
       </InputLabel>
       <CustomInput
+        id="surname"
         fontSize={fontSize}
         font={font}
         style={{}}
@@ -180,10 +182,11 @@ const SignUpInfo = (props) => {
         </Error>
       )}
 
-      <InputLabel fontSize={fontSize} font={font}>
+      <InputLabel fontSize={fontSize} font={font} htmlFor="birthDate">
         {t('birth_date')}
       </InputLabel>
       <CustomInput
+        id="birthDate"
         fontSize={fontSize}
         font={font}
         style={{ minWidth: 'intrinsic' }}
@@ -206,11 +209,12 @@ const SignUpInfo = (props) => {
           {t(formErrors.birthDate)}
         </Error>
       )}
-      <InputLabel fontSize={fontSize} font={font}>
+      <InputLabel fontSize={fontSize} font={font} htmlFor="email">
         {t('email')}
         <span>*</span>
       </InputLabel>
       <CustomInput
+        id="email"
         fontSize={fontSize}
         font={font}
         style={{}}
@@ -236,11 +240,12 @@ const SignUpInfo = (props) => {
       )}
       {!social && (
         <>
-          <InputLabel fontSize={fontSize} font={font}>
+          <InputLabel fontSize={fontSize} font={font} htmlFor="password">
             {t('password')}
             <span>*</span>
           </InputLabel>
           <CustomInput
+            id="password"
             fontSize={fontSize}
             font={font}
             style={{}}
@@ -262,11 +267,12 @@ const SignUpInfo = (props) => {
               {t(formErrors.password)}
             </Error>
           )}
-          <InputLabel fontSize={fontSize} font={font}>
+          <InputLabel fontSize={fontSize} font={font} htmlFor="confirmPassword">
             {t('confirm_password')}
             <span>*</span>
           </InputLabel>
           <CustomInput
+            id="confirmPassword"
             fontSize={fontSize}
             font={font}
             style={{}}
@@ -293,12 +299,14 @@ const SignUpInfo = (props) => {
 
       <CheckboxWrapper fontSize={fontSize} font={font}>
         <input
+          id="terms"
           type="checkbox"
           checked={formData.termsAccepted}
           onChange={() => setPrivacyPolicyChecked()}
         />
         <PrivacyPolicyLabel
           fontSize={fontSize}
+          htmlFor="terms"
           font={font}
           onClick={() => setPrivacyPolicyChecked()}
           dangerouslySetInnerHTML={{

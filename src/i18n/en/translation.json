@@ -13,7 +13,11 @@
   "confirm_password_placeholder": "****************",
   "recover_password": "Recover password",
   "recover": "Recover",
+  "recover-logo": "Recover password logo",
   "login": "Login",
+  "login-logo": "login logo",
+  "facebook-logo": "facebook logo",
+  "google-logo": "google logo",
   "register": "Register",
   "faqs": "FAQs & About",
   "help": "Help",
@@ -197,5 +201,17 @@
   "tutorial_7_1": "More reviews mean more useful information for others to find accessible spaces.",
   "tutorial_7_2": "Enjoy using Map4Accessibility and help create a more accessible world. Your input matters!",
   "denied_geo": "We were unable to get your current position. Please check your device or browser location settings",
-  "review": "Review"
+  "review": "Review",
+  "alt_text": {
+    "icon": "Icon",
+    "tutorial_phone_icon": "Tutorial Phone Icon",
+    "positive_icon": "Positive Icon",
+    "neutral_icon": "Neutral Icon",
+    "negative_icon": "Negative Icon",
+    "accepted_icon": "Accepted Icon",
+    "rejected_icon": "Rejected Icon",
+    "profile_picture": "Profile picture",
+    "evaluation_icon": "Evaluation Icon",
+    "place_image": "Place Image"
+  }
 }

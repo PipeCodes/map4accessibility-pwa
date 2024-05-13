@@ -31,6 +31,7 @@ import {
   Error,
   Neutral,
   Accordion,
+  InfoText,
 } from './RatePlaceScreen.styles';
 import TopBar from '../../components/TopBar/TopBar';
 import ImageSlider from '../../components/ImageSlider/ImageSlider';
@@ -189,6 +190,7 @@ const RatePlaceScreen = (props) => {
           place?.longitude,
           file,
           place?.city,
+          place?.county,
           place?.country_code,
           place?.place_type,
           place?.google_place_id,
@@ -373,7 +375,10 @@ const RatePlaceScreen = (props) => {
             thumbs={accessibility}
             onClick={() => onClickThumbsUp()}
           >
-            <img src={buttonUp} alt={t('accessible')} />
+            <img
+              src={buttonUp}
+              alt={`${t('accessible')} - ${t('alt_text.icon')}`}
+            />
             <span>{t('accessible')}</span>
           </ThumbsUp>
           <Neutral
@@ -382,7 +387,10 @@ const RatePlaceScreen = (props) => {
             thumbs={accessibility}
             onClick={() => onClickNeutral()}
           >
-            <img src={buttonNeutral} alt={t('neutral')} />
+            <img
+              src={buttonNeutral}
+              alt={`${t('neutral')} - ${t('alt_text.icon')}`}
+            />
             <span>{t('neutral')}</span>
           </Neutral>
           <ThumbsDown
@@ -391,7 +399,10 @@ const RatePlaceScreen = (props) => {
             thumbs={accessibility}
             onClick={() => onClickThumbsDown()}
           >
-            <img src={buttonDown} alt={t('not_accessible')} />
+            <img
+              src={buttonDown}
+              alt={`${t('not_accessible')} - ${t('alt_text.icon')}`}
+            />
             <span>{t('not_accessible')}</span>
           </ThumbsDown>
         </Vote>
@@ -402,13 +413,18 @@ const RatePlaceScreen = (props) => {
         />
 
         <Form className="questions">
-          <Label fontSize={fontSize} font={font}>
+          <Label fontSize={fontSize} font={font} htmlFor="comment-section">
             {t('comment')}
           </Label>
-          <Comment maxlength={255} rows={5} ref={commentRef} />
-          <Label fontSize={fontSize} font={font}>
+          <Comment
+            maxlength={255}
+            rows={5}
+            ref={commentRef}
+            id="comment-section"
+          />
+          <InfoText fontSize={fontSize} font={font}>
             {t('mandatory_questions')}
-          </Label>
+          </InfoText>
           {isDefined(params?.google_place_id) && (
             <>
               {questions?.mandatory &&
@@ -447,9 +463,9 @@ const RatePlaceScreen = (props) => {
                     </Options>
                   </Question>
                 ))}
-              <Label fontSize={fontSize} font={font}>
+              <InfoText fontSize={fontSize} font={font}>
                 {t('optional_questions')}
-              </Label>
+              </InfoText>
               {questions?.optional &&
                 Object.entries(questions?.optional)
                   .reverse()
@@ -540,8 +556,9 @@ const RatePlaceScreen = (props) => {
           type="file"
           onChange={handleFileChange}
           accept={MEDIA_TYPES}
+          id="file"
         />
-        <MediaLabel fontSize={fontSize} font={font}>
+        <MediaLabel fontSize={fontSize} font={font} htmlFor="file">
           {t('supported_formats')} <span>png</span>, <span>jpg</span>,{' '}
           <span>jpeg</span>, <span>webp</span>, <span>mp4</span>,{' '}
           <span>mp3</span> and <span>wav</span>.

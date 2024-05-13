@@ -118,7 +118,7 @@ const PlacePopUpComponent = (props) => {
             <Close onClick={() => setPopUp(false)}>
               <img src={x} alt="back" />
             </Close>
-            <Image src={getMedia(place)} />
+            <Image src={getMedia(place)} alt={t('alt_text.place_image')} />
             <Content>
               <Header>
                 <TextWrapper>
