@@ -13,7 +13,11 @@
   "confirm_password_placeholder": "****************",
   "recover_password": "Passwort wiederherstellen",
   "recover": "Wiederherstellen",
+  "recover-logo": "passwort wiederherstellungs logo",
   "login": "Login",
+  "login-logo": "Login-Logo",
+  "facebook-logo": "Facebook-Logo",
+  "google-logo": "Google-Logo",
   "register": "Registrieren",
   "faqs": "FAQs & Über",
   "help": "Hilfe",
@@ -189,5 +193,17 @@
   "tutorial_7_1": "Mehr Bewertungen führen zu mehr nützlichen Informationen, damit andere Nutzer einfacher barrierefreie Orte finden können.",
   "tutorial_7_2": "Genieße Map4Accessibility und hilf dabei, eine barrierefreiere Welt zu schaffen. Deine Meinung zählt!",
   "denied_geo": "Wir konnten Ihren aktuellen Standort nicht ermitteln. Überprüfen Sie die Standorteinstellungen Ihres Geräts oder Browsers.",
-  "review": "Rezension"
+  "review": "Rezension",
+  "alt_text": {
+    "icon": "Icon",
+    "tutorial_phone_icon": "Tutorial Telefon-Symbol",
+    "positive_icon": "Positiv-Symbol",
+    "neutral_icon": "Neutrales Icon",
+    "negative_icon": "Negatives Icon",
+    "accepted_icon": "Angenommenes Icon",
+    "rejected_icon": "Abgelehntes Icon",
+    "profile_picture": "Profilbild",
+    "evaluation_icon": "Bewertungssymbol",
+    "place_image": "Bild platzieren"
+  }
 }

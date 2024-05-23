@@ -142,13 +142,13 @@ const MapScreen = (props) => {
 
   // Gets Position and sets Location
   useEffect(() => {
-    if (history?.location?.state?.search.text && center && map) {
-      if (text !== history?.location?.state?.search.text) {
+    if (history?.location?.state?.search?.text && center && map) {
+      if (text !== history?.location?.state?.search?.text) {
         showPins();
-        setText(history?.location?.state?.search.text);
+        setText(history?.location?.state?.search?.text);
       }
     }
-  }, [center, history?.location?.state?.search.text, map, showPins, text]);
+  }, [center, history?.location?.state?.search?.text, map, showPins, text]);
 
   // Gets Position and sets Location
   useEffect(() => {

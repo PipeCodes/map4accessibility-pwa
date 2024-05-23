@@ -6,6 +6,7 @@ import ButtonStyle from './CustomButton.styles';
 const CustomButton = (props) => {
   const {
     text,
+    altText,
     backgroundColor,
     small,
     style,
@@ -30,7 +31,7 @@ const CustomButton = (props) => {
       {loading ? (
         <Spinner animation="border" variant="dark" />
       ) : (
-        icon && <img src={icon} alt={text} />
+        icon && <img src={icon} alt={altText || `${text} icon`} />
       )}
       {text}
     </ButtonStyle>

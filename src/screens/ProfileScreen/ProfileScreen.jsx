@@ -261,10 +261,11 @@ const ProfileScreen = (props) => {
         <FormWrapper>
           {editActive && (
             <div>
-              <InputLabel fontSize={fontSize} font={font}>
+              <InputLabel fontSize={fontSize} font={font} htmlFor="first_name">
                 {t('first_name')}
               </InputLabel>
               <CustomInput
+                id="first_name"
                 fontSize={fontSize}
                 font={font}
                 style={{}}
@@ -284,10 +285,11 @@ const ProfileScreen = (props) => {
                   {t(formErrors.firstName)}
                 </Error>
               )}
-              <InputLabel fontSize={fontSize} font={font}>
+              <InputLabel fontSize={fontSize} font={font} htmlFor="surname">
                 {t('surname')}
               </InputLabel>
               <CustomInput
+                id="surname"
                 fontSize={fontSize}
                 font={font}
                 style={{}}
@@ -307,10 +309,11 @@ const ProfileScreen = (props) => {
                   {t(formErrors.surname)}
                 </Error>
               )}
-              <InputLabel fontSize={fontSize} font={font}>
+              <InputLabel fontSize={fontSize} font={font} htmlFor="avatar">
                 {t('avatar')}
               </InputLabel>
               <CustomInput
+                id="avatar"
                 type="file"
                 fontSize={fontSize}
                 accept={IMAGE_TYPES}
@@ -328,10 +331,11 @@ const ProfileScreen = (props) => {
             </div>
           )}
 
-          <InputLabel fontSize={fontSize} font={font}>
+          <InputLabel fontSize={fontSize} font={font} htmlFor="email">
             {t('email')}
           </InputLabel>
           <CustomInput
+            id="email"
             fontSize={fontSize}
             font={font}
             style={{}}
@@ -352,10 +356,11 @@ const ProfileScreen = (props) => {
               {t(formErrors.email)}
             </Error>
           )}
-          <InputLabel fontSize={fontSize} font={font}>
+          <InputLabel fontSize={fontSize} font={font} htmlFor="birth_date">
             {t('birth_date')}
           </InputLabel>
           <CustomInput
+            id="birth_date"
             fontSize={fontSize}
             font={font}
             style={{ minWidth: 'intrinsic' }}
@@ -381,10 +386,15 @@ const ProfileScreen = (props) => {
             </Error>
           )}
 
-          <InputLabel fontSize={fontSize} font={font}>
+          <InputLabel
+            fontSize={fontSize}
+            font={font}
+            htmlFor="disability_types"
+          >
             {t('disability_types')}
           </InputLabel>
           <CustomInput
+            id="disability_types"
             fontSize={fontSize}
             font={font}
             style={{}}

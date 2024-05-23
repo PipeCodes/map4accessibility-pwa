@@ -45,7 +45,7 @@ const MyCommentsStatus = (props) => {
           <Line>
             <Box>
               <Label font={font} fontSize={fontSize}>
-                <img src={ThumbsUp} alt={t('positive')} />
+                <img src={ThumbsUp} alt={t('alt_text.positive_icon')} />
                 <span>{t('positive')}</span>
               </Label>
               <Count font={font} fontSize={fontSize} color={colors.green}>
@@ -54,7 +54,7 @@ const MyCommentsStatus = (props) => {
             </Box>
             <Box>
               <Label font={font} fontSize={fontSize}>
-                <img src={Neutral} alt={t('neutral')} />
+                <img src={Neutral} alt={t('alt_text.neutral_icon')} />
                 <span>{t('neutral')}</span>
               </Label>
               <Count font={font} fontSize={fontSize} color={colors.orange}>
@@ -63,7 +63,7 @@ const MyCommentsStatus = (props) => {
             </Box>
             <Box>
               <Label font={font} fontSize={fontSize}>
-                <img src={ThumbsDown} alt={t('negative')} />
+                <img src={ThumbsDown} alt={t('alt_text.negative_icon')} />
                 <span>{t('negative')}</span>
               </Label>
               <Count font={font} fontSize={fontSize} color={colors.red}>
@@ -74,7 +74,7 @@ const MyCommentsStatus = (props) => {
           <Line>
             <Box>
               <Label font={font} fontSize={fontSize}>
-                <img src={Accepted} alt={t('accepted')} />
+                <img src={Accepted} alt={t('alt_text.accepted_icon')} />
                 <span>{t('accepted')}</span>
               </Label>
               <Count
@@ -87,7 +87,7 @@ const MyCommentsStatus = (props) => {
             </Box>
             <Box>
               <Label font={font} fontSize={fontSize}>
-                <img src={Rejected} alt={t('rejected')} />
+                <img src={Rejected} alt={t('alt_text.rejected_icon')} />
                 <span>{t('rejected')}</span>
               </Label>
               <Count

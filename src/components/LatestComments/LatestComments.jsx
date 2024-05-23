@@ -145,9 +145,12 @@ const LatestComments = (props) => {
                 <Comment backgroundColor={backgroundColor} key={comment.id}>
                   <Top>
                     {image?.file_url ? (
-                      <Image src={image?.file_url} />
+                      <Image
+                        src={image?.file_url}
+                        alt={t('alt_text.profile_picture')}
+                      />
                     ) : (
-                      <Image src={image} />
+                      <Image src={image} alt={t('alt_text.profile_picture')} />
                     )}
                     <Name fontSize={fontSize} font={font}>
                       {comment?.place && comment?.place?.name}
@@ -164,6 +167,7 @@ const LatestComments = (props) => {
                           : ''
                       }`}
                       src={getIcon(comment?.evaluation)}
+                      alt={t('alt_text.evaluation_icon')}
                     />
                     <Label fontSize={fontSize} font={font}>
                       {getLabel(comment?.evaluation)}
@@ -215,9 +219,10 @@ const LatestComments = (props) => {
                       src={process.env.REACT_APP_EXTERNAL_LINKS_BASE.concat(
                         storageUrl(comment?.app_user?.avatar),
                       ).concat(`/${comment?.app_user?.avatar}`)}
+                      alt="avatar"
                     />
                   ) : (
-                    <Image src={Avatar} />
+                    <Image src={Avatar} alt="avatar" />
                   )}
                   <Name fontSize={fontSize} font={font}>
                     {comment?.app_user &&
@@ -235,6 +240,7 @@ const LatestComments = (props) => {
                         : ''
                     }`}
                     src={getIcon(comment?.evaluation)}
+                    alt={t('alt_text.evaluation_icon')}
                   />
                   <Label fontSize={fontSize} font={font}>
                     {getLabel(comment?.evaluation)}

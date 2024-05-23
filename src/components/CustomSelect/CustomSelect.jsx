@@ -13,7 +13,7 @@ const IconOption = (props) => {
 };
 
 const CustomSelect = (props) => {
-  const { style, options, onChange, defaultValue, value } = props;
+  const { style, options, onChange, defaultValue, value, id } = props;
   const { t } = useTranslation();
   const font = useSelector((state) => state.accessibility.font);
   const fontSize = useSelector((state) => state.accessibility.fontSize);
@@ -24,6 +24,7 @@ const CustomSelect = (props) => {
   return (
     <div style={style}>
       <StyledSelect
+        inputId={id}
         font={font}
         fontSize={fontSize}
         backgroundColor={backgroundColor}

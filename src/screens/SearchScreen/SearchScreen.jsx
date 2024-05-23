@@ -148,7 +148,7 @@ const SearchScreen = ({ history, routes }) => {
                         setFilterType(filter?.placeType);
                       }}
                     >
-                      <img src={filter?.icon} alt={filter?.label} />
+                      <img src={filter?.icon} alt={`${filter?.label} icon`} />
                       {filter?.label}
                     </button>
                   </Filter>
@@ -160,7 +160,7 @@ const SearchScreen = ({ history, routes }) => {
                         setFilterType(filter?.placeType);
                       }}
                     >
-                      <img src={filter?.icon} alt={filter?.label} />
+                      <img src={filter?.icon} alt={`${filter?.label} icon`} />
                       {filter?.label}
                     </button>
                   </Filter>
@@ -183,7 +183,10 @@ const SearchScreen = ({ history, routes }) => {
                         setDisabilityType(disability?.type);
                       }}
                     >
-                      <img src={disability?.icon} alt={disability?.label} />
+                      <img
+                        src={disability?.icon}
+                        alt={`${disability?.label} icon`}
+                      />
                       {disability?.label}
                     </button>
                   </Filter>
@@ -196,7 +199,10 @@ const SearchScreen = ({ history, routes }) => {
                         setDisabilityType(disability?.type);
                       }}
                     >
-                      <img src={disability?.icon} alt={disability?.label} />
+                      <img
+                        src={disability?.icon}
+                        alt={`${disability?.label} icon`}
+                      />
                       {disability?.label}
                     </button>
                   </Filter>

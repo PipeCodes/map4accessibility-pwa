@@ -16,11 +16,12 @@ const SignUpInfo = (props) => {
         {t('login')}
       </Text>
 
-      <InputLabel fontSize={fontSize} font={font}>
+      <InputLabel fontSize={fontSize} font={font} htmlFor="email">
         {t('email')}
         <span>*</span>
       </InputLabel>
       <CustomInput
+        id="email"
         fontSize={fontSize}
         font={font}
         style={{}}
@@ -36,7 +37,7 @@ const SignUpInfo = (props) => {
           {formErrors.email}
         </Error>
       )}
-      <InputLabel fontSize={fontSize} font={font}>
+      <InputLabel fontSize={fontSize} font={font} htmlFor="password">
         {t('password')}
         <span>*</span>
       </InputLabel>
@@ -44,6 +45,7 @@ const SignUpInfo = (props) => {
         fontSize={fontSize}
         font={font}
         style={{}}
+        id="password"
         placeholder={t('password_placeholder')}
         type="password"
         value={formData.password}

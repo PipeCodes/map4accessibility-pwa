@@ -13,7 +13,11 @@
   "confirm_password_placeholder": "****************",
   "recover_password": "recupera password",
   "recover": "recupera",
+  "recover-logo": "logo di recupero password",
   "login": "Login",
+  "login-logo": "logo di login",
+  "facebook-logo": "logo di facebook",
+  "google-logo": "logo di Google",
   "register": "registra",
   "faqs": "FAQs",
   "help": "Aiuto",
@@ -189,5 +193,17 @@
   "tutorial_7_1": "Più recensioni significano più informazioni utili agli altri per trovare spazi accessibili.",
   "tutorial_7_2": "Divertiti a usare Map4Accessibility e contribuisci a creare un mondo più accessibile. Il tuo contributo è importante!",
   "denied_geo": "Non siamo riusciti a ottenere la tua posizione attuale. Controlla le impostazioni di posizione del tuo dispositivo o browser.",
-  "review": "Rezension"
+  "review": "Rezension",
+  "alt_text": {
+    "icon": "Icona",
+    "tutorial_phone_icon": "Icona telefono tutorial",
+    "positive_icon": "Icona positiva",
+    "neutral_icon": "Icona neutrale",
+    "negative_icon": "Icona negativa",
+    "accepted_icon": "Icona accettata",
+    "rejected_icon": "Icona rifiutata",
+    "profile_picture": "Immagine del profilo",
+    "evaluation_icon": "Icona Valutazione",
+    "place_image": "Immagine del luogo"
+  }
 }

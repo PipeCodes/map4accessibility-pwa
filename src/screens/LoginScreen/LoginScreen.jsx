@@ -98,6 +98,7 @@ const LoginScreen = (props) => {
             borderRadius: '25px',
           }}
           text={t('login')}
+          altText={t('login-logo')}
           icon={OpenAccountLogin}
           onClick={() => validateFormErrorsClickHandler(formErrors)}
           backgroundColor={loading ? colors.grey : colors.orange}
