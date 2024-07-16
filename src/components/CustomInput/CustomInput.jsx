@@ -19,6 +19,7 @@ const CustomInput = (props) => {
     font,
     icon,
     id,
+    defaultValue,
   } = props;
 
   return (
@@ -32,6 +33,7 @@ const CustomInput = (props) => {
       min={min}
       max={max}
       onChange={onChange}
+      defaultValue={defaultValue}
       onPaste={(e) => {
         e.preventDefault();
         return false;

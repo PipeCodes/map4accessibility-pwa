@@ -116,7 +116,7 @@ export const Filter = styled.div`
 export const FilterToggleHeader = styled.div`
   display: inline-block;
   width: 100%;
-  margin-top: 50px;
+  margin-top: 70px;
   margin-bottom: 10px;
   padding-left: 20px;
   padding-right: 20px;

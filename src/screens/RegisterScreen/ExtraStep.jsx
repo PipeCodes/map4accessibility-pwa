@@ -47,22 +47,27 @@ const ExtraStep = (props) => {
       formData?.visualDisability ||
       formData?.hearingDisability ||
       formData?.intellectualDisability
-    )
-      setFormData((prev) => ({
-        ...prev,
-        noDisability: false,
-      }));
-    else if (
-      !formData?.motorDisability &&
-      !formData?.visualDisability &&
-      !formData?.hearingDisability &&
-      !formData?.intellectualDisability
-    )
+    ) {
+      if (formData.noDisability !== false) {
+        setFormData((prev) => ({
+          ...prev,
+          noDisability: false,
+        }));
+      }
+    } else if (formData.noDisability !== true) {
       setFormData((prev) => ({
         ...prev,
         noDisability: true,
       }));
-  }, [formData, setFormData]);
+    }
+  }, [
+    formData?.motorDisability,
+    formData?.visualDisability,
+    formData?.hearingDisability,
+    formData?.intellectualDisability,
+    formData?.noDisability,
+    setFormData,
+  ]);
 
   const disabilityClickHandler = useCallback(
     (disabilityOpt) => {
