@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { colors } from '../../constants/colors';
 
-export const SearchHeader = styled.div`
+export const SearchHeader = styled.form`
   padding: 15px 15px;
   display: flex;
   justify-content: center;

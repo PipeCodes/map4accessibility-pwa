@@ -38,8 +38,17 @@ const SearchBar = ({
     history.push(routes.ACCESSIBILITY.path);
   }, [history, routes]);
 
+  const onSubmitSearch = useCallback(
+    (e) => {
+      e.preventDefault();
+      const inputValue = e?.target?.elements?.searchInput?.value;
+      if (inputValue) handleSearchAction(inputValue);
+    },
+    [handleSearchAction],
+  );
+
   return (
-    <SearchHeader>
+    <SearchHeader onSubmit={onSubmitSearch}>
       <LeftButton type="button" onClick={() => handleBackButton()}>
         <img src={BackIcon} alt="back" />
       </LeftButton>
@@ -47,6 +56,7 @@ const SearchBar = ({
         {t('search')}
       </InputLabel>
       <CustomInput
+        name="searchInput"
         fontSize={fontSize}
         font={font}
         style={{
@@ -56,12 +66,12 @@ const SearchBar = ({
         placeholder={t('search')}
         type="text"
         alt
-        value={searchText}
+        defaultValue={searchText}
         onChange={(e) => handleSearch(e.target.value)}
         icon={Magnifier}
         id="search-input"
       />
-      <SearchButton type="button" onClick={handleSearchAction}>
+      <SearchButton type="submit">
         <img src={Magnifier} alt="Search Icon" />
       </SearchButton>
       <AccessibilityButton type="button" onClick={openAccessibility}>
