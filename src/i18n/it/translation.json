@@ -130,6 +130,8 @@
   "rejected": "rifiutato",
   "pending": "in attesa",
   "add_place": "aggiungi posto",
+  "add_new": "aggiungi nuovo",
+  "search_area": "cerca nell'area",
   "name": "nome",
   "type": "tipo",
   "pedestrian_cross": "attraversamento pedonale",
@@ -193,7 +195,7 @@
   "tutorial_7_1": "Più recensioni significano più informazioni utili agli altri per trovare spazi accessibili.",
   "tutorial_7_2": "Divertiti a usare Map4Accessibility e contribuisci a creare un mondo più accessibile. Il tuo contributo è importante!",
   "denied_geo": "Non siamo riusciti a ottenere la tua posizione attuale. Controlla le impostazioni di posizione del tuo dispositivo o browser.",
-  "review": "Rezension",
+  "review": "recensione",
   "alt_text": {
     "icon": "Icona",
     "tutorial_phone_icon": "Icona telefono tutorial",

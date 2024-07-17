@@ -422,11 +422,12 @@ const RatePlaceScreen = (props) => {
             ref={commentRef}
             id="comment-section"
           />
-          <InfoText fontSize={fontSize} font={font}>
-            {t('mandatory_questions')}
-          </InfoText>
+
           {isDefined(params?.google_place_id) && (
             <>
+              <InfoText fontSize={fontSize} font={font}>
+                {t('mandatory_questions')}
+              </InfoText>
               {questions?.mandatory &&
                 questions.mandatory.map((item, index) => (
                   <Question key={item.id}>

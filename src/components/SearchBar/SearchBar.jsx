@@ -70,6 +70,7 @@ const SearchBar = ({
         onChange={(e) => handleSearch(e.target.value)}
         icon={Magnifier}
         id="search-input"
+        autoFocus
       />
       <SearchButton type="submit">
         <img src={Magnifier} alt="Search Icon" />

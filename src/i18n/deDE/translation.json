@@ -130,6 +130,8 @@
   "rejected": "Abgelehnt",
   "pending": "Anhängig",
   "add_place": "Ort hinzufügen",
+  "add_new": "Ort hinzufügen",
+  "search_area": "Hier suchen",
   "name": "Name",
   "type": "Typ",
   "pedestrian_cross": "Fußgängerüberweg",
