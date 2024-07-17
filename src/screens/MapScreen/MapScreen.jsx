@@ -37,6 +37,7 @@ import {
 } from './MapScreen.styles';
 import { GOOGLE_MAPS_OPTIONS, MARKER_COLOR } from '../../constants';
 import MapZoom from '../../components/MapZoom/MapZoom';
+import { setMapZoom, setShowPins } from '../../store/actions/map';
 
 // Map styling
 const containerStyle = {
@@ -78,6 +79,10 @@ const MapScreen = (props) => {
   const place = useSelector((state) => state.place.place);
   const loading = useSelector((state) => state.place.loading);
 
+  // Gets map from reducer
+  const isShowingPins = useSelector((state) => state.map.isShowingPins);
+  const lastZoomSelected = useSelector((state) => state.map.zoom);
+
   // Place pop-up
   const [text, setText] = useState(null);
   const [popUp, setPopUp] = useState(false);
@@ -99,6 +104,13 @@ const MapScreen = (props) => {
 
   const readTutorial = useMemo(() => tutorialCookie, [tutorialCookie]);
 
+  useEffect(() => {
+    if (!history?.location?.state?.returnToMap) {
+      dispatch(setShowPins(false));
+      dispatch(setMapZoom(null));
+    }
+  }, [dispatch, history?.location?.state]);
+
   const showPins = useCallback(() => {
     const radius = getRadius(map);
 
@@ -106,6 +118,7 @@ const MapScreen = (props) => {
       dispatch(getPlacesRadiusMarkers(center.lat, center.lng, radius))
         .then((list) => {
           setMarkers(list);
+          dispatch(setShowPins(true));
         })
         .catch((err) => {
           // eslint-disable-next-line no-undef
@@ -139,6 +152,13 @@ const MapScreen = (props) => {
     },
     [dispatch],
   );
+
+  // Show pins if were toggled before entering a place
+  useEffect(() => {
+    if (isShowingPins) {
+      showPins();
+    }
+  }, [isShowingPins, showPins]);
 
   // Gets Position and sets Location
   useEffect(() => {
@@ -265,6 +285,15 @@ const MapScreen = (props) => {
     history.push(routes.SEARCH.path, { search: value });
   };
 
+  const handleZoom = useCallback(
+    (dir) => {
+      const newZoom = dir === 'in' ? map.getZoom() + 1 : map.getZoom() - 1;
+      map.setZoom(newZoom);
+      dispatch(setMapZoom(newZoom));
+    },
+    [map, dispatch],
+  );
+
   return (
     <Page backgroundColor={backgroundColor}>
       <PlacePopUp
@@ -307,7 +336,9 @@ const MapScreen = (props) => {
             <GoogleMap
               mapContainerStyle={containerStyle}
               center={location}
-              zoom={history.location?.state?.search ? 30 : 14}
+              zoom={
+                lastZoomSelected ?? (history.location?.state?.search ? 30 : 14)
+              }
               onClick={(e) => {
                 if (add) {
                   setCoords({ lat: e.latLng.lat(), lng: e.latLng.lng() });
@@ -395,12 +426,8 @@ const MapScreen = (props) => {
         )}
       </Container>
       <MapZoom
-        zoomIn={() => {
-          map.setZoom(map.getZoom() + 1);
-        }}
-        zoomOut={() => {
-          map.setZoom(map.getZoom() - 1);
-        }}
+        zoomIn={() => handleZoom('in')}
+        zoomOut={() => handleZoom('out')}
       />
       <ButtonsContainer>
         <ToolTip font={font} fontSize={fontSize}>

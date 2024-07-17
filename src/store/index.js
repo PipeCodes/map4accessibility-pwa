@@ -11,6 +11,7 @@ import placeReducer from './reducers/place';
 import directionsReducer from './reducers/directions';
 import historyReducer from './reducers/history';
 import searchReducer from './reducers/search';
+import mapReducer from './reducers/map';
 
 export const rootReducer = combineReducers({
   questions: questionsReducer,
@@ -22,6 +23,7 @@ export const rootReducer = combineReducers({
   place: placeReducer,
   directions: directionsReducer,
   search: searchReducer,
+  map: mapReducer,
 });
 
 const persistConfig = {

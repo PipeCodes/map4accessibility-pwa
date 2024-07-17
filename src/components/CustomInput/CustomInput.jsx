@@ -20,6 +20,7 @@ const CustomInput = (props) => {
     icon,
     id,
     defaultValue,
+    autoFocus,
   } = props;
 
   return (
@@ -34,6 +35,7 @@ const CustomInput = (props) => {
       max={max}
       onChange={onChange}
       defaultValue={defaultValue}
+      autoFocus={autoFocus}
       onPaste={(e) => {
         e.preventDefault();
         return false;
