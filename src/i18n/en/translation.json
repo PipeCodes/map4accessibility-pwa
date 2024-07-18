@@ -124,6 +124,7 @@
   "optional_questions": "Optional Questions",
   "submit": "Submit",
   "rate_error": "Please write a comment (Min 6 characters) and answer the questions",
+  "rate_success": "Rate submitted successfully",
   "place_details": "Place details",
   "supported_formats": "Supported formats are:",
   "my_comments": "My Comments",

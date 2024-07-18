@@ -4,6 +4,7 @@ import { withRouter, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useJsApiLoader } from '@react-google-maps/api';
 import { useDispatch, useSelector } from 'react-redux';
+import useToast from '../../hooks/useToast';
 import ArrowRightIcon from '../../assets/icons/arrow-right.svg';
 import { colors } from '../../constants/colors';
 import { MEDIA_TYPES, IMAGE_TYPES, GOOGLE_MAPS_OPTIONS } from '../../constants';
@@ -59,6 +60,7 @@ const RatePlaceScreen = (props) => {
   const { history, routes } = props;
   const dispatch = useDispatch();
   const { t } = useTranslation();
+  const showToast = useToast();
   const font = useSelector((state) => state.accessibility.font);
   const fontSize = useSelector((state) => state.accessibility.fontSize);
   const backgroundColor = useSelector(
@@ -198,6 +200,7 @@ const RatePlaceScreen = (props) => {
         ),
       )
         .then((result) => {
+          showToast(t('rate_success'));
           if (file !== undefined) {
             if (IMAGE_TYPES.includes(file?.type)) {
               compressSendImage(file, result.id, result?.place?.id);

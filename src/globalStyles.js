@@ -67,6 +67,14 @@ html {
       color: ${colors.primaryColor} !important;
       margin-top: 20px;
     }
+
+    .Toastify__progress-bar--bg {
+      background: ${colors.transparent};
+    }
+
+    .Toastify__progress-bar {
+      background: ${colors.primaryColor};
+    }
   }
 `;
 
