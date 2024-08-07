@@ -27,26 +27,21 @@ export const HeaderWrapper = styled.div`
   flex-direction: column;
 `;
 
-export const HeaderText = styled.span`
-  font-size: ${(props) => updateFontSize(22, props.fontSize)};
+export const HeaderText = styled.h2`
+  font-size: ${(props) => updateFontSize(20, props.fontSize)};
   font-family: ${(props) => updateValue('EasyReadingPro-Bold', props.font)};
   color: ${colors.primaryTextColor};
   margin-bottom: 10px;
   align-self: start;
 `;
 
-export const Text = styled.span`
+export const Text = styled.h2`
   font-size: ${(props) => updateFontSize(20, props.fontSize)};
   font-family: ${(props) => updateValue('EasyReadingPro-Bold', props.font)};
   color: ${colors.primaryTextColor};
   margin-bottom: 10px;
   padding: 20px 0;
   align-self: start;
-  span {
-    font-size: ${(props) => updateFontSize(14, props.fontSize)};
-    color: ${colors.primaryColor};
-    margin-left: 5px;
-  }
 `;
 
 export const InputLabel = styled.span`

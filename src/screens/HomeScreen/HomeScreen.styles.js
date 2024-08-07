@@ -32,7 +32,7 @@ export const Container = styled.div`
   }
 `;
 
-export const Text = styled.span`
+export const Text = styled.h2`
   font-size: ${(props) => updateFontSize(20, props.fontSize)};
   font-family: ${(props) => updateValue('EasyReadingPro-Bold', props.font)};
   color: ${colors.primaryTextColor};
