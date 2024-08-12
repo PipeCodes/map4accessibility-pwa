@@ -30,6 +30,7 @@ import paperclipIcon from '../../assets/icons/paperclip.svg';
 import CustomButton from '../../components/CustomButton/CustomButton';
 import { postPlace, postPlaceMedia } from '../../store/actions/places';
 import { getCountryCity } from '../../helpers/utils';
+import DialogContainer from '../../components/DialogContainer/DialogContainer';
 
 const AddPlaceScreen = (props) => {
   const { history, routes, location } = props;
@@ -246,6 +247,7 @@ const AddPlaceScreen = (props) => {
           disabled={loading}
         />
       </Container>
+      <DialogContainer style={{}} />
     </Page>
   );
 };

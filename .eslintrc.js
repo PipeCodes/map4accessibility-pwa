@@ -45,6 +45,7 @@ module.exports = {
     'no-underscore-dangle': 'off',
     'no-plusplus': 'off',
     'no-continue': 'off',
+    'no-console': 'off',
     'prefer-destructuring': 'off',
     'import/no-extraneous-dependencies': 'off',
     'react-hooks/exhaustive-deps': 'error',

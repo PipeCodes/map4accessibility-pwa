@@ -15,6 +15,7 @@ import TopBar from '../../components/TopBar/TopBar';
 import ProfileIcon from '../../assets/icons/profile.svg';
 import LoginIcon from '../../assets/icons/login.svg';
 import SocialLogin from '../../components/SocialLogin/SocialLogin';
+import DialogContainer from '../../components/DialogContainer/DialogContainer';
 
 const RegisterOptionsScreen = (props) => {
   const { routes, history } = props;
@@ -80,6 +81,7 @@ const RegisterOptionsScreen = (props) => {
           />
         </Box>
       </Container>
+      <DialogContainer />
     </Page>
   );
 };

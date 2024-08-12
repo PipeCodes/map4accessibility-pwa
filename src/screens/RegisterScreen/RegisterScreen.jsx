@@ -20,6 +20,7 @@ import {
   validatePassword,
   validateSurname,
 } from './validate';
+import DialogContainer from '../../components/DialogContainer/DialogContainer';
 
 const PageDisplay = ({
   formData,
@@ -304,6 +305,7 @@ const RegisterScreen = (props) => {
           </Box>
         )}
       </Container>
+      <DialogContainer />
     </Page>
   );
 };

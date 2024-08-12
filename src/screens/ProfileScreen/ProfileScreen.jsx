@@ -41,6 +41,7 @@ import TopBar from '../../components/TopBar/TopBar';
 import FooterMenu from '../../components/FooterMenu/FooterMenu';
 import { IMAGE_TYPES } from '../../constants';
 import { storageUrl } from '../../helpers/utils';
+import DialogContainer from '../../components/DialogContainer/DialogContainer';
 
 const initialValues = {
   firstName: '',
@@ -457,6 +458,7 @@ const ProfileScreen = (props) => {
             }}
             icon={LogoutIcon}
           />
+
           <CustomButton
             style={{
               width: 'auto',
@@ -502,6 +504,7 @@ const ProfileScreen = (props) => {
             {t('privacy_policy')}
           </Link>
         </BottomWrapper>
+        <DialogContainer />
       </Container>
       <FooterMenu routes={routes} profile />
     </Page>

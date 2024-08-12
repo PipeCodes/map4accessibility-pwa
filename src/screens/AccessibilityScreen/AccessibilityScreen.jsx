@@ -28,6 +28,7 @@ import {
   removeAnimations,
 } from '../../store/actions/accessibility';
 import ColorsPallet from '../../components/ColorsPallet/ColorsPallet';
+import DialogContainer from '../../components/DialogContainer/DialogContainer';
 
 const AccessibilityScreen = () => {
   const { t } = useTranslation();
@@ -206,6 +207,7 @@ const AccessibilityScreen = () => {
           />
         </Box>
       </Container>
+      <DialogContainer />
     </Page>
   );
 };

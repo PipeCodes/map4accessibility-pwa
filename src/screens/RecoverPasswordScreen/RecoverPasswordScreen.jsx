@@ -17,6 +17,7 @@ import MaterialLoop from '../../assets/icons/material-loop.svg';
 import TopBar from '../../components/TopBar/TopBar';
 import CustomInput from '../../components/CustomInput/CustomInput';
 import { validateEmailExists } from '../RegisterScreen/validate';
+import DialogContainer from '../../components/DialogContainer/DialogContainer';
 
 const initialValues = {
   email: '',
@@ -165,6 +166,7 @@ const RecoverPasswordScreen = (props) => {
           />
         </Box>
       </Container>
+      <DialogContainer />
     </Page>
   );
 };

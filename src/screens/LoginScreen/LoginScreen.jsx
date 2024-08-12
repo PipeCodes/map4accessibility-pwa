@@ -11,6 +11,7 @@ import TopBar from '../../components/TopBar/TopBar';
 import LoginInfo from './LoginInfo';
 import { REGEX_PASSWORD, REGEX_EMAIL } from '../../constants';
 import SocialLogin from '../../components/SocialLogin/SocialLogin';
+import DialogContainer from '../../components/DialogContainer/DialogContainer';
 
 const LoginScreen = (props) => {
   const initialValues = {
@@ -131,6 +132,7 @@ const LoginScreen = (props) => {
           />
         </Box>
       </Container>
+      <DialogContainer />
     </Page>
   );
 };
