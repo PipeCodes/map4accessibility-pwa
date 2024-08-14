@@ -11,6 +11,8 @@ import LatestComments from '../../components/LatestComments/LatestComments';
 import { getMyPlaceEvaluations } from '../../store/actions/placeEvaluations';
 import MyCommentsStatus from '../../components/MyCommentsStatus/MyCommentsStatus';
 import PlacesVisited from '../../components/PlacesVisited/PlacesVisited';
+import { UEButtonContainer } from '../../components/UEButton/UEButton.styles';
+import DialogUE from '../../components/UEButton/UEButton';
 
 const HomeScreen = (props) => {
   const { history, routes } = props;
@@ -73,7 +75,11 @@ const HomeScreen = (props) => {
           />
           <LatestComments myComments comments={myEvaluations} />
         </MyArea>
+        <UEButtonContainer>
+          <DialogUE />
+        </UEButtonContainer>
       </Container>
+
       <FooterMenu routes={routes} home />
     </Page>
   );
