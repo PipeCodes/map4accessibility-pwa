@@ -20,7 +20,8 @@ import {
   validatePassword,
   validateSurname,
 } from './validate';
-import DialogContainer from '../../components/DialogContainer/DialogContainer';
+import { UEButtonContainer } from '../../components/UEButton/UEButton.styles';
+import DialogUE from '../../components/UEButton/UEButton';
 
 const PageDisplay = ({
   formData,
@@ -305,7 +306,9 @@ const RegisterScreen = (props) => {
           </Box>
         )}
       </Container>
-      <DialogContainer />
+      <UEButtonContainer>
+        <DialogUE />
+      </UEButtonContainer>
     </Page>
   );
 };

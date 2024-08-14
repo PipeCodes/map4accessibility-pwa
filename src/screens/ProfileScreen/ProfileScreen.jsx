@@ -41,7 +41,8 @@ import TopBar from '../../components/TopBar/TopBar';
 import FooterMenu from '../../components/FooterMenu/FooterMenu';
 import { IMAGE_TYPES } from '../../constants';
 import { storageUrl } from '../../helpers/utils';
-import DialogContainer from '../../components/DialogContainer/DialogContainer';
+import { UEButtonContainer } from '../../components/UEButton/UEButton.styles';
+import DialogUE from '../../components/UEButton/UEButton';
 
 const initialValues = {
   firstName: '',
@@ -504,8 +505,11 @@ const ProfileScreen = (props) => {
             {t('privacy_policy')}
           </Link>
         </BottomWrapper>
-        <DialogContainer />
+        <UEButtonContainer>
+          <DialogUE />
+        </UEButtonContainer>
       </Container>
+
       <FooterMenu routes={routes} profile />
     </Page>
   );
