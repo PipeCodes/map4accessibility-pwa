@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { colors } from '../../constants/colors';
 import { updateFontSize, updateValue } from '../../helpers/utils';
 
-export const Title = styled.span`
+export const Title = styled.h1`
   color: ${colors.white};
   font-size: ${(props) => updateFontSize(28, props.fontSize)};
   font-family: ${(props) => updateValue('EasyReadingPro', props.font)};

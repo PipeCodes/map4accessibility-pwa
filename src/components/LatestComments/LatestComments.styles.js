@@ -15,7 +15,7 @@ export const Comment = styled.div`
     updateValue(colors.whiteSmoke, props.backgroundColor)};
 `;
 
-export const Title = styled.div`
+export const Title = styled.h5`
   margin-left: 15px;
   margin-top: 10px;
   margin-bottom: 13px;

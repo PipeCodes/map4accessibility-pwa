@@ -74,7 +74,7 @@ const WalkthroughScreen = (props) => {
                 alt={t('alt_text.tutorial_phone_icon')}
               />
               <Text fontSize={fontSize} font={font}>
-                <span>{t('tutorial_1_title')}</span>
+                <h3>{t('tutorial_1_title')}</h3>
                 <br />
                 {t('tutorial_1')}
               </Text>
@@ -87,7 +87,7 @@ const WalkthroughScreen = (props) => {
                 alt={t('alt_text.tutorial_phone_icon')}
               />
               <Text fontSize={fontSize} font={font}>
-                <span>{t('tutorial_2_title')}</span>
+                <h3>{t('tutorial_2_title')}</h3>
                 <br />
                 {t('tutorial_2')}
               </Text>
@@ -100,7 +100,7 @@ const WalkthroughScreen = (props) => {
                 alt={t('alt_text.tutorial_phone_icon')}
               />
               <Text fontSize={fontSize} font={font}>
-                <span>{t('tutorial_3_title')}</span>
+                <h3>{t('tutorial_3_title')}</h3>
                 <br />
                 {t('tutorial_3')}
               </Text>
@@ -113,7 +113,7 @@ const WalkthroughScreen = (props) => {
                 alt={t('alt_text.tutorial_phone_icon')}
               />
               <Text fontSize={fontSize} font={font}>
-                <span>{t('tutorial_4_title')}</span>
+                <h3>{t('tutorial_4_title')}</h3>
                 <br />
                 {t('tutorial_4')}
               </Text>
@@ -126,7 +126,7 @@ const WalkthroughScreen = (props) => {
                 alt={t('alt_text.tutorial_phone_icon')}
               />
               <Text fontSize={fontSize} font={font}>
-                <span>{t('tutorial_5_title')}</span>
+                <h3>{t('tutorial_5_title')}</h3>
                 <br />
                 {t('tutorial_5')}
               </Text>
@@ -139,7 +139,7 @@ const WalkthroughScreen = (props) => {
                 alt={t('alt_text.tutorial_phone_icon')}
               />
               <Text fontSize={fontSize} font={font}>
-                <span>{t('tutorial_6_title')}</span>
+                <h3>{t('tutorial_6_title')}</h3>
                 <br />
                 {t('tutorial_6')}
               </Text>
@@ -152,7 +152,7 @@ const WalkthroughScreen = (props) => {
                 alt={t('alt_text.tutorial_phone_icon')}
               />
               <Text fontSize={fontSize} font={font}>
-                <span>{t('tutorial_7_title')}</span>
+                <h3>{t('tutorial_7_title')}</h3>
                 <br />
                 {t('tutorial_7_1')}
                 <br />

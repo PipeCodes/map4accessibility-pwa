@@ -124,6 +124,7 @@
   "optional_questions": "Questões Opcionais",
   "submit": "Enviar",
   "rate_error": "Escreva um comentário (Min 6 caracteres) e responda ás questões.",
+  "rate_success": "Local avaliado com sucesso",
   "place_details": "Detalhes",
   "supported_formats": "Formatos suportados são:",
   "my_comments": "My Comments",
@@ -137,6 +138,7 @@
   "add_place": "Adicionar Local",
   "add_new": "Adicionar Novo",
   "click_map": "Clicar no mapa para marcar",
+  "search_area": "Pesquisar na área",
   "name": "Nome",
   "type": "Tipo",
   "pedestrian_cross": "Passadeira",
@@ -210,5 +212,6 @@
     "profile_picture": "Imagem do perfil",
     "evaluation_icon": "Ícone de avaliação",
     "place_image": "Imagem do local"
-  }
+  },
+  "ue_content_text": "Este projeto é financiado pelo programa Erasmus+ da União Europeia ao abrigo do acordo de subvenção n.º 2021-1-IT02-KA220-HED-00003032. No entanto, os pontos de vista e opiniões expressos são da exclusiva responsabilidade do(s) autor(es) e não reflectem necessariamente os da União Europeia ou da Agência de Execução relativa à Educação e Cultura (EACEA). Nem a União Europeia nem a EACEA podem ser responsabilizadas pelas mesmas."
 }

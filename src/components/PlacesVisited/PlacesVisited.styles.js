@@ -14,7 +14,7 @@ export const TopWrapper = styled.div`
   border-bottom: 1px solid ${colors.lightGrey};
 `;
 
-export const Title = styled.div`
+export const Title = styled.h3`
   margin-top: 10px;
   margin-bottom: 13px;
   font-size: ${(props) => updateFontSize(20, props.fontSize)};

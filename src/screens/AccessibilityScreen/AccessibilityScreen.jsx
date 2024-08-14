@@ -28,6 +28,8 @@ import {
   removeAnimations,
 } from '../../store/actions/accessibility';
 import ColorsPallet from '../../components/ColorsPallet/ColorsPallet';
+import { UEButtonContainer } from '../../components/UEButton/UEButton.styles';
+import UEButton from '../../components/UEButton/UEButton';
 
 const AccessibilityScreen = () => {
   const { t } = useTranslation();
@@ -206,6 +208,9 @@ const AccessibilityScreen = () => {
           />
         </Box>
       </Container>
+      <UEButtonContainer>
+        <UEButton />
+      </UEButtonContainer>
     </Page>
   );
 };

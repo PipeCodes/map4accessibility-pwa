@@ -48,10 +48,9 @@ export const Text = styled.span`
   color: ${colors.primaryColorText};
   margin-bottom: 10px;
   max-width: 90%;
-  span {
+  h3 {
     font-size: ${(props) => updateFontSize(22, props.fontSize)};
     color: ${colors.primaryColor};
-    margin-left: 5px;
   }
 `;
 

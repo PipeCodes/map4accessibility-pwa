@@ -15,6 +15,8 @@ import TopBar from '../../components/TopBar/TopBar';
 import ProfileIcon from '../../assets/icons/profile.svg';
 import LoginIcon from '../../assets/icons/login.svg';
 import SocialLogin from '../../components/SocialLogin/SocialLogin';
+import { UEButtonContainer } from '../../components/UEButton/UEButton.styles';
+import DialogUE from '../../components/UEButton/UEButton';
 
 const RegisterOptionsScreen = (props) => {
   const { routes, history } = props;
@@ -80,6 +82,9 @@ const RegisterOptionsScreen = (props) => {
           />
         </Box>
       </Container>
+      <UEButtonContainer>
+        <DialogUE />
+      </UEButtonContainer>
     </Page>
   );
 };

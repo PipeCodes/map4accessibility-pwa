@@ -58,7 +58,7 @@ const SearchScreen = ({ history, routes }) => {
         console.log(error);
         alert(t('denied_geo'));
       });
-  });
+  }, [t]);
 
   useEffect(() => {
     dispatch(resetPlaceState());
