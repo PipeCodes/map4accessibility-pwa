@@ -2,9 +2,12 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import PWAPrompt from 'react-ios-pwa-prompt';
+import { ToastContainer } from 'react-toastify';
 import GlobalStyles from './globalStyles';
 import GlobalRoutes from './routes/routes';
 import DarkOverlay from './components/DarkOverlay/DarkOverlay';
+import { ToastProvider } from './context/ToastContext';
+import 'react-toastify/dist/ReactToastify.css';
 
 const App = () => {
   const { t } = useTranslation();
@@ -17,7 +20,7 @@ const App = () => {
   );
 
   return (
-    <>
+    <ToastProvider>
       <PWAPrompt
         copyBody={t('pwa_prompt_message')}
         copyTitle={t('add_to_home_screen')}
@@ -35,7 +38,8 @@ const App = () => {
       />
       <DarkOverlay lightsOffMode={lightsOffMode} />
       <GlobalRoutes />
-    </>
+      <ToastContainer />
+    </ToastProvider>
   );
 };
 

@@ -119,6 +119,7 @@
   "optional_questions": "domande opzionali",
   "submit": "invia",
   "rate_error": "errore di valutazione",
+  "rate_success": "Sito valutato con successo",
   "place_details": "dettagli del posto",
   "supported_formats": "formati supportati",
   "my_comments": "miei commenti",
@@ -130,6 +131,8 @@
   "rejected": "rifiutato",
   "pending": "in attesa",
   "add_place": "aggiungi posto",
+  "add_new": "aggiungi nuovo",
+  "search_area": "cerca nell'area",
   "name": "nome",
   "type": "tipo",
   "pedestrian_cross": "attraversamento pedonale",
@@ -193,7 +196,7 @@
   "tutorial_7_1": "Più recensioni significano più informazioni utili agli altri per trovare spazi accessibili.",
   "tutorial_7_2": "Divertiti a usare Map4Accessibility e contribuisci a creare un mondo più accessibile. Il tuo contributo è importante!",
   "denied_geo": "Non siamo riusciti a ottenere la tua posizione attuale. Controlla le impostazioni di posizione del tuo dispositivo o browser.",
-  "review": "Rezension",
+  "review": "recensione",
   "alt_text": {
     "icon": "Icona",
     "tutorial_phone_icon": "Icona telefono tutorial",
@@ -205,5 +208,6 @@
     "profile_picture": "Immagine del profilo",
     "evaluation_icon": "Icona Valutazione",
     "place_image": "Immagine del luogo"
-  }
+  },
+  "ue_content_text": "Questo progetto è finanziato dal programma Erasmus+ dell'Unione Europea con l'accordo di sovvenzione n. 2021-1-IT02-KA220-HED-00003032. Tuttavia, le opinioni e i pareri espressi sono esclusivamente quelli dell'autore o degli autori e non riflettono necessariamente quelli dell'Unione Europea o dell'Agenzia esecutiva per l'istruzione e la cultura (EACEA). Né l'Unione Europea né l'EACEA possono essere ritenute responsabili."
 }

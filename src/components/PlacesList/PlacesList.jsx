@@ -77,7 +77,7 @@ const PlacesList = ({ places, history, routes, searchText }) => {
                   {place?.name}
                 </Name>
                 <City fontSize={fontSize} font={font}>
-                  {place?.city}
+                  {place?.city ?? place?.address}
                 </City>
               </TextWrapper>
               <PlacePin>

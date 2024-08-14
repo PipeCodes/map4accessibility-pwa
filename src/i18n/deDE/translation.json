@@ -119,6 +119,7 @@
   "optional_questions": "Optionale Fragen",
   "submit": "Einreichen",
   "rate_error": "Bitte schreiben Sie einen Kommentar (mindestens 6 Zeichen) und beantworten Sie die Fragen",
+  "rate_success": "Standort erfolgreich bewertet",
   "place_details": "Details zum Ort",
   "supported_formats": "Unterstützte Formate sind:",
   "my_comments": "Meine Kommentare",
@@ -130,6 +131,8 @@
   "rejected": "Abgelehnt",
   "pending": "Anhängig",
   "add_place": "Ort hinzufügen",
+  "add_new": "Ort hinzufügen",
+  "search_area": "Hier suchen",
   "name": "Name",
   "type": "Typ",
   "pedestrian_cross": "Fußgängerüberweg",
@@ -205,5 +208,6 @@
     "profile_picture": "Profilbild",
     "evaluation_icon": "Bewertungssymbol",
     "place_image": "Bild platzieren"
-  }
+  },
+  "ue_content_text": "Dieses Projekt wird durch das Programm Erasmus+ der Europäischen Union unter der Finanzhilfevereinbarung Nr. 2021-1-IT02-KA220-HED-00003032 finanziert. Die geäußerten Ansichten und Meinungen sind jedoch ausschließlich die des Autors/der Autoren und spiegeln nicht unbedingt die der Europäischen Union oder der Exekutivagentur Bildung und Kultur (EACEA) wider. Weder die Europäische Union noch die EACEA können für sie verantwortlich gemacht werden. Übersetzt mit DeepL.com (kostenlose Version)"
 }

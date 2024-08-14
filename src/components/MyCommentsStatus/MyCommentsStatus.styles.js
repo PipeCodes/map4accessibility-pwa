@@ -13,7 +13,7 @@ export const TopWrapper = styled.div`
   border-bottom: 1px solid ${colors.lightGrey};
 `;
 
-export const Title = styled.span`
+export const Title = styled.h3`
   font-size: ${(props) => updateFontSize(20, props.fontSize)};
   font-family: ${(props) => updateValue('EasyReadingPro', props.font)};
   color: ${colors.primaryTextColor};
@@ -36,7 +36,7 @@ export const BotWrapper = styled.div`
   flex-direction: column;
 `;
 
-export const SubTitle = styled.span`
+export const SubTitle = styled.h4`
   font-size: ${(props) => updateFontSize(18, props.fontSize)};
   font-family: ${(props) => updateValue('EasyReadingPro', props.font)};
   padding-top: 20px;
