@@ -38,6 +38,7 @@ import {
 import { GOOGLE_MAPS_OPTIONS, MARKER_COLOR } from '../../constants';
 import MapZoom from '../../components/MapZoom/MapZoom';
 import { setMapZoom, setShowPins } from '../../store/actions/map';
+import Dialog from '../../components/Dialog/Dialog';
 
 // Map styling
 const containerStyle = {
@@ -159,6 +160,27 @@ const MapScreen = (props) => {
       showPins();
     }
   }, [isShowingPins, showPins]);
+
+  const feedback = history?.location?.state?.feedback?.isFeedback;
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+  // Shows dialog after rating a place
+  useEffect(() => {
+    if (feedback) {
+      setIsDialogOpen(true);
+    }
+  }, [feedback]);
+
+  const handleDialogClose = () => {
+    setIsDialogOpen(false);
+
+    // Now reset the feedback flag after the dialog is closed
+    const newState = {
+      ...history.location.state,
+      feedback: { ...history.location.state.feedback, isFeedback: false },
+    };
+    history.replace(history.location.pathname, newState);
+  };
 
   // Gets Position and sets Location
   useEffect(() => {
@@ -451,6 +473,8 @@ const MapScreen = (props) => {
           <img src={LocationIcon} alt={t('location')} />
         </ButtonLocation>
       </ButtonsContainer>
+
+      {isDialogOpen && <Dialog setIsDialogOpen={handleDialogClose} />}
       <FooterMenu routes={routes} map />
     </Page>
   );
