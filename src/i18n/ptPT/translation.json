@@ -213,5 +213,7 @@
     "evaluation_icon": "Ícone de avaliação",
     "place_image": "Imagem do local"
   },
-  "ue_content_text": "Este projeto é financiado pelo programa Erasmus+ da União Europeia ao abrigo do acordo de subvenção n.º 2021-1-IT02-KA220-HED-00003032. No entanto, os pontos de vista e opiniões expressos são da exclusiva responsabilidade do(s) autor(es) e não reflectem necessariamente os da União Europeia ou da Agência de Execução relativa à Educação e Cultura (EACEA). Nem a União Europeia nem a EACEA podem ser responsabilizadas pelas mesmas."
+  "ue_content_text": "Este projeto é financiado pelo programa Erasmus+ da União Europeia ao abrigo do acordo de subvenção n.º 2021-1-IT02-KA220-HED-00003032. No entanto, os pontos de vista e opiniões expressos são da exclusiva responsabilidade do(s) autor(es) e não reflectem necessariamente os da União Europeia ou da Agência de Execução relativa à Educação e Cultura (EACEA). Nem a União Europeia nem a EACEA podem ser responsabilizadas pelas mesmas.",
+  "thanks_for_feedback": "Obrigado pelo seu feedback. Estamos sempre a tentar melhorar a acessibilidade de locais e cidades com a nossa aplicação. Pode dar-nos algum feedback sobre a aplicação?",
+  "proceed_to_google_form": "Prosseguir e dar feedback"
 }
