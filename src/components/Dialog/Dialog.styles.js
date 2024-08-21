@@ -8,7 +8,7 @@ export const BlurredScreen = styled.div`
   width: 100%;
   height: 100%;
   backdrop-filter: blur(2px);
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: ${colors.dark_shadow};
   z-index: 101;
   pointer-events: auto;
 `;
@@ -20,9 +20,9 @@ export const DialogCard = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: white;
+  background-color: ${colors.palleteWhite};
   border-radius: 8px;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  box-shadow: 0 4px 8px 0 ${colors.shadow}, 0 4px 6px 0 ${colors.shadow};
   text-align: center;
   padding: 20px;
   max-width: 280px;
@@ -33,7 +33,7 @@ export const DialogCard = styled.div`
 `;
 
 export const CloseButton = styled.button`
-  background-color: transparent;
+  background-color: ${colors.transparent};
   border: none;
   cursor: pointer;
   margin-left: auto;
@@ -50,7 +50,7 @@ export const FormLinkButton = styled.button`
   background-color: ${colors.facebook_blue};
   overflow: hidden;
   text-overflow: ellipsis;
-  color: white;
+  color: ${colors.palleteWhite};
   padding: 0 16px;
   white-space: nowrap;
   margin-top: 10px;
