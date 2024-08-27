@@ -99,8 +99,6 @@ export const CloseButton = styled.button`
   -ms-transform: translateY(-50%);
   transform: translateY(-50%);
   right: 0px;
-  width: 42px;
-  height: 42px;
   display: flex;
   justify-content: center;
   align-items: center;

@@ -50,7 +50,7 @@ export const Box = styled.div`
   align-items: center;
 `;
 
-export const Text = styled.span`
+export const Text = styled.h1`
   font-size: ${(props) => updateFontSize(20, props.fontSize)};
   font-family: ${(props) => updateValue('EasyReadingPro', props.font)};
   color: ${colors.primaryTextColor};
@@ -71,7 +71,7 @@ export const TextSecondary = styled.span`
 export const InputLabel = styled.label`
   font-size: ${(props) => updateFontSize(16, props.fontSize)};
   font-family: ${(props) => updateValue('EasyReadingPro', props.font)};
-  color: ${colors.grey};
+  color: ${colors.black};
   place-self: start;
   margin-top: 10px;
   margin-bottom: 5px;

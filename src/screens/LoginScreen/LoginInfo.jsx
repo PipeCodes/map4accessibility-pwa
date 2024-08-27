@@ -26,7 +26,9 @@ const SignUpInfo = (props) => {
         font={font}
         style={{}}
         placeholder={t('email_placeholder')}
+        name="email"
         type="email"
+        autoComplete="email"
         value={formData.email}
         onChange={(e) => {
           setFormData((prev) => ({ ...prev, email: e.target.value }));
@@ -48,6 +50,7 @@ const SignUpInfo = (props) => {
         id="password"
         placeholder={t('password_placeholder')}
         type="password"
+        autoComplete="current-password"
         value={formData.password}
         onChange={(e) => {
           setFormData((prev) => ({ ...prev, password: e.target.value }));
