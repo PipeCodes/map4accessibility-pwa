@@ -38,7 +38,10 @@ import {
 import { GOOGLE_MAPS_OPTIONS, MARKER_COLOR } from '../../constants';
 import MapZoom from '../../components/MapZoom/MapZoom';
 import { setMapZoom, setShowPins } from '../../store/actions/map';
-import Dialog from '../../components/Dialog/Dialog';
+import FeedbackContent from '../../components/FeedbackContent/FeedbackContent';
+import CustomDialog from '../../components/CustomDialog/CustomDialog';
+import LocationOptions from '../../components/LocationOptions/LocationOptions';
+import CoordinatesForm from '../../components/CoordinatesForm/CoordinatesForm';
 
 // Map styling
 const containerStyle = {
@@ -105,6 +108,15 @@ const MapScreen = (props) => {
 
   const readTutorial = useMemo(() => tutorialCookie, [tutorialCookie]);
 
+  // Show Feedback pop-up
+  const feedback = history?.location?.state?.feedback?.isFeedback;
+  const [isFeedbackContentOpen, setIsFeedbackContentOpen] = useState(false);
+
+  // Show DialogMain
+  const [isCustomDialogOpen, setIsCustomDialogOpen] = useState(false);
+  // Show CoordinatesForm
+  const [isCoordinatesFormOpen, setIsCoordinatesFormOpen] = useState(null);
+
   useEffect(() => {
     if (!history?.location?.state?.returnToMap) {
       dispatch(setShowPins(false));
@@ -161,18 +173,15 @@ const MapScreen = (props) => {
     }
   }, [isShowingPins, showPins]);
 
-  const feedback = history?.location?.state?.feedback?.isFeedback;
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
-
   // Shows dialog after rating a place
   useEffect(() => {
     if (feedback) {
-      setIsDialogOpen(true);
+      setIsFeedbackContentOpen(true);
     }
   }, [feedback]);
 
-  const handleDialogClose = () => {
-    setIsDialogOpen(false);
+  const handleFeedbackContentClose = () => {
+    setIsFeedbackContentOpen(false);
 
     // Now reset the feedback flag after the dialog is closed
     const newState = {
@@ -180,6 +189,16 @@ const MapScreen = (props) => {
       feedback: { ...history.location.state.feedback, isFeedback: false },
     };
     history.replace(history.location.pathname, newState);
+    console.log(newState);
+  };
+
+  const handleCoordinatesFormClose = () => {
+    setIsCoordinatesFormOpen(false);
+  };
+
+  const handleCustomDialogClose = () => {
+    setIsCustomDialogOpen(false);
+    handleCoordinatesFormClose();
   };
 
   // Gets Position and sets Location
@@ -265,7 +284,7 @@ const MapScreen = (props) => {
       getCurrentLocation()
         .then((position) => {
           setLocation(position);
-          map.setZoom(25);
+          map.setZoom(15);
         })
         // eslint-disable-next-line no-undef
         .catch((error) => {
@@ -455,9 +474,19 @@ const MapScreen = (props) => {
         <ToolTip font={font} fontSize={fontSize}>
           <span>{add ? t('click_map') : t('add_new')}</span>
         </ToolTip>
-        <ButtonCreate type="button" add={add} onClick={() => openAddPlace()}>
+
+        <ButtonCreate
+          type="button"
+          add={add}
+          onClick={() => setIsCustomDialogOpen(true)}
+        >
           <img src={AddIcon} alt={t('add_place')} />
         </ButtonCreate>
+
+        {/* <ButtonCreate type="button" add={add} onClick={() => openAddPlace()}>
+          <img src={AddIcon} alt={t('add_place')} />
+        </ButtonCreate> */}
+
         <CustomButton
           style={{
             marginTop: 30,
@@ -474,7 +503,32 @@ const MapScreen = (props) => {
         </ButtonLocation>
       </ButtonsContainer>
 
-      {isDialogOpen && <Dialog setIsDialogOpen={handleDialogClose} />}
+      {isCustomDialogOpen && (
+        <CustomDialog
+          closeDialog={handleCustomDialogClose}
+          dialogContent={
+            isCoordinatesFormOpen ? (
+              <CoordinatesForm setCoords={setCoords} />
+            ) : (
+              <LocationOptions
+                closeDialog={handleCustomDialogClose}
+                openAddPlace={openAddPlace}
+                setCoords={setCoords}
+                setCenterMap={setCenterMap}
+                handleSearch={handleSearch}
+                handleCoordinatesFormClose={setIsCoordinatesFormOpen}
+              />
+            )
+          }
+        />
+      )}
+
+      {isFeedbackContentOpen && (
+        <CustomDialog
+          closeDialog={handleFeedbackContentClose}
+          dialogContent={<FeedbackContent />}
+        />
+      )}
       <FooterMenu routes={routes} map />
     </Page>
   );

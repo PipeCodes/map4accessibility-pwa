@@ -211,5 +211,11 @@
   },
   "ue_content_text": "Questo progetto è finanziato dal programma Erasmus+ dell'Unione Europea con l'accordo di sovvenzione n. 2021-1-IT02-KA220-HED-00003032. Tuttavia, le opinioni e i pareri espressi sono esclusivamente quelli dell'autore o degli autori e non riflettono necessariamente quelli dell'Unione Europea o dell'Agenzia esecutiva per l'istruzione e la cultura (EACEA). Né l'Unione Europea né l'EACEA possono essere ritenute responsabili.",
   "thanks_for_feedback": "Grazie per il vostro feedback. Cerchiamo sempre di migliorare l'accessibilità di luoghi e città con la nostra app. Può darci un feedback sull'applicazione?",
-  "proceed_to_google_form": "Procedere e fornire un feedback"
+  "proceed_to_google_form": "Procedere e fornire un feedback",
+  "add_location": "Aggiungi posizione",
+  "add_current_location": "Aggiungere la posizione attuale",
+  "search_location": "Ricerca di una località",
+  "insert_coordinates": "Inserire le coordinate",
+  "latitude": "Latitudine",
+  "longitude": "Longitudine"
 }
