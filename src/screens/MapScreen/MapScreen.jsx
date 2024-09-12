@@ -189,16 +189,11 @@ const MapScreen = (props) => {
       feedback: { ...history.location.state.feedback, isFeedback: false },
     };
     history.replace(history.location.pathname, newState);
-    console.log(newState);
-  };
-
-  const handleCoordinatesFormClose = () => {
-    setIsCoordinatesFormOpen(false);
   };
 
   const handleCustomDialogClose = () => {
     setIsCustomDialogOpen(false);
-    handleCoordinatesFormClose();
+    setIsCoordinatesFormOpen(false);
   };
 
   // Gets Position and sets Location
@@ -482,10 +477,6 @@ const MapScreen = (props) => {
         >
           <img src={AddIcon} alt={t('add_place')} />
         </ButtonCreate>
-
-        {/* <ButtonCreate type="button" add={add} onClick={() => openAddPlace()}>
-          <img src={AddIcon} alt={t('add_place')} />
-        </ButtonCreate> */}
 
         <CustomButton
           style={{
