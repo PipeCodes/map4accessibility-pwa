@@ -16,7 +16,10 @@ import {
   ShowAll,
   NoResults,
   PlacePin,
+  RatePlace,
 } from './PlacesList.styles';
+import CustomButton from '../CustomButton/CustomButton';
+import { colors } from '../../constants/colors';
 
 const PlacesList = ({ places, history, routes, searchText }) => {
   const { t } = useTranslation();
@@ -68,9 +71,9 @@ const PlacesList = ({ places, history, routes, searchText }) => {
             <Place
               key={key}
               type="button"
-              onClick={() =>
-                showPlaceOnMap(place?.latitude, place?.longitude, place)
-              }
+              onClick={() => {
+                showPlaceOnMap(place?.latitude, place?.longitude, place);
+              }}
             >
               <TextWrapper>
                 <Name fontSize={fontSize} font={font}>
@@ -80,6 +83,22 @@ const PlacesList = ({ places, history, routes, searchText }) => {
                   {place?.city ?? place?.address}
                 </City>
               </TextWrapper>
+              <RatePlace>
+                <CustomButton
+                  style={{ width: '100px', borderRadius: '15px' }}
+                  text={t('review')}
+                  backgroundColor={colors.orange}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    history.push(
+                      `/rate-place/${place.id}/${place.google_place_id}`,
+                      {
+                        placePopup: true,
+                      },
+                    );
+                  }}
+                />
+              </RatePlace>
               <PlacePin>
                 <img src={pinIcon} alt={place.id} />
               </PlacePin>

@@ -86,3 +86,10 @@ export const ShowAll = styled.button`
   padding-bottom: 15px;
   width: 100%;
 `;
+
+export const RatePlace = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  padding-right: 15px;
+`;
