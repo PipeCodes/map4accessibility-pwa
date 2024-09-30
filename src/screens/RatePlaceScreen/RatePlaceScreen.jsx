@@ -226,6 +226,9 @@ const RatePlaceScreen = (props) => {
         })
         .finally(() => {
           history.push(routes.MAP.path, {
+            feedback: {
+              isFeedback: true,
+            },
             search: {
               location: {
                 lat: Number(place?.latitude),

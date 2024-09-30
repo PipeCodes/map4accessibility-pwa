@@ -120,6 +120,7 @@ const RecoverPasswordScreen = (props) => {
             placeholder={t('email_placeholder')}
             type="email"
             value={formData.email}
+            autoComplete="email"
             onChange={(e) =>
               setFormData({ ...formData, email: e.target.value })
             }

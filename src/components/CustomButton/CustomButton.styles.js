@@ -15,7 +15,7 @@ const ButtonStyle = styled.button`
   font-family: ${(props) => updateValue('NotoSans-Regular', props.font)};
   width: ${(props) => (props.width ? props.width : '189px')};
   height: ${(props) => (props.height ? props.height : 'auto')};
-  min-height: ${(props) => (props.minHeight ? props.minHeight : '42px')};
+  min-height: ${(props) => (props.minHeight ? props.minHeight : '48px')};
   padding-top: 12px;
   padding-bottom: 12px;
   display: flex;

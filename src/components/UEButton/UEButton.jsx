@@ -2,29 +2,26 @@ import React, { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import UELogo from '../../assets/images/ue_logo.jpg';
 import { ContainerUEButton, DialogImage } from './UEButton.styles';
-import UEContentContainer from '../UEContentContainer/UEContentContainer';
+import UEContent from '../UEContent/UEContent';
+import Dialog from '../CustomDialog/CustomDialog';
 
 const UEButton = () => {
-  const [showUEModal, setShowUEModal] = useState(false);
+  const [showDialog, setShowDialog] = useState(false);
 
   useEffect(() => {
-    if (showUEModal) {
+    if (showDialog) {
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = 'unset';
     }
-  }, [showUEModal]);
+  }, [showDialog]);
 
   return (
-    <ContainerUEButton onClick={() => setShowUEModal(!showUEModal)}>
+    <ContainerUEButton onClick={() => setShowDialog(!showDialog)}>
       <DialogImage src={UELogo} alt="ue_logo" />
-      {showUEModal &&
+      {showDialog &&
         createPortal(
-          <UEContentContainer
-            showUEModal={showUEModal}
-            setShowUEModal={setShowUEModal}
-            UELogo={UELogo}
-          />,
+          <Dialog closeDialog={setShowDialog} dialogContent={<UEContent />} />,
           document.body,
         )}
     </ContainerUEButton>

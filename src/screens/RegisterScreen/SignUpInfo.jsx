@@ -222,6 +222,7 @@ const SignUpInfo = (props) => {
         type="email"
         value={formData.email}
         name="email"
+        autoComplete="email"
         onBlur={(e) => {
           if (e.target.value.length > 0) {
             duplicate(e.target.value);
@@ -253,6 +254,7 @@ const SignUpInfo = (props) => {
             type="password"
             value={formData.password}
             name="password"
+            autoComplete="new-password"
             onBlur={(e) => focusHandler(e.target.name)}
             onChange={(e) => {
               setFormData((prevState) => ({
@@ -279,6 +281,7 @@ const SignUpInfo = (props) => {
             placeholder={t('confirm_password_placeholder')}
             type="password"
             name="confirmPassword"
+            autoComplete="new-password"
             onBlur={(e) => focusHandler(e.target.name)}
             value={formData.confirmPassword}
             onChange={(e) => {

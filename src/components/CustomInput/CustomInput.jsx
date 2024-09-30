@@ -21,6 +21,7 @@ const CustomInput = (props) => {
     id,
     defaultValue,
     autoFocus,
+    autoComplete,
   } = props;
 
   return (
@@ -51,6 +52,7 @@ const CustomInput = (props) => {
       {...{ readOnly }}
       {...{ borderColor }}
       icon={icon}
+      autoComplete={autoComplete}
     />
   );
 };
