@@ -30,8 +30,19 @@ const LocationOptions = ({
   return (
     <InnerDiv>
       <CustomButton
-        text={t('add_location')}
-        altText="add_location"
+        text={t('search_location')}
+        altText="search_location"
+        style={{ borderRadius: '50px', marginBottom: '10px', width: '235px' }}
+        backgroundColor={colors.facebook_blue}
+        onClick={() => {
+          handleSearch();
+        }}
+      />
+
+      <CustomButton
+        text={t('pick_on_the_map')}
+        altText="pick_on_the_map"
+        style={{ borderRadius: '50px', marginBottom: '10px', width: '235px' }}
         backgroundColor={colors.facebook_blue}
         onClick={() => {
           // after clicking the button continues the flow to add a place to the map
@@ -41,8 +52,9 @@ const LocationOptions = ({
       />
 
       <CustomButton
-        text={t('add_current_location')}
-        altText="add_current_location"
+        text={t('add_on_my_location')}
+        altText="add_on_my_location"
+        style={{ borderRadius: '50px', marginBottom: '10px', width: '235px' }}
         backgroundColor={colors.facebook_blue}
         onClick={() => {
           // centers the view of the map to the user's location
@@ -54,17 +66,9 @@ const LocationOptions = ({
       />
 
       <CustomButton
-        text={t('search_location')}
-        altText="search_location"
-        backgroundColor={colors.facebook_blue}
-        onClick={() => {
-          handleSearch();
-        }}
-      />
-
-      <CustomButton
         text={t('insert_coordinates')}
         altText="insert_coordinates"
+        style={{ borderRadius: '50px', marginBottom: '10px', width: '235px' }}
         backgroundColor={colors.facebook_blue}
         onClick={() => {
           handleCoordinatesFormClose(true);

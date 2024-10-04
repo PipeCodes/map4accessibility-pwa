@@ -497,6 +497,7 @@ const MapScreen = (props) => {
       {isCustomDialogOpen && (
         <CustomDialog
           closeDialog={handleCustomDialogClose}
+          title={t('new_review')}
           dialogContent={
             isCoordinatesFormOpen ? (
               <CoordinatesForm setCoords={setCoords} />
