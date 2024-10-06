@@ -6,10 +6,10 @@ const FeedbackContent = () => {
   const { t } = useTranslation();
 
   return (
-    <>
+    <div style={{ marginTop: '15px' }}>
       {t('thanks_for_feedback')}
       <FormLinkButton>{t('proceed_to_google_form')}</FormLinkButton>
-    </>
+    </div>
   );
 };
 

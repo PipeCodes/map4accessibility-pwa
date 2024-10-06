@@ -17,6 +17,10 @@ const CoordinatesForm = ({ setCoords }) => {
   return (
     <InnerDiv>
       <CustomInput
+        style={{
+          borderRadius: '50px',
+          marginBottom: '15px',
+        }}
         placeholder={t('latitude')}
         name="lat"
         value={lat}
@@ -24,6 +28,7 @@ const CoordinatesForm = ({ setCoords }) => {
       />
 
       <CustomInput
+        style={{ borderRadius: '50px', marginBottom: '15px' }}
         placeholder={t('longitude')}
         name="lng"
         value={lng}
@@ -32,6 +37,7 @@ const CoordinatesForm = ({ setCoords }) => {
       <CustomButton
         text={t('submit')}
         altText="submit"
+        style={{ borderRadius: '50px' }}
         backgroundColor={colors.facebook_blue}
         onClick={() => {
           setCoords({ lat, lng });
