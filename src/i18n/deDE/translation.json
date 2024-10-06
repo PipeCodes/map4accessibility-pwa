@@ -212,10 +212,11 @@
   "ue_content_text": "Dieses Projekt wird durch das Programm Erasmus+ der Europäischen Union unter der Finanzhilfevereinbarung Nr. 2021-1-IT02-KA220-HED-00003032 finanziert. Die geäußerten Ansichten und Meinungen sind jedoch ausschließlich die des Autors/der Autoren und spiegeln nicht unbedingt die der Europäischen Union oder der Exekutivagentur Bildung und Kultur (EACEA) wider. Weder die Europäische Union noch die EACEA können für sie verantwortlich gemacht werden. Übersetzt mit DeepL.com (kostenlose Version)",
   "thanks_for_feedback": "Vielen Dank für Ihr Feedback. Wir sind stets bemüht, die Zugänglichkeit von Orten und Städten mit unserer App zu verbessern. Können Sie uns etwas Feedback zur App geben?",
   "proceed_to_google_form": "Fortfahren und Feedback geben",
-  "add_location": "Standort hinzufügen",
-  "add_current_location": "Aktuellen Standort hinzufügen",
+  "pick_on_the_map": "Auf der Karte auswählen",
+  "add_on_my_location": "Meinem Standort hinzufügen",
   "search_location": "Standort suchen",
   "insert_coordinates": "Koordinaten einfügen",
   "latitude": "Breitengrad",
-  "longitude": "Längengrad"
+  "longitude": "Längengrad",
+  "new_review": "Neue Rezension"
 }

@@ -25,7 +25,7 @@ export const DialogCard = styled.div`
   box-shadow: 0 4px 8px 0 ${colors.shadow}, 0 4px 6px 0 ${colors.shadow};
   text-align: center;
   padding: 20px;
-  max-width: 280px;
+  max-width: 290px;
   max-height: 100vh;
   overflow-y: auto;
   pointer-events: auto;
@@ -37,8 +37,16 @@ export const CloseButton = styled.button`
   border: none;
   cursor: pointer;
   margin-left: auto;
+  position: absolute;
+  right: 0px;
+  top: 0px;
 `;
 
 export const DialogImage = styled.img`
   height: 100%;
+`;
+
+export const Title = styled.h3`
+  margin: 0;
+  text-align: center;
 `;

@@ -93,7 +93,7 @@ const PlacesList = ({ places, history, routes, searchText }) => {
                     history.push(
                       `/rate-place/${place.id}/${place.google_place_id}`,
                       {
-                        placePopup: true,
+                        placePopup: false,
                       },
                     );
                   }}

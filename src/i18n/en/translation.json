@@ -218,10 +218,11 @@
   "ue_content_text": "This project is funded by the Erasmus+ programme of the European Union under grant agreement No 2021-1-IT02-KA220-HED-00003032. However, the views and opinions expressed are solely those of the author(s) and do not necessarily reflect those of the European Union or the Education and Culture Executive Agency (EACEA). Neither the European Union nor the EACEA can be held responsible for them.",
   "thanks_for_feedback": "Thank you for your feedback. We're always seeking to improve places and cities accessibility with our app. Can you give us some feedback about the app?",
   "proceed_to_google_form": "Proceed and give feedback",
-  "add_location": "Add Location",
-  "add_current_location": "Add Current Location",
+  "pick_on_the_map": "Pick on the map",
+  "add_on_my_location": "Add on my location",
   "search_location": "Search Location",
   "insert_coordinates": "Insert Coordinates",
   "latitude": "Latitude",
-  "longitude": "Longitude"
+  "longitude": "Longitude",
+  "new_review": "New Review"
 }
