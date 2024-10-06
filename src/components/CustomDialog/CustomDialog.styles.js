@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { colors } from '../../constants/colors';
 
 export const BlurredScreen = styled.div`
   position: fixed;
@@ -7,47 +8,45 @@ export const BlurredScreen = styled.div`
   width: 100%;
   height: 100%;
   backdrop-filter: blur(2px);
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: ${colors.dark_shadow};
   z-index: 101;
   pointer-events: auto;
 `;
 
 export const DialogCard = styled.div`
   position: fixed;
+  display: flex;
+  flex-direction: column;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: white;
+  background-color: ${colors.white};
   border-radius: 8px;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  box-shadow: 0 4px 8px 0 ${colors.shadow}, 0 4px 6px 0 ${colors.shadow};
   text-align: center;
-  padding: 16px;
-  max-width: 800px;
+  padding: 20px;
+  max-width: 290px;
   max-height: 100vh;
   overflow-y: auto;
   pointer-events: auto;
+  position: relative;
 `;
 
 export const CloseButton = styled.button`
-  background-color: transparent;
+  background-color: ${colors.transparent};
   border: none;
   cursor: pointer;
+  margin-left: auto;
   position: absolute;
-  top: 16px;
-  right: 16px;
-  display: inline-flex;
+  right: 0px;
+  top: 0px;
 `;
 
 export const DialogImage = styled.img`
   height: 100%;
 `;
 
-export const DialogCardImage = styled.img`
-  justify-content: center;
-  height: 100%;
-`;
-
-export const InnerDiv = styled.div`
-  height: 100px;
-  width: 100%;
+export const Title = styled.h3`
+  margin: 0;
+  text-align: center;
 `;

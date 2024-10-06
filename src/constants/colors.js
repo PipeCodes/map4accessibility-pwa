@@ -14,6 +14,8 @@ export const colors = {
   whiteSmoke: '#F4F6F9',
   white: '#fff',
   shadow: '#00000029',
+  dark_shadow: '#00000080',
+  black: '#000000',
 
   // Pallete Colors
   palleteWhite: '#eeeee9',

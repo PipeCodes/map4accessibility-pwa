@@ -35,7 +35,7 @@ export const Box = styled.div`
   }
 `;
 
-export const Text = styled.span`
+export const Text = styled.h1`
   font-size: ${(props) => updateFontSize(20, props.fontSize)};
   font-family: ${(props) => updateValue('EasyReadingPro', props.font)};
   color: ${colors.primaryTextColor};
