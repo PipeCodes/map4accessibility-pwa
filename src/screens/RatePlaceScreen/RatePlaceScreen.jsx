@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useCallback, useRef } from 'react';
+import Cookies from 'js-cookie';
 import Compressor from 'compressorjs';
 import { withRouter, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -225,6 +226,8 @@ const RatePlaceScreen = (props) => {
           alert(err);
         })
         .finally(() => {
+          Cookies.set('lat', place?.latitude);
+          Cookies.set('lng', place?.longitude);
           history.push(routes.MAP.path, {
             feedback: {
               isFeedback: true,
