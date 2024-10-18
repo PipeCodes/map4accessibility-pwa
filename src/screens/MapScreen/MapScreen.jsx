@@ -101,7 +101,6 @@ const MapScreen = (props) => {
   const [add, setAdd] = useState(null);
   const [pinMarker, setPinMarker] = useState(null);
   const [radius, setRadius] = useState(null);
-
   const { isLoaded } = useJsApiLoader(GOOGLE_MAPS_OPTIONS);
 
   const tutorialCookie = Cookies.get('tutorial');
@@ -112,7 +111,7 @@ const MapScreen = (props) => {
   const feedback = history?.location?.state?.feedback?.isFeedback;
   const [isFeedbackContentOpen, setIsFeedbackContentOpen] = useState(false);
 
-  // Show DialogMain
+  // Show CustomDialog
   const [isCustomDialogOpen, setIsCustomDialogOpen] = useState(false);
   // Show CoordinatesForm
   const [isCoordinatesFormOpen, setIsCoordinatesFormOpen] = useState(null);
@@ -223,7 +222,16 @@ const MapScreen = (props) => {
           }
         })
         .catch((error) => {
-          setLocation({ lat: 38.736946, lng: -9.142685 });
+          if (!Cookies.get('lat')) {
+            if (history?.location?.state?.search?.location?.lat)
+              return setLocation(history?.location?.state?.search?.location);
+            setLocation({ lat: 38.736946, lng: -9.142685 });
+          } else {
+            setLocation({
+              lat: parseFloat(Cookies.get('lat')),
+              lng: parseFloat(Cookies.get('lng')),
+            });
+          }
           // eslint-disable-next-line no-console
           console.log(error);
           // eslint-disable-next-line no-undef
@@ -294,6 +302,8 @@ const MapScreen = (props) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const debounceSetCenter = useCallback(
     debounce((value, radius) => {
+      Cookies.set('lat', value.lat);
+      Cookies.set('lng', value.lng);
       if (
         center &&
         center.lat === value.lat &&
