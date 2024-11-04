@@ -477,9 +477,8 @@ const RatePlaceScreen = (props) => {
                 ))}
 
               <button
-                style={{ border: '0px' }}
                 type="button"
-                onClick={() => setIsListOpen(!isListOpen)}
+                onClick={() => setIsListOpen((prev) => !prev)}
               >
                 <InfoText fontSize={fontSize} font={font}>
                   {t('optional_questions')}
@@ -493,7 +492,7 @@ const RatePlaceScreen = (props) => {
 
               <OptionalQuestions isOpen={isListOpen}>
                 {questions?.optional &&
-                  Object.entries(questions?.optional)
+                  Object.entries(questions.optional)
                     .reverse()
                     .map((group, index) => (
                       <Accordion key={index}>
