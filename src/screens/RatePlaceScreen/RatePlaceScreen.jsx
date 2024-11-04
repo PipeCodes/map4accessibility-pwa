@@ -34,6 +34,7 @@ import {
   Neutral,
   Accordion,
   InfoText,
+  OptionalQuestions,
 } from './RatePlaceScreen.styles';
 import TopBar from '../../components/TopBar/TopBar';
 import ImageSlider from '../../components/ImageSlider/ImageSlider';
@@ -82,6 +83,7 @@ const RatePlaceScreen = (props) => {
   const params = useParams();
   const [file, setFile] = useState();
   const [error, setError] = useState('');
+  const [isListOpen, setIsListOpen] = useState(false);
 
   // Open file input on button click
   // Reference: https://bobbyhadz.com/blog/react-open-file-input-on-button-click
@@ -473,76 +475,90 @@ const RatePlaceScreen = (props) => {
                     </Options>
                   </Question>
                 ))}
-              <InfoText fontSize={fontSize} font={font}>
-                {t('optional_questions')}
-              </InfoText>
-              {questions?.optional &&
-                Object.entries(questions?.optional)
-                  .reverse()
-                  .map((group, index) => (
-                    <Accordion key={index}>
-                      <button
-                        type="button"
-                        onClick={() => {
-                          handleOptionalClick(group?.[0]);
-                        }}
-                        className="head"
-                      >
-                        <div>{group?.[0]}</div>
-                        {Object.values(optionalQuestions).includes(
-                          group?.[0],
-                        ) ? (
-                          <img src={upIcon} alt="closed" />
-                        ) : (
-                          <img src={downIcon} alt="open" />
-                        )}
-                      </button>
-                      <div
-                        className="content"
-                        id={
-                          Object.values(optionalQuestions).includes(
+
+              <button
+                type="button"
+                onClick={() => setIsListOpen((prev) => !prev)}
+              >
+                <InfoText fontSize={fontSize} font={font}>
+                  {t('optional_questions')}
+                </InfoText>
+
+                <img
+                  src={isListOpen ? upIcon : downIcon}
+                  alt={isListOpen ? 'close list' : 'open list'}
+                />
+              </button>
+
+              <OptionalQuestions isOpen={isListOpen}>
+                {questions?.optional &&
+                  Object.entries(questions.optional)
+                    .reverse()
+                    .map((group, index) => (
+                      <Accordion key={index}>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            handleOptionalClick(group?.[0]);
+                          }}
+                          className="head"
+                        >
+                          <div>{group?.[0]}</div>
+                          {Object.values(optionalQuestions).includes(
                             group?.[0],
-                          ) && 'active'
-                        }
-                      >
-                        {group?.[1].map((item, index) => (
-                          <Question key={item.id}>
-                            <Title fontSize={fontSize} font={font}>
-                              {index + 1}. {item?.title?.split(':')[1]}
-                            </Title>
-                            <Options>
-                              {item?.answers &&
-                                item?.answers.map((answer) => (
-                                  <Option key={answer?.id}>
-                                    <input
-                                      type="radio"
-                                      name={item?.id}
-                                      id={answer?.id}
-                                      onChange={() => {
-                                        setAnswers((prevState) => ({
-                                          ...prevState,
-                                          [`${index}_optional`]: {
-                                            question: item?.title,
-                                            answer: answer?.body,
-                                          },
-                                        }));
-                                      }}
-                                    />
-                                    <AnswerLabel
-                                      fontSize={fontSize}
-                                      font={font}
-                                      htmlFor={answer?.id}
-                                    >
-                                      {answer?.body}
-                                    </AnswerLabel>
-                                  </Option>
-                                ))}
-                            </Options>
-                          </Question>
-                        ))}
-                      </div>
-                    </Accordion>
-                  ))}
+                          ) ? (
+                            <img src={upIcon} alt="closed" />
+                          ) : (
+                            <img src={downIcon} alt="open" />
+                          )}
+                        </button>
+                        <div
+                          className="content"
+                          id={
+                            Object.values(optionalQuestions).includes(
+                              group?.[0],
+                            ) && 'active'
+                          }
+                        >
+                          {group?.[1].map((item, index) => (
+                            <Question key={item.id}>
+                              <Title fontSize={fontSize} font={font}>
+                                {index + 1}. {item?.title?.split(':')[1]}
+                              </Title>
+                              <Options>
+                                {item?.answers &&
+                                  item?.answers.map((answer) => (
+                                    <Option key={answer?.id}>
+                                      <input
+                                        type="radio"
+                                        name={item?.id}
+                                        id={answer?.id}
+                                        onChange={() => {
+                                          setAnswers((prevState) => ({
+                                            ...prevState,
+                                            [`${index}_optional`]: {
+                                              question: item?.title,
+                                              answer: answer?.body,
+                                            },
+                                          }));
+                                        }}
+                                      />
+                                      <AnswerLabel
+                                        fontSize={fontSize}
+                                        font={font}
+                                        htmlFor={answer?.id}
+                                      >
+                                        {answer?.body}
+                                      </AnswerLabel>
+                                    </Option>
+                                  ))}
+                              </Options>
+                            </Question>
+                          ))}
+                        </div>
+                      </Accordion>
+                    ))}
+              </OptionalQuestions>
             </>
           )}
         </Form>
