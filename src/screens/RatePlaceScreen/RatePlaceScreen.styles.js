@@ -285,3 +285,7 @@ export const Accordion = styled.div`
     }
   }
 `;
+
+export const OptionalQuestions = styled.div`
+  display: ${(props) => (props.isOpen ? 'block' : 'none')};
+`;
