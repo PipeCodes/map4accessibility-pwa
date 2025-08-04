@@ -41,7 +41,6 @@ const PlacesList = ({ places, history, routes, searchText }) => {
       setPlacesList(places);
     } else {
       setPlacesList(places?.slice(0, 5));
-      console.log(places);
     }
   }, [viewAll, places, dispatch]);
 
