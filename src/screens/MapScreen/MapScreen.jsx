@@ -154,11 +154,6 @@ const MapScreen = (props) => {
     (marker) => {
       if (marker?.google_place_id) {
         dispatch(getGooglePlace(marker?.google_place_id));
-        if (marker?.id) {
-          dispatch(getMorePlaceInfo(marker?.id));
-        } else {
-          dispatch(getMorePlaceInfo(marker?.google_place_id));
-        }
       } else {
         dispatch(getPlace(marker?.id));
       }
@@ -166,6 +161,17 @@ const MapScreen = (props) => {
     },
     [dispatch],
   );
+
+  useEffect(() => {
+    if (place === null || loading === true || place.more_info_loaded === true) {
+      return;
+    }
+    if (place.id) {
+      dispatch(getMorePlaceInfo(place.id));
+    } else {
+      dispatch(getMorePlaceInfo(place.google_place_id));
+    }
+  }, [loading, place, dispatch]);
 
   // Show pins if were toggled before entering a place
   useEffect(() => {
