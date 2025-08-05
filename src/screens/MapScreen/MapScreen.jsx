@@ -156,6 +156,8 @@ const MapScreen = (props) => {
         dispatch(getGooglePlace(marker?.google_place_id));
         if (marker?.id) {
           dispatch(getMorePlaceInfo(marker?.id));
+        } else {
+          dispatch(getMorePlaceInfo(marker?.google_place_id));
         }
       } else {
         dispatch(getPlace(marker?.id));
