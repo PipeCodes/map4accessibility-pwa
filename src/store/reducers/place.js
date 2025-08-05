@@ -63,7 +63,6 @@ const placeReducer = (state = initialState, action) => {
     case GET_MORE_PLACE_INFO:
       return {
         ...state,
-
         place: {
           ...state.place,
           id: action.id,
@@ -74,6 +73,7 @@ const placeReducer = (state = initialState, action) => {
           inaccessible_count: action.inaccessible_count,
           accessible_count: action.accessible_count,
           neutral_count: action.neutral_count,
+          more_info_loaded: true,
         },
         loading: false,
       };

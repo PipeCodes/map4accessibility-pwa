@@ -66,20 +66,27 @@ export const getMorePlaceInfo = (id) => async (dispatch) => {
   };
   const url = generatePath(Endpoints.PLACES.concat('/:id'), queryParams);
   try {
-    const response = await axios.get(url, config);
-    const statusCode = response.status;
-    if (statusCode === HTTP_STATUS.SUCCESS) {
-      dispatch({
-        type: GET_MORE_PLACE_INFO,
-        id,
-        images: response.data?.result?.media_evaluations,
-        evaluations: response.data?.result?.place_evaluations,
-        inaccessible_count: response.data?.result?.inaccessible_count,
-        accessible_count: response.data?.result?.accessible_count,
-        neutral_count: response.data?.result?.neutral_count,
+    await axios
+      .get(url, config)
+      .then((response) => {
+        const statusCode = response.status;
+        if (statusCode === HTTP_STATUS.SUCCESS) {
+          dispatch({
+            type: GET_MORE_PLACE_INFO,
+            id,
+            images: response.data?.result?.media_evaluations,
+            evaluations: response.data?.result?.place_evaluations,
+            inaccessible_count: response.data?.result?.inaccessible_count,
+            accessible_count: response.data?.result?.accessible_count,
+            neutral_count: response.data?.result?.neutral_count,
+          });
+          return response.data?.result;
+        }
+      })
+      .catch((error) => {
+        // Handle the error
+        console.error('An error occurred during the Axios request:', error);
       });
-      return response.data?.result;
-    }
   } catch (error) {
     dispatch({ type: GET_PLACE_ERROR });
     return Promise.reject(error?.response?.data?.message);
